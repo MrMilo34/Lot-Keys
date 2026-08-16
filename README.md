@@ -1,3 +1,15 @@
+# LotKeys Drive Test v0.4
+
+## New in v0.4
+
+- **Info From Photo (first test version):** when adding/editing a Vehicle Profile, choose one or more photos/screenshots and LotKeys runs browser-side OCR to suggest Year, Make, Model, Price, Odometer/Unit, VIN, and Stock #.
+- High-confidence values are preselected but **nothing is applied until the user reviews and taps Apply Selected**.
+- A valid 17-character VIN is treated as high confidence; labeled fields such as `STK`, `YEAR`, `MAKE`, and `MODEL` are prioritized.
+- The photos used for Info From Photo are analysis-only and are **not** automatically added to the customer-facing vehicle Photos folder.
+- OCR uses Tesseract.js in the browser and is loaded only when the feature is used; the first scan can take longer while the OCR engine/language data downloads.
+- Vehicle Profile / Google Drive folder naming is now **`Year Make Model - Stock #`** (for example `2022 Infiniti Q60 - PH80225`). Existing synced profile folders will be renamed on their next save/sync.
+- Service-worker cache bumped to v0.4 so phones pick up the new build.
+
 # LotKeys Drive Test v0.3.1
 
 **Hotfix:** fixes Google Drive vehicle sync error `buildVehicleProfileName is not defined`. The shared naming helper now lives outside the UI module so Drive sync can call it. Service-worker cache version was also bumped so the fixed build replaces v0.3 on phones.

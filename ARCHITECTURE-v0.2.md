@@ -54,3 +54,12 @@ The local Vehicle Profile stores explicit photo IDs in order. When Drive sync ru
 ## Retention
 
 Marketplace analytics are intended to use a rolling 120-day raw-data window. This build retains that local cleanup rule; store-wide analytics synchronization comes later.
+
+
+## v0.4 additions
+
+### Vehicle Profile folder naming
+Vehicle profile folder names are generated as `Year Make Model - Stock #`. Drive IDs remain authoritative, so renaming the human-readable folder name does not break the app.
+
+### Info From Photo
+Info From Photo is an assisted data-entry layer only. It does not become a new source of truth. It reads one or more images locally in the browser, creates field suggestions, marks confidence, and requires user confirmation before applying values to the Vehicle Profile form. Analysis images are not stored in `Shared/Photos` unless the user separately adds them as vehicle photos.
