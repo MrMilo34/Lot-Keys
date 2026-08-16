@@ -128,6 +128,17 @@ const DB = (() => {
   </script>
   
 <script>
+// Shared helper used by both the UI and Google Drive sync.
+function buildVehicleProfileName({stock='',year='',make='',model=''}={}){
+  stock=String(stock||'').trim();year=String(year||'').trim();make=String(make||'').trim();model=String(model||'').trim();
+  let vehicle='';
+  if(model && make && model.toLowerCase().startsWith(make.toLowerCase()+' ')) vehicle=[year,model].filter(Boolean).join(' ');
+  else vehicle=[year,make,model].filter(Boolean).join(' ');
+  if(stock && vehicle) return `STK: ${stock} - ${vehicle}`;
+  if(stock) return `STK: ${stock}`;
+  return vehicle||'New Vehicle Profile';
+}
+
 const DriveSync = (() => {
   const FOLDER_MIME = 'application/vnd.google-apps.folder';
   const SHEET_MIME = 'application/vnd.google-apps.spreadsheet';
@@ -526,15 +537,6 @@ const App = (()=>{
     if(v.sharedFolderUrl){$('#copy-share').onclick=()=>copyText(v.sharedFolderUrl,'Shared folder link copied');$('#open-share').onclick=()=>window.open(v.sharedFolderUrl,'_blank')}
     $('#sync-v').onclick=async()=>{await syncVehicleNow(v);modal.close();showVehicle(id)};
     $('#delete-v').onclick=async()=>{if(confirm(`Delete ${v.name}?\n\nIf this vehicle is synced, LotKeys will also move its Vehicle Profile folder to Google Drive Trash.`)){const ls=await DB.byIndex('listings','vehicleId',id);if(v.drive?.profileFolderId){try{await DriveSync.deleteVehicle(v)}catch(err){if(!confirm('Could not remove the Drive folder: '+err.message+'\n\nDelete the local vehicle anyway?'))return}}for(const l of ls){try{await DriveSync.deleteListing(l)}catch{}await deleteListingCascade(l.id)}await DB.del('vehicles',id);modal.close();toast('Vehicle deleted');render()}};modal.showModal();
-  }
-  function buildVehicleProfileName({stock='',year='',make='',model=''}={}){
-    stock=String(stock||'').trim();year=String(year||'').trim();make=String(make||'').trim();model=String(model||'').trim();
-    let vehicle='';
-    if(model && make && model.toLowerCase().startsWith(make.toLowerCase()+' ')) vehicle=[year,model].filter(Boolean).join(' ');
-    else vehicle=[year,make,model].filter(Boolean).join(' ');
-    if(stock && vehicle) return `STK: ${stock} - ${vehicle}`;
-    if(stock) return `STK: ${stock}`;
-    return vehicle||'New Vehicle Profile';
   }
   function photoPreviewHtml(photos){return photos?.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle to change the master order. #1 becomes the thumbnail.</div><div class="photo-grid reorder-master-form">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="remove-photo" data-i="${i}">×</button><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'<div class="notice">No photos selected yet.</div>'}
   async function showVehicleForm(existing=null){

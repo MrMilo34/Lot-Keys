@@ -1,3 +1,7 @@
+# LotKeys Drive Test v0.3.1
+
+**Hotfix:** fixes Google Drive vehicle sync error `buildVehicleProfileName is not defined`. The shared naming helper now lives outside the UI module so Drive sync can call it. Service-worker cache version was also bumped so the fixed build replaces v0.3 on phones.
+
 # LotKeys Drive Test v0.3
 
 This is the first hosted test build that can write real vehicle and listing data into Google Drive.
