@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="LotKeys dealership inventory and Marketplace listing manager" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <style>
+:root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;--good:#15803d;--warn:#b45309;--bad:#b91c1c;--shadow:0 8px 30px rgba(17,24,39,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.topbar{position:sticky;top:0;z-index:8;background:rgba(243,244,246,.94);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--line)}.topbar h1{font-size:25px;margin:1px 0 0}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted)}#main{max-width:760px;margin:0 auto;padding:18px 16px calc(92px + env(safe-area-inset-bottom))}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(17,24,39,.06)}.nav-btn{border:0;background:none;padding:5px;color:var(--muted);font-weight:700}.nav-btn span{display:block;font-size:20px;line-height:22px}.nav-btn small{font-size:11px}.nav-btn.active{color:var(--accent)}button{font:inherit;cursor:pointer}.icon-btn{width:44px;height:44px;border:0;border-radius:14px;background:var(--ink);color:white;font-size:28px;line-height:44px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}.section-title{display:flex;align-items:end;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:17px;margin:0}.section-title small{color:var(--muted)}.hero{background:linear-gradient(135deg,#111827,#1f2937);color:#fff;padding:20px}.hero p{color:#d1d5db;margin:5px 0 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.stat strong{display:block;font-size:24px}.stat span{font-size:12px;color:var(--muted)}.search{width:100%;border:1px solid var(--line);background:white;border-radius:15px;padding:14px 15px;font-size:16px;outline:none}.search:focus,input:focus,select:focus,textarea:focus{border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.12);outline:none}.vehicle-row,.listing-row{display:grid;grid-template-columns:74px 1fr auto;gap:12px;align-items:center}.thumb{width:74px;height:58px;border-radius:12px;background:#e5e7eb;object-fit:cover;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:24px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.row-title{font-weight:800}.meta{font-size:12px;color:var(--muted);margin-top:3px}.price{font-weight:800;margin-top:4px}.chev{color:var(--muted);font-size:22px}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;background:#eef2ff;color:#3730a3}.pill.good{background:#dcfce7;color:#166534}.pill.warn{background:#ffedd5;color:#9a3412}.pill.bad{background:#fee2e2;color:#991b1b}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.btn{border:0;border-radius:13px;padding:11px 14px;font-weight:800;background:#e5e7eb;color:#111827}.btn.primary{background:var(--accent);color:white}.btn.dark{background:var(--ink);color:#fff}.btn.danger{background:#fee2e2;color:#991b1b}.btn.ghost{background:transparent;border:1px solid var(--line)}.btn.block{width:100%}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:13px}.field.full{grid-column:1/-1}.field label{display:block;font-size:12px;font-weight:800;color:#4b5563;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:12px;font-size:15px}.field textarea{min-height:110px;resize:vertical}.help{font-size:12px;color:var(--muted);margin-top:5px}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.photo-tile{position:relative;aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:#e5e7eb}.photo-tile img{width:100%;height:100%;object-fit:cover}.photo-tile .badge{position:absolute;top:5px;left:5px;background:rgba(17,24,39,.82);color:#fff;border-radius:999px;padding:3px 7px;font-size:10px}.photo-tile button{position:absolute;right:5px;top:5px;border:0;background:rgba(255,255,255,.9);width:25px;height:25px;border-radius:999px}.photo-tile .drag-handle{top:auto;bottom:5px;background:rgba(17,24,39,.82);color:white;font-size:13px;font-weight:900;touch-action:none;cursor:grab}.photo-tile .drag-handle:active{cursor:grabbing}.photo-tile.dragging{outline:3px solid #2563eb;transform:scale(.97)}.photo-tile.drop-target{outline:3px dashed #60a5fa}.share-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.btn[disabled]{opacity:.5;cursor:not-allowed}.empty{text-align:center;padding:28px 16px;color:var(--muted)}dialog{border:0;border-radius:20px;padding:0;width:min(720px,calc(100% - 22px));max-height:88vh;overflow:auto;box-shadow:0 30px 90px rgba(0,0,0,.28)}dialog::backdrop{background:rgba(17,24,39,.55)}#modal-body{padding:18px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modal-head h2{margin:0}.close{border:0;background:#f3f4f6;width:38px;height:38px;border-radius:12px;font-size:20px}.toast{position:fixed;z-index:30;left:50%;bottom:92px;transform:translateX(-50%);background:#111827;color:white;border-radius:12px;padding:11px 15px;font-size:13px;box-shadow:var(--shadow)}.detail-title{margin:2px 0 4px;font-size:24px}.detail-sub{color:var(--muted);margin-bottom:16px}.kv{display:grid;grid-template-columns:130px 1fr;gap:7px 12px;font-size:14px}.kv div:nth-child(odd){color:var(--muted)}.chart{width:100%;height:170px;background:#f9fafb;border:1px solid var(--line);border-radius:14px;margin-top:10px}.chart text{font-size:10px;fill:#6b7280}.chart polyline{fill:none;stroke:currentColor;stroke-width:3}.chart circle{fill:currentColor}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.notice{padding:12px;border-radius:12px;background:#eff6ff;color:#1e40af;font-size:13px}.warning{background:#fff7ed;color:#9a3412}.muted{color:var(--muted)}.small{font-size:12px}.codeish{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#f9fafb;border:1px solid var(--line);padding:10px;border-radius:10px;overflow:auto}.hr{height:1px;background:var(--line);margin:16px 0}@media(max-width:520px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.vehicle-row,.listing-row{grid-template-columns:64px 1fr auto}.thumb{width:64px;height:52px}.stats{grid-template-columns:repeat(2,1fr)}}
+
+  
+.drive-status{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:13px;background:#f9fafb;border:1px solid var(--line);margin:10px 0}.status-dot{width:10px;height:10px;border-radius:999px;background:#9ca3af;flex:0 0 auto}.status-dot.good{background:#16a34a}.status-dot.warn{background:#f59e0b}.status-dot.bad{background:#dc2626}.credentials{margin-top:12px}.credentials summary{font-weight:800;cursor:pointer}.sync-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.sync-ok{color:#166534}.sync-warn{color:#9a3412}.sync-bad{color:#991b1b}.protocol-warning{margin:0 16px 8px;padding:9px 11px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:12px;line-height:1.4}.protocol-good{background:#ecfdf5;color:#166534}
+</style>
+  <title>LotKeys</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://apis.google.com/js/api.js" async defer></script>
+</head>
+<body>
+  <div id="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow" id="store-name">LOTKEYS</div>
+        <h1 id="page-title">Home</h1>
+      </div>
+      <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
+    </header>
+
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.2</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <main id="main"></main>
+
+    <nav class="bottom-nav" aria-label="Primary">
+      <button data-route="home" class="nav-btn active"><span>⌂</span><small>Home</small></button>
+      <button data-route="vehicles" class="nav-btn"><span>🚙</span><small>Vehicles</small></button>
+      <button data-route="listings" class="nav-btn"><span>📢</span><small>Listings</small></button>
+      <button data-route="settings" class="nav-btn"><span>⚙</span><small>Settings</small></button>
+    </nav>
+  </div>
+
+  <dialog id="modal"><div id="modal-body"></div></dialog>
+  <div id="toast" class="toast" hidden></div>
+
+  <script>
+const DB = (() => {
+  const DB_NAME = 'autolister-v1';
+  const VERSION = 1;
+  const STORES = ['vehicles','listings','locations','analytics','settings'];
+  let db = null;
+  let useMemory = false;
+  const memory = Object.fromEntries(STORES.map(n => [n, new Map()]));
+
+  function openIndexedDB(){
+    return new Promise((resolve,reject)=>{
+      try {
+        if (!('indexedDB' in window)) return reject(new Error('IndexedDB unavailable'));
+        if(db) return resolve(db);
+        const req=indexedDB.open(DB_NAME,VERSION);
+        req.onupgradeneeded=()=>{
+          const d=req.result;
+          STORES.forEach(name=>{
+            if(!d.objectStoreNames.contains(name)){
+              const s=d.createObjectStore(name,{keyPath:'id'});
+              if(name==='analytics') s.createIndex('listingId','listingId',{unique:false});
+              if(name==='listings') s.createIndex('vehicleId','vehicleId',{unique:false});
+            }
+          });
+        };
+        req.onsuccess=()=>{db=req.result;resolve(db)};
+        req.onerror=()=>reject(req.error || new Error('IndexedDB failed'));
+        req.onblocked=()=>reject(new Error('IndexedDB blocked'));
+      } catch(err) { reject(err); }
+    });
+  }
+
+  async function open(){
+    if(useMemory) return null;
+    try { return await openIndexedDB(); }
+    catch(err){
+      console.warn('LotKeys: IndexedDB unavailable in this local-file mode; using temporary in-memory storage.', err);
+      useMemory=true;
+      return null;
+    }
+  }
+
+  async function store(name,mode='readonly'){
+    const d=await open();
+    if(useMemory) return null;
+    return d.transaction(name,mode).objectStore(name);
+  }
+
+  async function all(name){
+    await open();
+    if(useMemory) return Array.from(memory[name].values());
+    return new Promise(async(res,rej)=>{const r=(await store(name)).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+  }
+  async function get(name,id){
+    await open();
+    if(useMemory) return memory[name].get(id);
+    return new Promise(async(res,rej)=>{const r=(await store(name)).get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+  }
+  async function put(name,value){
+    await open();
+    if(useMemory){memory[name].set(value.id,value);return value;}
+    return new Promise(async(res,rej)=>{const r=(await store(name,'readwrite')).put(value);r.onsuccess=()=>res(value);r.onerror=()=>rej(r.error)});
+  }
+  async function del(name,id){
+    await open();
+    if(useMemory){memory[name].delete(id);return;}
+    return new Promise(async(res,rej)=>{const r=(await store(name,'readwrite')).delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)});
+  }
+  async function clear(name){
+    await open();
+    if(useMemory){memory[name].clear();return;}
+    return new Promise(async(res,rej)=>{const r=(await store(name,'readwrite')).clear();r.onsuccess=()=>res();r.onerror=()=>rej(r.error)});
+  }
+  async function byIndex(name,index,key){
+    await open();
+    if(useMemory){
+      return Array.from(memory[name].values()).filter(v=>v && v[index]===key);
+    }
+    return new Promise(async(res,rej)=>{const s=await store(name);const r=s.index(index).getAll(key);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+  }
+  function isTemporary(){ return useMemory; }
+  return {open,all,get,put,del,clear,byIndex,isTemporary};
+})();
+  </script>
+  
+<script>
+const DriveSync = (() => {
+  const FOLDER_MIME = 'application/vnd.google-apps.folder';
+  const SHEET_MIME = 'application/vnd.google-apps.spreadsheet';
+  const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+  let accessToken = '';
+  let expiresAt = 0;
+  let tokenClient = null;
+  let tokenClientId = '';
+  let pickerPromise = null;
+
+  async function setting(id, def=''){ return (await DB.get('settings',id))?.value ?? def; }
+  async function setSetting(id,value){ return DB.put('settings',{id,value}); }
+  function now(){ return Date.now(); }
+  function qEscape(s){ return String(s??'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+  function isHttps(){ return location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1'; }
+  async function config(){
+    return {
+      clientId: (await setting('googleClientId','')).trim(),
+      apiKey: (await setting('googleApiKey','')).trim(),
+      projectNumber: String(await setting('googleProjectNumber','')).trim(),
+      storeFolderId: (await setting('storeFolderId','')).trim(),
+      storeFolderName: (await setting('storeFolderName','')).trim(),
+      userName: (await setting('userName','')).trim(),
+      storeName: (await setting('storeName','')).trim(),
+      publicShareEnabled: await setting('publicShareEnabled', true),
+    };
+  }
+  async function waitForGoogle(timeoutMs=12000){
+    const start=now();
+    while(now()-start < timeoutMs){
+      if(window.google?.accounts?.oauth2 && window.gapi) return;
+      await new Promise(r=>setTimeout(r,100));
+    }
+    throw new Error('Google sign-in libraries did not load. Check your internet connection and reload LotKeys.');
+  }
+  async function initPicker(){
+    if(pickerPromise) return pickerPromise;
+    pickerPromise=(async()=>{
+      await waitForGoogle();
+      await new Promise((resolve,reject)=>{
+        try { gapi.load('picker',{callback:resolve,onerror:()=>reject(new Error('Google Picker failed to load'))}); }
+        catch(e){ reject(e); }
+      });
+      return true;
+    })();
+    return pickerPromise;
+  }
+  async function authorize(forcePrompt=false){
+    const c=await config();
+    if(!isHttps()) throw new Error('Google authorization requires HTTPS (or localhost). Host this build first, then open that URL.');
+    if(!c.clientId) throw new Error('Google OAuth Client ID is not configured in Settings.');
+    await waitForGoogle();
+    if(accessToken && expiresAt-now()>60000 && !forcePrompt) return accessToken;
+    if(!tokenClient || tokenClientId!==c.clientId){
+      tokenClientId=c.clientId;
+      tokenClient=google.accounts.oauth2.initTokenClient({client_id:c.clientId,scope:DRIVE_SCOPE,callback:()=>{}});
+    }
+    return new Promise((resolve,reject)=>{
+      tokenClient.callback=resp=>{
+        if(resp?.error) return reject(new Error(resp.error_description || resp.error));
+        accessToken=resp.access_token;
+        expiresAt=now()+(Number(resp.expires_in||3600)*1000);
+        resolve(accessToken);
+      };
+      tokenClient.error_callback=err=>reject(new Error(err?.message || err?.type || 'Google authorization was cancelled.'));
+      tokenClient.requestAccessToken({prompt: forcePrompt || !accessToken ? 'consent' : ''});
+    });
+  }
+  function connected(){ return !!(accessToken && expiresAt-now()>60000); }
+  async function ready(){ const c=await config(); return !!(c.clientId && c.storeFolderId && c.userName); }
+  async function disconnect(){
+    if(accessToken && window.google?.accounts?.oauth2){ try{ google.accounts.oauth2.revoke(accessToken,()=>{}); }catch{} }
+    accessToken='';expiresAt=0;
+  }
+  async function apiFetch(url, opts={}, retry=true){
+    const token=await authorize(false);
+    const headers=new Headers(opts.headers||{}); headers.set('Authorization',`Bearer ${token}`);
+    const res=await fetch(url,{...opts,headers});
+    if(res.status===401 && retry){ accessToken='';expiresAt=0;await authorize(true);return apiFetch(url,opts,false); }
+    if(!res.ok){
+      let detail='';try{const j=await res.json();detail=j?.error?.message||JSON.stringify(j);}catch{detail=await res.text();}
+      const e=new Error(detail||`Google API request failed (${res.status})`); e.status=res.status; throw e;
+    }
+    if(res.status===204) return null;
+    const type=res.headers.get('content-type')||'';
+    return type.includes('application/json') ? res.json() : res.text();
+  }
+  async function driveGet(id,fields='id,name,mimeType,webViewLink,appProperties,parents,driveId'){
+    return apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(id)}?supportsAllDrives=true&fields=${encodeURIComponent(fields)}`);
+  }
+  async function listFiles(q,fields='files(id,name,mimeType,webViewLink,appProperties,parents,trashed)'){
+    const u=new URL('https://www.googleapis.com/drive/v3/files');
+    u.searchParams.set('q',q);u.searchParams.set('fields',fields);u.searchParams.set('pageSize','1000');
+    u.searchParams.set('supportsAllDrives','true');u.searchParams.set('includeItemsFromAllDrives','true');
+    return (await apiFetch(u.toString())).files||[];
+  }
+  async function createMetadata(meta,fields='id,name,mimeType,webViewLink,appProperties'){
+    return apiFetch(`https://www.googleapis.com/drive/v3/files?supportsAllDrives=true&fields=${encodeURIComponent(fields)}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)
+    });
+  }
+  async function patchMetadata(id,meta,fields='id,name,webViewLink,appProperties'){
+    return apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(id)}?supportsAllDrives=true&fields=${encodeURIComponent(fields)}`,{
+      method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)
+    });
+  }
+  async function trashFile(id){ if(!id)return; return patchMetadata(id,{trashed:true},'id,trashed'); }
+  async function createFolder(name,parentId,appProperties={}){
+    return createMetadata({name,mimeType:FOLDER_MIME,parents:[parentId],appProperties});
+  }
+  async function findChildByName(parentId,name,mimeType=''){
+    let q=`'${qEscape(parentId)}' in parents and name = '${qEscape(name)}' and trashed = false`;
+    if(mimeType) q+=` and mimeType = '${qEscape(mimeType)}'`;
+    return (await listFiles(q))[0]||null;
+  }
+  async function findChildByAppProperty(parentId,key,value,mimeType=''){
+    let q=`'${qEscape(parentId)}' in parents and appProperties has { key='${qEscape(key)}' and value='${qEscape(value)}' } and trashed = false`;
+    if(mimeType) q+=` and mimeType = '${qEscape(mimeType)}'`;
+    return (await listFiles(q))[0]||null;
+  }
+  async function ensureFolder(parentId,name,key='',value=''){
+    let f=null;
+    if(key && value) f=await findChildByAppProperty(parentId,key,value,FOLDER_MIME);
+    if(!f) f=await findChildByName(parentId,name,FOLDER_MIME);
+    if(!f) f=await createFolder(name,parentId,key&&value?{[key]:value}:{})
+    else if(f.name!==name) f=await patchMetadata(f.id,{name});
+    return f;
+  }
+  async function updateTextFile(fileId,blob){
+    const token=await authorize(false);
+    const res=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${encodeURIComponent(fileId)}?uploadType=media&supportsAllDrives=true`,{
+      method:'PATCH',headers:{Authorization:`Bearer ${token}`,'Content-Type':blob.type||'application/octet-stream'},body:blob
+    });
+    if(!res.ok){let d='';try{d=(await res.json())?.error?.message||''}catch{};throw new Error(d||`Could not update Drive file (${res.status})`)}
+    return res.json();
+  }
+  async function multipartCreate(blob,metadata){
+    const token=await authorize(false);
+    const boundary='lotkeys_'+Math.random().toString(36).slice(2);
+    const body=new Blob([
+      `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n`,JSON.stringify(metadata),
+      `\r\n--${boundary}\r\nContent-Type: ${blob.type||'application/octet-stream'}\r\n\r\n`,blob,`\r\n--${boundary}--`
+    ]);
+    const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true&fields=id,name,webViewLink,appProperties',{
+      method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':`multipart/related; boundary=${boundary}`},body
+    });
+    if(!res.ok){let d='';try{d=(await res.json())?.error?.message||''}catch{};throw new Error(d||`Could not upload file (${res.status})`)}
+    return res.json();
+  }
+  async function upsertJson({fileId='',name,parentId,data,appProperties={}}){
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    if(fileId){ await updateTextFile(fileId,blob); return driveGet(fileId,'id,name,webViewLink,appProperties'); }
+    return multipartCreate(blob,{name,parents:[parentId],appProperties});
+  }
+  async function setAnyoneReader(folderId){
+    const p=await apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(folderId)}/permissions?supportsAllDrives=true&fields=permissions(id,type,role)`).catch(()=>({permissions:[]}));
+    if((p.permissions||[]).some(x=>x.type==='anyone'&&x.role==='reader')) return true;
+    await apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(folderId)}/permissions?supportsAllDrives=true&fields=id,type,role`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'anyone',role:'reader'})
+    });
+    return true;
+  }
+  async function ensureStoreStructure(){
+    const c=await config();
+    if(!c.storeFolderId) throw new Error('Choose a Store Folder first.');
+    if(!c.userName) throw new Error('Enter your user name first.');
+    await authorize(false);
+    // Validate that the selected root is still available to this app/account.
+    const root=await driveGet(c.storeFolderId,'id,name,mimeType,webViewLink,capabilities(canAddChildren,canListChildren)');
+    if(root.mimeType!==FOLDER_MIME) throw new Error('The selected Store item is not a folder.');
+    const users=await ensureFolder(root.id,'Users','lotkeysRole','users');
+    const admin=await ensureFolder(root.id,'Administration','lotkeysRole','administration');
+    const inventory=await ensureFolder(root.id,'Inventory','lotkeysRole','inventory');
+    const user=await ensureFolder(users.id,c.userName,'lotkeysUserName',c.userName);
+    const listings=await ensureFolder(user.id,'Listings','lotkeysRole','userListings');
+    const structure={rootId:root.id,rootName:root.name,usersId:users.id,adminId:admin.id,inventoryId:inventory.id,userId:user.id,listingsId:listings.id,updatedAt:new Date().toISOString()};
+    await setSetting('driveStoreStructure',structure);
+    await syncStoreConfig(structure).catch(()=>{});
+    return structure;
+  }
+  async function structure(){
+    const s=await setting('driveStoreStructure',null); const c=await config();
+    if(s?.rootId===c.storeFolderId && s?.inventoryId && s?.listingsId) return s;
+    return ensureStoreStructure();
+  }
+  async function syncStoreConfig(existingStructure=null){
+    const s=existingStructure||await structure();
+    const c=await config();const locations=await DB.all('locations');
+    const data={schemaVersion:2,app:'LotKeys',storeName:c.storeName,userName:c.userName,storeFolderId:c.storeFolderId,locations:locations.map(({id,name,address,lat,lng,updatedAt})=>({id,name,address,lat,lng,updatedAt})),updatedAt:new Date().toISOString()};
+    let fileId=await setting('storeConfigFileId','');
+    if(!fileId){ const found=await findChildByAppProperty(s.adminId,'lotkeysRole','storeConfig'); fileId=found?.id||''; }
+    const f=await upsertJson({fileId,name:'LotKeys Store Config.json',parentId:s.adminId,data,appProperties:{lotkeysRole:'storeConfig'}});
+    await setSetting('storeConfigFileId',f.id); return f;
+  }
+  async function createSpreadsheet(parentId,vehicleId){
+    const found=await findChildByAppProperty(parentId,'lotkeysVehicleSheet',vehicleId,SHEET_MIME);
+    if(found) return found;
+    return createMetadata({name:'Vehicle Data - Administrative',mimeType:SHEET_MIME,parents:[parentId],appProperties:{lotkeysVehicleSheet:vehicleId}},'id,name,mimeType,webViewLink,appProperties');
+  }
+  async function writeVehicleSheet(sheetId,v){
+    const d=v.drive||{};
+    const values=[
+      ['Field','Value'],
+      ['Profile Name',v.name||''],['Year',v.year||''],['Make',v.make||''],['Model',v.model||''],['Price',v.price??''],
+      ['Odometer',v.odometer??''],['Odometer Unit',v.odometerUnit||''],['VIN #',v.vin||''],['STK #',v.stock||''],
+      ['Photos Folder',d.photosFolderId?`https://drive.google.com/drive/folders/${d.photosFolderId}`:''],
+      ['Videos Folder',d.videosFolderId?`https://drive.google.com/drive/folders/${d.videosFolderId}`:''],
+      ['Documents Folder',d.documentsFolderId?`https://drive.google.com/drive/folders/${d.documentsFolderId}`:''],
+      ['Shared Folder',d.sharedFolderId?`https://drive.google.com/drive/folders/${d.sharedFolderId}`:''],
+      ['Description',v.description||''],['Profile ID',v.id],['Cover Photo File ID',v.photos?.[0]?.driveFileId||''],['Updated',new Date().toISOString()]
+    ];
+    return apiFetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values/A1:B${values.length}?valueInputOption=RAW`,{
+      method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({majorDimension:'ROWS',values})
+    });
+  }
+  function safeName(name,fallback){
+    const n=String(name||fallback||'file').replace(/[\\/:*?"<>|]/g,'-').trim();return n||fallback||'file';
+  }
+  async function syncAssets(items,folderId,vehicleId,kind){
+    items=items||[];
+    const remotes=await listFiles(`'${qEscape(folderId)}' in parents and trashed = false`,'files(id,name,mimeType,webViewLink,appProperties,trashed)');
+    const byAsset=new Map(remotes.filter(x=>x.appProperties?.lotkeysAssetId).map(x=>[x.appProperties.lotkeysAssetId,x]));
+    const localIds=new Set(items.map(x=>x.id));
+    for(let i=0;i<items.length;i++){
+      const item=items[i]; const existing=(item.driveFileId&&remotes.find(x=>x.id===item.driveFileId))||byAsset.get(item.id);
+      const prefix=kind==='photo'?String(i+1).padStart(2,'0')+' - ':'';
+      const wanted=safeName(prefix+(item.name||(`${kind}-${i+1}`)),`${kind}-${i+1}`);
+      if(existing){ item.driveFileId=existing.id; if(existing.name!==wanted) await patchMetadata(existing.id,{name:wanted}); continue; }
+      if(!item.blob) continue;
+      const f=await multipartCreate(item.blob,{name:wanted,parents:[folderId],appProperties:{lotkeysAssetId:item.id,lotkeysVehicleId:vehicleId,lotkeysAssetKind:kind}});
+      item.driveFileId=f.id;
+    }
+    for(const r of remotes){
+      const assetId=r.appProperties?.lotkeysAssetId;
+      if(assetId && r.appProperties?.lotkeysVehicleId===vehicleId && !localIds.has(assetId)) await trashFile(r.id).catch(()=>{});
+    }
+    return items;
+  }
+  async function syncVehicle(v){
+    if(!v?.id) throw new Error('Vehicle ID missing.');
+    const s=await structure(); const c=await config();
+    v.drive=v.drive||{};
+    let profile=null;
+    if(v.drive.profileFolderId){ profile=await driveGet(v.drive.profileFolderId,'id,name,mimeType,webViewLink,appProperties').catch(()=>null); }
+    if(!profile) profile=await findChildByAppProperty(s.inventoryId,'lotkeysVehicleId',v.id,FOLDER_MIME);
+    if(!profile) profile=await createFolder(v.name||v.id,s.inventoryId,{lotkeysVehicleId:v.id,lotkeysRole:'vehicleProfile'});
+    else if(profile.name!==(v.name||v.id)) profile=await patchMetadata(profile.id,{name:v.name||v.id});
+    v.drive.profileFolderId=profile.id;
+    const shared=await ensureFolder(profile.id,'Shared','lotkeysVehicleShared',v.id);
+    const photos=await ensureFolder(shared.id,'Photos','lotkeysVehiclePhotos',v.id);
+    const videos=await ensureFolder(shared.id,'Videos','lotkeysVehicleVideos',v.id);
+    const docs=await ensureFolder(shared.id,'Documents','lotkeysVehicleDocuments',v.id);
+    v.drive.sharedFolderId=shared.id;v.drive.photosFolderId=photos.id;v.drive.videosFolderId=videos.id;v.drive.documentsFolderId=docs.id;
+    v.sharedFolderUrl=`https://drive.google.com/drive/folders/${shared.id}`;
+    if(c.publicShareEnabled){
+      try{await setAnyoneReader(shared.id);v.shareWarning='';}catch(e){v.shareWarning=e.message||'Public sharing could not be enabled';}
+    }
+    v.photos=await syncAssets(v.photos,photos.id,v.id,'photo');
+    v.attachments=await syncAssets(v.attachments,docs.id,v.id,'document');
+    v.videos=await syncAssets(v.videos,videos.id,v.id,'video');
+    let sheet=null;
+    if(v.drive.adminSheetId) sheet=await driveGet(v.drive.adminSheetId,'id,name,mimeType,webViewLink').catch(()=>null);
+    if(!sheet) sheet=await createSpreadsheet(profile.id,v.id);
+    v.drive.adminSheetId=sheet.id;v.drive.adminSheetUrl=sheet.webViewLink||`https://docs.google.com/spreadsheets/d/${sheet.id}/edit`;
+    await writeVehicleSheet(sheet.id,v);
+    v.syncStatus='synced';v.lastDriveSyncAt=Date.now();v.syncError='';
+    await DB.put('vehicles',v);
+    return v;
+  }
+  async function deleteVehicle(v){
+    if(v?.drive?.profileFolderId) await trashFile(v.drive.profileFolderId);
+  }
+  async function syncListing(l){
+    if(!l?.id) throw new Error('Listing ID missing.');
+    const s=await structure(); const vehicle=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;const loc=l.locationId?await DB.get('locations',l.locationId):null;
+    const data={schemaVersion:2,listingId:l.id,userName:(await config()).userName,vehicleId:l.vehicleId||'',vehicleName:vehicle?.name||'',stock:vehicle?.stock||'',marketplaceTitle:l.marketplaceTitle||'',year:l.year||'',make:l.make||'',model:l.model||'',price:l.price??'',odometer:l.odometer??'',odometerUnit:l.odometerUnit||'',marketplaceDescription:l.description||'',location:loc?{id:loc.id,name:loc.name,address:loc.address,lat:loc.lat,lng:loc.lng}:null,status:l.status||'Draft',facebookUrl:l.facebookUrl||'',photoOrder:l.photoOrder||[],createdAt:l.createdAt||null,updatedAt:l.updatedAt||Date.now(),syncedAt:new Date().toISOString()};
+    let fileId=l.driveFileId||'';
+    if(!fileId){const f=await findChildByAppProperty(s.listingsId,'lotkeysListingId',l.id);fileId=f?.id||'';}
+    const f=await upsertJson({fileId,name:`${safeName(l.marketplaceTitle||l.id,'listing')}.json`,parentId:s.listingsId,data,appProperties:{lotkeysListingId:l.id,lotkeysRole:'marketplaceListing'}});
+    l.driveFileId=f.id;l.syncStatus='synced';l.lastDriveSyncAt=Date.now();l.syncError='';await DB.put('listings',l);return l;
+  }
+  async function deleteListing(l){ if(l?.driveFileId) await trashFile(l.driveFileId).catch(()=>{}); }
+  async function chooseStoreFolder(){
+    const c=await config();
+    if(!c.apiKey) throw new Error('Google API Key is not configured in Settings.');
+    if(!c.projectNumber) throw new Error('Google Cloud Project Number is not configured in Settings.');
+    await authorize(false);await initPicker();
+    return new Promise((resolve,reject)=>{
+      const view=new google.picker.DocsView(google.picker.ViewId.FOLDERS).setSelectFolderEnabled(true);
+      const picker=new google.picker.PickerBuilder().addView(view).setOAuthToken(accessToken).setDeveloperKey(c.apiKey).setAppId(c.projectNumber).setCallback(async data=>{
+        const action=data[google.picker.Response.ACTION];
+        if(action===google.picker.Action.CANCEL) return reject(new Error('Folder selection cancelled.'));
+        if(action!==google.picker.Action.PICKED) return;
+        try{
+          const doc=data[google.picker.Response.DOCUMENTS][0];const id=doc[google.picker.Document.ID];
+          const meta=await driveGet(id,'id,name,mimeType,webViewLink');
+          if(meta.mimeType!==FOLDER_MIME) throw new Error('Please choose a folder.');
+          await setSetting('storeFolderId',meta.id);await setSetting('storeFolderName',meta.name);await setSetting('storeFolderUrl',meta.webViewLink||`https://drive.google.com/drive/folders/${meta.id}`);await setSetting('driveStoreStructure',null);
+          resolve(meta);
+        }catch(e){reject(e)}
+      }).build();
+      picker.setVisible(true);
+    });
+  }
+  async function useFolderUrl(url){
+    const m=String(url||'').match(/\/folders\/([a-zA-Z0-9_-]+)/)||String(url||'').match(/[?&]id=([a-zA-Z0-9_-]+)/);if(!m)throw new Error('Could not find a Google Drive folder ID in that URL.');
+    await authorize(false);const meta=await driveGet(m[1],'id,name,mimeType,webViewLink');if(meta.mimeType!==FOLDER_MIME)throw new Error('That Drive link is not a folder.');
+    await setSetting('storeFolderId',meta.id);await setSetting('storeFolderName',meta.name);await setSetting('storeFolderUrl',meta.webViewLink||url);await setSetting('driveStoreStructure',null);return meta;
+  }
+  async function getStatus(){ const c=await config();const s=await setting('driveStoreStructure',null);return {isHttps:isHttps(),configured:!!c.clientId,hasPickerConfig:!!(c.apiKey&&c.projectNumber),connected:connected(),storeFolderId:c.storeFolderId,storeFolderName:c.storeFolderName,structure:s}; }
+  return {authorize,disconnect,connected,ready,chooseStoreFolder,useFolderUrl,ensureStoreStructure,syncVehicle,deleteVehicle,syncListing,deleteListing,syncStoreConfig,getStatus,config};
+})();
+</script>
+
+<script>
+const App = (()=>{
+  const $=s=>document.querySelector(s);
+  const main=$('#main'), modal=$('#modal'), modalBody=$('#modal-body');
+  let route='home', objectUrls=[];
+  const uid=(p='ID')=>`${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,7)}`;
+  const money=n=>n!==''&&n!=null&&!Number.isNaN(+n)?new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(+n):'—';
+  const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const fmtOdo=v=>v!==''&&v!=null?Number(v).toLocaleString('en-CA'):'—';
+  const yyyyMmDd=d=>new Date(d).toISOString().slice(0,10);
+
+  function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;setTimeout(()=>t.hidden=true,2400)}
+  function cleanupUrls(){objectUrls.forEach(URL.revokeObjectURL);objectUrls=[]}
+  function blobUrl(blob){if(!blob)return'';const u=URL.createObjectURL(blob);objectUrls.push(u);return u}
+  async function setting(id,def=''){return (await DB.get('settings',id))?.value ?? def}
+  async function setSetting(id,value){return DB.put('settings',{id,value})}
+  function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
+  function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
+  function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.2</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.2</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
+  async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
+  async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
+  function bindPhotoReorder(container,onMove){if(!container)return;let from=null,activeTile=null;container.querySelectorAll('.drag-handle').forEach(handle=>{handle.onpointerdown=e=>{const tile=handle.closest('.photo-tile');from=+tile.dataset.pos;activeTile=tile;tile.classList.add('dragging');handle.setPointerCapture?.(e.pointerId);e.preventDefault();e.stopPropagation()};handle.onpointermove=e=>{if(from===null)return;container.querySelectorAll('.drop-target').forEach(x=>x.classList.remove('drop-target'));const under=document.elementFromPoint(e.clientX,e.clientY)?.closest('.photo-tile');if(under&&container.contains(under)&&under!==activeTile)under.classList.add('drop-target')};const finish=e=>{if(from===null)return;const under=document.elementFromPoint(e.clientX,e.clientY)?.closest('.photo-tile');const to=under&&container.contains(under)?+under.dataset.pos:from;container.querySelectorAll('.drop-target,.dragging').forEach(x=>x.classList.remove('drop-target','dragging'));const old=from;from=null;activeTile=null;if(Number.isFinite(to)&&to!==old)onMove(old,to)};handle.onpointerup=finish;handle.onpointercancel=()=>{container.querySelectorAll('.drop-target,.dragging').forEach(x=>x.classList.remove('drop-target','dragging'));from=null;activeTile=null}})}
+
+  async function boot(){
+    updateProtocolNote();
+    await DB.open();
+    await ensureDefaults();
+    $('#quick-add').onclick=()=>showCreateChooser();
+    document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>go(b.dataset.route));
+    if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    await render();
+  }
+  async function ensureDefaults(){
+    if(!(await DB.get('locations','loc-south'))) await DB.put('locations',{id:'loc-south',name:'South Edmonton',address:'',lat:'',lng:'',createdAt:Date.now()});
+    if(!(await DB.get('settings','retentionDays'))) await setSetting('retentionDays',120);
+    if(!(await DB.get('settings','publicShareEnabled'))) await setSetting('publicShareEnabled',true);
+    await pruneAnalytics();
+  }
+  async function pruneAnalytics(){
+    const days=+(await setting('retentionDays',120)); const cutoff=Date.now()-days*86400000;
+    const rows=await DB.all('analytics');
+    await Promise.all(rows.filter(x=>new Date(x.date).getTime()<cutoff).map(x=>DB.del('analytics',x.id)));
+  }
+  async function go(r){route=r;document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.route===r));await render()}
+  async function render(){
+    cleanupUrls();
+    const store=await setting('storeName','LOTKEYS');$('#store-name').textContent=store||'LOTKEYS';
+    const titles={home:'Home',vehicles:'Vehicles',listings:'My Listings',settings:'Settings'};$('#page-title').textContent=titles[route]||'LotKeys';
+    if(route==='home')return renderHome();if(route==='vehicles')return renderVehicles();if(route==='listings')return renderListings();if(route==='settings')return renderSettings();
+  }
+  function empty(label,sub=''){return `<div class="card empty"><strong>${esc(label)}</strong>${sub?`<div class="small" style="margin-top:6px">${esc(sub)}</div>`:''}</div>`}
+  async function renderHome(){
+    const vehicles=await DB.all('vehicles'), listings=await DB.all('listings');
+    const active=listings.filter(x=>x.status!=='Archived'&&x.status!=='Sold');
+    main.innerHTML=`
+      <section class="card hero"><strong>Find a vehicle fast</strong><p>Search partial stock #, VIN, year, make, model or profile name.</p><div style="margin-top:14px"><input id="global-search" class="search" placeholder="Try part of a STK#…" autocomplete="off"></div></section>
+      <div id="search-results"></div>
+      <div class="stats"><div class="stat"><strong>${vehicles.length}</strong><span>Store vehicles cached</span></div><div class="stat"><strong>${active.length}</strong><span>My active listings</span></div></div>
+      <div class="section-title"><h2>Recent listings</h2><small>Personal</small></div>
+      <div id="recent-listings">${active.length?'':empty('No Marketplace listings yet','Create one from a saved vehicle.')}</div>`;
+    $('#global-search').oninput=e=>renderSearch(e.target.value,vehicles,$('#search-results'));
+    const recent=active.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).slice(0,4);$('#recent-listings').innerHTML=recent.length?(await Promise.all(recent.map(listingCard))).join(''):empty('No Marketplace listings yet','Create one from a saved vehicle.');
+    bindListingCards();
+  }
+  async function renderSearch(q,vehicles,target){q=q.trim().toLowerCase();if(!q){target.innerHTML='';return}const scored=vehicles.map(v=>{const vals=[v.stock,v.vin,v.name,v.year,v.make,v.model].map(x=>String(x||'').toLowerCase());let score=0;vals.forEach(x=>{if(x.startsWith(q))score+=5;else if(x.includes(q))score+=2});return{v,score}}).filter(x=>x.score).sort((a,b)=>b.score-a.score).slice(0,5);target.innerHTML=scored.length?`<div class="section-title"><h2>Best matches</h2><small>${scored.length} shown</small></div>${(await Promise.all(scored.map(x=>vehicleCard(x.v)))).join('')}`:empty('No matches');bindVehicleCards()}
+  async function vehicleCard(v){const cover=v.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}" alt="">`:'🚙';return `<div class="card vehicle-row open-vehicle" data-id="${v.id}"><div class="thumb">${img}</div><div><div class="row-title">${esc(v.name||`${v.year||''} ${v.make||''} ${v.model||''}`.trim())}</div><div class="meta">STK# ${esc(v.stock||'—')} • ${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</div><div class="price">${money(v.price)}</div></div><div class="chev">›</div></div>`}
+  function bindVehicleCards(){document.querySelectorAll('.open-vehicle').forEach(x=>x.onclick=()=>showVehicle(x.dataset.id))}
+  async function renderVehicles(){const vs=(await DB.all('vehicles')).sort((a,b)=>String(a.stock||'').localeCompare(String(b.stock||'')));main.innerHTML=`<div class="actions"><button class="btn primary" id="add-vehicle">＋ Add Vehicle</button></div><div class="section-title"><h2>Shared store inventory</h2><small>${vs.length}</small></div>${vs.length?(await Promise.all(vs.map(vehicleCard))).join(''):empty('No vehicles yet','Add your first vehicle profile.')}`;$('#add-vehicle').onclick=()=>showVehicleForm();bindVehicleCards()}
+  async function showVehicle(id){const v=await DB.get('vehicles',id);if(!v)return;
+    const renderMasterPhotos=()=>{const wrap=$('#master-photo-area');if(!wrap)return;const photos=v.photos||[];wrap.innerHTML=photos.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle onto another photo to reorder. Photo #1 is the vehicle thumbnail and default cover for new listings.</div><div class="photo-grid" id="master-photo-grid">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'';const grid=$('#master-photo-grid');bindPhotoReorder(grid,async(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);v.updatedAt=Date.now();await DB.put('vehicles',v);cleanupUrls();renderMasterPhotos();toast('Photo order updated');syncVehicleNow(v,{quiet:true})})};
+    modalBody.innerHTML=`<div class="modal-head"><div><div class="eyebrow">VEHICLE PROFILE</div><h2>${esc(v.name)}</h2></div><button class="close">×</button></div>
+    <div id="master-photo-area"></div>
+    <div class="hr"></div><div class="kv"><div>Stock #</div><strong>${esc(v.stock||'—')}</strong><div>VIN</div><span>${esc(v.vin||'—')}</span><div>Vehicle</div><span>${esc([v.year,v.make,v.model].filter(Boolean).join(' '))}</span><div>Price</div><span>${money(v.price)}</span><div>Odometer</div><span>${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</span><div>Drive sync</div><span class="${v.syncStatus==='synced'?'sync-ok':v.syncStatus==='error'?'sync-bad':'sync-warn'}">${v.syncStatus==='synced'?'Synced ✓':v.syncStatus==='error'?'Needs attention':'Local / pending'}</span><div>Shared folder</div><span>${v.sharedFolderUrl?'Connected automatically':'Will be created automatically'}</span></div>
+    <div class="share-actions">${v.sharedFolderUrl?`<button class="btn primary" id="copy-share">Copy Shared Link</button><button class="btn ghost" id="open-share">Open Shared Folder</button>`:`<button class="btn" disabled>Shared Link available after Drive sync</button>`}<button class="btn ghost" id="sync-v">↻ Sync Vehicle</button></div>${v.shareWarning?`<div class="notice warning" style="margin-top:8px">Shared folder exists, but public link sharing could not be enabled: ${esc(v.shareWarning)}</div>`:''}${v.syncError?`<div class="notice warning" style="margin-top:8px">Last sync error: ${esc(v.syncError)}</div>`:''}
+    <div class="section-title"><h2>Vehicle profile description</h2></div><div class="card" style="box-shadow:none">${esc(v.description||'No description yet.').replace(/\n/g,'<br>')}</div>
+    <div class="actions"><button class="btn primary" id="create-from">Create Listing</button><button class="btn" id="edit-v">Edit Vehicle</button><button class="btn danger" id="delete-v">Delete</button></div>`;
+    renderMasterPhotos();
+    modalBody.querySelector('.close').onclick=()=>modal.close();$('#create-from').onclick=()=>{modal.close();showListingForm({vehicleId:id})};$('#edit-v').onclick=()=>showVehicleForm(v);
+    if(v.sharedFolderUrl){$('#copy-share').onclick=()=>copyText(v.sharedFolderUrl,'Shared folder link copied');$('#open-share').onclick=()=>window.open(v.sharedFolderUrl,'_blank')}
+    $('#sync-v').onclick=async()=>{await syncVehicleNow(v);modal.close();showVehicle(id)};
+    $('#delete-v').onclick=async()=>{if(confirm(`Delete ${v.name}?\n\nIf this vehicle is synced, LotKeys will also move its Vehicle Profile folder to Google Drive Trash.`)){const ls=await DB.byIndex('listings','vehicleId',id);if(v.drive?.profileFolderId){try{await DriveSync.deleteVehicle(v)}catch(err){if(!confirm('Could not remove the Drive folder: '+err.message+'\n\nDelete the local vehicle anyway?'))return}}for(const l of ls){try{await DriveSync.deleteListing(l)}catch{}await deleteListingCascade(l.id)}await DB.del('vehicles',id);modal.close();toast('Vehicle deleted');render()}};modal.showModal();
+  }
+  function photoPreviewHtml(photos){return photos?.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle to change the master order. #1 becomes the thumbnail.</div><div class="photo-grid reorder-master-form">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="remove-photo" data-i="${i}">×</button><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'<div class="notice">No photos selected yet.</div>'}
+  async function showVehicleForm(existing=null){
+    const v=existing?structuredClone(existing):{id:uid('VP'),photos:[],attachments:[],videos:[],odometerUnit:'KM'}; if(existing?.photos)v.photos=existing.photos;
+    modalBody.innerHTML=`<div class="modal-head"><h2>${existing?'Edit':'Add'} Vehicle</h2><button class="close">×</button></div><form id="vehicle-form"><div class="form-grid">
+      <div class="field full"><label>Profile Name</label><input name="name" required value="${esc(v.name||'')}" placeholder="e.g. 2024 Infiniti QX60 Luxe"></div>
+      <div class="field"><label>Year</label><input name="year" inputmode="numeric" value="${esc(v.year||'')}"></div><div class="field"><label>Make</label><input name="make" value="${esc(v.make||'')}"></div>
+      <div class="field"><label>Model</label><input name="model" value="${esc(v.model||'')}"></div><div class="field"><label>Price</label><input name="price" inputmode="decimal" value="${esc(v.price||'')}"></div>
+      <div class="field"><label>Odometer</label><input name="odometer" inputmode="numeric" value="${esc(v.odometer||'')}"></div><div class="field"><label>Unit</label><select name="odometerUnit"><option ${v.odometerUnit==='KM'?'selected':''}>KM</option><option ${v.odometerUnit==='MI'?'selected':''}>MI</option></select></div>
+      <div class="field"><label>VIN #</label><input name="vin" value="${esc(v.vin||'')}"></div><div class="field"><label>STK #</label><input name="stock" value="${esc(v.stock||'')}"></div>
+      <div class="field full"><label>Vehicle Profile Description</label><textarea name="description" placeholder="Store/customer-facing vehicle information. This is separate from Marketplace copy.">${esc(v.description||'')}</textarea></div>
+      <div class="field full"><div class="notice"><strong>Shared folder:</strong> LotKeys creates this automatically in Google Drive. Photos → Shared/Photos, videos → Shared/Videos, and inspections/documents → Shared/Documents.</div></div>
+      <div class="field full"><label>Photos</label><input id="vehicle-photos" type="file" accept="image/*" multiple><div class="help">On Android you can choose gallery images; camera capture will be added as a dedicated flow.</div><div id="photo-preview" style="margin-top:10px">${photoPreviewHtml(v.photos)}</div></div>
+      <div class="field full"><label>Attachments</label><input id="vehicle-attachments" type="file" multiple><div class="help">Inspection sheets, PDFs and other vehicle files. Saved locally first, then uploaded to the vehicle Documents folder when Drive is connected.</div></div>
+      <div class="field full"><label>Videos</label><input id="vehicle-videos" type="file" accept="video/*" multiple></div>
+    </div><button class="btn primary block" type="submit">Save Vehicle</button></form>`;
+    modalBody.querySelector('.close').onclick=()=>modal.close();
+    const rerenderPhotos=()=>{const p=$('#photo-preview');p.innerHTML=photoPreviewHtml(v.photos);p.querySelectorAll('.remove-photo').forEach(b=>b.onclick=()=>{v.photos.splice(+b.dataset.i,1);rerenderPhotos()});bindPhotoReorder(p.querySelector('.reorder-master-form'),(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);cleanupUrls();rerenderPhotos()})};
+    $('#vehicle-photos').onchange=e=>{[...e.target.files].forEach(f=>v.photos.push({id:uid('PH'),name:f.name,type:f.type,blob:f}));rerenderPhotos()};
+    $('#vehicle-attachments').onchange=e=>{v.attachments=[...e.target.files].map(f=>({id:uid('ATT'),name:f.name,type:f.type,blob:f}))};
+    $('#vehicle-videos').onchange=e=>{v.videos=[...e.target.files].map(f=>({id:uid('VID'),name:f.name,type:f.type,blob:f}))};
+    $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saving…';const fd=new FormData(e.target);['name','year','make','model','vin','stock','description','odometerUnit'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();await DB.put('vehicles',v);await syncVehicleNow(v);modal.close();render()};modal.showModal();
+  }
+  async function listingCard(l){const v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;const order=normalizePhotoOrder(l,v);const coverId=order[0];const cover=v?.photos?.find(p=>p.id===coverId)?.blob||v?.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}">`:'📢';const loc=l.locationId?await DB.get('locations',l.locationId):null;return `<div class="card listing-row open-listing" data-id="${l.id}"><div class="thumb">${img}</div><div><div class="row-title">${esc(l.marketplaceTitle||'Untitled listing')}</div><div class="meta">${esc(loc?.name||'No location')} • ${esc(l.status||'Draft')} • ${l.createdAt?Math.max(0,Math.floor((Date.now()-l.createdAt)/86400000))+' days':'—'}</div><div class="price">${money(l.price)}</div></div><div class="chev">›</div></div>`}
+  function bindListingCards(){document.querySelectorAll('.open-listing').forEach(x=>x.onclick=()=>showListing(x.dataset.id))}
+  async function renderListings(){const ls=(await DB.all('listings')).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));main.innerHTML=`<div class="actions"><button class="btn primary" id="add-listing">＋ Create Listing</button></div><div class="section-title"><h2>My Marketplace listings</h2><small>${ls.length}</small></div>${ls.length?(await Promise.all(ls.map(listingCard))).join(''):empty('No listings yet','Create one from a vehicle profile or manually.')}`;$('#add-listing').onclick=()=>showListingForm({});bindListingCards()}
+  async function analyticsFor(id){return (await DB.byIndex('analytics','listingId',id)).sort((a,b)=>new Date(a.date)-new Date(b.date))}
+  function chartSvg(rows){if(!rows.length)return'<div class="notice">No view snapshots recorded yet.</div>';const vals=rows.map(r=>+r.views||0),w=560,h=150,p=18,min=Math.min(...vals),max=Math.max(...vals,1),span=Math.max(1,max-min),pts=vals.map((v,i)=>`${p+(i*(w-2*p)/Math.max(1,vals.length-1))},${h-p-((v-min)/span)*(h-2*p)}`).join(' ');return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img"><polyline points="${pts}"></polyline>${vals.map((v,i)=>{const x=p+(i*(w-2*p)/Math.max(1,vals.length-1)),y=h-p-((v-min)/span)*(h-2*p);return `<circle cx="${x}" cy="${y}" r="4"></circle>`}).join('')}<text x="18" y="16">${max} cumulative views</text><text x="18" y="142">${esc(rows[0].date)}</text><text x="470" y="142">${esc(rows.at(-1).date)}</text></svg>`}
+  async function showListing(id){const l=await DB.get('listings',id);if(!l)return;const v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null,loc=l.locationId?await DB.get('locations',l.locationId):null,rows=await analyticsFor(id);modalBody.innerHTML=`<div class="modal-head"><div><div class="eyebrow">MARKETPLACE LISTING</div><h2>${esc(l.marketplaceTitle)}</h2></div><button class="close">×</button></div><div class="kv"><div>Vehicle</div><span>${esc(v?.name||[l.year,l.make,l.model].filter(Boolean).join(' '))}</span><div>Location</div><span>${esc(loc?.name||'—')}</span><div>Status</div><span>${esc(l.status||'Draft')}</span><div>Created</div><span>${l.createdAt?new Date(l.createdAt).toLocaleDateString('en-CA'):'—'}</span><div>Facebook URL</div><span>${l.facebookUrl?`<a href="${esc(l.facebookUrl)}" target="_blank">Open listing</a>`:'Not saved'}</span></div><div class="section-title"><h2>Marketplace description</h2></div><div class="card" style="box-shadow:none">${esc(l.description||'').replace(/\n/g,'<br>')}</div><div class="section-title"><h2>Views</h2><small>rolling history</small></div>${chartSvg(rows)}<div class="actions"><button class="btn primary" id="add-snapshot">Add View Snapshot</button><button class="btn" id="dup-listing">Duplicate</button><button class="btn" id="edit-l">Edit</button><button class="btn danger" id="delete-l">Delete</button></div>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#edit-l').onclick=()=>showListingForm(l);$('#dup-listing').onclick=()=>{modal.close();showListingForm({...l,id:null,facebookUrl:'',status:'Draft',createdAt:null,updatedAt:null})};$('#add-snapshot').onclick=async()=>{const views=prompt('Current cumulative Marketplace views:');if(views==null||views==='')return;await DB.put('analytics',{id:uid('AN'),listingId:id,date:yyyyMmDd(Date.now()),views:+views});toast('Snapshot saved');showListing(id)};$('#delete-l').onclick=async()=>{if(confirm('Delete this listing record?')){await deleteListingCascade(id);modal.close();toast('Listing deleted');render()}};modal.showModal()}
+  async function deleteListingCascade(id){for(const r of await DB.byIndex('analytics','listingId',id))await DB.del('analytics',r.id);await DB.del('listings',id)}
+  async function showListingForm(input={}){
+    const vehicles=await DB.all('vehicles'),locations=await DB.all('locations');let l=input.id?structuredClone(input):{...input,id:uid('LST'),status:'Draft'};let v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;
+    const vehicleOptions=`<option value="">Create manually</option>${vehicles.map(x=>`<option value="${x.id}" ${x.id===l.vehicleId?'selected':''}>${esc(x.stock?x.stock+' — ':'')}${esc(x.name)}</option>`).join('')}`;
+    const locationOptions=`<option value="">Choose location…</option>${locations.map(x=>`<option value="${x.id}" ${x.id===l.locationId?'selected':''}>${esc(x.name)}</option>`).join('')}`;
+    function defaultsFromVehicle(){if(!v)return; l.year=v.year;l.make=v.make;l.model=v.model;l.price=v.price;l.odometer=v.odometer;l.odometerUnit=v.odometerUnit;l.photoOrder=(v.photos||[]).map(p=>p.id)}
+    if(v&&!l.year)defaultsFromVehicle();
+    modalBody.innerHTML=`<div class="modal-head"><h2>${input.id?'Edit':'Create'} Listing</h2><button class="close">×</button></div><form id="listing-form"><div class="field"><label>Vehicle Profile</label><select id="listing-vehicle" name="vehicleId">${vehicleOptions}</select><div class="help">Vehicle facts and photos can be pulled from the shared profile. Marketplace title and description remain separate.</div></div><div class="field"><label>Marketplace Title *</label><input name="marketplaceTitle" required value="${esc(l.marketplaceTitle||'')}"></div><div class="form-grid"><div class="field"><label>Year</label><input name="year" value="${esc(l.year||'')}"></div><div class="field"><label>Make</label><input name="make" value="${esc(l.make||'')}"></div><div class="field"><label>Model</label><input name="model" value="${esc(l.model||'')}"></div><div class="field"><label>Price</label><input name="price" inputmode="decimal" value="${esc(l.price||'')}"></div><div class="field"><label>Odometer</label><input name="odometer" inputmode="numeric" value="${esc(l.odometer||'')}"></div><div class="field"><label>Unit</label><select name="odometerUnit"><option ${l.odometerUnit==='KM'?'selected':''}>KM</option><option ${l.odometerUnit==='MI'?'selected':''}>MI</option></select></div></div><div class="field"><label>Listing Location</label><select name="locationId">${locationOptions}</select></div><div class="field"><label>Marketplace Description</label><textarea name="description" placeholder="Your Facebook Marketplace copy — intentionally separate from the Vehicle Profile description.">${esc(l.description||'')}</textarea></div><div class="field"><label>Status</label><select name="status">${['Draft','Active','Pending','Sold','Archived'].map(x=>`<option ${x===l.status?'selected':''}>${x}</option>`).join('')}</select></div><div class="field"><label>Facebook Listing URL</label><input name="facebookUrl" value="${esc(l.facebookUrl||'')}" placeholder="Paste after posting"></div><div id="listing-photos"></div><button class="btn primary block" type="submit">Save Listing</button></form>`;
+    modalBody.querySelector('.close').onclick=()=>modal.close();
+    async function photoArea(){const el=$('#listing-photos');if(!v?.photos?.length){el.innerHTML='<div class="notice">No master vehicle photos available.</div>';return}l.photoOrder=normalizePhotoOrder(l,v);const order=l.photoOrder;el.innerHTML=`<div class="field"><label>Listing Photo Order</label><div class="help">This order belongs only to this Marketplace listing. Drag ☰ to reorder; changing it does not alter the Vehicle Profile photo order.</div><div class="photo-grid" id="listing-photo-grid">${order.map((photoId,pos)=>{const p=v.photos.find(x=>x.id===photoId);return p?`<div class="photo-tile" data-pos="${pos}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${pos===0?'Cover':pos+1}</span><button type="button" class="drag-handle" aria-label="Reorder listing photo">☰</button></div>`:''}).join('')}</div></div>`;bindPhotoReorder($('#listing-photo-grid'),(from,to)=>{l.photoOrder=moveArrayItem(l.photoOrder,from,to);cleanupUrls();photoArea()})}
+    await photoArea();
+    $('#listing-vehicle').onchange=async e=>{l.vehicleId=e.target.value;v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;if(v){defaultsFromVehicle();const f=$('#listing-form');f.year.value=v.year||'';f.make.value=v.make||'';f.model.value=v.model||'';f.price.value=v.price||'';f.odometer.value=v.odometer||'';f.odometerUnit.value=v.odometerUnit||'KM'}else l.photoOrder=[];await photoArea()};
+    $('#listing-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saving…';const fd=new FormData(e.target);['vehicleId','marketplaceTitle','year','make','model','odometerUnit','locationId','description','status','facebookUrl'].forEach(k=>l[k]=fd.get(k)?.trim?.()??fd.get(k));l.price=fd.get('price')?+fd.get('price'):'';l.odometer=fd.get('odometer')?+fd.get('odometer'):'';l.createdAt=l.createdAt||Date.now();l.updatedAt=Date.now();await DB.put('listings',l);await syncListingNow(l);modal.close();go('listings')};modal.showModal();
+  }
+  async function showCreateChooser(){modalBody.innerHTML=`<div class="modal-head"><h2>Create</h2><button class="close">×</button></div><div class="actions" style="display:grid"><button class="btn primary" id="c-listing">📢 Marketplace Listing</button><button class="btn" id="c-vehicle">🚙 Vehicle Profile</button></div>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#c-listing').onclick=()=>{modal.close();showListingForm({})};$('#c-vehicle').onclick=()=>showVehicleForm();modal.showModal()}
+  async function renderSettings(){
+    const locs=await DB.all('locations'),storeName=await setting('storeName',''),userName=await setting('userName',''),folderUrl=await setting('storeFolderUrl',''),folderName=await setting('storeFolderName',''),ret=await setting('retentionDays',120),clientId=await setting('googleClientId',''),apiKey=await setting('googleApiKey',''),projectNumber=await setting('googleProjectNumber',''),publicShare=await setting('publicShareEnabled',true);const ds=await DriveSync.getStatus();
+    const dot=!ds.isHttps?'bad':ds.connected?'good':ds.configured?'warn':'';const statusText=!ds.isHttps?'Open the HTTPS-hosted build to connect Google Drive':ds.connected?'Google Drive authorized for this session':ds.configured?'Ready to sign in to Google Drive':'Google credentials not configured yet';
+    main.innerHTML=`<div class="card"><div class="section-title" style="margin-top:0"><h2>Google Drive</h2></div><div class="drive-status"><span class="status-dot ${dot}"></span><div><strong>${esc(statusText)}</strong><div class="small muted">${ds.storeFolderName?`Store folder: ${esc(ds.storeFolderName)}`:'No Store folder selected yet'}</div></div></div>
+      <div class="actions"><button class="btn primary" id="drive-connect">${ds.connected?'Reconnect Google Drive':'Connect Google Drive'}</button>${ds.connected?'<button class="btn ghost" id="drive-disconnect">Disconnect session</button>':''}</div>
+      <div class="hr"></div><div class="field"><label>Store Name</label><input id="set-store" value="${esc(storeName)}" placeholder="e.g. Blairs Cars"></div><div class="field"><label>My User Name</label><input id="set-user" value="${esc(userName)}" placeholder="e.g. Blair"><div class="help">Creates Store / Users / Your Name / Listings.</div></div>
+      <div class="field"><label>Store Folder</label><input id="set-folder" value="${esc(folderUrl)}" placeholder="Google Drive folder URL (optional fallback)"><div class="help">For the safest Drive permission, use <strong>Choose Store Folder</strong>. Pasting a link only works if this app/account already has OAuth access to that folder.</div></div>
+      <div class="actions"><button class="btn" id="pick-store">📁 Choose Store Folder</button><button class="btn ghost" id="use-folder-url">Use Pasted URL</button></div>
+      <label class="sync-line small"><input type="checkbox" id="public-share" ${publicShare?'checked':''}> Automatically make each vehicle's <strong>Shared</strong> folder “Anyone with the link can view”</label>
+      <div class="actions"><button class="btn primary" id="save-store">Save Store Settings</button><button class="btn dark" id="init-store">Initialize / Repair Store Structure</button></div>
+      ${ds.structure?.inventoryId?`<div class="notice" style="margin-top:12px"><strong>Store structure connected ✓</strong><br>Users, Administration, Inventory, ${esc(userName||'your user')} and Listings are registered.</div>`:''}
+      <details class="credentials"><summary>Test developer setup (Google Cloud credentials)</summary><div class="help" style="margin:8px 0 12px">This is only exposed in the test build. A release version will have LotKeys' credentials built in.</div><div class="field"><label>OAuth Web Client ID</label><input id="google-client" value="${esc(clientId)}" placeholder="…apps.googleusercontent.com"></div><div class="field"><label>Google Picker API Key</label><input id="google-key" value="${esc(apiKey)}" placeholder="AIza…"></div><div class="field"><label>Google Cloud Project Number</label><input id="google-project-number" value="${esc(projectNumber)}" inputmode="numeric" placeholder="123456789012"></div><button class="btn" id="save-google">Save Google Test Credentials</button></details></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;└── LotKeys Store Config.json<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── Vehicle Profile<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Saved posting locations</h2><small>${locs.length}</small></div><div id="loc-list">${locs.map(x=>`<div class="card" style="box-shadow:none"><strong>${esc(x.name)}</strong><div class="small muted">${esc(x.address||[x.lat,x.lng].filter(Boolean).join(', ')||'No pin details yet')}</div><div class="actions"><button class="btn ghost edit-loc" data-id="${x.id}">Edit</button><button class="btn danger del-loc" data-id="${x.id}">Delete</button></div></div>`).join('')}</div><button class="btn" id="add-loc">＋ Add Location</button></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Analytics retention</h2></div><div class="field"><label>Rolling history (days)</label><input id="ret-days" type="number" min="7" max="365" value="${esc(ret)}"></div><button class="btn" id="save-ret">Save & prune</button></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Local test backup</h2></div><div class="split"><button class="btn" id="export-json">Export JSON</button><label class="btn" style="text-align:center">Import JSON<input id="import-json" type="file" accept="application/json" hidden></label></div><div class="help">This local backup is for testing. Drive remains the shared store copy once sync is enabled.</div></div>`;
+    $('#save-google').onclick=async()=>{await setSetting('googleClientId',$('#google-client').value.trim());await setSetting('googleApiKey',$('#google-key').value.trim());await setSetting('googleProjectNumber',$('#google-project-number').value.trim());toast('Google test credentials saved');render()};
+    $('#drive-connect').onclick=async()=>{try{toast('Opening Google authorization…');await DriveSync.authorize(true);toast('Google Drive connected ✓');render()}catch(err){alert('Google Drive connection failed:\n\n'+err.message)}};
+    if($('#drive-disconnect'))$('#drive-disconnect').onclick=async()=>{await DriveSync.disconnect();toast('Google session disconnected');render()};
+    $('#pick-store').onclick=async()=>{try{const m=await DriveSync.chooseStoreFolder();toast(`Selected ${m.name}`);render()}catch(err){if(!/cancel/i.test(err.message))alert('Could not choose Store folder:\n\n'+err.message)}};
+    $('#use-folder-url').onclick=async()=>{try{await setSetting('storeFolderUrl',$('#set-folder').value.trim());const m=await DriveSync.useFolderUrl($('#set-folder').value.trim());toast(`Selected ${m.name}`);render()}catch(err){alert('Could not use that folder URL:\n\n'+err.message+'\n\nTry Choose Store Folder instead.')}};
+    $('#save-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('storeFolderUrl',$('#set-folder').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);toast('Store settings saved');if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});render()};
+    $('#init-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);try{toast('Building Store folders…');await DriveSync.ensureStoreStructure();toast('Store structure ready ✓');render()}catch(err){alert('Could not initialize Store structure:\n\n'+err.message)}};
+    $('#add-loc').onclick=()=>showLocationForm();document.querySelectorAll('.edit-loc').forEach(b=>b.onclick=async()=>showLocationForm(await DB.get('locations',b.dataset.id)));document.querySelectorAll('.del-loc').forEach(b=>b.onclick=async()=>{if(confirm('Delete this saved location?')){await DB.del('locations',b.dataset.id);if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});render()}});$('#save-ret').onclick=async()=>{await setSetting('retentionDays',Math.max(7,+$('#ret-days').value||120));await pruneAnalytics();toast('Retention updated')};$('#export-json').onclick=exportJson;$('#import-json').onchange=importJson;
+  }
+  function showLocationForm(existing=null){const l=existing||{id:uid('LOC')};modalBody.innerHTML=`<div class="modal-head"><h2>${existing?'Edit':'Add'} Location</h2><button class="close">×</button></div><form id="loc-form"><div class="field"><label>Name</label><input name="name" required value="${esc(l.name||'')}" placeholder="e.g. Sherwood Park"></div><div class="field"><label>Address</label><input name="address" value="${esc(l.address||'')}" placeholder="Optional full address"></div><div class="form-grid"><div class="field"><label>Latitude</label><input name="lat" value="${esc(l.lat||'')}"></div><div class="field"><label>Longitude</label><input name="lng" value="${esc(l.lng||'')}"></div></div><button class="btn primary block">Save Location</button></form>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#loc-form').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);l.name=fd.get('name').trim();l.address=fd.get('address').trim();l.lat=fd.get('lat').trim();l.lng=fd.get('lng').trim();l.updatedAt=Date.now();l.createdAt=l.createdAt||Date.now();await DB.put('locations',l);if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});modal.close();toast('Location saved');render()};modal.showModal()}
+  async function exportJson(){const data={version:1,exportedAt:new Date().toISOString(),vehicles:(await DB.all('vehicles')).map(stripBlobs),listings:await DB.all('listings'),locations:await DB.all('locations'),analytics:await DB.all('analytics'),settings:await DB.all('settings')};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=`lotkeys-backup-${yyyyMmDd(Date.now())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+  function stripBlobs(v){const copy=structuredClone(v);['photos','attachments','videos'].forEach(k=>copy[k]=(copy[k]||[]).map(({blob,...rest})=>rest));return copy}
+  async function importJson(e){const f=e.target.files?.[0];if(!f)return;try{const data=JSON.parse(await f.text());for(const name of ['vehicles','listings','locations','analytics','settings'])if(Array.isArray(data[name]))for(const row of data[name])await DB.put(name,row);toast('Backup imported');render()}catch(err){alert('Could not import backup: '+err.message)}}
+  return {boot};
+})();
+window.addEventListener('DOMContentLoaded',App.boot);
+
+  </script>
+</body>
+</html>
