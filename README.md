@@ -1,4 +1,4 @@
-# LotKeys Drive Test v0.2
+# LotKeys Drive Test v0.3
 
 This is the first hosted test build that can write real vehicle and listing data into Google Drive.
 
@@ -48,3 +48,7 @@ The app uses Google's browser token model. The Drive access token is held only f
 13. Create a small test vehicle with two photos and verify the Drive folders, Sheet, and Shared link.
 
 See `GOOGLE-CLOUD-SETUP.md` and `DEPLOY-GITHUB-PAGES.md` for the detailed sequence.
+
+
+## v0.3 naming rule
+Vehicle Profile names are generated automatically as `STK: <stock> - <year> <make> <model>`. If the Model already begins with the Make, LotKeys avoids duplicating it. Marketplace titles remain salesperson-controlled and free-form. Existing synced vehicle folders are renamed on the next vehicle save/sync.
