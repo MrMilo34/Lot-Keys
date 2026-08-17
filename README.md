@@ -1,3 +1,7 @@
+# LotKeys Drive Test v0.5.10
+
+- Facebook Posting Assistant displays prices as formatted Canadian currency (for example `$18,488`) while the Copy button still sends the plain numeric value (`18488`) for Facebook compatibility.
+
 # LotKeys Drive Test v0.5.9
 
 UI cleanup: the **Create Listing → Vehicle Profile** selector now displays saved vehicles consistently as `Year Make Model — Stock #`. Stock numbers remain searchable/useful without being repeated in the visible label.
