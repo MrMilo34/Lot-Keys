@@ -1,6 +1,16 @@
-# LotKeys Drive Test v0.6
+# LotKeys Drive Test v0.6.1
 
 Adds the customer-facing **Vehicle Info Directory** system.
+
+
+## New in v0.6.1
+
+- Store-wide settings now live in `Administration/LotKeys.json`.
+- Existing `LotKeys Store Config.json` files are migrated/renamed automatically.
+- A staff member connecting to an existing Store folder loads the shared Store name, address, directions URL, template reference, and saved posting locations.
+- User name remains device/user-specific and is not written into the shared Store config.
+- CARFAX checkboxes are displayed side-by-side: **One Owner**, **Low Odometer**, **No Accidents**.
+- Customer directory badge wording follows the shorter labels while the existing template placeholders remain compatible.
 
 ## New in v0.6
 - Vehicle Profile fields for optional Original Vehicle Listing URL and CARFAX URL.

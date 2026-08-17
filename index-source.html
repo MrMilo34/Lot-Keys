@@ -24,6 +24,10 @@
   <title>LotKeys</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://apis.google.com/js/api.js" async defer></script>
+
+<style>
+.carfax-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.carfax-check{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;text-align:center;font-size:12px;font-weight:800;line-height:1.15;min-width:0}.carfax-check input{width:24px;height:24px;margin:0;flex:0 0 auto}@media(max-width:380px){.carfax-check{font-size:11px}.carfax-checks{gap:5px}}
+</style>
 </head>
 <body>
   <div id="app-shell">
@@ -35,7 +39,7 @@
       <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.6</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.6.1</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -384,8 +388,8 @@ const DriveSync = (() => {
       '{{DOCUMENTS_LINK}}':'🔧 VIEW INSPECTIONS & DOCUMENTS',
       '{{CARFAX_LINK}}':v.carfaxUrl?'📋 VIEW CARFAX REPORT':'',
       '{{BADGE_ONE_OWNER}}':v.carfaxOneOwner?'✅ ONE OWNER':'',
-      '{{BADGE_LOW_KM}}':v.carfaxLowKm?'✅ LOW KILOMETRES':'',
-      '{{BADGE_NO_ACCIDENTS}}':v.carfaxNoAccidents?'✅ NO REPORTED ACCIDENTS':''
+      '{{BADGE_LOW_KM}}':v.carfaxLowKm?'✅ LOW ODOMETER':'',
+      '{{BADGE_NO_ACCIDENTS}}':v.carfaxNoAccidents?'✅ NO ACCIDENTS':''
     };
     try{
       await docsBatchUpdate(temp.id,Object.entries(values).map(([find,replaceText])=>({replaceAllText:{containsText:{text:find,matchCase:true},replaceText}})));
@@ -427,6 +431,8 @@ const DriveSync = (() => {
     const listings=await ensureFolder(user.id,'Listings','lotkeysRole','userListings');
     const structure={rootId:root.id,rootName:root.name,usersId:users.id,adminId:admin.id,inventoryId:inventory.id,userId:user.id,listingsId:listings.id,updatedAt:new Date().toISOString()};
     await setSetting('driveStoreStructure',structure);
+    // Existing store configuration wins when a new staff member connects. Then normalize/migrate it to Administration/LotKeys.json.
+    await loadStoreConfig(structure).catch(()=>false);
     await syncStoreConfig(structure).catch(()=>{});
     await ensureDirectoryTemplate(structure).catch(err=>console.warn('Directory template not ready',err));
     return structure;
@@ -436,13 +442,44 @@ const DriveSync = (() => {
     if(s?.rootId===c.storeFolderId && s?.inventoryId && s?.listingsId) return s;
     return ensureStoreStructure();
   }
+  async function loadStoreConfig(existingStructure=null){
+    const s=existingStructure||await structure();
+    let f=await findChildByAppProperty(s.adminId,'lotkeysRole','storeConfig');
+    if(!f) f=await findChildByName(s.adminId,'LotKeys.json');
+    if(!f) f=await findChildByName(s.adminId,'LotKeys Store Config.json'); // v0.6 migration
+    if(!f) return false;
+    try{
+      const blob=await fetchFileBlob(f.id);
+      const data=JSON.parse(await blob.text());
+      await setSetting('storeConfigFileId',f.id);
+      if(data.storeName!=null) await setSetting('storeName',String(data.storeName||''));
+      const d=data.directory||{};
+      if(d.storeName!=null) await setSetting('directoryStoreName',String(d.storeName||''));
+      if(d.address!=null) await setSetting('directoryStoreAddress',String(d.address||''));
+      if(d.directionsUrl!=null) await setSetting('directoryDirectionsUrl',String(d.directionsUrl||''));
+      if(d.templateFileId) await setSetting('directoryTemplateFileId',String(d.templateFileId));
+      if(Array.isArray(data.locations)){
+        for(const x of data.locations){
+          if(!x?.id||!x?.name) continue;
+          const current=await DB.get('locations',x.id);
+          await DB.put('locations',{...(current||{}),...x,updatedAt:x.updatedAt||Date.now(),createdAt:current?.createdAt||Date.now()});
+        }
+      }
+      return true;
+    }catch(err){ console.warn('Could not read LotKeys.json',err); return false; }
+  }
   async function syncStoreConfig(existingStructure=null){
     const s=existingStructure||await structure();
     const c=await config();const locations=await DB.all('locations');
-    const data={schemaVersion:3,app:'LotKeys',storeName:c.storeName,userName:c.userName,storeFolderId:c.storeFolderId,directory:{storeName:c.directoryStoreName||c.storeName,address:c.directoryStoreAddress,directionsUrl:c.directoryDirectionsUrl,templateFileId:await setting('directoryTemplateFileId','')},locations:locations.map(({id,name,postalCode,address,lat,lng,updatedAt})=>({id,name,postalCode,address,lat,lng,updatedAt})),updatedAt:new Date().toISOString()};
+    const data={schemaVersion:4,app:'LotKeys',storeName:c.storeName,directory:{storeName:c.directoryStoreName||c.storeName,address:c.directoryStoreAddress,directionsUrl:c.directoryDirectionsUrl,templateFileId:await setting('directoryTemplateFileId','')},locations:locations.map(({id,name,postalCode,address,lat,lng,updatedAt})=>({id,name,postalCode,address,lat,lng,updatedAt})),updatedAt:new Date().toISOString()};
     let fileId=await setting('storeConfigFileId','');
-    if(!fileId){ const found=await findChildByAppProperty(s.adminId,'lotkeysRole','storeConfig'); fileId=found?.id||''; }
-    const f=await upsertJson({fileId,name:'LotKeys Store Config.json',parentId:s.adminId,data,appProperties:{lotkeysRole:'storeConfig'}});
+    let found=null;
+    if(fileId){ try{found=await driveGet(fileId,'id,name,webViewLink,appProperties')}catch{fileId='';} }
+    if(!fileId){ found=await findChildByAppProperty(s.adminId,'lotkeysRole','storeConfig'); fileId=found?.id||''; }
+    if(!fileId){ found=await findChildByName(s.adminId,'LotKeys.json'); fileId=found?.id||''; }
+    if(!fileId){ found=await findChildByName(s.adminId,'LotKeys Store Config.json'); fileId=found?.id||''; }
+    if(fileId && (!found || found.name!=='LotKeys.json')) await patchMetadata(fileId,{name:'LotKeys.json',appProperties:{lotkeysRole:'storeConfig'}}).catch(()=>{});
+    const f=await upsertJson({fileId,name:'LotKeys.json',parentId:s.adminId,data,appProperties:{lotkeysRole:'storeConfig'}});
     await setSetting('storeConfigFileId',f.id); return f;
   }
   async function createSpreadsheet(parentId,vehicleId){
@@ -462,7 +499,7 @@ const DriveSync = (() => {
       ['Shared Folder',d.sharedFolderId?`https://drive.google.com/drive/folders/${d.sharedFolderId}`:''],
       ['Vehicle Info Directory',d.directoryPdfUrl||''],
       ['Original Vehicle Listing URL',v.originalListingUrl||''],['CARFAX URL',v.carfaxUrl||''],
-      ['CARFAX - One Owner',v.carfaxOneOwner?'TRUE':'FALSE'],['CARFAX - Low Kilometres',v.carfaxLowKm?'TRUE':'FALSE'],['CARFAX - No Reported Accidents',v.carfaxNoAccidents?'TRUE':'FALSE'],
+      ['CARFAX - One Owner',v.carfaxOneOwner?'TRUE':'FALSE'],['CARFAX - Low Odometer',v.carfaxLowKm?'TRUE':'FALSE'],['CARFAX - No Accidents',v.carfaxNoAccidents?'TRUE':'FALSE'],
       ['Description',v.description||''],['Profile ID',v.id],['Cover Photo File ID',v.photos?.[0]?.driveFileId||''],['Updated',new Date().toISOString()]
     ];
     return apiFetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values/A1:B${values.length}?valueInputOption=RAW`,{
@@ -742,7 +779,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.6</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.6</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.6.1</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.6.1</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
   async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
   async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
@@ -836,7 +873,7 @@ const App = (()=>{
       <div class="field"><label>VIN #</label><input name="vin" value="${esc(v.vin||'')}"></div><div class="field"><label>STK #</label><input name="stock" value="${esc(v.stock||'')}"></div>
       <div class="field full"><label>Original Vehicle Listing URL <span class="muted">(optional)</span></label><input name="originalListingUrl" type="url" value="${esc(v.originalListingUrl||'')}" placeholder="https://dealership.example/vehicle/..."><div class="help">Customer reference only; this is not pushed to Facebook Marketplace.</div></div>
       <div class="field full"><label>CARFAX Link <span class="muted">(optional)</span></label><input name="carfaxUrl" type="url" value="${esc(v.carfaxUrl||'')}" placeholder="https://vhr.carfax.ca/..."><div class="help">Used in the customer Vehicle Info Directory.</div></div>
-      <div class="field full"><label>CARFAX - Vehicle History</label><div class="sync-line"><label><input type="checkbox" name="carfaxOneOwner" ${v.carfaxOneOwner?'checked':''}> One Owner</label><label><input type="checkbox" name="carfaxLowKm" ${v.carfaxLowKm?'checked':''}> Low Kilometres</label><label><input type="checkbox" name="carfaxNoAccidents" ${v.carfaxNoAccidents?'checked':''}> No Reported Accidents</label></div><div class="help">These are user-controlled CARFAX highlights. LotKeys does not guess them from claims/history.</div></div>
+      <div class="field full"><label>CARFAX - Vehicle History</label><div class="carfax-checks"><label class="carfax-check"><input type="checkbox" name="carfaxOneOwner" ${v.carfaxOneOwner?'checked':''}><span>One Owner</span></label><label class="carfax-check"><input type="checkbox" name="carfaxLowKm" ${v.carfaxLowKm?'checked':''}><span>Low Odometer</span></label><label class="carfax-check"><input type="checkbox" name="carfaxNoAccidents" ${v.carfaxNoAccidents?'checked':''}><span>No Accidents</span></label></div><div class="help">These are user-controlled CARFAX highlights. LotKeys does not guess them from claims/history.</div></div>
       <div class="field full"><label>Vehicle Profile Description</label><textarea name="description" placeholder="Store/customer-facing vehicle information. This is separate from Marketplace copy.">${esc(v.description||'')}</textarea></div>
       <div class="field full"><div class="notice"><strong>Shared folder:</strong> LotKeys creates this automatically in Google Drive. Photos → Shared/Photos, videos → Shared/Videos, and inspections/documents → Shared/Documents.</div></div>
       <div class="field full"><label>Photos</label><input id="vehicle-photos" type="file" accept="image/*" multiple><div class="help">On Android you can choose gallery images; camera capture will be added as a dedicated flow.</div><div id="photo-preview" style="margin-top:10px">${photoPreviewHtml(v.photos)}</div></div>
@@ -1031,7 +1068,7 @@ const App = (()=>{
       <div class="field"><label>Store Folder</label><input id="set-folder" value="${esc(folderUrl)}" placeholder="Google Drive folder URL (optional fallback)"><div class="help">For the safest Drive permission, use <strong>Choose Store Folder</strong>. Pasting a link only works if this app/account already has OAuth access to that folder.</div></div>
       <div class="actions"><button class="btn" id="pick-store">📁 Choose Store Folder</button><button class="btn ghost" id="use-folder-url">Use Pasted URL</button></div>
       <label class="sync-line small"><input type="checkbox" id="public-share" ${publicShare?'checked':''}> Automatically make each vehicle's <strong>Shared</strong> folder “Anyone with the link can view”</label>
-      <div class="hr"></div><div class="field"><label>Vehicle Info Directory - Store Name</label><input id="directory-store-name" value="${esc(directoryStoreName||storeName)}" placeholder="e.g. Infiniti South Edmonton"></div><div class="field"><label>Store Address</label><input id="directory-store-address" value="${esc(directoryStoreAddress)}" placeholder="2110 103A St SW, Edmonton, AB T6W 2P6"></div><div class="field"><label>Directions URL</label><input id="directory-directions-url" value="${esc(directoryDirectionsUrl)}" placeholder="https://www.google.com/maps/dir/..."></div><div class="actions"><button class="btn ghost" id="open-directory-template">Open / Create Directory Template</button></div><div class="help">The template lives in Administration as a Google Doc. Administrators can change logos, fonts, wording and layout; keep the {{...}} placeholders in the document.</div>
+      <div class="hr"></div><div class="section-title" style="margin-top:0"><h2>Shared Store Configuration</h2><small>Administration / LotKeys.json</small></div><div class="help" style="margin-bottom:10px">These values belong to the Store, not the individual user. Staff connected to the same Store folder can reuse them.</div><div class="field"><label>Vehicle Info Directory - Store Name</label><input id="directory-store-name" value="${esc(directoryStoreName||storeName)}" placeholder="e.g. Infiniti South Edmonton"></div><div class="field"><label>Store Address</label><input id="directory-store-address" value="${esc(directoryStoreAddress)}" placeholder="2110 103A St SW, Edmonton, AB T6W 2P6"></div><div class="field"><label>Directions URL</label><input id="directory-directions-url" value="${esc(directoryDirectionsUrl)}" placeholder="https://www.google.com/maps/dir/..."></div><div class="actions"><button class="btn ghost" id="open-directory-template">Open / Create Directory Template</button></div><div class="help">The template lives in Administration as a Google Doc. Administrators can change logos, fonts, wording and layout; keep the {{...}} placeholders in the document.</div>
       <div class="actions"><button class="btn primary" id="save-store">Save Store Settings</button><button class="btn dark" id="init-store">Initialize / Repair Store Structure</button></div>
       ${ds.structure?.inventoryId?`<div class="notice" style="margin-top:12px"><strong>Store structure connected ✓</strong><br>Users, Administration, Inventory, ${esc(userName||'your user')} and Listings are registered.</div>`:''}
       <details class="credentials"><summary>Test developer setup (Google Cloud credentials)</summary><div class="help" style="margin:8px 0 12px">This is only exposed in the test build. A release version will have LotKeys' credentials built in.</div><div class="field"><label>OAuth Web Client ID</label><input id="google-client" value="${esc(clientId)}" placeholder="…apps.googleusercontent.com"></div><div class="field"><label>Google Picker API Key</label><input id="google-key" value="${esc(apiKey)}" placeholder="AIza…"></div><div class="field"><label>Google Cloud Project Number</label><input id="google-project-number" value="${esc(projectNumber)}" inputmode="numeric" placeholder="123456789012"></div><button class="btn" id="save-google">Save Google Test Credentials</button></details></div>
