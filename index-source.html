@@ -35,7 +35,7 @@
       <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.5</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.5.1</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -630,7 +630,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.5</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.5</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.5.1</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.5.1</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
   async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
   async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
@@ -800,8 +800,17 @@ const App = (()=>{
     toast('Photo downloads started');
   }
   function openFacebookMarketplace(){
-    const w=window.open(FACEBOOK_MARKETPLACE_CREATE_URL,'_blank','noopener');
-    if(!w)location.href=FACEBOOK_MARKETPLACE_CREATE_URL;
+    // Use a real temporary anchor with target=_blank rather than falling back to
+    // same-tab navigation. Mobile Chrome is much more reliable about keeping
+    // LotKeys open when the navigation comes directly from an anchor click.
+    const a=document.createElement('a');
+    a.href=FACEBOOK_MARKETPLACE_CREATE_URL;
+    a.target='_blank';
+    a.rel='noopener noreferrer';
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
   function locationPostingText(loc){
     if(!loc)return'';
@@ -833,7 +842,7 @@ const App = (()=>{
         <div class="copy-row"><div><div class="copy-label">Listing Location${loc?.name?` · ${esc(loc.name)}`:''}</div><div class="copy-value">${esc(locText||loc?.name||'—')}</div></div><button class="btn copy-btn" data-copy="location">Copy</button></div>
         <div class="copy-row"><div><div class="copy-label">Marketplace Description</div><div class="copy-value">${esc(l.description||'—')}</div></div><button class="btn copy-btn" data-copy="description">Copy</button></div>
       </div></div>
-      <div class="post-step"><div class="post-step-head"><div style="display:flex;gap:10px"><div class="post-step-num">3</div><div><div class="post-step-title">Open Facebook Marketplace</div><div class="post-step-sub">Facebook will open separately so this prepared LotKeys listing stays available when you come back.</div></div></div></div><button class="btn block fb-open" id="post-open-facebook" style="margin-top:12px">Open Facebook Marketplace</button></div>
+      <div class="post-step"><div class="post-step-head"><div style="display:flex;gap:10px"><div class="post-step-num">3</div><div><div class="post-step-title">Open Facebook Marketplace</div><div class="post-step-sub">Facebook will open separately so this prepared LotKeys listing stays available when you come back.</div></div></div></div><a class="btn block fb-open" id="post-open-facebook" href="${FACEBOOK_MARKETPLACE_CREATE_URL}" target="_blank" rel="noopener noreferrer" style="margin-top:12px;text-decoration:none;text-align:center">Open Facebook Marketplace ↗</a></div>
       <div class="post-step ${l.postedAt?'posted-card':''}"><div class="post-step-head"><div style="display:flex;gap:10px"><div class="post-step-num">${l.postedAt?'✓':'4'}</div><div><div class="post-step-title">${l.postedAt?'Listing marked posted':'After you press Publish'}</div><div class="post-step-sub">Paste the Facebook listing link so LotKeys can track this exact listing.</div>${l.postedAt?`<div class="posted-date">Posted ${new Date(l.postedAt).toLocaleString('en-CA')}</div>`:''}</div></div></div><div class="field" style="margin-top:12px"><label>Facebook Listing URL</label><input id="post-facebook-url" value="${esc(l.facebookUrl||'')}" placeholder="https://www.facebook.com/marketplace/item/…"></div><div class="actions"><button class="btn primary" id="post-mark-posted">${l.postedAt?'Update Listing Link':'✓ I Posted It'}</button>${l.facebookUrl?'<button class="btn ghost" id="post-open-live">Open Live Listing</button>':''}</div></div>`;
     modalBody.querySelector('.close').onclick=()=>{modal.close();render()};
     const copyMap={title:l.marketplaceTitle||'',vehicle:vehicleText,price:l.price!==''&&l.price!=null?String(l.price):'',odometer:odometerText,location:locText||loc?.name||'',description:l.description||''};
@@ -841,7 +850,6 @@ const App = (()=>{
     if($('#post-open-drive-photos'))$('#post-open-drive-photos').onclick=()=>window.open(photoFolderUrl,'_blank','noopener');
     $('#post-download-photos').onclick=()=>downloadListingPhotos(l,v);
     if($('#post-share-photos'))$('#post-share-photos').onclick=()=>shareListingPhotos(l,v);
-    $('#post-open-facebook').onclick=openFacebookMarketplace;
     if($('#post-open-live'))$('#post-open-live').onclick=()=>window.open(l.facebookUrl,'_blank','noopener');
     $('#post-mark-posted').onclick=async()=>{const url=$('#post-facebook-url').value.trim();await markListingPosted(l,url);showPostingAssistant(l.id)};
     if(!modal.open)modal.showModal();

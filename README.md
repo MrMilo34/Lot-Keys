@@ -1,4 +1,4 @@
-# LotKeys Drive Test v0.5
+# LotKeys Drive Test v0.5.1
 
 ## Facebook Posting Assistant
 
@@ -20,7 +20,7 @@
 - Listing age now uses the actual Facebook `postedAt` time when available instead of only the LotKeys draft creation time.
 - Duplicating a listing resets the Facebook URL, posted time and Drive listing file reference.
 - Drive listing JSON schema bumped to version 3 to include `postedAt` and `lastPreparedAt`.
-- Service-worker cache bumped to v0.5.
+- Service-worker cache bumped to v0.5.1.
 
 # LotKeys Drive Test v0.4.2
 
