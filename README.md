@@ -1,3 +1,27 @@
+# LotKeys Drive Test v0.5
+
+## Facebook Posting Assistant
+
+- Adds **Post to Facebook** to every LotKeys Marketplace listing.
+- Adds **Save & Prepare Facebook** when creating/editing a listing so the user can jump directly into the posting workflow.
+- Posting Assistant keeps the listing's exact custom photo order visible and provides:
+  - **Open Drive Photos**
+  - **Download Photos** with numbered filenames matching the listing order
+  - **Share / Save Photos** through Android's Web Share sheet when supported
+- Adds one-tap copy controls for:
+  - Marketplace Title
+  - Year / Make / Model
+  - Price
+  - Odometer + unit
+  - Saved listing location/address/coordinates
+  - Marketplace Description
+- Adds **Open Facebook Marketplace** from the prepared listing.
+- After publishing, **I Posted It** marks the listing Active, records `postedAt`, accepts the Facebook listing URL, and syncs that information to `Users/<User>/Listings` in Google Drive.
+- Listing age now uses the actual Facebook `postedAt` time when available instead of only the LotKeys draft creation time.
+- Duplicating a listing resets the Facebook URL, posted time and Drive listing file reference.
+- Drive listing JSON schema bumped to version 3 to include `postedAt` and `lastPreparedAt`.
+- Service-worker cache bumped to v0.5.
+
 # LotKeys Drive Test v0.4.2
 
 - Adds **Videos** and **Attachments** galleries directly inside the Vehicle Profile, immediately below the master Photos area.
