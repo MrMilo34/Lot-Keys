@@ -1,4 +1,13 @@
-# LotKeys Drive Test v0.5.1
+# LotKeys Drive Test v0.5.2
+
+## v0.5.2 Facebook posting fixes
+
+- Fixes the mobile layout overlap on the Facebook launch button.
+- Opens Facebook's vehicle-specific Marketplace route (`/marketplace/create/vehicle`) instead of the generic create route.
+- Replaces direct photo sharing to Facebook with **Save Photos to Folder**, using the browser File System Access API when available. This avoids Android handing Facebook temporary/blob files that can appear as blank photo placeholders.
+- Can re-download synced photo files from Google Drive if their local browser blobs are unavailable.
+- Keeps Download Photos and Open Drive Photos as fallback options.
+
 
 ## Facebook Posting Assistant
 
@@ -20,7 +29,7 @@
 - Listing age now uses the actual Facebook `postedAt` time when available instead of only the LotKeys draft creation time.
 - Duplicating a listing resets the Facebook URL, posted time and Drive listing file reference.
 - Drive listing JSON schema bumped to version 3 to include `postedAt` and `lastPreparedAt`.
-- Service-worker cache bumped to v0.5.1.
+- Service-worker cache bumped to v0.5.2.
 
 # LotKeys Drive Test v0.4.2
 
