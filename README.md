@@ -1,5 +1,10 @@
-# LotKeys Drive Test v0.5.5
+# LotKeys Drive Test v0.5.6
 
+## v0.5.6
+
+- Posting Assistant photo actions simplified to **💾 Download Photos** and **📂 Open Drive Photos**.
+- Removed the redundant browser folder-save action.
+- Facebook Selling shortcut now documents the tested Android behavior: if Facebook opens **No results found**, tap **Back once** to reach the Selling screen; Marketplace Home remains the fallback.
 **Facebook Posting Assistant field correction:** Listing Name and Odometer are restored to the prepared Facebook copy fields. The full prepared set is now Listing Name, Year, Make, Model, Price, Odometer, Location / Postal Code, and Description.
 
 
@@ -126,3 +131,10 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Saved posting locations now have a dedicated Facebook Postal Code field; address/coordinates remain optional reference data.
 - Primary Facebook button now targets the Marketplace Selling area (`/marketplace/you/selling`), with Marketplace Home kept as a fallback.
 - Marketplace Title and odometer remain stored in LotKeys even though the current Facebook vehicle form does not request them on the first screen.
+
+
+## v0.5.7 Facebook navigation test
+
+- Facebook button now opens the parent Marketplace account route (`/marketplace/you/`) instead of `/marketplace/you/selling`.
+- This is intended to avoid the Android Facebook app interpreting the final `selling` path as a Marketplace search.
+- Marketplace Home remains available as a fallback.
