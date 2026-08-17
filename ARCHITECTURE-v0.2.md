@@ -63,3 +63,10 @@ Vehicle profile folder names are generated as `Year Make Model - Stock #`. Drive
 
 ### Info From Photo
 Info From Photo is an assisted data-entry layer only. It does not become a new source of truth. It reads one or more images locally in the browser, creates field suggestions, marks confidence, and requires user confirmation before applying values to the Vehicle Profile form. Analysis images are not stored in `Shared/Photos` unless the user separately adds them as vehicle photos.
+
+
+## v0.7 additions
+- `Administration/LotKeys.json` stores Store-wide configuration plus the LotKeys user registry. Personal posting locations remain local/user-side.
+- `Administration/Inventory Index.json` is a fast Store inventory cache generated from vehicle Administrative Sheets. LotKeys verifies Inventory folders on refresh and can rebuild the index with a full scan.
+- The signed-in Google account is bound to a unique LotKeys user name. The first registered Store user becomes Administrator.
+- Store inventory refreshes from Drive every five minutes while the app is active, when returning to the app, and on manual refresh.

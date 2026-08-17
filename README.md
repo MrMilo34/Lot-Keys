@@ -1,3 +1,20 @@
+# LotKeys Drive Test v0.7.0
+
+## v0.7.0 changes
+
+- Shared Inventory now loads back from Google Drive on other devices.
+- Added a Drive-backed `Inventory Index.json` for fast store-wide refreshes, with full-scan fallback for existing inventory.
+- Store inventory refreshes every 5 minutes while LotKeys is open and when returning to the app; manual Refresh Inventory is also available.
+- Vehicle editing now saves locally immediately and syncs to Drive in the background. Unchanged media and Vehicle Info Directory work are skipped when possible.
+- LotKeys users are bound to the Google account used to connect. Duplicate user names cannot be claimed by another Google account. The first registered user is the Store Administrator.
+- Settings are role-aware: normal users see account/Drive status and their own posting locations; Store/Drive/template/developer controls are Administrator-only.
+- Saved Facebook posting locations are client-side user preferences and are no longer stored in the shared Store configuration.
+- One Store Name is now used everywhere; the duplicate Vehicle Info Directory Store Name setting was removed.
+- Vehicle Profile actions are now: Copy Vehicle Info Sheet Link, Open Shared Folder, Sync Vehicle.
+- CARFAX checkbox label spacing was refined.
+- Existing v0.6.x directory template references are re-resolved from Administration once during migration.
+- Vehicle media is hydrated from Drive on demand when opening a vehicle or preparing a listing on another device.
+
 # LotKeys Drive Test v0.6.2
 
 Adds the customer-facing **Vehicle Info Directory** system.

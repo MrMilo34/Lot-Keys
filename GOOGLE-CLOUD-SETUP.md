@@ -73,3 +73,7 @@ Tap **Connect Google Drive** and approve access.
 Then tap **Choose Store Folder**. Selecting the folder through Google Picker is important because the app intentionally uses the narrow `drive.file` scope instead of requesting access to the user's entire Drive.
 
 Enter the Store name and your user name, then tap **Initialize / Repair Store Structure**.
+
+## v0.7 user identity note
+
+LotKeys v0.7 requests the standard Google `openid` + `email` scopes in addition to the existing `drive.file` scope. This is used only to bind a LotKeys user name to the Google account that signed in, so another person cannot simply claim an existing LotKeys user name. After upgrading, existing users should reconnect Google Drive once and approve the basic account-email permission.
