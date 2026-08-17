@@ -1,13 +1,11 @@
-# LotKeys Drive Test v0.5.2
+# LotKeys Drive Test v0.5.5
 
-## v0.5.2 Facebook posting fixes
+**Facebook Posting Assistant field correction:** Listing Name and Odometer are restored to the prepared Facebook copy fields. The full prepared set is now Listing Name, Year, Make, Model, Price, Odometer, Location / Postal Code, and Description.
 
-- Fixes the mobile layout overlap on the Facebook launch button.
-- Opens Facebook's vehicle-specific Marketplace route (`/marketplace/create/vehicle`) instead of the generic create route.
-- Replaces direct photo sharing to Facebook with **Save Photos to Folder**, using the browser File System Access API when available. This avoids Android handing Facebook temporary/blob files that can appear as blank photo placeholders.
-- Can re-download synced photo files from Google Drive if their local browser blobs are unavailable.
-- Keeps Download Photos and Open Drive Photos as fallback options.
 
+**Facebook Android routing fix:** the direct `/marketplace/create/vehicle` deep link is no longer used from the Posting Assistant because the Facebook Android app can route it into a broken Marketplace search screen. The primary button now opens Marketplace Home and tells the user to use Facebook's normal Sell → Create listing flow.
+
+# LotKeys Drive Test v0.5.1
 
 ## Facebook Posting Assistant
 
@@ -29,7 +27,7 @@
 - Listing age now uses the actual Facebook `postedAt` time when available instead of only the LotKeys draft creation time.
 - Duplicating a listing resets the Facebook URL, posted time and Drive listing file reference.
 - Drive listing JSON schema bumped to version 3 to include `postedAt` and `lastPreparedAt`.
-- Service-worker cache bumped to v0.5.2.
+- Service-worker cache bumped to v0.5.1.
 
 # LotKeys Drive Test v0.4.2
 
@@ -120,3 +118,11 @@ See `GOOGLE-CLOUD-SETUP.md` and `DEPLOY-GITHUB-PAGES.md` for the detailed sequen
 
 ## v0.3 naming rule
 Vehicle Profile names are generated automatically as `STK: <stock> - <year> <make> <model>`. If the Model already begins with the Make, LotKeys avoids duplicating it. Marketplace titles remain salesperson-controlled and free-form. Existing synced vehicle folders are renamed on the next vehicle save/sync.
+
+
+## v0.5.4 Facebook assistant refinements
+
+- Posting Assistant now mirrors the Facebook Android vehicle form fields observed in testing: Year, Make, Model, Price, Postal Code location, and Description.
+- Saved posting locations now have a dedicated Facebook Postal Code field; address/coordinates remain optional reference data.
+- Primary Facebook button now targets the Marketplace Selling area (`/marketplace/you/selling`), with Marketplace Home kept as a fallback.
+- Marketplace Title and odometer remain stored in LotKeys even though the current Facebook vehicle form does not request them on the first screen.
