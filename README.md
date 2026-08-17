@@ -1,3 +1,7 @@
+# LotKeys Drive Test v0.5.9
+
+UI cleanup: the **Create Listing → Vehicle Profile** selector now displays saved vehicles consistently as `Year Make Model — Stock #`. Stock numbers remain searchable/useful without being repeated in the visible label.
+
 # LotKeys Drive Test v0.5.6
 
 ## v0.5.6
@@ -138,3 +142,8 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Facebook button now opens the parent Marketplace account route (`/marketplace/you/`) instead of `/marketplace/you/selling`.
 - This is intended to avoid the Android Facebook app interpreting the final `selling` path as a Marketplace search.
 - Marketplace Home remains available as a fallback.
+
+## v0.5.8 Facebook Selling route test
+- Primary Facebook button now targets exactly `https://www.facebook.com/marketplace/selling`.
+- This tests the simpler Selling route observed during live Android/Facebook app testing.
+- Marketplace Home remains available as the fallback.
