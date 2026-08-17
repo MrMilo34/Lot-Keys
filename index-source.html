@@ -26,7 +26,7 @@
   <script src="https://apis.google.com/js/api.js" async defer></script>
 
 <style>
-.carfax-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.carfax-check{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;text-align:center;font-size:12px;font-weight:800;line-height:1.15;min-width:0}.carfax-check input{width:24px;height:24px;margin:0;flex:0 0 auto}@media(max-width:380px){.carfax-check{font-size:11px}.carfax-checks{gap:5px}}
+.carfax-checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.carfax-check{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;text-align:left;font-size:12px;font-weight:800;line-height:1.15;min-width:0}.carfax-check span{white-space:nowrap}.carfax-check input{width:22px;height:22px;margin:0;flex:0 0 auto}@media(max-width:380px){.carfax-check{font-size:10.5px;gap:4px}.carfax-checks{gap:4px}.carfax-check input{width:20px;height:20px}}
 </style>
 </head>
 <body>
@@ -39,7 +39,7 @@
       <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.6.1</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.6.2</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -354,16 +354,24 @@ const DriveSync = (() => {
   }
   async function ensureDirectoryTemplate(existingStructure=null){
     const s=existingStructure||await structure();
-    let templateId=await setting('directoryTemplateFileId','');let t=null;
-    if(templateId)t=await driveGet(templateId,'id,name,mimeType,webViewLink').catch(()=>null);
-    if(!t)t=await findChildByAppProperty(s.adminId,'lotkeysRole','vehicleInfoDirectoryTemplate',DOC_MIME);
-    if(!t)t=await findChildByName(s.adminId,'Vehicle Info Directory Template',DOC_MIME);
+    // Administration is the source of truth. Re-resolve the template every time instead of
+    // trusting a stale cached/template ID from an older LotKeys build or phone.
+    let q=`'${qEscape(s.adminId)}' in parents and name = '${qEscape('Vehicle Info Directory Template')}' and mimeType = '${qEscape(DOC_MIME)}' and trashed = false`;
+    let candidates=await listFiles(q,'files(id,name,mimeType,webViewLink,appProperties,parents,trashed,modifiedTime)');
+    candidates.sort((a,b)=>String(b.modifiedTime||'').localeCompare(String(a.modifiedTime||'')));
+    let t=candidates[0]||null;
     if(!t){
-      t=await createMetadata({name:'Vehicle Info Directory Template',mimeType:DOC_MIME,parents:[s.adminId],appProperties:{lotkeysRole:'vehicleInfoDirectoryTemplate'}},'id,name,mimeType,webViewLink,appProperties');
+      t=await createMetadata({name:'Vehicle Info Directory Template',mimeType:DOC_MIME,parents:[s.adminId],appProperties:{lotkeysRole:'vehicleInfoDirectoryTemplate'}},'id,name,mimeType,webViewLink,appProperties,parents');
       try{await docsBatchUpdate(t.id,[{insertText:{location:{index:1},text:defaultDirectoryTemplate()}}]);}
       catch(err){await trashFile(t.id).catch(()=>{});throw new Error('Vehicle Info Directory template could not be created. Enable the Google Docs API for the LotKeys Google Cloud project, then try again. '+(err.message||err));}
+    } else {
+      // Mark the real Administration template so future installs can also identify it by role.
+      await patchMetadata(t.id,{appProperties:{...(t.appProperties||{}),lotkeysRole:'vehicleInfoDirectoryTemplate'}},'id,name,mimeType,webViewLink,appProperties,parents').catch(()=>{});
     }
-    await setSetting('directoryTemplateFileId',t.id);return t;
+    await setSetting('directoryTemplateFileId',t.id);
+    // Keep LotKeys.json aligned with the template actually selected from Administration.
+    await syncStoreConfig(s).catch(()=>{});
+    return t;
   }
   async function upsertPdf(fileId,name,parentId,blob,appProperties={}){
     if(fileId){await updateTextFile(fileId,blob);const cur=await driveGet(fileId,'id,name,webViewLink,appProperties').catch(()=>null);if(cur){if(cur.name!==name)await patchMetadata(fileId,{name});return driveGet(fileId,'id,name,webViewLink,appProperties')}}
@@ -640,11 +648,82 @@ const PhotoInfo = (()=>{
     const prev=out[key];
     if(!prev || (prev.confidence!=='high' && confidence==='high')) out[key]={value,confidence,reason};
   }
-  function parse(text, barcodeValues=[]){
+  function modelValue(raw){
+    return clean(raw).replace(/[©®™]+/g,'').replace(/\s+(?:IN\s+STOCK|PRICE|STK|STOCK|VIN)\b.*$/i,'').replace(/[|:;,.\-]+$/g,'').replace(/\s+/g,' ').trim();
+  }
+  function flattenLayoutLines(blocks,imageIndex=0){
+    const rows=[];
+    for(const block of blocks||[]) for(const para of block.paragraphs||[]) for(const line of para.lines||[]){
+      const text=clean(line.text || (line.words||[]).map(w=>w.text||'').join(' '));
+      if(!text)continue;
+      const b=line.bbox||{};
+      rows.push({text,bbox:{x0:+b.x0||0,y0:+b.y0||0,x1:+b.x1||0,y1:+b.y1||0},imageIndex});
+    }
+    return rows;
+  }
+  function headingParts(line){
+    const text=clean(line);const m=text.match(/\b((?:19|20)\d{2})\s+(.+)$/i);if(!m)return null;
+    const year=normalizeYear(m[1]);if(!year)return null;
+    const rest=clean(m[2]);const upper=rest.toUpperCase().replace(/[^A-Z0-9 -]/g,' ').replace(/\s+/g,' ').trim();
+    const makeKeys=Object.keys(MAKES).sort((a,b)=>b.length-a.length);
+    for(const k of makeKeys){
+      const rx=new RegExp('^'+k.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')+'(?:\\s+|$)','i');
+      if(!rx.test(upper))continue;
+      const mk=MAKES[k];
+      // Use the same number of leading words from the original OCR line so punctuation/case is preserved in model.
+      const makeWordCount=k.trim().split(/\s+/).length;
+      const originalWords=rest.split(/\s+/);
+      const model=modelValue(originalWords.slice(makeWordCount).join(' '));
+      if(model)return {year,make:mk,model};
+    }
+    return null;
+  }
+  function groupedVehicleHeader(layoutLines,plainLines=[]){
+    const candidates=[];
+    for(const row of layoutLines||[]){
+      const parts=headingParts(row.text);if(!parts)continue;
+      const u=row.text.toUpperCase();
+      if(/AVAILABLE\s+AT|DEALER|REFERENCE\s+LINKS|CREATED\s*:/i.test(u))continue;
+      const same=(layoutLines||[]).filter(x=>x.imageIndex===row.imageIndex);
+      const pageBottom=Math.max(1,...same.map(x=>x.bbox?.y1||0));
+      const cy=((row.bbox?.y0||0)+(row.bbox?.y1||0))/2;
+      const nearby=same.filter(x=>x!==row && Math.abs((((x.bbox?.y0||0)+(x.bbox?.y1||0))/2)-cy) <= Math.max(180,pageBottom*.22));
+      const evidence=nearby.filter(x=>/(?:STK|STOCK)\s*(?:#|NO\.?|NUMBER)?\s*[:#-]?\s*[A-Z0-9-]{3,16}|(?:VIN|VIN\s*#)\s*[:#-]?\s*[A-HJ-NPR-Z0-9 -]{15,25}/i.test(x.text));
+      let score=10+(evidence.length?12:0);
+      if(parts.make==='Infiniti' && /INFINITI\s+(?:SOUTH|NORTH|WEST|EAST)|GO\s+INFINITI/i.test(u))score-=20;
+      candidates.push({row,parts,score,evidence});
+    }
+    // Text-only fallback when block/layout output is unavailable.
+    if(!candidates.length){
+      for(let i=0;i<plainLines.length;i++){
+        const parts=headingParts(plainLines[i]);if(!parts)continue;
+        const u=plainLines[i].toUpperCase();if(/AVAILABLE\s+AT|DEALER|REFERENCE\s+LINKS|CREATED\s*:/i.test(u))continue;
+        const around=plainLines.slice(Math.max(0,i-3),i+5).join(' ');
+        const evidence=/(?:STK|STOCK)\s*(?:#|NO\.?|NUMBER)?\s*[:#-]?\s*[A-Z0-9-]{3,16}|(?:VIN|VIN\s*#)\s*[:#-]?\s*[A-HJ-NPR-Z0-9 -]{15,25}/i.test(around);
+        candidates.push({parts,score:10+(evidence?10:0),evidence:evidence?[true]:[]});
+      }
+    }
+    candidates.sort((a,b)=>b.score-a.score);return candidates[0]||null;
+  }
+  function parse(text, barcodeValues=[], layoutLines=[]){
     const out={}; const raw=clean(text); const upper=raw.toUpperCase(); const lines=raw.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+    // First priority: a coherent Year + Make + Model header, reinforced by nearby STK/VIN.
+    // This prevents dealership branding or unrelated dates elsewhere on a screenshot from winning.
+    const grouped=groupedVehicleHeader(layoutLines,lines);
+    if(grouped){
+      const conf=grouped.evidence?.length?'high':'suggested';
+      add(out,'year',grouped.parts.year,conf,'Grouped Year / Make / Model header');
+      add(out,'make',grouped.parts.make,conf,'Grouped Year / Make / Model header');
+      add(out,'model',grouped.parts.model,conf,'Grouped Year / Make / Model header');
+    }
     for(const b of barcodeValues||[]){const v=normalizeVin(b); if(validVin(v)) add(out,'vin',v,'high','17-character VIN from barcode');}
     const vinCandidates=(upper.match(/[A-HJ-NPR-Z0-9]{17}/g)||[]);
     for(const v of vinCandidates) if(validVin(v)) add(out,'vin',v,'high','17-character VIN');
+
+    // Prefer the actual sale / Your Price before generic price labels.
+    const preferredPrice=raw.match(/(?:YOUR\s+PRICE|SALE\s+PRICE)\D{0,14}\$?\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})/i);
+    if(preferredPrice)add(out,'price',preferredPrice[1].replace(/,/g,''),'high','Your/Sale price');
+
     for(const line of lines){
       const u=line.toUpperCase();
       let m=u.match(/(?:VIN|VIN\s*#|VEHICLE\s*IDENTIFICATION(?:\s*NUMBER)?)\s*[:#-]?\s*([A-Z0-9 -]{17,25})/);
@@ -655,51 +734,42 @@ const PhotoInfo = (()=>{
       if(m){const y=normalizeYear(m[1]); if(y)add(out,'year',y,'high','Labeled year');}
       m=u.match(/\bMAKE\s*[:#-]?\s*([A-Z][A-Z -]{1,20})/);
       if(m){const mk=makeValue(m[1]); if(mk)add(out,'make',mk,'high','Labeled make');}
-      m=u.match(/\bMODEL\s*[:#-]?\s*([A-Z0-9][A-Z0-9 .+\/-]{0,35})/);
-      if(m){
-        let val=m[1].replace(/\s+(MAKE|YEAR|VIN|STK|STOCK)\b.*$/,'').trim().replace(/[.:;-]+$/,'');
-        if(val)add(out,'model',val,'high','Labeled model');
-      }
-      m=line.match(/(?:YOUR\s+PRICE|SALE\s+PRICE|PRICE)\D{0,12}\$?\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})/i);
-      if(m) add(out,'price',m[1].replace(/,/g,''),'high','Labeled price');
+      m=u.match(/\bMODEL\s*[:#-]?\s*([A-Z0-9][A-Z0-9 .+\/\-©®™]{0,35})/);
+      if(m){const val=modelValue(m[1].replace(/\s+(MAKE|YEAR|VIN|STK|STOCK)\b.*$/,'').trim());if(val)add(out,'model',val,'high','Labeled model');}
+      if(!out.price){m=line.match(/(?:PRICE)\D{0,12}\$?\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})/i);if(m)add(out,'price',m[1].replace(/,/g,''),'suggested','Price found near price label');}
       m=line.match(/(?:ODOMETER|MILEAGE)\D{0,12}([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{1,6})\s*(KM|KMS|MI|MILES)?/i);
       if(m){add(out,'odometer',m[1].replace(/,/g,''),'high','Labeled odometer');if(m[2])add(out,'odometerUnit',/^MI/i.test(m[2])?'MI':'KM','high','Odometer unit');}
     }
-    if(!out.year){
-      const ys=upper.match(/\b(?:19|20)\d{2}\b/g)||[];
-      for(const y of ys){const ny=normalizeYear(y);if(ny){add(out,'year',ny,'suggested','Year found in image');break;}}
-    }
-    if(!out.make){
-      for(const [k,v] of Object.entries(MAKES)){if(new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`,'i').test(upper)){add(out,'make',v,'suggested','Make name found in image');break;}}
-    }
-    if(!out.odometer){
-      const m=raw.match(/\b([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})\s*(KM|KMS|MI|MILES)\b/i);
-      if(m){add(out,'odometer',m[1].replace(/,/g,''),'suggested','Distance found in image');add(out,'odometerUnit',/^MI/i.test(m[2])?'MI':'KM','suggested','Distance unit');}
-    }
-    if(!out.price){
-      const m=raw.match(/\$\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})/);
-      if(m)add(out,'price',m[1].replace(/,/g,''),'suggested','Dollar amount found in image');
-    }
+    // Secondary heading pass is still local/coherent; do it before any page-wide fallbacks.
     if((!out.model || !out.make || !out.year)){
       for(const line of lines){
-        const m=line.match(/\b((?:19|20)\d{2})\s+([A-Za-z][A-Za-z-]+)\s+(.{1,45})$/);
-        if(!m)continue;
-        const y=normalizeYear(m[1]), mk=makeValue(m[2]);
-        if(y && !out.year)add(out,'year',y,'suggested','Vehicle heading');
-        if(mk && !out.make)add(out,'make',mk,'suggested','Vehicle heading');
-        if(mk && !out.model){
-          let md=m[3].replace(/\s+(?:IN\s+STOCK|PRICE|STK|VIN).*$/i,'').trim();
-          if(md)add(out,'model',md,'suggested','Vehicle heading');
-        }
-        if(y||mk)break;
+        const parts=headingParts(line);if(!parts)continue;
+        if(!out.year)add(out,'year',parts.year,'suggested','Vehicle heading');
+        if(!out.make)add(out,'make',parts.make,'suggested','Vehicle heading');
+        if(!out.model)add(out,'model',parts.model,'suggested','Vehicle heading');
+        break;
+      }
+    }
+    // Odometer is allowed to live elsewhere on the page, as it often does on dealership sites.
+    if(!out.odometer){
+      const m=raw.match(/\b([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})\s*(KM|KMS|MI|MILES)\b/i);
+      if(m){add(out,'odometer',m[1].replace(/,/g,''),'suggested','Distance found elsewhere in image');add(out,'odometerUnit',/^MI/i.test(m[2])?'MI':'KM','suggested','Distance unit');}
+    }
+    if(!out.price){const m=raw.match(/\$\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,6})/);if(m)add(out,'price',m[1].replace(/,/g,''),'suggested','Dollar amount found in image');}
+    // Avoid grabbing a dealership brand as Make. Only use a page-wide make fallback on a line
+    // that is not obviously store/location branding and that also contains a plausible model/year context.
+    if(!out.make){
+      for(const line of lines){
+        if(/AVAILABLE\s+AT|GO\s+INFINITI|INFINITI\s+(?:SOUTH|NORTH|WEST|EAST)|REFERENCE\s+LINKS|DEALER/i.test(line))continue;
+        const parts=headingParts(line);if(parts){add(out,'make',parts.make,'suggested','Make from vehicle heading');if(!out.year)add(out,'year',parts.year,'suggested','Year from vehicle heading');if(!out.model)add(out,'model',parts.model,'suggested','Model from vehicle heading');break;}
       }
     }
     if(!out.stock){
-      for(const line of lines){
-        const c=line.toUpperCase().replace(/[^A-Z0-9-]/g,'').trim();
-        if(c.length<5||c.length>12||validVin(c))continue;
-        if(/^(?=.*[A-Z])(?=.*\d)[A-Z0-9-]+$/.test(c) && !/^(KM|KMS|MI|MILES)$/i.test(c)){
-          add(out,'stock',c,'suggested','Possible dealer stock number');break;
+      outer: for(const line of lines){
+        const tokens=line.toUpperCase().match(/\b[A-Z0-9-]{5,12}\b/g)||[];
+        for(const c of tokens){
+          if(validVin(c)||/^(?:19|20)\d{2}$/.test(c)||/^(KM|KMS|MI|MILES)$/i.test(c))continue;
+          if(/^(?=.*[A-Z])(?=.*\d)[A-Z0-9-]+$/.test(c)){add(out,'stock',c,'suggested','Possible dealer stock number');break outer;}
         }
       }
     }
@@ -734,23 +804,24 @@ const PhotoInfo = (()=>{
   }
   async function scan(files,onProgress=()=>{}){
     files=[...files];if(!files.length)throw new Error('Choose at least one photo.');
-    const T=await loadTesseract();let worker=null;let allText='',barcodes=[];
+    const T=await loadTesseract();let worker=null;let allText='',barcodes=[],layoutLines=[];
     try{
       worker=await T.createWorker('eng',T.OEM?.LSTM_ONLY??1,{logger:m=>{if(m?.status)onProgress({stage:m.status,progress:m.progress??0})}});
       await worker.setParameters?.({preserve_interword_spaces:'1',user_defined_dpi:'300'}).catch?.(()=>{});
       for(let i=0;i<files.length;i++){
         onProgress({stage:`Reading photo ${i+1} of ${files.length}`,progress:i/files.length});
         barcodes.push(...await barcodeValues(files[i]));
-        const r=await worker.recognize(files[i]);allText+=(r?.data?.text||'')+'\n';
-        const first=parse(allText,barcodes);
+        const r=await worker.recognize(files[i],{}, {text:true,blocks:true});
+        allText+=(r?.data?.text||'')+'\n';layoutLines.push(...flattenLayoutLines(r?.data?.blocks||[],i));
+        const first=parse(allText,barcodes,layoutLines);
         if(i===files.length-1 && (Object.keys(first).length<4 || !first.vin || !first.stock)){
           onProgress({stage:'Trying enhanced key-tag / label read',progress:.92});
           const enhanced=await enhancedOcrImage(files[i]);
-          if(enhanced!==files[i]){const r2=await worker.recognize(enhanced);allText+=(r2?.data?.text||'')+'\n';}
+          if(enhanced!==files[i]){const r2=await worker.recognize(enhanced,{}, {text:true,blocks:true});allText+=(r2?.data?.text||'')+'\n';layoutLines.push(...flattenLayoutLines(r2?.data?.blocks||[],i));}
         }
       }
-      onProgress({stage:'Finding vehicle information',progress:1});
-      return {fields:parse(allText,barcodes),rawText:allText.trim(),barcodes};
+      onProgress({stage:'Finding grouped vehicle information',progress:1});
+      return {fields:parse(allText,barcodes,layoutLines),rawText:allText.trim(),barcodes};
     }finally{if(worker)await worker.terminate().catch(()=>{});}
   }
   return {scan};
@@ -779,7 +850,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.6.1</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.6.1</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.6.2</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.6.2</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
   async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
   async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
@@ -1058,7 +1129,7 @@ const App = (()=>{
     $('#listing-vehicle').onchange=async e=>{l.vehicleId=e.target.value;v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;if(v){defaultsFromVehicle();const f=$('#listing-form');f.year.value=v.year||'';f.make.value=v.make||'';f.model.value=v.model||'';f.price.value=v.price||'';f.odometer.value=v.odometer||'';f.odometerUnit.value=v.odometerUnit||'KM'}else l.photoOrder=[];await photoArea()};
     $('#listing-form').onsubmit=async e=>{e.preventDefault();const action=e.submitter?.dataset?.action||'save';const submit=e.submitter||e.target.querySelector('button[type=submit]');e.target.querySelectorAll('button[type=submit]').forEach(b=>b.disabled=true);submit.textContent='Saving…';const fd=new FormData(e.target);['vehicleId','marketplaceTitle','year','make','model','odometerUnit','locationId','description','status','facebookUrl'].forEach(k=>l[k]=fd.get(k)?.trim?.()??fd.get(k));l.price=fd.get('price')?+fd.get('price'):'';l.odometer=fd.get('odometer')?+fd.get('odometer'):'';l.createdAt=l.createdAt||Date.now();l.updatedAt=Date.now();await DB.put('listings',l);await syncListingNow(l);modal.close();if(action==='post')showPostingAssistant(l.id);else go('listings')};modal.showModal();
   }
-  async function showCreateChooser(){modalBody.innerHTML=`<div class="modal-head"><h2>Create</h2><button class="close">×</button></div><div class="actions" style="display:grid"><button class="btn primary" id="c-listing">📢 Marketplace Listing</button><button class="btn" id="c-vehicle">🚙 Vehicle Profile</button></div>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#c-listing').onclick=()=>{modal.close();showListingForm({})};$('#c-vehicle').onclick=()=>showVehicleForm();modal.showModal()}
+  async function showCreateChooser(){modalBody.innerHTML=`<div class="modal-head"><h2>Create</h2><button class="close">×</button></div><div class="actions" style="display:grid"><button class="btn primary" id="c-vehicle">🚙 Vehicle Profile</button><button class="btn" id="c-listing">📄 Marketplace Listing</button></div>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#c-vehicle').onclick=()=>showVehicleForm();$('#c-listing').onclick=()=>{modal.close();showListingForm({})};modal.showModal()}
   async function renderSettings(){
     const locs=await DB.all('locations'),storeName=await setting('storeName',''),userName=await setting('userName',''),folderUrl=await setting('storeFolderUrl',''),folderName=await setting('storeFolderName',''),ret=await setting('retentionDays',120),clientId=await setting('googleClientId',''),apiKey=await setting('googleApiKey',''),projectNumber=await setting('googleProjectNumber',''),publicShare=await setting('publicShareEnabled',true),directoryStoreName=await setting('directoryStoreName',storeName),directoryStoreAddress=await setting('directoryStoreAddress',''),directoryDirectionsUrl=await setting('directoryDirectionsUrl','');const ds=await DriveSync.getStatus();
     const dot=!ds.isHttps?'bad':ds.connected?'good':ds.configured?'warn':'';const statusText=!ds.isHttps?'Open the HTTPS-hosted build to connect Google Drive':ds.connected?'Google Drive authorized for this session':ds.configured?'Ready to sign in to Google Drive':'Google credentials not configured yet';
@@ -1072,7 +1143,7 @@ const App = (()=>{
       <div class="actions"><button class="btn primary" id="save-store">Save Store Settings</button><button class="btn dark" id="init-store">Initialize / Repair Store Structure</button></div>
       ${ds.structure?.inventoryId?`<div class="notice" style="margin-top:12px"><strong>Store structure connected ✓</strong><br>Users, Administration, Inventory, ${esc(userName||'your user')} and Listings are registered.</div>`:''}
       <details class="credentials"><summary>Test developer setup (Google Cloud credentials)</summary><div class="help" style="margin:8px 0 12px">This is only exposed in the test build. A release version will have LotKeys' credentials built in.</div><div class="field"><label>OAuth Web Client ID</label><input id="google-client" value="${esc(clientId)}" placeholder="…apps.googleusercontent.com"></div><div class="field"><label>Google Picker API Key</label><input id="google-key" value="${esc(apiKey)}" placeholder="AIza…"></div><div class="field"><label>Google Cloud Project Number</label><input id="google-project-number" value="${esc(projectNumber)}" inputmode="numeric" placeholder="123456789012"></div><button class="btn" id="save-google">Save Google Test Credentials</button></details></div>
-    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;├── LotKeys Store Config.json<br>│&nbsp;&nbsp;└── Vehicle Info Directory Template (Google Doc)<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── 2022 Infiniti Q60 - PH80225<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Info Directory.pdf<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;├── LotKeys.json<br>│&nbsp;&nbsp;└── Vehicle Info Directory Template (Google Doc)<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── 2022 Infiniti Q60 - PH80225<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Info Directory.pdf<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Saved posting locations</h2><small>${locs.length}</small></div><div id="loc-list">${locs.map(x=>`<div class="card" style="box-shadow:none"><strong>${esc(x.name)}</strong><div class="small muted">${esc(x.postalCode||x.address||[x.lat,x.lng].filter(Boolean).join(', ')||'No postal code / pin details yet')}</div><div class="actions"><button class="btn ghost edit-loc" data-id="${x.id}">Edit</button><button class="btn danger del-loc" data-id="${x.id}">Delete</button></div></div>`).join('')}</div><button class="btn" id="add-loc">＋ Add Location</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Analytics retention</h2></div><div class="field"><label>Rolling history (days)</label><input id="ret-days" type="number" min="7" max="365" value="${esc(ret)}"></div><button class="btn" id="save-ret">Save & prune</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Local test backup</h2></div><div class="split"><button class="btn" id="export-json">Export JSON</button><label class="btn" style="text-align:center">Import JSON<input id="import-json" type="file" accept="application/json" hidden></label></div><div class="help">This local backup is for testing. Drive remains the shared store copy once sync is enabled.</div></div>`;

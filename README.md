@@ -1,4 +1,4 @@
-# LotKeys Drive Test v0.6.1
+# LotKeys Drive Test v0.6.2
 
 Adds the customer-facing **Vehicle Info Directory** system.
 
@@ -109,6 +109,15 @@ UI cleanup: the **Create Listing → Vehicle Profile** selector now displays sav
 # LotKeys Drive Test v0.3
 
 This is the first hosted test build that can write real vehicle and listing data into Google Drive.
+
+## v0.6.2 changes
+
+- Create menu now puts **🚙 Vehicle Profile** first and uses **📄 Marketplace Listing** second.
+- CARFAX history checkboxes keep all three choices in one row with reliable spacing between each box and label.
+- Vehicle Info Directory generation re-resolves **Administration / Vehicle Info Directory Template** before every generation. The Administration template is now the source of truth instead of a stale cached template ID.
+- **Info From Photo** now prioritizes a grouped **Year + Make + Model** heading and nearby **STK/VIN** evidence before page-wide fallbacks. This prevents dealership branding such as Infiniti from overriding the actual vehicle make on website screenshots.
+- Odometer/KM may still be recovered from elsewhere on the image because dealership sites often place mileage in a separate section.
+- Sale/Your Price is preferred over a regular/list price when both are visible.
 
 ## What is implemented
 
