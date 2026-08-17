@@ -1,4 +1,23 @@
-# LotKeys Drive Test v0.5.10
+# LotKeys Drive Test v0.6
+
+Adds the customer-facing **Vehicle Info Directory** system.
+
+## New in v0.6
+- Vehicle Profile fields for optional Original Vehicle Listing URL and CARFAX URL.
+- User-controlled CARFAX badges: One Owner, Low Kilometres, No Reported Accidents.
+- Store-level customer directory name, address and directions URL.
+- An editable Google Doc template named `Vehicle Info Directory Template` in Administration.
+- Every synced vehicle generates/updates `Vehicle Info Directory.pdf` inside Shared.
+- PDF links to the original listing (when supplied), Photos, Videos, Inspections & Documents, CARFAX (when supplied), and store directions.
+- Existing photo/video/document and Facebook Posting Assistant behavior remains.
+
+## One-time Google Cloud change
+Enable **Google Docs API** in the same LotKeys Google Cloud project. No new OAuth client is required; the existing `drive.file` scope is accepted by the Docs API.
+
+## Template rule
+Administrators can edit branding, graphics, fonts, wording and layout. Keep the `{{...}}` placeholder tokens intact so LotKeys can replace them when creating each PDF.
+
+# LotKeys Drive Test v0.6
 
 - Facebook Posting Assistant displays prices as formatted Canadian currency (for example `$18,488`) while the Copy button still sends the plain numeric value (`18488`) for Facebook compatibility.
 

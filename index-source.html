@@ -35,7 +35,7 @@
       <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.5.10</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.6</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -149,6 +149,7 @@ function buildVehicleProfileName({stock='',year='',make='',model=''}={}){
 const DriveSync = (() => {
   const FOLDER_MIME = 'application/vnd.google-apps.folder';
   const SHEET_MIME = 'application/vnd.google-apps.spreadsheet';
+  const DOC_MIME = 'application/vnd.google-apps.document';
   const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
   let accessToken = '';
   let expiresAt = 0;
@@ -171,6 +172,9 @@ const DriveSync = (() => {
       userName: (await setting('userName','')).trim(),
       storeName: (await setting('storeName','')).trim(),
       publicShareEnabled: await setting('publicShareEnabled', true),
+      directoryStoreName: (await setting('directoryStoreName','')).trim(),
+      directoryStoreAddress: (await setting('directoryStoreAddress','')).trim(),
+      directoryDirectionsUrl: (await setting('directoryDirectionsUrl','')).trim(),
     };
   }
   async function waitForGoogle(timeoutMs=12000){
@@ -307,6 +311,99 @@ const DriveSync = (() => {
     if(fileId){ await updateTextFile(fileId,blob); return driveGet(fileId,'id,name,webViewLink,appProperties'); }
     return multipartCreate(blob,{name,parents:[parentId],appProperties});
   }
+  async function copyDriveFile(fileId,name,parentId,appProperties={}){
+    return apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}/copy?supportsAllDrives=true&fields=id,name,mimeType,webViewLink,appProperties`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,parents:[parentId],appProperties})
+    });
+  }
+  async function docsBatchUpdate(documentId,requests){
+    return apiFetch(`https://docs.googleapis.com/v1/documents/${encodeURIComponent(documentId)}:batchUpdate`,{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({requests})
+    });
+  }
+  async function docsGet(documentId){
+    return apiFetch(`https://docs.googleapis.com/v1/documents/${encodeURIComponent(documentId)}`);
+  }
+  async function exportGoogleFileBlob(fileId,mimeType='application/pdf',retry=true){
+    const token=await authorize(false);
+    const url=`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(fileId)}/export?mimeType=${encodeURIComponent(mimeType)}`;
+    const res=await fetch(url,{headers:{Authorization:`Bearer ${token}`}});
+    if(res.status===401 && retry){accessToken='';expiresAt=0;await authorize(true);return exportGoogleFileBlob(fileId,mimeType,false)}
+    if(!res.ok){let detail='';try{detail=(await res.json())?.error?.message||''}catch{detail=await res.text()}throw new Error(detail||`Could not export Google file (${res.status})`)}
+    return res.blob();
+  }
+  function walkDocElements(elements,cb){
+    for(const el of elements||[]){
+      if(el.paragraph) for(const pe of el.paragraph.elements||[]) if(pe.textRun) cb(pe.textRun.content||'',pe.startIndex,pe.endIndex);
+      if(el.table) for(const row of el.table.tableRows||[]) for(const cell of row.tableCells||[]) walkDocElements(cell.content||[],cb);
+      if(el.tableOfContents) walkDocElements(el.tableOfContents.content||[],cb);
+    }
+  }
+  async function linkTextInDoc(documentId,label,url){
+    if(!label||!url)return;
+    const doc=await docsGet(documentId);const req=[];
+    walkDocElements(doc.body?.content||[],(text,start)=>{let at=0;while((at=text.indexOf(label,at))>=0){req.push({updateTextStyle:{range:{startIndex:start+at,endIndex:start+at+label.length},textStyle:{link:{url},foregroundColor:{color:{rgbColor:{blue:0.65,green:0.25,red:0.05}}},underline:true},fields:'link,foregroundColor,underline'}});at+=label.length;}});
+    if(req.length)await docsBatchUpdate(documentId,req);
+  }
+  function defaultDirectoryTemplate(){
+    return `{{STORE_NAME}}\n{{STORE_ADDRESS}}\n{{DIRECTIONS_LINK}}\n\n{{VEHICLE_TITLE}}\nStock # {{STOCK_NUMBER}}\n{{ODOMETER}}\n\n{{VEHICLE_LISTING_LINK}}\n\n{{PHOTOS_LINK}}\n\n{{VIDEOS_LINK}}\n\n{{DOCUMENTS_LINK}}\n\n{{CARFAX_LINK}}\n\nCARFAX - VEHICLE HISTORY\n{{BADGE_ONE_OWNER}}   {{BADGE_LOW_KM}}   {{BADGE_NO_ACCIDENTS}}\n`;
+  }
+  async function ensureDirectoryTemplate(existingStructure=null){
+    const s=existingStructure||await structure();
+    let templateId=await setting('directoryTemplateFileId','');let t=null;
+    if(templateId)t=await driveGet(templateId,'id,name,mimeType,webViewLink').catch(()=>null);
+    if(!t)t=await findChildByAppProperty(s.adminId,'lotkeysRole','vehicleInfoDirectoryTemplate',DOC_MIME);
+    if(!t)t=await findChildByName(s.adminId,'Vehicle Info Directory Template',DOC_MIME);
+    if(!t){
+      t=await createMetadata({name:'Vehicle Info Directory Template',mimeType:DOC_MIME,parents:[s.adminId],appProperties:{lotkeysRole:'vehicleInfoDirectoryTemplate'}},'id,name,mimeType,webViewLink,appProperties');
+      try{await docsBatchUpdate(t.id,[{insertText:{location:{index:1},text:defaultDirectoryTemplate()}}]);}
+      catch(err){await trashFile(t.id).catch(()=>{});throw new Error('Vehicle Info Directory template could not be created. Enable the Google Docs API for the LotKeys Google Cloud project, then try again. '+(err.message||err));}
+    }
+    await setSetting('directoryTemplateFileId',t.id);return t;
+  }
+  async function upsertPdf(fileId,name,parentId,blob,appProperties={}){
+    if(fileId){await updateTextFile(fileId,blob);const cur=await driveGet(fileId,'id,name,webViewLink,appProperties').catch(()=>null);if(cur){if(cur.name!==name)await patchMetadata(fileId,{name});return driveGet(fileId,'id,name,webViewLink,appProperties')}}
+    return multipartCreate(blob,{name,parents:[parentId],appProperties});
+  }
+  async function generateVehicleInfoDirectory(v){
+    if(!v?.drive?.sharedFolderId)return null;
+    const s=await structure();const c=await config();const template=await ensureDirectoryTemplate(s);
+    const temp=await copyDriveFile(template.id,`LotKeys Temp - ${v.id}`,v.drive.profileFolderId,{lotkeysRole:'vehicleDirectoryTemp',lotkeysVehicleId:v.id});
+    const title=[v.year,v.make,v.model].filter(Boolean).join(' ');
+    const odometer=v.odometer!==''&&v.odometer!=null?`${Number(v.odometer).toLocaleString()} ${v.odometerUnit||'KM'}`:'';
+    const values={
+      '{{STORE_NAME}}':c.directoryStoreName||c.storeName||'',
+      '{{STORE_ADDRESS}}':c.directoryStoreAddress||'',
+      '{{DIRECTIONS_LINK}}':c.directoryDirectionsUrl?'📍 GET DIRECTIONS':'',
+      '{{VEHICLE_TITLE}}':title,
+      '{{STOCK_NUMBER}}':v.stock||'',
+      '{{ODOMETER}}':odometer,
+      '{{VEHICLE_LISTING_LINK}}':v.originalListingUrl?'🚘 VIEW VEHICLE LISTING':'',
+      '{{PHOTOS_LINK}}':'📸 VIEW PHOTOS',
+      '{{VIDEOS_LINK}}':'🎥 VIEW VIDEOS',
+      '{{DOCUMENTS_LINK}}':'🔧 VIEW INSPECTIONS & DOCUMENTS',
+      '{{CARFAX_LINK}}':v.carfaxUrl?'📋 VIEW CARFAX REPORT':'',
+      '{{BADGE_ONE_OWNER}}':v.carfaxOneOwner?'✅ ONE OWNER':'',
+      '{{BADGE_LOW_KM}}':v.carfaxLowKm?'✅ LOW KILOMETRES':'',
+      '{{BADGE_NO_ACCIDENTS}}':v.carfaxNoAccidents?'✅ NO REPORTED ACCIDENTS':''
+    };
+    try{
+      await docsBatchUpdate(temp.id,Object.entries(values).map(([find,replaceText])=>({replaceAllText:{containsText:{text:find,matchCase:true},replaceText}})));
+      const links=[
+        ['📍 GET DIRECTIONS',c.directoryDirectionsUrl],['🚘 VIEW VEHICLE LISTING',v.originalListingUrl],
+        ['📸 VIEW PHOTOS',`https://drive.google.com/drive/folders/${v.drive.photosFolderId}`],
+        ['🎥 VIEW VIDEOS',`https://drive.google.com/drive/folders/${v.drive.videosFolderId}`],
+        ['🔧 VIEW INSPECTIONS & DOCUMENTS',`https://drive.google.com/drive/folders/${v.drive.documentsFolderId}`],
+        ['📋 VIEW CARFAX REPORT',v.carfaxUrl]
+      ];
+      for(const [label,url] of links)if(url)await linkTextInDoc(temp.id,label,url);
+      const pdfBlob=await exportGoogleFileBlob(temp.id,'application/pdf');
+      const old=v.drive.directoryPdfId||'';
+      const pdf=await upsertPdf(old,'Vehicle Info Directory.pdf',v.drive.sharedFolderId,pdfBlob,{lotkeysRole:'vehicleInfoDirectoryPdf',lotkeysVehicleId:v.id});
+      v.drive.directoryPdfId=pdf.id;v.drive.directoryPdfUrl=pdf.webViewLink||`https://drive.google.com/file/d/${pdf.id}/view`;
+      return pdf;
+    } finally { await trashFile(temp.id).catch(()=>{}); }
+  }
   async function setAnyoneReader(folderId){
     const p=await apiFetch(`https://www.googleapis.com/drive/v3/files/${encodeURIComponent(folderId)}/permissions?supportsAllDrives=true&fields=permissions(id,type,role)`).catch(()=>({permissions:[]}));
     if((p.permissions||[]).some(x=>x.type==='anyone'&&x.role==='reader')) return true;
@@ -331,6 +428,7 @@ const DriveSync = (() => {
     const structure={rootId:root.id,rootName:root.name,usersId:users.id,adminId:admin.id,inventoryId:inventory.id,userId:user.id,listingsId:listings.id,updatedAt:new Date().toISOString()};
     await setSetting('driveStoreStructure',structure);
     await syncStoreConfig(structure).catch(()=>{});
+    await ensureDirectoryTemplate(structure).catch(err=>console.warn('Directory template not ready',err));
     return structure;
   }
   async function structure(){
@@ -341,7 +439,7 @@ const DriveSync = (() => {
   async function syncStoreConfig(existingStructure=null){
     const s=existingStructure||await structure();
     const c=await config();const locations=await DB.all('locations');
-    const data={schemaVersion:2,app:'LotKeys',storeName:c.storeName,userName:c.userName,storeFolderId:c.storeFolderId,locations:locations.map(({id,name,postalCode,address,lat,lng,updatedAt})=>({id,name,postalCode,address,lat,lng,updatedAt})),updatedAt:new Date().toISOString()};
+    const data={schemaVersion:3,app:'LotKeys',storeName:c.storeName,userName:c.userName,storeFolderId:c.storeFolderId,directory:{storeName:c.directoryStoreName||c.storeName,address:c.directoryStoreAddress,directionsUrl:c.directoryDirectionsUrl,templateFileId:await setting('directoryTemplateFileId','')},locations:locations.map(({id,name,postalCode,address,lat,lng,updatedAt})=>({id,name,postalCode,address,lat,lng,updatedAt})),updatedAt:new Date().toISOString()};
     let fileId=await setting('storeConfigFileId','');
     if(!fileId){ const found=await findChildByAppProperty(s.adminId,'lotkeysRole','storeConfig'); fileId=found?.id||''; }
     const f=await upsertJson({fileId,name:'LotKeys Store Config.json',parentId:s.adminId,data,appProperties:{lotkeysRole:'storeConfig'}});
@@ -362,6 +460,9 @@ const DriveSync = (() => {
       ['Videos Folder',d.videosFolderId?`https://drive.google.com/drive/folders/${d.videosFolderId}`:''],
       ['Documents Folder',d.documentsFolderId?`https://drive.google.com/drive/folders/${d.documentsFolderId}`:''],
       ['Shared Folder',d.sharedFolderId?`https://drive.google.com/drive/folders/${d.sharedFolderId}`:''],
+      ['Vehicle Info Directory',d.directoryPdfUrl||''],
+      ['Original Vehicle Listing URL',v.originalListingUrl||''],['CARFAX URL',v.carfaxUrl||''],
+      ['CARFAX - One Owner',v.carfaxOneOwner?'TRUE':'FALSE'],['CARFAX - Low Kilometres',v.carfaxLowKm?'TRUE':'FALSE'],['CARFAX - No Reported Accidents',v.carfaxNoAccidents?'TRUE':'FALSE'],
       ['Description',v.description||''],['Profile ID',v.id],['Cover Photo File ID',v.photos?.[0]?.driveFileId||''],['Updated',new Date().toISOString()]
     ];
     return apiFetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values/A1:B${values.length}?valueInputOption=RAW`,{
@@ -419,6 +520,8 @@ const DriveSync = (() => {
     if(!sheet) sheet=await createSpreadsheet(profile.id,v.id);
     v.drive.adminSheetId=sheet.id;v.drive.adminSheetUrl=sheet.webViewLink||`https://docs.google.com/spreadsheets/d/${sheet.id}/edit`;
     await writeVehicleSheet(sheet.id,v);
+    await generateVehicleInfoDirectory(v);
+    await writeVehicleSheet(sheet.id,v);
     v.syncStatus='synced';v.lastDriveSyncAt=Date.now();v.syncError='';
     await DB.put('vehicles',v);
     return v;
@@ -464,7 +567,7 @@ const DriveSync = (() => {
     await setSetting('storeFolderId',meta.id);await setSetting('storeFolderName',meta.name);await setSetting('storeFolderUrl',meta.webViewLink||url);await setSetting('driveStoreStructure',null);return meta;
   }
   async function getStatus(){ const c=await config();const s=await setting('driveStoreStructure',null);return {isHttps:isHttps(),configured:!!c.clientId,hasPickerConfig:!!(c.apiKey&&c.projectNumber),connected:connected(),storeFolderId:c.storeFolderId,storeFolderName:c.storeFolderName,structure:s}; }
-  return {authorize,disconnect,connected,ready,chooseStoreFolder,useFolderUrl,ensureStoreStructure,syncVehicle,deleteVehicle,syncListing,deleteListing,syncStoreConfig,getStatus,config,fetchFileBlob};
+  return {authorize,disconnect,connected,ready,chooseStoreFolder,useFolderUrl,ensureStoreStructure,ensureDirectoryTemplate,syncVehicle,deleteVehicle,syncListing,deleteListing,syncStoreConfig,getStatus,config,fetchFileBlob};
 })();
 </script>
 
@@ -639,7 +742,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.5.10</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.5.10</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.6</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.6</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
   async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
   async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
@@ -711,13 +814,13 @@ const App = (()=>{
     <div id="master-photo-area"></div>
     <div class="section-title"><h2>Videos</h2><small>${(v.videos||[]).length}</small></div><div id="master-video-area">${videoGalleryHtml(v.videos)}</div>
     <div class="section-title"><h2>Attachments</h2><small>${(v.attachments||[]).length}</small></div><div id="master-attachment-area">${attachmentGalleryHtml(v.attachments)}</div>
-    <div class="hr"></div><div class="kv"><div>Stock #</div><strong>${esc(v.stock||'—')}</strong><div>VIN</div><span>${esc(v.vin||'—')}</span><div>Vehicle</div><span>${esc([v.year,v.make,v.model].filter(Boolean).join(' '))}</span><div>Price</div><span>${money(v.price)}</span><div>Odometer</div><span>${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</span><div>Drive sync</div><span class="${v.syncStatus==='synced'?'sync-ok':v.syncStatus==='error'?'sync-bad':'sync-warn'}">${v.syncStatus==='synced'?'Synced ✓':v.syncStatus==='error'?'Needs attention':'Local / pending'}</span><div>Shared folder</div><span>${v.sharedFolderUrl?'Connected automatically':'Will be created automatically'}</span></div>
-    <div class="share-actions">${v.sharedFolderUrl?`<button class="btn primary" id="copy-share">Copy Shared Link</button><button class="btn ghost" id="open-share">Open Shared Folder</button>`:`<button class="btn" disabled>Shared Link available after Drive sync</button>`}<button class="btn ghost" id="sync-v">↻ Sync Vehicle</button></div>${v.shareWarning?`<div class="notice warning" style="margin-top:8px">Shared folder exists, but public link sharing could not be enabled: ${esc(v.shareWarning)}</div>`:''}${v.syncError?`<div class="notice warning" style="margin-top:8px">Last sync error: ${esc(v.syncError)}</div>`:''}
+    <div class="hr"></div><div class="kv"><div>Stock #</div><strong>${esc(v.stock||'—')}</strong><div>VIN</div><span>${esc(v.vin||'—')}</span><div>Vehicle</div><span>${esc([v.year,v.make,v.model].filter(Boolean).join(' '))}</span><div>Price</div><span>${money(v.price)}</span><div>Odometer</div><span>${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</span><div>Drive sync</div><span class="${v.syncStatus==='synced'?'sync-ok':v.syncStatus==='error'?'sync-bad':'sync-warn'}">${v.syncStatus==='synced'?'Synced ✓':v.syncStatus==='error'?'Needs attention':'Local / pending'}</span><div>Shared folder</div><span>${v.sharedFolderUrl?'Connected automatically':'Will be created automatically'}</span><div>Original listing</div><span>${v.originalListingUrl?`<a href="${esc(v.originalListingUrl)}" target="_blank">Open</a>`:'—'}</span><div>CARFAX</div><span>${v.carfaxUrl?`<a href="${esc(v.carfaxUrl)}" target="_blank">Open</a>`:'—'}</span></div>
+    <div class="share-actions">${v.sharedFolderUrl?`<button class="btn primary" id="copy-share">Copy Shared Link</button><button class="btn ghost" id="open-share">Open Shared Folder</button>`:`<button class="btn" disabled>Shared Link available after Drive sync</button>`}${v.drive?.directoryPdfUrl?`<button class="btn ghost" id="open-directory">Open Vehicle Info Directory</button>`:''}<button class="btn ghost" id="sync-v">↻ Sync Vehicle</button></div>${v.shareWarning?`<div class="notice warning" style="margin-top:8px">Shared folder exists, but public link sharing could not be enabled: ${esc(v.shareWarning)}</div>`:''}${v.syncError?`<div class="notice warning" style="margin-top:8px">Last sync error: ${esc(v.syncError)}</div>`:''}
     <div class="section-title"><h2>Vehicle profile description</h2></div><div class="card" style="box-shadow:none">${esc(v.description||'No description yet.').replace(/\n/g,'<br>')}</div>
     <div class="actions"><button class="btn primary" id="create-from">Create Listing</button><button class="btn" id="edit-v">Edit Vehicle</button><button class="btn danger" id="delete-v">Delete</button></div>`;
     renderMasterPhotos();
     modalBody.querySelector('.close').onclick=()=>modal.close();$('#create-from').onclick=()=>{modal.close();showListingForm({vehicleId:id})};$('#edit-v').onclick=()=>showVehicleForm(v);
-    if(v.sharedFolderUrl){$('#copy-share').onclick=()=>copyText(v.sharedFolderUrl,'Shared folder link copied');$('#open-share').onclick=()=>window.open(v.sharedFolderUrl,'_blank')}
+    if(v.sharedFolderUrl){$('#copy-share').onclick=()=>copyText(v.sharedFolderUrl,'Shared folder link copied');$('#open-share').onclick=()=>window.open(v.sharedFolderUrl,'_blank')}if(v.drive?.directoryPdfUrl&&$('#open-directory'))$('#open-directory').onclick=()=>window.open(v.drive.directoryPdfUrl,'_blank')
     $('#sync-v').onclick=async()=>{await syncVehicleNow(v);modal.close();showVehicle(id)};
     $('#delete-v').onclick=async()=>{if(confirm(`Delete ${v.name}?\n\nIf this vehicle is synced, LotKeys will also move its Vehicle Profile folder to Google Drive Trash.`)){const ls=await DB.byIndex('listings','vehicleId',id);if(v.drive?.profileFolderId){try{await DriveSync.deleteVehicle(v)}catch(err){if(!confirm('Could not remove the Drive folder: '+err.message+'\n\nDelete the local vehicle anyway?'))return}}for(const l of ls){try{await DriveSync.deleteListing(l)}catch{}await deleteListingCascade(l.id)}await DB.del('vehicles',id);modal.close();toast('Vehicle deleted');render()}};modal.showModal();
   }
@@ -731,6 +834,9 @@ const App = (()=>{
       <div class="field"><label>Model</label><input name="model" value="${esc(v.model||'')}"></div><div class="field"><label>Price</label><input name="price" inputmode="decimal" value="${esc(v.price||'')}"></div>
       <div class="field"><label>Odometer</label><input name="odometer" inputmode="numeric" value="${esc(v.odometer||'')}"></div><div class="field"><label>Unit</label><select name="odometerUnit"><option ${v.odometerUnit==='KM'?'selected':''}>KM</option><option ${v.odometerUnit==='MI'?'selected':''}>MI</option></select></div>
       <div class="field"><label>VIN #</label><input name="vin" value="${esc(v.vin||'')}"></div><div class="field"><label>STK #</label><input name="stock" value="${esc(v.stock||'')}"></div>
+      <div class="field full"><label>Original Vehicle Listing URL <span class="muted">(optional)</span></label><input name="originalListingUrl" type="url" value="${esc(v.originalListingUrl||'')}" placeholder="https://dealership.example/vehicle/..."><div class="help">Customer reference only; this is not pushed to Facebook Marketplace.</div></div>
+      <div class="field full"><label>CARFAX Link <span class="muted">(optional)</span></label><input name="carfaxUrl" type="url" value="${esc(v.carfaxUrl||'')}" placeholder="https://vhr.carfax.ca/..."><div class="help">Used in the customer Vehicle Info Directory.</div></div>
+      <div class="field full"><label>CARFAX - Vehicle History</label><div class="sync-line"><label><input type="checkbox" name="carfaxOneOwner" ${v.carfaxOneOwner?'checked':''}> One Owner</label><label><input type="checkbox" name="carfaxLowKm" ${v.carfaxLowKm?'checked':''}> Low Kilometres</label><label><input type="checkbox" name="carfaxNoAccidents" ${v.carfaxNoAccidents?'checked':''}> No Reported Accidents</label></div><div class="help">These are user-controlled CARFAX highlights. LotKeys does not guess them from claims/history.</div></div>
       <div class="field full"><label>Vehicle Profile Description</label><textarea name="description" placeholder="Store/customer-facing vehicle information. This is separate from Marketplace copy.">${esc(v.description||'')}</textarea></div>
       <div class="field full"><div class="notice"><strong>Shared folder:</strong> LotKeys creates this automatically in Google Drive. Photos → Shared/Photos, videos → Shared/Videos, and inspections/documents → Shared/Documents.</div></div>
       <div class="field full"><label>Photos</label><input id="vehicle-photos" type="file" accept="image/*" multiple><div class="help">On Android you can choose gallery images; camera capture will be added as a dedicated flow.</div><div id="photo-preview" style="margin-top:10px">${photoPreviewHtml(v.photos)}</div></div>
@@ -771,7 +877,7 @@ const App = (()=>{
     $('#vehicle-photos').onchange=e=>{[...e.target.files].forEach(f=>v.photos.push({id:uid('PH'),name:f.name,type:f.type,blob:f}));rerenderPhotos()};
     $('#vehicle-attachments').onchange=e=>{[...e.target.files].forEach(f=>v.attachments.push({id:uid('ATT'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderAttachments()};
     $('#vehicle-videos').onchange=e=>{[...e.target.files].forEach(f=>v.videos.push({id:uid('VID'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderVideos()};
-    $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saving…';const fd=new FormData(e.target);['year','make','model','vin','stock','description','odometerUnit'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.name=buildVehicleProfileName(v);v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();await DB.put('vehicles',v);await syncVehicleNow(v);modal.close();render()};modal.showModal();
+    $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saving…';const fd=new FormData(e.target);['year','make','model','vin','stock','description','odometerUnit','originalListingUrl','carfaxUrl'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.name=buildVehicleProfileName(v);v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.carfaxOneOwner=fd.get('carfaxOneOwner')==='on';v.carfaxLowKm=fd.get('carfaxLowKm')==='on';v.carfaxNoAccidents=fd.get('carfaxNoAccidents')==='on';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();await DB.put('vehicles',v);await syncVehicleNow(v);modal.close();render()};modal.showModal();
   }
   async function copyText(text,label='Copied'){
     text=String(text??'');
@@ -917,7 +1023,7 @@ const App = (()=>{
   }
   async function showCreateChooser(){modalBody.innerHTML=`<div class="modal-head"><h2>Create</h2><button class="close">×</button></div><div class="actions" style="display:grid"><button class="btn primary" id="c-listing">📢 Marketplace Listing</button><button class="btn" id="c-vehicle">🚙 Vehicle Profile</button></div>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#c-listing').onclick=()=>{modal.close();showListingForm({})};$('#c-vehicle').onclick=()=>showVehicleForm();modal.showModal()}
   async function renderSettings(){
-    const locs=await DB.all('locations'),storeName=await setting('storeName',''),userName=await setting('userName',''),folderUrl=await setting('storeFolderUrl',''),folderName=await setting('storeFolderName',''),ret=await setting('retentionDays',120),clientId=await setting('googleClientId',''),apiKey=await setting('googleApiKey',''),projectNumber=await setting('googleProjectNumber',''),publicShare=await setting('publicShareEnabled',true);const ds=await DriveSync.getStatus();
+    const locs=await DB.all('locations'),storeName=await setting('storeName',''),userName=await setting('userName',''),folderUrl=await setting('storeFolderUrl',''),folderName=await setting('storeFolderName',''),ret=await setting('retentionDays',120),clientId=await setting('googleClientId',''),apiKey=await setting('googleApiKey',''),projectNumber=await setting('googleProjectNumber',''),publicShare=await setting('publicShareEnabled',true),directoryStoreName=await setting('directoryStoreName',storeName),directoryStoreAddress=await setting('directoryStoreAddress',''),directoryDirectionsUrl=await setting('directoryDirectionsUrl','');const ds=await DriveSync.getStatus();
     const dot=!ds.isHttps?'bad':ds.connected?'good':ds.configured?'warn':'';const statusText=!ds.isHttps?'Open the HTTPS-hosted build to connect Google Drive':ds.connected?'Google Drive authorized for this session':ds.configured?'Ready to sign in to Google Drive':'Google credentials not configured yet';
     main.innerHTML=`<div class="card"><div class="section-title" style="margin-top:0"><h2>Google Drive</h2></div><div class="drive-status"><span class="status-dot ${dot}"></span><div><strong>${esc(statusText)}</strong><div class="small muted">${ds.storeFolderName?`Store folder: ${esc(ds.storeFolderName)}`:'No Store folder selected yet'}</div></div></div>
       <div class="actions"><button class="btn primary" id="drive-connect">${ds.connected?'Reconnect Google Drive':'Connect Google Drive'}</button>${ds.connected?'<button class="btn ghost" id="drive-disconnect">Disconnect session</button>':''}</div>
@@ -925,10 +1031,11 @@ const App = (()=>{
       <div class="field"><label>Store Folder</label><input id="set-folder" value="${esc(folderUrl)}" placeholder="Google Drive folder URL (optional fallback)"><div class="help">For the safest Drive permission, use <strong>Choose Store Folder</strong>. Pasting a link only works if this app/account already has OAuth access to that folder.</div></div>
       <div class="actions"><button class="btn" id="pick-store">📁 Choose Store Folder</button><button class="btn ghost" id="use-folder-url">Use Pasted URL</button></div>
       <label class="sync-line small"><input type="checkbox" id="public-share" ${publicShare?'checked':''}> Automatically make each vehicle's <strong>Shared</strong> folder “Anyone with the link can view”</label>
+      <div class="hr"></div><div class="field"><label>Vehicle Info Directory - Store Name</label><input id="directory-store-name" value="${esc(directoryStoreName||storeName)}" placeholder="e.g. Infiniti South Edmonton"></div><div class="field"><label>Store Address</label><input id="directory-store-address" value="${esc(directoryStoreAddress)}" placeholder="2110 103A St SW, Edmonton, AB T6W 2P6"></div><div class="field"><label>Directions URL</label><input id="directory-directions-url" value="${esc(directoryDirectionsUrl)}" placeholder="https://www.google.com/maps/dir/..."></div><div class="actions"><button class="btn ghost" id="open-directory-template">Open / Create Directory Template</button></div><div class="help">The template lives in Administration as a Google Doc. Administrators can change logos, fonts, wording and layout; keep the {{...}} placeholders in the document.</div>
       <div class="actions"><button class="btn primary" id="save-store">Save Store Settings</button><button class="btn dark" id="init-store">Initialize / Repair Store Structure</button></div>
       ${ds.structure?.inventoryId?`<div class="notice" style="margin-top:12px"><strong>Store structure connected ✓</strong><br>Users, Administration, Inventory, ${esc(userName||'your user')} and Listings are registered.</div>`:''}
       <details class="credentials"><summary>Test developer setup (Google Cloud credentials)</summary><div class="help" style="margin:8px 0 12px">This is only exposed in the test build. A release version will have LotKeys' credentials built in.</div><div class="field"><label>OAuth Web Client ID</label><input id="google-client" value="${esc(clientId)}" placeholder="…apps.googleusercontent.com"></div><div class="field"><label>Google Picker API Key</label><input id="google-key" value="${esc(apiKey)}" placeholder="AIza…"></div><div class="field"><label>Google Cloud Project Number</label><input id="google-project-number" value="${esc(projectNumber)}" inputmode="numeric" placeholder="123456789012"></div><button class="btn" id="save-google">Save Google Test Credentials</button></details></div>
-    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;└── LotKeys Store Config.json<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── 2022 Infiniti Q60 - PH80225<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;├── LotKeys Store Config.json<br>│&nbsp;&nbsp;└── Vehicle Info Directory Template (Google Doc)<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── 2022 Infiniti Q60 - PH80225<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Info Directory.pdf<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Saved posting locations</h2><small>${locs.length}</small></div><div id="loc-list">${locs.map(x=>`<div class="card" style="box-shadow:none"><strong>${esc(x.name)}</strong><div class="small muted">${esc(x.postalCode||x.address||[x.lat,x.lng].filter(Boolean).join(', ')||'No postal code / pin details yet')}</div><div class="actions"><button class="btn ghost edit-loc" data-id="${x.id}">Edit</button><button class="btn danger del-loc" data-id="${x.id}">Delete</button></div></div>`).join('')}</div><button class="btn" id="add-loc">＋ Add Location</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Analytics retention</h2></div><div class="field"><label>Rolling history (days)</label><input id="ret-days" type="number" min="7" max="365" value="${esc(ret)}"></div><button class="btn" id="save-ret">Save & prune</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Local test backup</h2></div><div class="split"><button class="btn" id="export-json">Export JSON</button><label class="btn" style="text-align:center">Import JSON<input id="import-json" type="file" accept="application/json" hidden></label></div><div class="help">This local backup is for testing. Drive remains the shared store copy once sync is enabled.</div></div>`;
@@ -937,8 +1044,9 @@ const App = (()=>{
     if($('#drive-disconnect'))$('#drive-disconnect').onclick=async()=>{await DriveSync.disconnect();toast('Google session disconnected');render()};
     $('#pick-store').onclick=async()=>{try{const m=await DriveSync.chooseStoreFolder();toast(`Selected ${m.name}`);render()}catch(err){if(!/cancel/i.test(err.message))alert('Could not choose Store folder:\n\n'+err.message)}};
     $('#use-folder-url').onclick=async()=>{try{await setSetting('storeFolderUrl',$('#set-folder').value.trim());const m=await DriveSync.useFolderUrl($('#set-folder').value.trim());toast(`Selected ${m.name}`);render()}catch(err){alert('Could not use that folder URL:\n\n'+err.message+'\n\nTry Choose Store Folder instead.')}};
-    $('#save-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('storeFolderUrl',$('#set-folder').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);toast('Store settings saved');if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});render()};
-    $('#init-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);try{toast('Building Store folders…');await DriveSync.ensureStoreStructure();toast('Store structure ready ✓');render()}catch(err){alert('Could not initialize Store structure:\n\n'+err.message)}};
+    $('#save-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('storeFolderUrl',$('#set-folder').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);await setSetting('directoryStoreName',$('#directory-store-name').value.trim());await setSetting('directoryStoreAddress',$('#directory-store-address').value.trim());await setSetting('directoryDirectionsUrl',$('#directory-directions-url').value.trim());toast('Store settings saved');if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});render()};
+    $('#init-store').onclick=async()=>{await setSetting('storeName',$('#set-store').value.trim());await setSetting('userName',$('#set-user').value.trim());await setSetting('publicShareEnabled',$('#public-share').checked);await setSetting('directoryStoreName',$('#directory-store-name').value.trim());await setSetting('directoryStoreAddress',$('#directory-store-address').value.trim());await setSetting('directoryDirectionsUrl',$('#directory-directions-url').value.trim());try{toast('Building Store folders…');await DriveSync.ensureStoreStructure();toast('Store structure ready ✓');render()}catch(err){alert('Could not initialize Store structure:\n\n'+err.message)}};
+    $('#open-directory-template').onclick=async()=>{try{await setSetting('directoryStoreName',$('#directory-store-name').value.trim());await setSetting('directoryStoreAddress',$('#directory-store-address').value.trim());await setSetting('directoryDirectionsUrl',$('#directory-directions-url').value.trim());const t=await DriveSync.ensureDirectoryTemplate();window.open(t.webViewLink||`https://docs.google.com/document/d/${t.id}/edit`,'_blank')}catch(err){alert('Could not create/open Vehicle Info Directory Template:\n\n'+err.message)}};
     $('#add-loc').onclick=()=>showLocationForm();document.querySelectorAll('.edit-loc').forEach(b=>b.onclick=async()=>showLocationForm(await DB.get('locations',b.dataset.id)));document.querySelectorAll('.del-loc').forEach(b=>b.onclick=async()=>{if(confirm('Delete this saved location?')){await DB.del('locations',b.dataset.id);if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});render()}});$('#save-ret').onclick=async()=>{await setSetting('retentionDays',Math.max(7,+$('#ret-days').value||120));await pruneAnalytics();toast('Retention updated')};$('#export-json').onclick=exportJson;$('#import-json').onchange=importJson;
   }
   function showLocationForm(existing=null){const l=existing||{id:uid('LOC')};modalBody.innerHTML=`<div class="modal-head"><h2>${existing?'Edit':'Add'} Location</h2><button class="close">×</button></div><form id="loc-form"><div class="field"><label>Name</label><input name="name" required value="${esc(l.name||'')}" placeholder="e.g. South Edmonton"></div><div class="field"><label>Facebook Postal Code</label><input name="postalCode" value="${esc(l.postalCode||'')}" placeholder="e.g. T5J" autocapitalize="characters"><div class="help">This is the value LotKeys puts on the Facebook Posting Assistant. Facebook's vehicle form on your phone currently uses a postal-code location.</div></div><details><summary>Optional map/reference details</summary><div class="field" style="margin-top:12px"><label>Address</label><input name="address" value="${esc(l.address||'')}" placeholder="Optional full address"></div><div class="form-grid"><div class="field"><label>Latitude</label><input name="lat" value="${esc(l.lat||'')}"></div><div class="field"><label>Longitude</label><input name="lng" value="${esc(l.lng||'')}"></div></div></details><button class="btn primary block">Save Location</button></form>`;modalBody.querySelector('.close').onclick=()=>modal.close();$('#loc-form').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);l.name=fd.get('name').trim();l.postalCode=fd.get('postalCode').trim().toUpperCase();l.address=fd.get('address').trim();l.lat=fd.get('lat').trim();l.lng=fd.get('lng').trim();l.updatedAt=Date.now();l.createdAt=l.createdAt||Date.now();await DB.put('locations',l);if(await DriveSync.ready())DriveSync.syncStoreConfig().catch(()=>{});modal.close();toast('Location saved');render()};modal.showModal()}
