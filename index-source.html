@@ -14,8 +14,10 @@
   
 .drive-status{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:13px;background:#f9fafb;border:1px solid var(--line);margin:10px 0}.status-dot{width:10px;height:10px;border-radius:999px;background:#9ca3af;flex:0 0 auto}.status-dot.good{background:#16a34a}.status-dot.warn{background:#f59e0b}.status-dot.bad{background:#dc2626}.credentials{margin-top:12px}.credentials summary{font-weight:800;cursor:pointer}.sync-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.sync-ok{color:#166534}.sync-warn{color:#9a3412}.sync-bad{color:#991b1b}.protocol-warning{margin:0 16px 8px;padding:9px 11px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:12px;line-height:1.4}.protocol-good{background:#ecfdf5;color:#166534}
 
-.info-photo-card{border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);border-radius:16px;padding:14px;margin-bottom:14px}.info-photo-head{display:flex;gap:12px;align-items:center;justify-content:space-between}.info-photo-head strong{font-size:15px}.info-photo-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.scan-results{margin-top:12px;border-top:1px solid #dbeafe;padding-top:10px}.scan-row{display:grid;grid-template-columns:22px 90px 1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #e5e7eb}.scan-row:last-child{border-bottom:0}.scan-label{font-size:12px;color:var(--muted);font-weight:800}.scan-value{font-size:13px;font-weight:800;word-break:break-word}.confidence{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:#e5e7eb;color:#374151}.confidence.high{background:#dcfce7;color:#166534}.confidence.suggested{background:#fef3c7;color:#92400e}.scan-progress{font-size:12px;color:#1e40af;margin-top:8px}.scan-raw{margin-top:8px;font-size:11px;color:var(--muted);max-height:100px;overflow:auto;white-space:pre-wrap;background:white;border:1px solid var(--line);border-radius:10px;padding:8px}
-@media(max-width:520px){.scan-row{grid-template-columns:22px 72px 1fr}.confidence{grid-column:3;justify-self:start}}
+.info-photo-card{border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f8fafc);border-radius:16px;padding:14px;margin-bottom:14px}.info-photo-head{display:flex;gap:12px;align-items:center;justify-content:space-between}.info-photo-head strong{font-size:15px}.info-photo-head p{margin:3px 0 0;color:var(--muted);font-size:12px}.scan-results{margin-top:12px;border-top:1px solid #dbeafe;padding-top:10px}.scan-row{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #e5e7eb}.scan-row:last-child{border-bottom:0}.scan-pair{min-width:0;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}.scan-label{font-size:12px;color:var(--muted);font-weight:800;white-space:nowrap}.scan-value{font-size:13px;font-weight:800;word-break:break-word}.confidence{font-size:10px;font-weight:800;border-radius:999px;padding:4px 7px;background:#e5e7eb;color:#374151}.confidence.high{background:#dcfce7;color:#166534}.confidence.suggested{background:#fef3c7;color:#92400e}.scan-progress{font-size:12px;color:#1e40af;margin-top:8px}.scan-raw{margin-top:8px;font-size:11px;color:var(--muted);max-height:100px;overflow:auto;white-space:pre-wrap;background:white;border:1px solid var(--line);border-radius:10px;padding:8px}
+
+.media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.media-card{position:relative;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;min-width:0}.media-card video,.media-card .media-image{width:100%;aspect-ratio:16/10;object-fit:cover;background:#111827;display:block}.media-card-body{padding:10px}.media-card-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.media-card-meta{font-size:10px;color:var(--muted);margin-top:3px}.media-card-actions{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}.media-card-actions .btn{padding:7px 9px;font-size:11px}.doc-face{aspect-ratio:16/10;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:38px}.asset-empty{border:1px dashed #d1d5db;border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:12px}.asset-status{display:inline-flex;margin-left:5px;font-size:9px;font-weight:800;border-radius:999px;padding:2px 6px;background:#dcfce7;color:#166534}@media(max-width:420px){.media-grid{grid-template-columns:1fr 1fr}.media-card-body{padding:8px}}
+@media(max-width:520px){.scan-row{grid-template-columns:22px minmax(0,1fr)}.confidence{grid-column:2;justify-self:start}.scan-pair{gap:7px}}
 </style>
   <title>LotKeys</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -31,7 +33,7 @@
       <button class="icon-btn" id="quick-add" aria-label="Create">＋</button>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.4</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.4.2</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -468,7 +470,7 @@ const PhotoInfo = (()=>{
     'JAGUAR':'Jaguar','JEEP':'Jeep','KIA':'Kia','LAND ROVER':'Land Rover','LEXUS':'Lexus','LINCOLN':'Lincoln',
     'MAZDA':'Mazda','MERCEDES':'Mercedes-Benz','MERCEDES-BENZ':'Mercedes-Benz','MINI':'MINI','MITSUBISHI':'Mitsubishi',
     'NISSAN':'Nissan','PORSCHE':'Porsche','RAM':'Ram','SUBARU':'Subaru','TESLA':'Tesla','TOYOTA':'Toyota',
-    'VOLKSWAGEN':'Volkswagen','VW':'Volkswagen','VOLVO':'Volvo'
+    'VOLKSWAGEN':'Volkswagen','VW':'Volkswagen','VOLVO':'Volvo','INFI':'Infiniti'
   };
   function clean(s){return String(s||'').replace(/[|]/g,'I').replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/\r/g,'').trim()}
   function normalizeVin(v){return clean(v).toUpperCase().replace(/[^A-Z0-9]/g,'')}
@@ -543,6 +545,15 @@ const PhotoInfo = (()=>{
         if(y||mk)break;
       }
     }
+    if(!out.stock){
+      for(const line of lines){
+        const c=line.toUpperCase().replace(/[^A-Z0-9-]/g,'').trim();
+        if(c.length<5||c.length>12||validVin(c))continue;
+        if(/^(?=.*[A-Z])(?=.*\d)[A-Z0-9-]+$/.test(c) && !/^(KM|KMS|MI|MILES)$/i.test(c)){
+          add(out,'stock',c,'suggested','Possible dealer stock number');break;
+        }
+      }
+    }
     return out;
   }
   async function loadTesseract(){
@@ -562,15 +573,32 @@ const PhotoInfo = (()=>{
       const bmp=await createImageBitmap(file);const codes=await detector.detect(bmp);bmp.close?.();return codes.map(x=>x.rawValue).filter(Boolean);
     }catch{return[]}
   }
+  async function enhancedOcrImage(file){
+    try{
+      const bmp=await createImageBitmap(file);const maxW=2200;const scale=Math.max(1,Math.min(2.2,maxW/bmp.width));
+      const c=document.createElement('canvas');c.width=Math.round(bmp.width*scale);c.height=Math.round(bmp.height*scale);
+      const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(bmp,0,0,c.width,c.height);bmp.close?.();
+      const img=x.getImageData(0,0,c.width,c.height),d=img.data;
+      for(let i=0;i<d.length;i+=4){const g=Math.round(.299*d[i]+.587*d[i+1]+.114*d[i+2]);const v=Math.max(0,Math.min(255,(g-128)*1.55+128));d[i]=d[i+1]=d[i+2]=v;}
+      x.putImageData(img,0,0);return c;
+    }catch{return file}
+  }
   async function scan(files,onProgress=()=>{}){
     files=[...files];if(!files.length)throw new Error('Choose at least one photo.');
     const T=await loadTesseract();let worker=null;let allText='',barcodes=[];
     try{
       worker=await T.createWorker('eng',T.OEM?.LSTM_ONLY??1,{logger:m=>{if(m?.status)onProgress({stage:m.status,progress:m.progress??0})}});
+      await worker.setParameters?.({preserve_interword_spaces:'1',user_defined_dpi:'300'}).catch?.(()=>{});
       for(let i=0;i<files.length;i++){
         onProgress({stage:`Reading photo ${i+1} of ${files.length}`,progress:i/files.length});
         barcodes.push(...await barcodeValues(files[i]));
         const r=await worker.recognize(files[i]);allText+=(r?.data?.text||'')+'\n';
+        const first=parse(allText,barcodes);
+        if(i===files.length-1 && (Object.keys(first).length<4 || !first.vin || !first.stock)){
+          onProgress({stage:'Trying enhanced key-tag / label read',progress:.92});
+          const enhanced=await enhancedOcrImage(files[i]);
+          if(enhanced!==files[i]){const r2=await worker.recognize(enhanced);allText+=(r2?.data?.text||'')+'\n';}
+        }
       }
       onProgress({stage:'Finding vehicle information',progress:1});
       return {fields:parse(allText,barcodes),rawText:allText.trim(),barcodes};
@@ -599,7 +627,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.4</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.4</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.4.2</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.4.2</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false}={}){if(!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);if(!quiet)toast('Saved locally — connect Drive to sync');return v;}v.syncStatus='syncing';await DB.put('vehicles',v);if(!quiet)toast('Saving to Google Drive…');try{const out=await DriveSync.syncVehicle(v);if(!quiet)toast('Vehicle synced to Drive ✓');return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);if(!quiet)alert('Vehicle saved locally, but Drive sync failed:\n\n'+v.syncError);return v}}
   async function syncListingNow(l,{quiet=false}={}){if(!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);if(!quiet)toast('Listing saved locally — connect Drive to sync');return l;}l.syncStatus='syncing';await DB.put('listings',l);try{const out=await DriveSync.syncListing(l);if(!quiet)toast('Listing synced to your Drive folder ✓');return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
   async function copyText(text,label='Copied'){if(!text)return;try{await navigator.clipboard.writeText(text);toast(label)}catch{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(label)}}
@@ -650,10 +678,27 @@ const App = (()=>{
   async function vehicleCard(v){const cover=v.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}" alt="">`:'🚙';return `<div class="card vehicle-row open-vehicle" data-id="${v.id}"><div class="thumb">${img}</div><div><div class="row-title">${esc(v.name||`${v.year||''} ${v.make||''} ${v.model||''}`.trim())}</div><div class="meta">STK# ${esc(v.stock||'—')} • ${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</div><div class="price">${money(v.price)}</div></div><div class="chev">›</div></div>`}
   function bindVehicleCards(){document.querySelectorAll('.open-vehicle').forEach(x=>x.onclick=()=>showVehicle(x.dataset.id))}
   async function renderVehicles(){const vs=(await DB.all('vehicles')).sort((a,b)=>String(a.stock||'').localeCompare(String(b.stock||'')));main.innerHTML=`<div class="actions"><button class="btn primary" id="add-vehicle">＋ Add Vehicle</button></div><div class="section-title"><h2>Shared store inventory</h2><small>${vs.length}</small></div>${vs.length?(await Promise.all(vs.map(vehicleCard))).join(''):empty('No vehicles yet','Add your first vehicle profile.')}`;$('#add-vehicle').onclick=()=>showVehicleForm();bindVehicleCards()}
+  function assetViewUrl(asset){
+    if(asset?.blob)return blobUrl(asset.blob);
+    if(asset?.driveFileId)return `https://drive.google.com/file/d/${encodeURIComponent(asset.driveFileId)}/view`;
+    return '';
+  }
+  function videoGalleryHtml(items,editable=false){
+    items=items||[];
+    if(!items.length)return '<div class="asset-empty">No videos added yet.</div>';
+    return `<div class="media-grid">${items.map((x,i)=>{const url=assetViewUrl(x);return `<div class="media-card">${url&&x.blob?`<video controls playsinline preload="metadata" src="${esc(url)}"></video>`:`<div class="doc-face">🎥</div>`}<div class="media-card-body"><div class="media-card-name" title="${esc(x.name||'Video')}">${esc(x.name||`Video ${i+1}`)}${x.driveFileId?'<span class="asset-status">Synced</span>':''}</div><div class="media-card-meta">Video</div><div class="media-card-actions">${url?`<a class="btn ghost" href="${esc(url)}" target="_blank" rel="noopener">Open</a>`:''}${editable?`<button type="button" class="btn danger remove-video" data-i="${i}">Remove</button>`:''}</div></div></div>`}).join('')}</div>`;
+  }
+  function attachmentGalleryHtml(items,editable=false){
+    items=items||[];
+    if(!items.length)return '<div class="asset-empty">No attachments added yet.</div>';
+    return `<div class="media-grid">${items.map((x,i)=>{const url=assetViewUrl(x),isImg=String(x.type||'').startsWith('image/'),isPdf=String(x.type||'').includes('pdf');return `<div class="media-card">${isImg&&url?`<img class="media-image" src="${esc(url)}" alt="">`:`<div class="doc-face">${isPdf?'📄':'📎'}</div>`}<div class="media-card-body"><div class="media-card-name" title="${esc(x.name||'Attachment')}">${esc(x.name||`Attachment ${i+1}`)}${x.driveFileId?'<span class="asset-status">Synced</span>':''}</div><div class="media-card-meta">${esc(isPdf?'PDF / Document':(x.type||'Document'))}</div><div class="media-card-actions">${url?`<a class="btn ghost" href="${esc(url)}" target="_blank" rel="noopener">Open</a>`:''}${editable?`<button type="button" class="btn danger remove-attachment" data-i="${i}">Remove</button>`:''}</div></div></div>`}).join('')}</div>`;
+  }
   async function showVehicle(id){const v=await DB.get('vehicles',id);if(!v)return;
-    const renderMasterPhotos=()=>{const wrap=$('#master-photo-area');if(!wrap)return;const photos=v.photos||[];wrap.innerHTML=photos.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle onto another photo to reorder. Photo #1 is the vehicle thumbnail and default cover for new listings.</div><div class="photo-grid" id="master-photo-grid">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'';const grid=$('#master-photo-grid');bindPhotoReorder(grid,async(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);v.updatedAt=Date.now();await DB.put('vehicles',v);cleanupUrls();renderMasterPhotos();toast('Photo order updated');syncVehicleNow(v,{quiet:true})})};
+    const renderMasterPhotos=()=>{const wrap=$('#master-photo-area');if(!wrap)return;const photos=v.photos||[];wrap.innerHTML=photos.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle onto another photo to reorder. Photo #1 is the vehicle thumbnail and default cover for new listings.</div><div class="photo-grid" id="master-photo-grid">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'';const grid=$('#master-photo-grid');bindPhotoReorder(grid,async(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);v.updatedAt=Date.now();await DB.put('vehicles',v);renderMasterPhotos();toast('Photo order updated');syncVehicleNow(v,{quiet:true})})};
     modalBody.innerHTML=`<div class="modal-head"><div><div class="eyebrow">VEHICLE PROFILE</div><h2>${esc(v.name)}</h2></div><button class="close">×</button></div>
     <div id="master-photo-area"></div>
+    <div class="section-title"><h2>Videos</h2><small>${(v.videos||[]).length}</small></div><div id="master-video-area">${videoGalleryHtml(v.videos)}</div>
+    <div class="section-title"><h2>Attachments</h2><small>${(v.attachments||[]).length}</small></div><div id="master-attachment-area">${attachmentGalleryHtml(v.attachments)}</div>
     <div class="hr"></div><div class="kv"><div>Stock #</div><strong>${esc(v.stock||'—')}</strong><div>VIN</div><span>${esc(v.vin||'—')}</span><div>Vehicle</div><span>${esc([v.year,v.make,v.model].filter(Boolean).join(' '))}</span><div>Price</div><span>${money(v.price)}</span><div>Odometer</div><span>${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}</span><div>Drive sync</div><span class="${v.syncStatus==='synced'?'sync-ok':v.syncStatus==='error'?'sync-bad':'sync-warn'}">${v.syncStatus==='synced'?'Synced ✓':v.syncStatus==='error'?'Needs attention':'Local / pending'}</span><div>Shared folder</div><span>${v.sharedFolderUrl?'Connected automatically':'Will be created automatically'}</span></div>
     <div class="share-actions">${v.sharedFolderUrl?`<button class="btn primary" id="copy-share">Copy Shared Link</button><button class="btn ghost" id="open-share">Open Shared Folder</button>`:`<button class="btn" disabled>Shared Link available after Drive sync</button>`}<button class="btn ghost" id="sync-v">↻ Sync Vehicle</button></div>${v.shareWarning?`<div class="notice warning" style="margin-top:8px">Shared folder exists, but public link sharing could not be enabled: ${esc(v.shareWarning)}</div>`:''}${v.syncError?`<div class="notice warning" style="margin-top:8px">Last sync error: ${esc(v.syncError)}</div>`:''}
     <div class="section-title"><h2>Vehicle profile description</h2></div><div class="card" style="box-shadow:none">${esc(v.description||'No description yet.').replace(/\n/g,'<br>')}</div>
@@ -666,7 +711,7 @@ const App = (()=>{
   }
   function photoPreviewHtml(photos){return photos?.length?`<div class="help" style="margin-bottom:8px">Drag the ☰ handle to change the master order. #1 becomes the thumbnail.</div><div class="photo-grid reorder-master-form">${photos.map((p,i)=>`<div class="photo-tile" data-pos="${i}"><img draggable="false" src="${blobUrl(p.blob)}"><span class="badge">${i===0?'Cover':i+1}</span><button type="button" class="remove-photo" data-i="${i}">×</button><button type="button" class="drag-handle" aria-label="Reorder photo">☰</button></div>`).join('')}</div>`:'<div class="notice">No photos selected yet.</div>'}
   async function showVehicleForm(existing=null){
-    const v=existing?structuredClone(existing):{id:uid('VP'),photos:[],attachments:[],videos:[],odometerUnit:'KM'}; if(existing?.photos)v.photos=existing.photos;
+    const v=existing?structuredClone(existing):{id:uid('VP'),photos:[],attachments:[],videos:[],odometerUnit:'KM'}; if(existing?.photos)v.photos=existing.photos;if(existing?.attachments)v.attachments=existing.attachments;if(existing?.videos)v.videos=existing.videos;
     modalBody.innerHTML=`<div class="modal-head"><h2>${existing?'Edit':'Add'} Vehicle</h2><button class="close">×</button></div><form id="vehicle-form"><div class="form-grid">
       <div class="field full"><label>Vehicle Profile Name <span class="muted">(automatic)</span></label><input id="vehicle-profile-name" name="name" readonly value="${esc(buildVehicleProfileName(v))}"><div class="help">Generated as Year + Make + Model - Stock #. This is also the Google Drive Vehicle Profile folder name.</div></div>
       <div class="field full"><div class="info-photo-card"><div class="info-photo-head"><div><strong>✨ Info From Photo</strong><p>Use a lot tag, window sticker, website screenshot or other vehicle photo to suggest fields. You approve what gets applied.</p></div><button class="btn primary" type="button" id="scan-info-photo">Choose Photo</button></div><input id="info-photo-input" type="file" accept="image/*" multiple hidden><div id="info-photo-output"></div></div></div>
@@ -677,11 +722,14 @@ const App = (()=>{
       <div class="field full"><label>Vehicle Profile Description</label><textarea name="description" placeholder="Store/customer-facing vehicle information. This is separate from Marketplace copy.">${esc(v.description||'')}</textarea></div>
       <div class="field full"><div class="notice"><strong>Shared folder:</strong> LotKeys creates this automatically in Google Drive. Photos → Shared/Photos, videos → Shared/Videos, and inspections/documents → Shared/Documents.</div></div>
       <div class="field full"><label>Photos</label><input id="vehicle-photos" type="file" accept="image/*" multiple><div class="help">On Android you can choose gallery images; camera capture will be added as a dedicated flow.</div><div id="photo-preview" style="margin-top:10px">${photoPreviewHtml(v.photos)}</div></div>
-      <div class="field full"><label>Attachments</label><input id="vehicle-attachments" type="file" multiple><div class="help">Inspection sheets, PDFs and other vehicle files. Saved locally first, then uploaded to the vehicle Documents folder when Drive is connected.</div></div>
-      <div class="field full"><label>Videos</label><input id="vehicle-videos" type="file" accept="video/*" multiple></div>
+      <div class="field full"><label>Attachments</label><input id="vehicle-attachments" type="file" multiple><div class="help">Inspection sheets, PDFs and other vehicle files. Existing files stay in place when you add more.</div><div id="attachment-preview" style="margin-top:10px">${attachmentGalleryHtml(v.attachments,true)}</div></div>
+      <div class="field full"><label>Videos</label><input id="vehicle-videos" type="file" accept="video/*" multiple><div class="help">Add walkarounds or other vehicle videos. Existing videos stay in place when you add more.</div><div id="video-preview" style="margin-top:10px">${videoGalleryHtml(v.videos,true)}</div></div>
     </div><button class="btn primary block" type="submit">Save Vehicle</button></form>`;
     modalBody.querySelector('.close').onclick=()=>modal.close();
-    const rerenderPhotos=()=>{const p=$('#photo-preview');p.innerHTML=photoPreviewHtml(v.photos);p.querySelectorAll('.remove-photo').forEach(b=>b.onclick=()=>{v.photos.splice(+b.dataset.i,1);rerenderPhotos()});bindPhotoReorder(p.querySelector('.reorder-master-form'),(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);cleanupUrls();rerenderPhotos()})};
+    const rerenderPhotos=()=>{const p=$('#photo-preview');p.innerHTML=photoPreviewHtml(v.photos);p.querySelectorAll('.remove-photo').forEach(b=>b.onclick=()=>{v.photos.splice(+b.dataset.i,1);rerenderPhotos()});bindPhotoReorder(p.querySelector('.reorder-master-form'),(from,to)=>{v.photos=moveArrayItem(v.photos,from,to);rerenderPhotos()})};
+    const rerenderAttachments=()=>{const p=$('#attachment-preview');p.innerHTML=attachmentGalleryHtml(v.attachments,true);p.querySelectorAll('.remove-attachment').forEach(b=>b.onclick=()=>{v.attachments.splice(+b.dataset.i,1);rerenderAttachments()})};
+    const rerenderVideos=()=>{const p=$('#video-preview');p.innerHTML=videoGalleryHtml(v.videos,true);p.querySelectorAll('.remove-video').forEach(b=>b.onclick=()=>{v.videos.splice(+b.dataset.i,1);rerenderVideos()})};
+    rerenderAttachments();rerenderVideos();
     const refreshAutoProfileName=()=>{const f=$('#vehicle-form');if(!f)return;const out=$('#vehicle-profile-name');const val=k=>f.elements.namedItem(k)?.value||'';if(out)out.value=buildVehicleProfileName({stock:val('stock'),year:val('year'),make:val('make'),model:val('model')})};
     ['stock','year','make','model'].forEach(k=>$('#vehicle-form')[k]?.addEventListener('input',refreshAutoProfileName));
     refreshAutoProfileName();
@@ -690,7 +738,7 @@ const App = (()=>{
       const fieldOrder=['year','make','model','price','odometer','odometerUnit','vin','stock'];const entries=Object.entries(result.fields||{}).sort((a,b)=>fieldOrder.indexOf(a[0])-fieldOrder.indexOf(b[0]));
       if(!entries.length){scanOut.innerHTML='<div class="notice warning" style="margin-top:10px">I could read the photo, but I did not find vehicle information confidently enough to suggest. Try a closer/clearer photo.</div>';return}
       const labels={year:'Year',make:'Make',model:'Model',price:'Price',odometer:'Odometer',odometerUnit:'Unit',vin:'VIN #',stock:'STK #'};
-      scanOut.innerHTML=`<div class="scan-results"><div class="help" style="margin-bottom:4px"><strong>Found ${entries.length} possible fields.</strong> High-confidence items are selected automatically. Review before applying.</div>${entries.map(([k,x])=>`<label class="scan-row"><input type="checkbox" data-scan-field="${esc(k)}" ${x.confidence==='high'?'checked':''}><span class="scan-label">${esc(labels[k]||k)}</span><span class="scan-value">${esc(x.value)}</span><span class="confidence ${x.confidence==='high'?'high':'suggested'}">${x.confidence==='high'?'High':'Suggested'}</span></label>`).join('')}<div class="actions"><button class="btn primary" type="button" id="apply-photo-info">Apply Selected</button><button class="btn ghost" type="button" id="show-scan-text">View Read Text</button></div><pre class="scan-raw" id="scan-raw-text" hidden>${esc(result.rawText||'')}</pre><div class="help">Analysis photos are not added to the vehicle's customer-facing Photos folder unless you upload them separately below.</div></div>`;
+      scanOut.innerHTML=`<div class="scan-results"><div class="help" style="margin-bottom:4px"><strong>Found ${entries.length} possible fields.</strong> High-confidence items are selected automatically. Review before applying.</div>${entries.map(([k,x])=>`<label class="scan-row"><input type="checkbox" data-scan-field="${esc(k)}" ${x.confidence==='high'?'checked':''}><span class="scan-pair"><span class="scan-label">${esc(labels[k]||k)}:</span><span class="scan-value">${esc(x.value)}</span></span><span class="confidence ${x.confidence==='high'?'high':'suggested'}">${x.confidence==='high'?'High':'Suggested'}</span></label>`).join('')}<div class="actions"><button class="btn primary" type="button" id="apply-photo-info">Apply Selected</button><button class="btn ghost" type="button" id="show-scan-text">View Read Text</button></div><pre class="scan-raw" id="scan-raw-text" hidden>${esc(result.rawText||'')}</pre><div class="help">Analysis photos are not added to the vehicle's customer-facing Photos folder unless you upload them separately below.</div></div>`;
       $('#apply-photo-info').onclick=()=>{
         const f=$('#vehicle-form');let count=0;
         scanOut.querySelectorAll('[data-scan-field]:checked').forEach(box=>{const k=box.dataset.scanField,x=result.fields[k];const el=f.elements.namedItem(k);if(el&&x){el.value=x.value;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));count++;}});
@@ -709,8 +757,8 @@ const App = (()=>{
       finally{scanBtn.disabled=false;scanBtn.textContent='Choose Photo';scanInput.value=''}
     };
     $('#vehicle-photos').onchange=e=>{[...e.target.files].forEach(f=>v.photos.push({id:uid('PH'),name:f.name,type:f.type,blob:f}));rerenderPhotos()};
-    $('#vehicle-attachments').onchange=e=>{v.attachments=[...e.target.files].map(f=>({id:uid('ATT'),name:f.name,type:f.type,blob:f}))};
-    $('#vehicle-videos').onchange=e=>{v.videos=[...e.target.files].map(f=>({id:uid('VID'),name:f.name,type:f.type,blob:f}))};
+    $('#vehicle-attachments').onchange=e=>{[...e.target.files].forEach(f=>v.attachments.push({id:uid('ATT'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderAttachments()};
+    $('#vehicle-videos').onchange=e=>{[...e.target.files].forEach(f=>v.videos.push({id:uid('VID'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderVideos()};
     $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saving…';const fd=new FormData(e.target);['year','make','model','vin','stock','description','odometerUnit'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.name=buildVehicleProfileName(v);v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();await DB.put('vehicles',v);await syncVehicleNow(v);modal.close();render()};modal.showModal();
   }
   async function listingCard(l){const v=l.vehicleId?await DB.get('vehicles',l.vehicleId):null;const order=normalizePhotoOrder(l,v);const coverId=order[0];const cover=v?.photos?.find(p=>p.id===coverId)?.blob||v?.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}">`:'📢';const loc=l.locationId?await DB.get('locations',l.locationId):null;return `<div class="card listing-row open-listing" data-id="${l.id}"><div class="thumb">${img}</div><div><div class="row-title">${esc(l.marketplaceTitle||'Untitled listing')}</div><div class="meta">${esc(loc?.name||'No location')} • ${esc(l.status||'Draft')} • ${l.createdAt?Math.max(0,Math.floor((Date.now()-l.createdAt)/86400000))+' days':'—'}</div><div class="price">${money(l.price)}</div></div><div class="chev">›</div></div>`}
@@ -746,7 +794,7 @@ const App = (()=>{
       <div class="actions"><button class="btn primary" id="save-store">Save Store Settings</button><button class="btn dark" id="init-store">Initialize / Repair Store Structure</button></div>
       ${ds.structure?.inventoryId?`<div class="notice" style="margin-top:12px"><strong>Store structure connected ✓</strong><br>Users, Administration, Inventory, ${esc(userName||'your user')} and Listings are registered.</div>`:''}
       <details class="credentials"><summary>Test developer setup (Google Cloud credentials)</summary><div class="help" style="margin:8px 0 12px">This is only exposed in the test build. A release version will have LotKeys' credentials built in.</div><div class="field"><label>OAuth Web Client ID</label><input id="google-client" value="${esc(clientId)}" placeholder="…apps.googleusercontent.com"></div><div class="field"><label>Google Picker API Key</label><input id="google-key" value="${esc(apiKey)}" placeholder="AIza…"></div><div class="field"><label>Google Cloud Project Number</label><input id="google-project-number" value="${esc(projectNumber)}" inputmode="numeric" placeholder="123456789012"></div><button class="btn" id="save-google">Save Google Test Credentials</button></details></div>
-    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;└── LotKeys Store Config.json<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── STK: 12345 - Year Make Model<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
+    <div class="card"><div class="section-title" style="margin-top:0"><h2>Store structure</h2></div><div class="codeish">STORE FOLDER<br>├── Users<br>│&nbsp;&nbsp;└── ${esc(userName||'Your Name')}<br>│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Listings<br>├── Administration<br>│&nbsp;&nbsp;└── LotKeys Store Config.json<br>└── Inventory<br>&nbsp;&nbsp;&nbsp;└── 2022 Infiniti Q60 - PH80225<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Vehicle Data - Administrative (Google Sheet)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Shared<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Photos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Videos<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Documents</div></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Saved posting locations</h2><small>${locs.length}</small></div><div id="loc-list">${locs.map(x=>`<div class="card" style="box-shadow:none"><strong>${esc(x.name)}</strong><div class="small muted">${esc(x.address||[x.lat,x.lng].filter(Boolean).join(', ')||'No pin details yet')}</div><div class="actions"><button class="btn ghost edit-loc" data-id="${x.id}">Edit</button><button class="btn danger del-loc" data-id="${x.id}">Delete</button></div></div>`).join('')}</div><button class="btn" id="add-loc">＋ Add Location</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Analytics retention</h2></div><div class="field"><label>Rolling history (days)</label><input id="ret-days" type="number" min="7" max="365" value="${esc(ret)}"></div><button class="btn" id="save-ret">Save & prune</button></div>
     <div class="card"><div class="section-title" style="margin-top:0"><h2>Local test backup</h2></div><div class="split"><button class="btn" id="export-json">Export JSON</button><label class="btn" style="text-align:center">Import JSON<input id="import-json" type="file" accept="application/json" hidden></label></div><div class="help">This local backup is for testing. Drive remains the shared store copy once sync is enabled.</div></div>`;

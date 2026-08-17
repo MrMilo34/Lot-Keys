@@ -1,3 +1,22 @@
+# LotKeys Drive Test v0.4.2
+
+- Adds **Videos** and **Attachments** galleries directly inside the Vehicle Profile, immediately below the master Photos area.
+- Videos can be played in-app when a local copy is available, or opened from Google Drive after sync.
+- Attachments show as visual cards with filenames, file type, sync state, and Open actions; image attachments get thumbnails.
+- The Add/Edit Vehicle screen now previews existing Videos and Attachments instead of showing only file-picker boxes.
+- Adding more Videos or Attachments **appends** to the existing set instead of replacing what was already attached.
+- Videos and Attachments can be removed from the Edit Vehicle screen; Drive sync then removes the corresponding synced file.
+- Keeps the v0.4.1 Info From Photo improvements.
+- Service-worker cache bumped to v0.4.2.
+
+# LotKeys Drive Test v0.4.1
+
+- Polishes Info From Photo result rows to display clear `Label: Value` spacing on mobile.
+- Adds an enhanced contrast/upscale OCR fallback for difficult key tags and labels.
+- Adds `INFI` → `Infiniti` recognition for abbreviated lot tags.
+- Adds a conservative suggested stock-number fallback when a tag shows an unlabeled dealer stock code.
+- Service-worker cache bumped to v0.4.1.
+
 # LotKeys Drive Test v0.4
 
 ## New in v0.4
