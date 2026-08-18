@@ -14,6 +14,8 @@ STORE FOLDER
 ├── Users
 │   └── Blair
 │       └── Listings
+│           ├── Listings Index.json
+│           └── <Marketplace Listing>.json
 ├── Administration
 │   └── LotKeys Store Config.json
 └── Inventory
@@ -70,3 +72,9 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 - `Administration/Inventory Index.json` is a fast Store inventory cache generated from vehicle Administrative Sheets. LotKeys verifies Inventory folders on refresh and can rebuild the index with a full scan.
 - The signed-in Google account is bound to a unique LotKeys user name. The first registered Store user becomes Administrator.
 - Store inventory refreshes from Drive every five minutes while the app is active, when returning to the app, and on manual refresh.
+
+## v0.7.1 additions
+- Each user's Marketplace Listings folder is a Drive-backed source of truth for that user's listings across devices.
+- `Listings Index.json` caches the user's listing records for fast refresh while individual listing JSON files remain recoverable records.
+- Personal posting-location presets remain local/client-side; synced listings store a location snapshot so an existing listing still displays coherently on another device.
+- Vehicle Info Directory placeholder replacement is presentation-neutral: LotKeys injects text/hyperlinks only, while the Administration template owns emojis, graphics, icons, colors, and layout.

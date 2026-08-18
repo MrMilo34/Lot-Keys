@@ -1,3 +1,16 @@
+# LotKeys Drive Test v0.7.1
+
+## v0.7.1 changes
+
+- Marketplace Listings are now user-specific Drive data, not device-only data. The same LotKeys/Google user can load their listings on phone, PC, or another browser.
+- Added `Users/<User>/Listings/Listings Index.json` for faster cross-device listing refreshes. Existing listing JSON files are discovered and indexed automatically.
+- Existing local listings are migrated to the signed-in user's Drive Listings folder when needed.
+- My Listings refreshes every 5 minutes, when returning to LotKeys, when opening Home/Listings, and with a manual **Refresh Listings** button.
+- A listing keeps a snapshot of its location for display on another device, while saved Posting Locations/Postal Codes remain client-side preferences.
+- Deleting a listing now removes its synced Drive listing record and updates the user Listings index.
+- Vehicle Info Directory placeholders now inject plain text only. LotKeys no longer adds emojis/checkmarks; administrators control all icons/graphics in the Google Doc template.
+- Vehicle Info Directory fingerprints were bumped so the text-only placeholder behavior is picked up on the next vehicle sync.
+
 # LotKeys Drive Test v0.7.0
 
 ## v0.7.0 changes
