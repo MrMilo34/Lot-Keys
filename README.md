@@ -1,4 +1,11 @@
-# LotKeys Drive Test v0.7.8
+# LotKeys Drive Test v0.7.9
+
+## v0.7.9 changes
+
+- Keeps the top readiness light yellow for the entire Google Drive connection/store-loading process, even if the user changes tabs.
+- Adds immediate press/working feedback to Vehicle and Listing cards.
+- Vehicle Profiles now open a loading panel immediately while Drive media is reconciled, so slower first-load Drive checks no longer look like a missed click.
+- Keeps the broader Drive read permission required to discover photos/videos/documents added directly in Google Drive, not only through LotKeys.
 
 ## v0.7.8 changes
 
