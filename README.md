@@ -1,12 +1,16 @@
-# LotKeys Drive Test v0.7.7
+# LotKeys Drive Test v0.7.8
 
-## v0.7.7 changes
+## v0.7.8 changes
 
 - Fixed photo filename order prefixes multiplying on every sync. LotKeys now strips any previous leading order markers and writes exactly one current marker, e.g. `03 - original-photo.jpg`. Reordering overwrites that number instead of adding another one.
 - Vehicle media remains Drive-authoritative: files added directly to Shared/Photos, Shared/Videos or Shared/Documents are discovered when a Vehicle Profile is opened/refreshed.
 - Fixed Vehicle Info Directory duplication. `Vehicle Info Directory.pdf` is now treated as a singleton per vehicle: LotKeys reuses/overwrites the existing PDF and moves stale duplicate copies to Drive Trash on the next vehicle sync.
 - Preserves Drive-only metadata while refreshing a Vehicle Profile so the browser does not forget the existing Vehicle Info Directory file ID and accidentally create another copy.
 - Service-worker cache bumped to v0.7.7.
+
+- Fixed mobile photo drag/reorder by using document-level pointer tracking and touch-friendly drop targeting.
+- CARFAX report placeholder is now a normal clickable VIEW CARFAX REPORT text link; LotKeys no longer inserts the old View Report graphic.
+- Global readiness light stays green during ordinary item/background synchronization; individual cards still show their sync state.
 
 ## v0.7.6 changes
 
