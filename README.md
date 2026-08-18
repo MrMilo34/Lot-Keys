@@ -1,4 +1,23 @@
-# LotKeys Drive Test v0.7.1
+# LotKeys Drive Test v0.7.3
+
+## v0.7.3 changes
+
+- Added a traffic-light readiness indicator beside the + button on every main screen.
+  - Green = Google Drive connected, user/store ready, and no pending local changes.
+  - Yellow = Google Drive needs reconnecting, an item is pending/syncing, or a background refresh is running.
+  - Red = Store/account setup is incomplete or one or more items have a Drive sync error.
+- Tap the readiness circle to see what is happening and plain-language instructions to correct it.
+- Vehicle and Marketplace cards highlight yellow while local/pending/syncing; Marketplace status Pending also highlights yellow. Drive sync errors highlight red.
+- Copy buttons briefly turn yellow and show “Copied ✓” after copying a link or Facebook field.
+- Marketplace listing forms now close after the local save and synchronize to Drive in the background, making the pending/syncing state visible instead of holding the user on “Saving…”.
+
+
+
+## v0.7.2 changes
+
+- CARFAX placeholders can now render the supplied CARFAX graphics in generated Vehicle Info Directory PDFs. The report image is linked to the vehicle CARFAX URL; One Owner / Low Kilometres / No Reported Accidents images appear only when their Vehicle Profile checkboxes are selected.
+- Fixed v0.7.1 listing migration pulling old duplicate test drafts back into My Listings. Legacy no-location/no-Facebook draft copies for the same vehicle are collapsed to the newest record and stale duplicate files are moved to Drive Trash. Posted, active, Facebook-linked, and location-specific listings are preserved.
+- New listing records use schema v5 so future intentional drafts are not treated as v0.7.1 legacy duplicates.
 
 ## v0.7.1 changes
 

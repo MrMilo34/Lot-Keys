@@ -78,3 +78,8 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 - `Listings Index.json` caches the user's listing records for fast refresh while individual listing JSON files remain recoverable records.
 - Personal posting-location presets remain local/client-side; synced listings store a location snapshot so an existing listing still displays coherently on another device.
 - Vehicle Info Directory placeholder replacement is presentation-neutral: LotKeys injects text/hyperlinks only, while the Administration template owns emojis, graphics, icons, colors, and layout.
+
+## v0.7.2 additions
+
+- Vehicle Info Directory CARFAX placeholders may be replaced by hosted image assets during generation. The template still controls placement; LotKeys controls whether each CARFAX asset appears.
+- Listing refresh performs targeted legacy cleanup for duplicate v0.7.1-era drafts with no location and no Facebook URL while preserving real posted/location-specific records.
