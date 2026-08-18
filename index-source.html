@@ -42,7 +42,7 @@
       </div>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.7.3</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.7.4</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -435,11 +435,14 @@ const DriveSync = (() => {
         ['VIEW INSPECTIONS & DOCUMENTS',`https://drive.google.com/drive/folders/${v.drive.documentsFolderId}`]
       ];
       await linkTextsInDoc(temp.id,links);
-      // CARFAX assets are rendered as the supplied graphics. The template controls where each placeholder sits.
-      await replacePlaceholderWithImage(temp.id,'{{CARFAX_LINK}}',publicAssetUrl('carfax-view-report.png'),{enabled:!!v.carfaxUrl,width:90,height:41,linkUrl:v.carfaxUrl||''});
-      await replacePlaceholderWithImage(temp.id,'{{BADGE_ONE_OWNER}}',publicAssetUrl('carfax-one-owner.png'),{enabled:!!v.carfaxOneOwner,width:90,height:56});
-      await replacePlaceholderWithImage(temp.id,'{{BADGE_LOW_KM}}',publicAssetUrl('carfax-low-kilometres.png'),{enabled:!!v.carfaxLowKm,width:90,height:42});
-      await replacePlaceholderWithImage(temp.id,'{{BADGE_NO_ACCIDENTS}}',publicAssetUrl('carfax-no-reported-accidents.png'),{enabled:!!v.carfaxNoAccidents,width:90,height:41});
+      // Keep the CARFAX report as a simple text link. History badges use equal dimensions
+      // so all selected graphics line up cleanly on one row in the administrator template.
+      await docsBatchUpdate(temp.id,[{replaceAllText:{containsText:{text:'{{CARFAX_LINK}}',matchCase:true},replaceText:v.carfaxUrl?'VIEW CARFAX REPORT':''}}]);
+      if(v.carfaxUrl)await linkTextsInDoc(temp.id,[['VIEW CARFAX REPORT',v.carfaxUrl]]);
+      const carfaxBadgeSize={width:78,height:48};
+      await replacePlaceholderWithImage(temp.id,'{{BADGE_ONE_OWNER}}',publicAssetUrl('carfax-one-owner.png'),{enabled:!!v.carfaxOneOwner,...carfaxBadgeSize});
+      await replacePlaceholderWithImage(temp.id,'{{BADGE_LOW_KM}}',publicAssetUrl('carfax-low-kilometres.png'),{enabled:!!v.carfaxLowKm,...carfaxBadgeSize});
+      await replacePlaceholderWithImage(temp.id,'{{BADGE_NO_ACCIDENTS}}',publicAssetUrl('carfax-no-reported-accidents.png'),{enabled:!!v.carfaxNoAccidents,...carfaxBadgeSize});
       const pdfBlob=await exportGoogleFileBlob(temp.id,'application/pdf');
       const old=v.drive.directoryPdfId||'';
       const pdf=await upsertPdf(old,'Vehicle Info Directory.pdf',v.drive.sharedFolderId,pdfBlob,{lotkeysRole:'vehicleInfoDirectoryPdf',lotkeysVehicleId:v.id});
@@ -704,7 +707,7 @@ const DriveSync = (() => {
     return items;
   }
   function assetFingerprint(items){return (items||[]).map(x=>`${x.id||''}:${x.driveFileId||''}:${x.name||''}`).join('|');}
-  function directoryFingerprint(v,c,templateId){return JSON.stringify(['v071-text-only',templateId,c.storeName,c.directoryStoreAddress,c.directoryDirectionsUrl,v.year,v.make,v.model,v.stock,v.odometer,v.odometerUnit,v.originalListingUrl,v.carfaxUrl,!!v.carfaxOneOwner,!!v.carfaxLowKm,!!v.carfaxNoAccidents,v.drive?.photosFolderId,v.drive?.videosFolderId,v.drive?.documentsFolderId]);}
+  function directoryFingerprint(v,c,templateId){return JSON.stringify(['v074-carfax-badges',templateId,c.storeName,c.directoryStoreAddress,c.directoryDirectionsUrl,v.year,v.make,v.model,v.stock,v.odometer,v.odometerUnit,v.originalListingUrl,v.carfaxUrl,!!v.carfaxOneOwner,!!v.carfaxLowKm,!!v.carfaxNoAccidents,v.drive?.photosFolderId,v.drive?.videosFolderId,v.drive?.documentsFolderId]);}
   function sheetFingerprint(v){return JSON.stringify([v.name,v.year,v.make,v.model,v.price,v.odometer,v.odometerUnit,v.vin,v.stock,v.originalListingUrl,v.carfaxUrl,!!v.carfaxOneOwner,!!v.carfaxLowKm,!!v.carfaxNoAccidents,v.description,v.photos?.[0]?.driveFileId,v.drive?.directoryPdfUrl]);}
   async function syncVehicle(v,{force=false}={}){
     if(!v?.id) throw new Error('Vehicle ID missing.');
@@ -1006,7 +1009,7 @@ const App = (()=>{
   function parseDriveFolderId(url){const s=(url||'').trim();const m=s.match(/\/folders\/([a-zA-Z0-9_-]+)/)||s.match(/[?&]id=([a-zA-Z0-9_-]+)/);return m?m[1]:''}
   function moveArrayItem(arr,from,to){const out=[...arr];const [item]=out.splice(from,1);out.splice(to,0,item);return out}
   function normalizePhotoOrder(listing,vehicle){if(!vehicle?.photos?.length)return[];const ids=vehicle.photos.map(p=>p.id);const raw=listing?.photoOrder||[];const normalized=raw.map(x=>typeof x==='number'?vehicle.photos[x]?.id:x).filter(x=>ids.includes(x));return normalized.length?normalized:ids}
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.7.3</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.7.3</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.7.4</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.7.4</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
   async function syncVehicleNow(v,{quiet=false,force=false}={}){if(!DriveSync.connected()||!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Saved locally — connect Drive to sync');if(!modal.open&&(route==='home'||route==='vehicles'))render();return v;}v.syncStatus='syncing';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Syncing vehicle in background…');if(!modal.open&&(route==='home'||route==='vehicles'))render();try{const out=await DriveSync.syncVehicle(v,{force});await updateReadinessIndicator();if(!quiet)toast('Vehicle synced to Drive ✓');if(!modal.open&&(route==='home'||route==='vehicles'))render();return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))render();if(!quiet)toast('Saved locally — Drive sync needs attention');return v}}
   function queueVehicleSync(v,{force=false}={}){v.syncStatus='pending';DB.put('vehicles',v).then(()=>syncVehicleNow(v,{quiet:true,force})).catch(console.warn);}
   async function refreshInventory({quiet=true,forceFull=false}={}){if(inventoryRefreshBusy||modal.open||!DriveSync.connected()||!(await DriveSync.ready()))return;inventoryRefreshBusy=true;try{const n=await DriveSync.refreshInventoryFromDrive({quiet,forceFull});if(!quiet)toast(`Inventory refreshed · ${n} vehicles`);if(!modal.open&&(route==='home'||route==='vehicles'))await render();}catch(err){if(!quiet)alert('Could not refresh Store inventory:\n\n'+err.message);else console.warn('Inventory refresh failed',err);}finally{inventoryRefreshBusy=false}}
@@ -1034,17 +1037,12 @@ const App = (()=>{
     if(!ds.storeFolderId)issues.push('No Store folder is connected.');
     if(!userName)issues.push('No LotKeys user is registered on this device.');
     if(errors.length)issues.push(`${errors.length} item${errors.length===1?' has':'s have'} a Drive sync error.`);
-    if(issues.length)return {level:'bad',title:'Needs attention',summary:'LotKeys is not fully ready to synchronize.',issues,pending:pending.length,errors:errors.length};
+    if(issues.length)return {level:'bad',title:'Needs attention',summary:'LotKeys setup or Drive data needs attention.',issues,pending:pending.length,errors:errors.length};
     if(!ready||!ds.connected){
       return {level:'warn',title:'Google Drive connection needed',summary:'Your Store is configured, but this browser is not currently authorized with Google Drive.',issues:['Open Settings and connect/reconnect Google Drive. Your local work will stay on this device until Drive is connected.'],pending:pending.length,errors:0};
     }
-    if(pending.length||inventoryRefreshBusy||listingsRefreshBusy){
-      const parts=[];
-      if(pending.length)parts.push(`${pending.length} item${pending.length===1?' is':'s are'} waiting for or currently syncing`);
-      if(inventoryRefreshBusy||listingsRefreshBusy)parts.push('a background refresh is running');
-      return {level:'warn',title:'Synchronizing',summary:'LotKeys is connected and finishing background work.',issues:[parts.join('; ')+'.'],pending:pending.length,errors:0};
-    }
-    return {level:'good',title:'Synced and ready',summary:'Google Drive is connected and there are no pending local changes.',issues:[],pending:0,errors:0};
+    // Vehicle/listing background sync is shown on that item itself, not in the global readiness light.
+    return {level:'good',title:'Connected and ready',summary:'Your Google account, Store folder and LotKeys user are connected and ready.',issues:[],pending:pending.length,errors:0};
   }
   async function updateReadinessIndicator(){
     const b=$('#sync-readiness');if(!b)return;

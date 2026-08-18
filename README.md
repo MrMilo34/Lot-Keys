@@ -1,3 +1,12 @@
+# LotKeys Drive Test v0.7.4
+
+## v0.7.4 changes
+
+- Vehicle Info Directory CARFAX history graphics now use the same display dimensions and are sized to stay together on one line when the three placeholders are placed on one line in the Administration template.
+- `{{CARFAX_LINK}}` is a simple clickable **VIEW CARFAX REPORT** text link again; the separate CARFAX View Report image is no longer injected by LotKeys.
+- The top readiness traffic light now reflects account/store readiness only. Normal vehicle/listing background synchronization no longer turns the global indicator yellow.
+- Individual Vehicle and Listing cards still highlight yellow while they are local, pending or syncing, and red on a Drive sync error.
+
 # LotKeys Drive Test v0.7.3
 
 ## v0.7.3 changes
