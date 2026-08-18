@@ -1,14 +1,27 @@
-# LotKeys Drive Test v0.7.6
+# LotKeys Drive Test v0.7.7
+
+## v0.7.7 changes
+
+- Fixed photo filename order prefixes multiplying on every sync. LotKeys now strips any previous leading order markers and writes exactly one current marker, e.g. `03 - original-photo.jpg`. Reordering overwrites that number instead of adding another one.
+- Vehicle media remains Drive-authoritative: files added directly to Shared/Photos, Shared/Videos or Shared/Documents are discovered when a Vehicle Profile is opened/refreshed.
+- Fixed Vehicle Info Directory duplication. `Vehicle Info Directory.pdf` is now treated as a singleton per vehicle: LotKeys reuses/overwrites the existing PDF and moves stale duplicate copies to Drive Trash on the next vehicle sync.
+- Preserves Drive-only metadata while refreshing a Vehicle Profile so the browser does not forget the existing Vehicle Info Directory file ID and accidentally create another copy.
+- Service-worker cache bumped to v0.7.7.
 
 ## v0.7.6 changes
 
-- Google Drive is now authoritative for vehicle media: files added directly to `Shared/Photos`, `Shared/Videos`, or `Shared/Documents` are discovered even if LotKeys did not upload them.
-- Vehicle media is reconciled when a Vehicle Profile is opened and during the normal Store inventory refresh.
-- Background media refresh preserves unsynced local uploads while a vehicle is pending/syncing, preventing an automatic refresh from replacing in-progress work.
-- Added Drive read-only authorization alongside `drive.file` so the test build can see files manually added by other devices/users inside Drive. Reconnect Google Drive once after upgrading.
-- The global readiness light no longer turns yellow for routine background vehicle/listing sync. Individual cards still show yellow while they are syncing.
-- Includes the v0.7.5 CARFAX badge sizing correction and all earlier v0.7.x features.
-- Service-worker cache bumped to v0.7.6.
+- Google Drive is the source of truth for Vehicle Profile Photos, Videos and Documents; manually added Drive files are discovered by LotKeys.
+- Drive authorization includes read access needed to discover files that were not originally uploaded by LotKeys.
+
+# LotKeys Drive Test v0.7.5
+
+## v0.7.5 changes
+
+- Full clean release based on the complete v0.7.4 build plus the CARFAX badge sizing hotfix.
+- One Owner, Low Kilometres and No Reported Accidents are inserted using the same display height so the One Owner badge no longer renders taller than the others.
+- CARFAX history badges remain on one line when all three placeholders are kept together in the Administration template.
+- VIEW CARFAX REPORT remains a normal text hyperlink; the old CARFAX View Report graphic is not required.
+- Service-worker cache bumped to v0.7.5 to avoid stale partial-patch files after replacing the GitHub release.
 
 # LotKeys Drive Test v0.7.3
 
@@ -250,12 +263,3 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Primary Facebook button now targets exactly `https://www.facebook.com/marketplace/selling`.
 - This tests the simpler Selling route observed during live Android/Facebook app testing.
 - Marketplace Home remains available as the fallback.
-
-## v0.7.6 — Drive-authoritative vehicle media
-
-- Google Drive is the source of truth for `Shared/Photos`, `Shared/Videos`, and `Shared/Documents`.
-- Files added directly in Google Drive (from another phone, PC, or staff member) are discovered by LotKeys even when LotKeys did not upload them.
-- Vehicle media metadata is reconciled during the normal Store inventory refresh and again whenever a Vehicle Profile is opened.
-- Unsynced local uploads are preserved while a vehicle is pending/syncing, so background refreshes do not overwrite work in progress.
-- The global readiness light stays green during ordinary background vehicle/listing sync; individual cards continue to show yellow while they are syncing.
-- Because Google Picker's `drive.file` permission only covers files explicitly opened/shared with the app, this test build additionally requests Drive read-only access so it can discover manually-added files inside the Store folder.
