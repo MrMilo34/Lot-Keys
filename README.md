@@ -1,4 +1,15 @@
-# LotKeys Drive Test v0.7.9
+# LotKeys Drive Test v0.8.0
+
+## v0.8.0 changes
+
+- Adds **🌐 Import From Website** to Vehicle Profile create/edit. Paste the exact dealership vehicle URL and LotKeys scans only that supplied page for Year, Make, Model, current/sale Price, Odometer + unit, VIN, Stock #, Vehicle Profile Description, CARFAX link when exposed, and gallery photos.
+- The pasted dealership URL is automatically included as the **Original Vehicle Listing URL** suggestion.
+- Website importing uses the exact supplied page only; missing information stays blank/untouched rather than being filled from search results or another dealership page.
+- Website results use the same checkbox approval workflow as Info From Photo, including Select All / Clear All and photo selection before import.
+- Info From Photo review rows are compacted so checkbox, field/value and confidence level share one line where possible.
+- Facebook Posting Assistant keeps showing formatted odometer text such as `95,639 KM`, but the Copy button now sends numeric-only `95639` so Facebook's mileage field accepts the paste.
+- Website photo import attempts to preserve the page's gallery order and skips photos already imported from the same source URL.
+- Service-worker cache bumped to v0.8.0.
 
 ## v0.7.9 changes
 
