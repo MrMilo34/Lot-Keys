@@ -1,4 +1,12 @@
-# LotKeys Drive Test v0.8.2.2
+# LotKeys Drive Test v0.8.2.3
+
+## v0.8.2.3 changes
+
+- Vehicle Profile photo galleries are now read-only; photo reordering is available only from Edit Vehicle.
+- Edit Vehicle keeps existing photos collapsed by default behind **Expand & Order Photos**, placed directly under the photo chooser. New photos can still be added without opening the ordering gallery.
+- The Accident-Free CARFAX filter is grouped on the same compact control row immediately to the left of the Inventory sort selector, keeping the Inventory title and vehicle count clear.
+- Preserves v0.8.2.2 sorting, CARFAX filtering, Drive-as-source-of-truth behavior, and the protected website/photo-import identification logic from v0.8.1.2.
+- Service-worker cache bumped for v0.8.2.3.
 
 ## v0.8.2.2 changes
 
