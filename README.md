@@ -1,4 +1,16 @@
-# LotKeys Drive Test v0.8.2.4
+# LotKeys Drive Test v0.8.3
+
+
+## v0.8.3 changes
+
+- Google Drive authorization now survives normal page refreshes in the same browser tab/session by keeping the current short-lived access token in `sessionStorage` until Google expires it. The token is never written into LotKeys Drive files or exported backups.
+- Returning Google users are recognized from their saved account email and LotKeys supplies that account as a Google `login_hint`, reducing repeated account-selection screens when a fresh token is needed.
+- Normal Connect/Reconnect no longer forces `prompt=consent`. Google is allowed to reuse the user's existing grant and only asks for consent when Google actually requires it.
+- Expired/revoked authorization no longer launches a forced consent flow from a background refresh. LotKeys returns to **Please Sync** and lets the user reconnect deliberately.
+- When a valid session token is restored after reload, LotKeys quietly resumes Inventory/Listings refresh without asking the user to connect again.
+- Failed/cancelled Google authorization no longer clears the user's stored LotKeys role.
+- Keeps all v0.8.2.4 photo-order safety/UI behavior, sorting, CARFAX filter, Drive source-of-truth behavior, and protected website/photo-import identification logic.
+- Service-worker cache bumped for v0.8.3.
 
 ## v0.8.2.4 changes
 
