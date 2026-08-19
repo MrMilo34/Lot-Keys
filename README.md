@@ -1,4 +1,22 @@
-# LotKeys Drive Test v0.8.2
+# LotKeys Drive Test v0.8.2.2
+
+## v0.8.2.2 changes
+
+- Adds **Odometer L → H** sorting to Inventory and Listings. Vehicles/listings with an odometer sort from lowest to highest; missing odometers are kept at the end. MI values are normalized for comparison so mixed KM/MI inventory still sorts sensibly.
+- Adds an **Accident-Free CARFAX** checkbox filter to the Inventory tab. When enabled, only Vehicle Profiles with the existing **No Accidents** CARFAX highlight/badge selected are shown; vehicles with No Accidents plus other CARFAX badges are included too.
+- The accident-free filter is display-only, remembers its state on that device, and never changes Vehicle Profiles or Drive data.
+- Sorting labels now appear as: **Low → High**, **High → Low**, **New → Old**, **Old → New**, **Odometer L → H**, **Brand A → Z**.
+- Restores `sw.js` to the full release archive and bumps its cache to v0.8.2.2.
+- Preserves the protected v0.8.1.2 website/photo identification pipeline and all v0.8.2.x navigation/sync behavior.
+
+## v0.8.2.1 changes
+
+- Adds **Low → High** sorting for least-to-most expensive vehicles/listings.
+- Adds **High → Low** sorting for most-to-least expensive vehicles/listings.
+- Renames **Make A–Z** to **Brand A–Z** while preserving compatibility with the prior saved sort preference.
+- Sorting options now appear as: Low → High, High → Low, New → Old, Old → New, Brand A–Z.
+- Retains the v0.8.2 navigation/sync polish and the protected v0.8.1.2 website-import identification pipeline.
+- Service-worker cache bumped to v0.8.2.1.
 
 ## v0.8.2 changes
 - Quality-of-life navigation polish: **🏷️ Inventory** replaces the Vehicles tab label/icon and **📒 Listings** replaces the Listings icon. Existing Home and Settings icons are intentionally preserved.
