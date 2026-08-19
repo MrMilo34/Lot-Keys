@@ -1,4 +1,14 @@
-# LotKeys Drive Test v0.8.1.1
+# LotKeys Drive Test v0.8.1.2
+
+## v0.8.1.2 changes
+- Website photo selection now favors the **highest-resolution repeated primary gallery** instead of letting the largest image-count group win automatically.
+- Images appearing after obvious related-inventory sections such as **Explore more vehicles / Similar vehicles / Recently viewed** are excluded from the vehicle-photo candidate pool.
+- Adds lightweight visual fingerprints so resized/cropped copies of the same scene can be collapsed to the highest-resolution version when the image service permits it.
+- Adds a fallback parallel-gallery heuristic for responsive duplicate sets (for example two interleaved size variants of the same gallery), keeping the larger dimension group.
+- High-confidence recommended photos stay visible; lower-confidence Review photos are collapsed behind **Expand to View All** to reduce scrolling.
+- Keeps the exact supplied listing URL as the only website source and preserves the compact field-confidence/checkbox layout.
+- Retains the Facebook odometer numeric-only copy fix and all Drive/source-of-truth fixes from earlier releases.
+- Service-worker cache bumped to v0.8.1.2.
 
 ## v0.8.1.1 changes
 - Website photo importing now probes actual image dimensions before recommending photos.
