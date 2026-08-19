@@ -1,4 +1,16 @@
-# LotKeys Drive Test v0.8.1.2
+# LotKeys Drive Test v0.8.2
+
+## v0.8.2 changes
+- Quality-of-life navigation polish: **🏷️ Inventory** replaces the Vehicles tab label/icon and **📒 Listings** replaces the Listings icon. Existing Home and Settings icons are intentionally preserved.
+- The Create menu now labels **📝 Marketplace Listing**.
+- **Shared store inventory** is renamed to **Inventory**.
+- Inventory/Listings refresh timestamps move into a compact header status beside the readiness light, using a 12-hour AM/PM clock such as **Sync 1:30 PM**. The label also shows **Syncing…**, **Please Sync**, **Setup Needed**, or **Sync Error** when appropriate.
+- Normal background refreshes still do **not** turn the global readiness light yellow; the established readiness-light behavior is preserved.
+- Adds persistent display sorting to both Inventory and Listings: **New → Old**, **Old → New**, and **Make A–Z**. Each tab remembers its own selected sort on the device.
+- Sorts are display-only and do not rename/move Drive folders, change photo order, or alter the protected website/photo identification logic.
+- User-visible sync/posting times use a 12-hour AM/PM format.
+- Retains all v0.8.1.2 website-import region, resolution, duplicate-photo, confidence, and collapsed-review behavior without changing that importer pipeline.
+- Service-worker cache bumped to v0.8.2.
 
 ## v0.8.1.2 changes
 - Website photo selection now favors the **highest-resolution repeated primary gallery** instead of letting the largest image-count group win automatically.
