@@ -1,5 +1,24 @@
-# LotKeys Drive Test v0.8.3
+# LotKeys Drive Test v0.8.3.2
 
+
+
+
+## v0.8.3.2 changes
+
+- Vehicle Profile secondary actions now use the same pressed-state treatment as the polished refresh controls.
+- **Sync Vehicle** shows a grey busy state with an inline loading spinner while Drive synchronization is running.
+- Added a **🏷️ Open Vehicle Info Sheet** shortcut directly beside **Copy Vehicle Info Sheet Link**. It opens the same customer-facing PDF in a new tab.
+- **Open Shared Folder** keeps its clean white idle state and greys while pressed.
+- Service-worker cache bumped for v0.8.3.2.
+
+## v0.8.3.1 changes
+
+- Inventory and Listings **Refresh** buttons now use a clean white idle state instead of the transparent ghost style.
+- While a manual or background refresh is running, the matching Refresh button switches to the same pressed/grey visual language used by the expanded photo-order control.
+- A blue loading spinner appears inside the Refresh button during synchronization so users get immediate feedback that the click was received and LotKeys is working.
+- The Refresh button is temporarily disabled while that refresh is active, preventing accidental duplicate refresh requests.
+- Keeps the v0.8.3 returning-user Google authorization improvements and all existing website importer, photo-identification, sorting, CARFAX filter, photo-order safety, and Drive source-of-truth behavior intact.
+- Service-worker cache bumped for v0.8.3.1.
 
 ## v0.8.3 changes
 
