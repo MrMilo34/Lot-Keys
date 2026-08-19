@@ -1,4 +1,20 @@
-# LotKeys Drive Test v0.8.0
+# LotKeys Drive Test v0.8.1.1
+
+## v0.8.1.1 changes
+- Website photo importing now probes actual image dimensions before recommending photos.
+- The strongest repeated high-resolution image-size group (2+ matching large images) is treated as the likely vehicle gallery and is preselected automatically.
+- Other plausible high-resolution images remain visible but unchecked as **Review** items so the user can decide.
+- Obvious thumbnails, maps/location graphics, logos, tiny artwork and lower-resolution resized duplicates are omitted from the review grid.
+- Photo review now shows High/Review confidence and detected dimensions, plus a Recommended button that restores the automatic selection.
+- Retains v0.8.1 heading/model parsing, compact field review layout and all v0.8.0 importer/Facebook odometer fixes.
+- Service-worker cache bumped to v0.8.1.1.
+
+## v0.8.1 changes
+- Website and photo review rows are tighter: the confidence chip and checkbox now sit together on the right side of each field.
+- Website Year + Make + Model parsing now reads the same vehicle heading line first, preventing badges such as “JUST ARRIVED!” from becoming the model.
+- Website gallery extraction now prefers the largest `srcset` / sized image variant, collapses resized thumbnail duplicates, and filters common map/location artwork.
+- Retains v0.8.0 exact-URL importing and Facebook odometer numeric-only copy behavior.
+- Service-worker cache bumped to v0.8.1.
 
 ## v0.8.0 changes
 
