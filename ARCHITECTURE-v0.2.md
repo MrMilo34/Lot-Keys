@@ -99,3 +99,10 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 
 ## v0.8.4.1 posting assistant rule
 - Posting Assistant is review-only for listing photos; all listing-specific add/remove/reorder changes are made and saved in Create/Edit Listing before posting.
+
+
+## Personal description/profile layer (v0.8.5)
+- Store Inventory remains dealership-owned. Marketplace description structure is user-owned.
+- Personal Description Templates are building-block recipes, separate from Vehicle Profile descriptions and separate from Store Administration.
+- Vehicle Profile Year/Make/Model/Price/Odometer/VIN/STK remain authoritative during description generation. Website reads are supplementary and discrepancies (especially price) are surfaced for review rather than silently overwriting the Profile.
+- Current v0.8.5 stores personal template/preferences in the browser settings store. A portable user-profile sync location outside the dealership Store Folder is planned before browser-extension rollout.

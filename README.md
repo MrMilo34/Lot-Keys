@@ -1,9 +1,9 @@
-# LotKeys Drive Test v0.8.4.1
+# LotKeys Drive Test v0.8.5
 
 
 
 
-## v0.8.4.1 changes
+## v0.8.5 changes
 
 - Facebook Posting Assistant photo area is now **review-only**.
 - Removed **Add Photos**, **Expand & Order Photos**, removal controls, drag ordering, and **Reset to Inventory Order** from the Posting Assistant.
@@ -11,7 +11,7 @@
 - Posting Assistant Step 1 is now **Review listing photos** and shows the saved posting sequence only.
 - **Download Photos** and **Open Shared Folder** remain available from the Posting Assistant.
 - No changes were made to the Inventory master-photo set or the protected website-import/photo-identification logic.
-- Service-worker cache bumped for v0.8.4.1.
+- Service-worker cache bumped for v0.8.5.
 
 ## v0.8.4 changes
 
@@ -421,3 +421,13 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Primary Facebook button now targets exactly `https://www.facebook.com/marketplace/selling`.
 - This tests the simpler Selling route observed during live Android/Facebook app testing.
 - Marketplace Home remains available as the fallback.
+
+
+## v0.8.5 — Account + Description Recipe Builder
+- Added a personal **Account** section at the bottom of Settings with sales/display name, System/Light/Dark appearance and selectable accent color.
+- Added **Description Templates** with **＋ Create / Add** first, plus built-in **Marketplace - Quick** and **Marketplace - Detailed** recipes.
+- Custom templates use draggable building blocks for Headline, Vehicle Details, Overview, Features, Top Features, Price, Financing, Signature and Custom Text. Sections and emoji treatment can be toggled independently.
+- Create/Edit Listing now includes **✨ Build Description**. It uses Vehicle Profile values as the source of truth, checks the exact Original Listing URL for supplementary facts/features, flags a current website price that differs from the Profile without silently overwriting the Profile, and lets the user approve/edit ingredients before building editable Marketplace copy.
+- Description template selection defaults to the user's last-used recipe.
+- Renamed listing actions to **Save Listing for later** and **Save & Prepare Facebook Listing**.
+- Personal templates/preferences are local-browser backed in this test build; portable personal-profile sync is the next foundation before the Chrome Marketplace extension.
