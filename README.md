@@ -1,15 +1,19 @@
-# LotKeys Drive Test v0.8.3.3
+# LotKeys Drive Test v0.8.3.4
 
 
 
 
-## v0.8.3.3 changes
+## v0.8.3.4 changes
+
+- Vehicle Profile **Open Shared Folder** and **Sync Vehicle** actions now use the same grey secondary-button treatment as **Edit Vehicle**, improving contrast against the white profile card.
+- Existing pressed/syncing states and the Sync Vehicle loading spinner are retained.
+
 
 - CARFAX website imports now accept only actual `https://vhr.carfax.ca/...` vehicle-history report URLs.
 - CARFAX badge/logo/image assets such as `cdn.carfax.ca/...svg` are explicitly ignored and will never populate the CARFAX Link field.
 - Direct page imports inspect both clickable links and embedded page source for a valid VHR report URL, including escaped URLs found in page data.
 - The read-only website fallback uses the same VHR-only rule. If a valid report URL is not exposed, LotKeys leaves CARFAX blank rather than importing an image or unrelated CARFAX asset.
-- Service-worker cache bumped for v0.8.3.3.
+- Service-worker cache bumped for v0.8.3.4.
 
 ## v0.8.3.2 changes
 
