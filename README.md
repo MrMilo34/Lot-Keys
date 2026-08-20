@@ -1,4 +1,16 @@
-# LotKeys Drive Test v0.8.8
+# LotKeys Drive Test v0.8.9
+
+## v0.8.9 — moderation + administration levels
+- User moderation cards are collapsed by default; tap a user row/avatar area to view deletion-request history and Request Ranking.
+- Request Ranking starts at 75 and is based only on approved vs false reports; neutral removed requests do not affect it.
+- Added ⭐ Admin Level 1 and 🌟 Admin Level 2 with owner-only Store/Google configuration at Level 2.
+- Removal requests are resolved per Vehicle Profile: Approve+Delete approves all reporters, Deny gives all open reporters a false-report tally, Remove Requests clears them neutrally.
+- Admins see ❕ on flagged Profiles/users; the reporting user sees ❔ on a Vehicle Profile they personally flagged.
+- Profiles Marked for Removal acts as a review queue and returns to Settings after resolution; Inventory-origin reviews return to Inventory.
+- Legacy Administrator accounts migrate to Admin Level 2.
+- The Posting Assistant hero now follows the selected accent gradient as part of the theme-consistency cleanup.
+- Service-worker cache bumped for v0.8.9.
+
 
 
 ## v0.8.8 — Vehicle Profile ownership + moderation controls
