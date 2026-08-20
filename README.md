@@ -462,6 +462,13 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Checkboxes now follow the selected accent color and use the calculated contrasting checkmark color. Light accent choices also receive improved active-navigation contrast/drop shadow.
 
 
+
+## v0.8.7.2 — Neutral modal backdrop polish
+
+- Removed the blue/slate saturation from the page dimming layer shown behind dialogs and loading modals.
+- Dialog backdrops now use a neutral black transparency in both Light and Dark appearance modes, preserving the underlying UI without introducing a blue hue.
+- All v0.8.7.1 navigation, rankings, portable profile and thumbnail behavior remains unchanged.
+
 ## v0.8.7.1 — Competition visibility + navigation polish
 - Vehicle Profile Builders ranking is visible to every registered Store user; Administrator / Store Configuration remains admin-only.
 - Bottom navigation order is now Home → Inventory → Listings → Settings → Profile, keeping Profile on the far right.

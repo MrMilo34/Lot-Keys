@@ -132,3 +132,7 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 ### v0.8.7.1 profile-thumbnail + leaderboard refinement
 - Store leaderboard visibility is not an admin privilege: all registered Store users can view the top-10 Vehicle Profile builders and their own active count. Store configuration controls remain admin-only.
 - Each Store user keeps a single tiny `Profile Thumbnail.jpg` under `Users/<user>/`; profile changes overwrite that file and update the Store user registry timestamp. UI thumbnail caching is versioned by that timestamp so the same Drive file ID can refresh everywhere without duplicating media.
+
+
+### v0.8.7.2 UI polish
+Dialog/modal backdrops use neutral black transparency rather than a blue/slate overlay in both appearance modes.
