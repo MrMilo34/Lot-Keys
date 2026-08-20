@@ -450,3 +450,20 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Description template selection defaults to the user's last-used recipe.
 - Renamed listing actions to **Save Listing for later** and **Save & Prepare Facebook Listing**.
 - Personal templates/preferences are local-browser backed in this test build; portable personal-profile sync is the next foundation before the Chrome Marketplace extension.
+
+## v0.8.7 — Portable Profile + theme polish + Vehicle Profile builders
+- Personal Profile data now uses a **local browser cache plus a user-owned Google Drive backup** in `My Drive/LotKeys Personal Profile`. It carries the user's display name, theme, accent color, personal Description Templates, last-used template and profile photo independently of any dealership Store folder.
+- A compact `Profile Thumbnail.jpg` is also maintained inside the user's Store-side `Users/<User>/` folder. Store Administration can use this small thumbnail without duplicating the full personal profile image.
+- New Vehicle Profiles record the **original creator** and creation date. Creator metadata is written to the administrative Sheet and Inventory Index, then displayed on the Vehicle Profile with the creator's small profile photo when available.
+- Administrators now get a **Vehicle Profile Builders** chart below Store Configuration showing the top 10 registered users by active Inventory profiles created, plus the signed-in user's personal active-profile count. Legacy profiles without creator metadata remain clearly identified as unassigned rather than guessed.
+- Dark-mode syncing cards now keep the yellow warning outline **and** receive a dark amber/yellow-tinted fill so the syncing state is visible against charcoal cards.
+- The Create/Edit Listing vehicle-search gradient follows the user's selected accent hue.
+- Info From Photo / Import From Website panels and other previously light-only surfaces now use charcoal surfaces in Dark mode while retaining subtle blue/green functional tints.
+- Checkboxes now follow the selected accent color and use the calculated contrasting checkmark color. Light accent choices also receive improved active-navigation contrast/drop shadow.
+
+
+## v0.8.7.1 — Competition visibility + navigation polish
+- Vehicle Profile Builders ranking is visible to every registered Store user; Administrator / Store Configuration remains admin-only.
+- Bottom navigation order is now Home → Inventory → Listings → Settings → Profile, keeping Profile on the far right.
+- Active bottom tabs receive a consistent translucent backplate and contrast-aware drop-shadow treatment so light/dark accents remain visible across themes.
+- Store profile thumbnails remain one small image per user. Updating a profile photo overwrites that thumbnail and now invalidates/version-keys the in-app thumbnail cache so refreshed Store data updates avatars across Vehicle creator strips, Users and the leaderboard without creating duplicate active thumbnail files.

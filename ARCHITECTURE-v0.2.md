@@ -121,3 +121,14 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 - Dealership identity, Google authorization, Store configuration, Administration, and store-user registry remain under Settings / the dealership Store Folder.
 - The Profile remains browser-local in v0.8.6 while its UX is tested. The intended next step is a user-owned Google Drive profile outside any dealership Store Folder so the same selling identity can follow the user between stores/devices.
 
+
+## Portable personal profile + creator attribution (v0.8.7)
+- The user's personal identity is independent of Store ownership. Browser IndexedDB remains the fast cache, while a user-owned `LotKeys Personal Profile` folder in My Drive is the portable source for display name, appearance, description templates, last-used template and full profile photo.
+- Each connected dealership Store receives only a compact `Users/<User>/Profile Thumbnail.jpg` plus thumbnail file metadata in the Store user registry. This supports staff identity/competition UI without copying the full personal profile into every Store.
+- Vehicle Profiles now carry immutable-origin fields `createdByUserName`, `createdByEmail` and `createdAt`. These fields are included in the administrative Sheet and `Inventory Index.json` so counts work across devices.
+- Active Vehicle Profile competition counts are derived from currently present Inventory profiles, so deleting a Vehicle Profile naturally removes it from the active count. Legacy profiles with no creator metadata are not guessed.
+
+
+### v0.8.7.1 profile-thumbnail + leaderboard refinement
+- Store leaderboard visibility is not an admin privilege: all registered Store users can view the top-10 Vehicle Profile builders and their own active count. Store configuration controls remain admin-only.
+- Each Store user keeps a single tiny `Profile Thumbnail.jpg` under `Users/<user>/`; profile changes overwrite that file and update the Store user registry timestamp. UI thumbnail caching is versioned by that timestamp so the same Drive file ID can refresh everywhere without duplicating media.
