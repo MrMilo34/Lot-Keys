@@ -106,3 +106,18 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 - Personal Description Templates are building-block recipes, separate from Vehicle Profile descriptions and separate from Store Administration.
 - Vehicle Profile Year/Make/Model/Price/Odometer/VIN/STK remain authoritative during description generation. Website reads are supplementary and discrepancies (especially price) are surfaced for review rather than silently overwriting the Profile.
 - Current v0.8.5 stores personal template/preferences in the browser settings store. A portable user-profile sync location outside the dealership Store Folder is planned before browser-extension rollout.
+
+
+## Appearance polish (v0.8.5.1)
+- Personal accent color drives primary actions and the global + action button.
+- LotKeys calculates dark/light foreground text for accent contrast.
+- Dark mode uses a neutral black/charcoal palette rather than the earlier navy palette.
+
+## Personal Profile tab (v0.8.6)
+- Bottom navigation now separates the user's personal **Profile** from technical/dealership **Settings**.
+- The Profile owns personal display/sales name, profile photo, appearance/accent choices, last-used description template, and personal Description Templates.
+- Profile photos are currently center-cropped/resized to 360x360 and stored in the browser settings store as a compact data URL. This avoids adding a full-resolution phone photo to the current test profile and makes later personal-Drive migration straightforward.
+- A saved profile photo is rendered as the circular Profile navigation icon; the generic person icon is the fallback.
+- Dealership identity, Google authorization, Store configuration, Administration, and store-user registry remain under Settings / the dealership Store Folder.
+- The Profile remains browser-local in v0.8.6 while its UX is tested. The intended next step is a user-owned Google Drive profile outside any dealership Store Folder so the same selling identity can follow the user between stores/devices.
+

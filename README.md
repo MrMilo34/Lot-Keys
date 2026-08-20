@@ -1,7 +1,26 @@
-# LotKeys Drive Test v0.8.5
+# LotKeys Drive Test v0.8.6
 
 
 
+
+
+## v0.8.6 Profile foundation
+- Added a dedicated **Profile** tab to the bottom navigation between Listings and Settings. Home and Settings retain their existing icons.
+- Users can upload/change/remove a familiar circular profile photo. LotKeys center-crops and resizes the selected image to a compact 360 px avatar for the current browser profile.
+- When a profile photo exists, the bottom **Profile** navigation icon displays that photo; otherwise it uses the generic person icon.
+- Personal **User / Sales Name**, Appearance, accent color, and Description Templates moved out of Settings into Profile.
+- Description Templates retain **＋ Create / Add** at the top plus Marketplace - Quick, Marketplace - Detailed, and custom templates.
+- Profile shows the user's dealership/store and role while keeping the personal selling identity visually separate from Store Inventory.
+- Settings now focuses on **Google & Store Connection**, Administration, posting locations, and technical/local configuration.
+- Profile data remains browser-local for this test build; the approved Profile layer is intended to become portable through the user's personal Google Drive in the next foundation step.
+- Service-worker cache bumped for v0.8.6.
+
+## v0.8.5.1 polish
+- Accent buttons now automatically use readable foreground text: light accents such as yellow, green, and white use dark text; dark accents retain white text.
+- The top-right + action button now follows the user's selected accent color and matching contrast text.
+- Dark mode was changed from navy to a neutral ChatGPT-like black/charcoal palette: black app background, charcoal cards, and grey inputs/secondary controls.
+- Browser theme color follows light/dark appearance.
+- Service-worker cache bumped for v0.8.5.1.
 
 ## v0.8.5 changes
 
