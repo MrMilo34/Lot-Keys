@@ -541,3 +541,11 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Bottom navigation order is now Home → Inventory → Listings → Settings → Profile, keeping Profile on the far right.
 - Active bottom tabs receive a consistent translucent backplate and contrast-aware drop-shadow treatment so light/dark accents remain visible across themes.
 - Store profile thumbnails remain one small image per user. Updating a profile photo overwrites that thumbnail and now invalidates/version-keys the in-app thumbnail cache so refreshed Store data updates avatars across Vehicle creator strips, Users and the leaderboard without creating duplicate active thumbnail files.
+
+
+## v0.8.9.5 — Account Drive save reliability
+- Fixed Personal Account saves being incorrectly skipped when the green Store sync state was healthy but the in-memory Google access token had not yet been restored after a page reload. Account sync now restores/renews authorization before writing.
+- `Account.json` and `Account Photo.jpg` now write to the selected Lot-Keys Account folder whenever Account preferences/photo changes are saved.
+- Store-side `Users/<User>/Profile Thumbnail.jpg` generation now restores authorization independently and forces a complete Store user structure lookup when needed.
+- Personal Account saving and Store thumbnail publishing are treated as separate steps, so a thumbnail registry problem can no longer falsely report that the personal Account file failed to save.
+- Account/photo toast messages no longer claim a cloud save when only the local browser cache was updated.
