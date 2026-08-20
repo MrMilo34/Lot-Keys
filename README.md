@@ -1,4 +1,15 @@
-# LotKeys Drive Test v0.8.9.3
+# LotKeys Drive Test v0.8.9.4
+
+## v0.8.9.4 — Account data in personal Drive folder
+
+- The selected **Lot-Keys Account** folder is now the persistent home for personal account data.
+- Saves account data as `Account.json` and the optional photo as `Account Photo.jpg`.
+- `Account.json` carries the Google account identifier, store user name, sales/display name, theme, accent color, personal description templates, default template, photo file ID, and update timestamp.
+- Saving Account preferences/photo/templates now waits for the small personal Drive write so the UI can report whether the data actually reached Google Drive.
+- Existing `Profile.json` / `Profile Photo.jpg` data is detected and migrated in place for backward compatibility.
+- The Account Storage card shows whether `Account.json` is saved.
+- Service-worker cache bumped for v0.8.9.4.
+
 
 ## v0.8.9.3 — responsive media uploads
 
