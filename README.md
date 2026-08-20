@@ -1,4 +1,19 @@
-# LotKeys Drive Test v0.8.6
+# LotKeys Drive Test v0.8.8
+
+
+## v0.8.8 — Vehicle Profile ownership + moderation controls
+- Home **Find a vehicle fast** gradient now follows the user's selected accent theme, matching the Create/Edit Listing vehicle search treatment.
+- Vehicle Profile ownership is enforced: the original creator (and Administrators) can delete the Profile; other users receive **Mark for Deletion** instead.
+- Removal requests use a clear selectable reason flow: **Duplicate Vehicle Profile**, **Missing Details**, **Wrong Vehicle Listed**, or **Other** with a custom explanation.
+- Deletion requests are stored with the Vehicle Profile's administrative data and Inventory Index so they survive refreshes and are visible across authorized Store sessions.
+- Only Administrators see the **❕** removal marker and request details. Requests show the reporting user's name/profile thumbnail and submitted reason.
+- Settings → Administrator / Store Configuration now includes a **Profiles Marked for Removal** review area with dismiss, false-report, open, and delete actions.
+- User administration now stores per-user permissions for Vehicle Profile creation, deletion reporting, Listings, leaderboard visibility, Description Builder, future Chrome extension access, and full account status.
+- User moderation counters track submitted, approved, dismissed and false deletion reports so repeated misuse is visible to Administration.
+- Duplicate stock numbers are allowed, but LotKeys warns before saving when that STK# already exists.
+- Description Builder restrictions are now enforced in Create/Edit Listing while leaving manual description editing available.
+- Advanced Google / Store controls sit above the main Store Configuration save actions.
+- Service-worker cache bumped for v0.8.8.
 
 
 
