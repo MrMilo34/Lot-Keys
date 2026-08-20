@@ -95,3 +95,7 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 - User-added listing photos are uploaded once under `Users/<User>/Listing Assets/<Vehicle>/Photos`. Listing JSON records store Drive references, not image copies.
 - Listing duplication copies only metadata/references. It does not duplicate Inventory photos or already-synced user listing assets in Google Drive.
 - `photoOrderCustomized` distinguishes an intentional empty/custom listing order from the default Inventory photo order.
+
+
+## v0.8.4.1 posting assistant rule
+- Posting Assistant is review-only for listing photos; all listing-specific add/remove/reorder changes are made and saved in Create/Edit Listing before posting.

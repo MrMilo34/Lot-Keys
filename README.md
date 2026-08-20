@@ -1,7 +1,17 @@
-# LotKeys Drive Test v0.8.4
+# LotKeys Drive Test v0.8.4.1
 
 
 
+
+## v0.8.4.1 changes
+
+- Facebook Posting Assistant photo area is now **review-only**.
+- Removed **Add Photos**, **Expand & Order Photos**, removal controls, drag ordering, and **Reset to Inventory Order** from the Posting Assistant.
+- Listing photo additions, removals, cover choice and ordering remain available in **Create/Edit Listing**, where they are saved before the Facebook Posting Assistant opens.
+- Posting Assistant Step 1 is now **Review listing photos** and shows the saved posting sequence only.
+- **Download Photos** and **Open Shared Folder** remain available from the Posting Assistant.
+- No changes were made to the Inventory master-photo set or the protected website-import/photo-identification logic.
+- Service-worker cache bumped for v0.8.4.1.
 
 ## v0.8.4 changes
 
