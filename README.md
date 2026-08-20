@@ -1,6 +1,24 @@
-# LotKeys Drive Test v0.8.9.1
+# LotKeys Drive Test v0.8.9.3
 
-## v0.8.9.1 — cross-device refresh + resilient media uploads
+## v0.8.9.3 — responsive media uploads
+
+- Uses one live in-memory media progress source for both the Vehicle card and the top status label, so the two percentages no longer drift apart.
+- Stops writing the full Vehicle record (including large video Blobs) to IndexedDB every ~700 ms just to save upload percentage. Progress checkpoints are now tiny local metadata writes.
+- Navigation rendering no longer waits for the full readiness scan before opening Account, Settings, Listings or other tabs.
+- The readiness header avoids re-reading every Vehicle record while media is actively uploading.
+- Removed the deliberate "wait until visible" gate between Drive upload chunks. LotKeys now keeps transferring while Chrome/Android allows background network work.
+- Resumable Google Drive session URLs and accepted-byte checkpoints are retained locally so an interrupted/suspended upload can query Drive and continue from the server-accepted offset when LotKeys resumes.
+- Upload progress is restored as paused after a full page/browser restart until the resumable session reconnects and reports the real Drive offset.
+- Keeps the v0.8.9.2 Account storage-location controls, Account naming, personal Google Drive recovery, and the v0.8.9.1 shared Inventory refresh fix.
+- Service-worker cache bumped for v0.8.9.3.
+
+## v0.8.9.2 — Account storage location + naming
+
+- Renamed the user-facing **Profile** tab/page to **Account** (Vehicle Profile terminology is unchanged).
+- Added a theme-accented **Lot-Keys Account Storage** box on the Account page.
+- Users can choose a Google Drive location; LotKeys links an existing `Lot-Keys Account` / legacy personal-profile folder or creates `Lot-Keys Account` inside the selected folder.
+- The selected Google Drive folder ID is remembered and can be reopened from the Account page.
+- Personal Account restore now waits for a linked/discovered Account folder instead of silently creating a new folder in the wrong place.
 - Fixed the deployed Store refresh crash caused by DriveSync not being able to access `normalizeStoreUsers` / `normalizeUserAccount`.
 - Store Inventory refresh can now rebuild a stale browser cache from the shared Drive Inventory without clearing local browser storage.
 - Vehicle Profile metadata, folders, admin sheet, directory and Inventory Index are saved before large media transfers so a video cannot hold the whole Profile save hostage.
@@ -9,7 +27,7 @@
 - If Android/Chrome suspends an upload while LotKeys is backgrounded, the media job pauses safely instead of turning the Vehicle Profile red; it retries when LotKeys becomes active again.
 - Added per-vehicle upload locking to prevent duplicate sync jobs when returning to the app, focusing the browser, or refreshing.
 - Video compression is intentionally not enabled in this patch; reliability and resumable upload behavior are fixed first.
-- Service-worker cache bumped for v0.8.9.1.
+- Service-worker cache bumped for v0.8.9.2.
 
 ## v0.8.9 — moderation + administration levels
 - User moderation cards are collapsed by default; tap a user row/avatar area to view deletion-request history and Request Ranking.
