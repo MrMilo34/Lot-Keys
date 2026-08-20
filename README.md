@@ -1,7 +1,24 @@
-# LotKeys Drive Test v0.8.3.4
+# LotKeys Drive Test v0.8.4
 
 
 
+
+## v0.8.4 changes
+
+- Replaced the long native Vehicle Profile dropdown in **Create Listing** with a compact fuzzy search panel.
+- Listing vehicle search accepts partial combinations such as `17 Civ`, `Honda Civ`, stock-number fragments, VIN fragments, year, make/brand, and model.
+- Only the **top 3** vehicle matches are shown with thumbnails, keeping the mobile picker compact.
+- **Create Listing Manually** remains available for listings that are not linked to Inventory.
+- Marketplace Listings now support their own photo set/order without modifying Inventory photos.
+- Users can add salesperson-only photos, remove Inventory photos from a specific listing, choose a different cover, and reorder the listing before posting.
+- The Facebook Posting Assistant now includes **Add Photos** plus an expandable photo-order editor and no longer shows the large introductory gradient panel.
+- **Open Drive Photos** was replaced by **Open Shared Folder** in the Posting Assistant.
+- Listing-added photos are uploaded once to `Users/<User>/Listing Assets/<Vehicle>/Photos` and listing records reference those Drive files. Duplicating a listing reuses those references rather than copying high-resolution photos.
+- Inventory master photos remain referenced by file ID; they are never duplicated into a Marketplace listing.
+- Listing sync schema bumped to v6 to preserve listing-added asset references and intentional custom photo order.
+- Existing v0.8.3.x listing JSON records remain readable.
+- Protected website-import, CARFAX VHR validation, photo-identification, sorting, authentication, and Inventory photo behavior remain intact.
+- Service-worker cache bumped for v0.8.4.
 
 ## v0.8.3.4 changes
 
