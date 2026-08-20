@@ -9,7 +9,7 @@
   <link rel="icon" href="./icon.svg" type="image/svg+xml" />
   <style>
 :root{--bg:#f3f4f6;--card:#fff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;--accent-ink:#fff;--good:#15803d;--warn:#b45309;--bad:#b91c1c;--shadow:0 8px 30px rgba(17,24,39,.08)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.topbar{position:sticky;top:0;z-index:8;background:rgba(243,244,246,.94);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--line)}.topbar h1{font-size:25px;margin:1px 0 0}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted)}#main{max-width:760px;margin:0 auto;padding:18px 16px calc(92px + env(safe-area-inset-bottom))}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(17,24,39,.06)}.nav-btn{border:0;background:none;padding:5px;color:var(--muted);font-weight:700}.nav-btn span{display:block;font-size:20px;line-height:22px}.nav-btn small{font-size:11px}.nav-btn{position:relative;isolation:isolate}.nav-btn.active{color:var(--accent)!important}.nav-btn.active::before{content:"";position:absolute;inset:1px 5px;border-radius:12px;background:color-mix(in srgb,var(--accent) 8%,transparent);box-shadow:0 3px 11px rgba(17,24,39,.16);z-index:-1;pointer-events:none}.nav-btn.active span,.nav-btn.active small{filter:drop-shadow(0 1px 1px rgba(0,0,0,.58)) drop-shadow(0 0 2px rgba(255,255,255,.42))}.nav-btn.active .nav-profile-icon{box-shadow:0 0 0 2px var(--accent),0 3px 10px rgba(17,24,39,.26)}button{font:inherit;cursor:pointer}.top-actions{display:flex;align-items:center;gap:10px}.icon-btn{width:44px;height:44px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-size:28px;line-height:44px;transition:background-color .16s ease,color .16s ease,transform .12s ease}.icon-btn:active{transform:scale(.96)}.readiness-btn{width:26px;height:26px;border-radius:999px;border:3px solid rgba(255,255,255,.9);box-shadow:0 0 0 1px rgba(17,24,39,.16),0 2px 7px rgba(17,24,39,.18);padding:0;background:#9ca3af;flex:0 0 auto}.readiness-btn.good{background:#22c55e}.readiness-btn.warn{background:#facc15}.readiness-btn.bad{background:#ef4444}.sync-status-text{font-size:11px;font-weight:800;color:#6b7280;white-space:nowrap;cursor:pointer;max-width:88px;overflow:hidden;text-overflow:ellipsis}.sync-status-text.good{color:#166534}.sync-status-text.warn{color:#854d0e}.sync-status-text.bad{color:#991b1b}.card.sync-pending{background:color-mix(in srgb,var(--accent) 12%,var(--card));border-color:color-mix(in srgb,var(--accent) 48%,#fbbf24);box-shadow:0 8px 30px color-mix(in srgb,var(--accent) 18%,transparent)}.card.sync-error{background:#fef2f2;border-color:#f87171}.btn.copy-flash{background:#facc15!important;color:#713f12!important}.readiness-hero{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:16px;margin-bottom:14px}.readiness-hero.good{background:#f0fdf4;color:#166534}.readiness-hero.warn{background:#fefce8;color:#854d0e}.readiness-hero.bad{background:#fef2f2;color:#991b1b}.readiness-big-dot{width:24px;height:24px;border-radius:999px;flex:0 0 auto;margin-top:2px}.readiness-big-dot.good{background:#22c55e}.readiness-big-dot.warn{background:#facc15}.readiness-big-dot.bad{background:#ef4444}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}.section-title{display:flex;align-items:end;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:17px;margin:0}.section-title small{color:var(--muted)}.sort-select{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 30px 8px 10px;font-size:12px;font-weight:800;color:#374151;max-width:142px}.section-title.list-tools{align-items:center}.section-title-copy{min-width:0}.section-title-copy small{display:block;margin-top:3px}.list-tool-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.inventory-control-row{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:-2px 2px 12px}.inventory-control-row .filter-check{flex:0 0 auto}.inventory-control-row .sort-select{flex:0 0 auto}.filter-check{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:7px 9px;font-size:11px;font-weight:800;color:#374151;white-space:nowrap;cursor:pointer}.filter-check input{width:17px;height:17px;margin:0;accent-color:var(--accent);flex:0 0 auto}.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 32%,#0b1018),color-mix(in srgb,var(--accent) 58%,#111827));color:#fff;padding:20px}.hero p{color:#d1d5db;margin:5px 0 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.stat strong{display:block;font-size:24px}.stat span{font-size:12px;color:var(--muted)}.search{width:100%;border:1px solid var(--line);background:white;border-radius:15px;padding:14px 15px;font-size:16px;outline:none}.search:focus,input:focus,select:focus,textarea:focus{border-color:color-mix(in srgb,var(--accent) 58%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent);outline:none}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.topbar{position:sticky;top:0;z-index:8;background:rgba(243,244,246,.94);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:calc(12px + env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid var(--line)}.topbar h1{font-size:25px;margin:1px 0 0}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--muted)}#main{max-width:760px;margin:0 auto;padding:18px 16px calc(92px + env(safe-area-inset-bottom))}.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:9;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -8px 30px rgba(17,24,39,.06)}.nav-btn{border:0;background:none;padding:5px;color:var(--muted);font-weight:700}.nav-btn span{display:block;font-size:20px;line-height:22px}.nav-btn small{font-size:11px}.nav-btn{position:relative;isolation:isolate}.nav-btn.active{color:var(--accent)!important}.nav-btn.active::before{content:"";position:absolute;inset:1px 5px;border-radius:12px;background:color-mix(in srgb,var(--accent) 8%,transparent);box-shadow:0 3px 11px rgba(17,24,39,.16);z-index:-1;pointer-events:none}.nav-btn.active span,.nav-btn.active small{filter:drop-shadow(0 1px 1px rgba(0,0,0,.58)) drop-shadow(0 0 2px rgba(255,255,255,.42))}.nav-btn.active .nav-profile-icon{box-shadow:0 0 0 2px var(--accent),0 3px 10px rgba(17,24,39,.26)}button{font:inherit;cursor:pointer}.top-actions{display:flex;align-items:center;gap:10px}.icon-btn{width:44px;height:44px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-size:28px;line-height:44px;transition:background-color .16s ease,color .16s ease,transform .12s ease}.icon-btn:active{transform:scale(.96)}.readiness-btn{width:26px;height:26px;border-radius:999px;border:3px solid rgba(255,255,255,.9);box-shadow:0 0 0 1px rgba(17,24,39,.16),0 2px 7px rgba(17,24,39,.18);padding:0;background:#9ca3af;flex:0 0 auto}.readiness-btn.good{background:#22c55e}.readiness-btn.warn{background:#facc15}.readiness-btn.bad{background:#ef4444}.sync-status-text{font-size:11px;font-weight:800;color:#6b7280;white-space:nowrap;cursor:pointer;max-width:88px;overflow:hidden;text-overflow:ellipsis}.sync-status-text.good{color:#166534}.sync-status-text.warn{color:#854d0e}.sync-status-text.bad{color:#991b1b}.card.sync-pending{background:color-mix(in srgb,var(--accent) 12%,var(--card));border-color:color-mix(in srgb,var(--accent) 48%,#fbbf24);box-shadow:0 8px 30px color-mix(in srgb,var(--accent) 18%,transparent)}.card.sync-error{background:#fef2f2;border-color:#f87171}.price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.vehicle-upload-status{font-size:12px;font-weight:850;color:var(--accent);line-height:1.25}.vehicle-upload-status.paused{color:#b45309}.vehicle-upload-status.error{color:#b91c1c}.btn.copy-flash{background:#facc15!important;color:#713f12!important}.readiness-hero{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:16px;margin-bottom:14px}.readiness-hero.good{background:#f0fdf4;color:#166534}.readiness-hero.warn{background:#fefce8;color:#854d0e}.readiness-hero.bad{background:#fef2f2;color:#991b1b}.readiness-big-dot{width:24px;height:24px;border-radius:999px;flex:0 0 auto;margin-top:2px}.readiness-big-dot.good{background:#22c55e}.readiness-big-dot.warn{background:#facc15}.readiness-big-dot.bad{background:#ef4444}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}.section-title{display:flex;align-items:end;justify-content:space-between;margin:20px 2px 10px}.section-title h2{font-size:17px;margin:0}.section-title small{color:var(--muted)}.sort-select{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 30px 8px 10px;font-size:12px;font-weight:800;color:#374151;max-width:142px}.section-title.list-tools{align-items:center}.section-title-copy{min-width:0}.section-title-copy small{display:block;margin-top:3px}.list-tool-controls{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.inventory-control-row{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:-2px 2px 12px}.inventory-control-row .filter-check{flex:0 0 auto}.inventory-control-row .sort-select{flex:0 0 auto}.filter-check{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:7px 9px;font-size:11px;font-weight:800;color:#374151;white-space:nowrap;cursor:pointer}.filter-check input{width:17px;height:17px;margin:0;accent-color:var(--accent);flex:0 0 auto}.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 32%,#0b1018),color-mix(in srgb,var(--accent) 58%,#111827));color:#fff;padding:20px}.hero p{color:#d1d5db;margin:5px 0 0}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.stat strong{display:block;font-size:24px}.stat span{font-size:12px;color:var(--muted)}.search{width:100%;border:1px solid var(--line);background:white;border-radius:15px;padding:14px 15px;font-size:16px;outline:none}.search:focus,input:focus,select:focus,textarea:focus{border-color:color-mix(in srgb,var(--accent) 58%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent);outline:none}
 .listing-vehicle-picker{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 32%,#0b1018),color-mix(in srgb,var(--accent) 58%,#111827));color:#fff;border-radius:18px;padding:15px;margin-bottom:12px}
 .listing-vehicle-picker strong{display:block;font-size:17px}
 .listing-vehicle-picker p{margin:4px 0 12px;color:#dbeafe;font-size:12px}
@@ -149,7 +149,7 @@ body[data-theme="dark"] .profile-photo-edit{border-color:#212121}
       </div>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.8.9</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.8.9.1</strong> — Google Drive sync requires this app to be opened from an HTTPS web address (not content://).</div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -260,6 +260,16 @@ function buildVehicleProfileName({stock='',year='',make='',model=''}={}){
   if(stock) return stock;
   return vehicle||'New Vehicle Profile';
 }
+
+// Shared user/account normalizers are intentionally global because DriveSync and the UI
+// live in separate closures. v0.8.9 accidentally left these helpers only inside App,
+// which caused Store refresh to stop at `normalizeStoreUsers is not defined`.
+function lotKeysUserKey(u={}){return String(u.googleSub||u.email||u.userName||'').trim().toLowerCase()}
+function lotKeysDefaultUserPermissions(overrides={}){return {createVehicleProfiles:true,markVehicleForDeletion:true,useListings:true,showOnLeaderboard:true,useDescriptionBuilder:true,useChromeExtension:true,...(overrides||{})}}
+function lotKeysDefaultModerationStats(overrides={}){return {submitted:0,approved:0,dismissed:0,falseReports:0,...(overrides||{})}}
+function lotKeysNormalizedAdminLevel(user={}){const raw=user.adminLevel!=null?Number(user.adminLevel):(user.role==='admin'?2:0);return Math.max(0,Math.min(2,Number.isFinite(raw)?raw:0))}
+function normalizeUserAccount(user={}){const permissions=lotKeysDefaultUserPermissions(user.permissions||{}),moderation=lotKeysDefaultModerationStats(user.moderation||{}),adminLevel=lotKeysNormalizedAdminLevel(user);return {...user,adminLevel,role:adminLevel>0?'admin':'user',status:user.status||'active',permissions,moderation}}
+function normalizeStoreUsers(users=[]){const seen=new Set(),out=[];for(const raw of Array.isArray(users)?users:[]){const u=normalizeUserAccount(raw||{}),key=lotKeysUserKey(u);if(key&&seen.has(key))continue;if(key)seen.add(key);out.push(u)}return out}
 
 const DriveSync = (() => {
   const FOLDER_MIME = 'application/vnd.google-apps.folder';
@@ -449,8 +459,56 @@ const DriveSync = (() => {
     const res=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true&fields=id,name,webViewLink,appProperties',{
       method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':`multipart/related; boundary=${boundary}`},body
     });
-    if(!res.ok){let d='';try{d=(await res.json())?.error?.message||''}catch{};throw new Error(d||`Could not upload file (${res.status})`)}
+    if(!res.ok){let d='';try{d=(await res.json())?.error?.message||''}catch{};const e=new Error(d||`Could not upload file (${res.status})`);e.status=res.status;throw e}
     return res.json();
+  }
+  function waitUntilVisible(){
+    if(document.visibilityState!=='hidden')return Promise.resolve();
+    return new Promise(resolve=>{const done=()=>{if(document.visibilityState==='hidden')return;document.removeEventListener('visibilitychange',done);resolve()};document.addEventListener('visibilitychange',done)});
+  }
+  async function resumableCreate(blob,metadata,onProgress=()=>{}){
+    if(!blob?.size)return multipartCreate(blob,metadata);
+    const token=await authorize(false);
+    const start=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true&fields=id,name,webViewLink,appProperties',{
+      method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json; charset=UTF-8','X-Upload-Content-Type':blob.type||'application/octet-stream','X-Upload-Content-Length':String(blob.size)},body:JSON.stringify(metadata)
+    });
+    if(start.status===401){clearSessionAuthorization();const e=new Error('Google Drive authorization expired. Reconnect Google Drive to resume sync.');e.code='AUTH_REQUIRED';throw e}
+    if(!start.ok){let d='';try{d=(await start.json())?.error?.message||''}catch{};const e=new Error(d||`Could not start Drive upload (${start.status})`);e.status=start.status;throw e}
+    const uploadUrl=start.headers.get('Location');
+    if(!uploadUrl){const f=await multipartCreate(blob,metadata);onProgress(blob.size,blob.size);return f}
+    const CHUNK=8*1024*1024;
+    let offset=0,lastResult=null;
+    while(offset<blob.size){
+      await waitUntilVisible();
+      const end=Math.min(blob.size,offset+CHUNK),chunk=blob.slice(offset,end,blob.type||'application/octet-stream');
+      let attempt=0,complete=false;
+      while(!complete){
+        attempt++;
+        try{
+          lastResult=await new Promise((resolve,reject)=>{
+            const xhr=new XMLHttpRequest();xhr.open('PUT',uploadUrl,true);xhr.responseType='json';xhr.setRequestHeader('Authorization',`Bearer ${token}`);xhr.setRequestHeader('Content-Type',blob.type||'application/octet-stream');xhr.setRequestHeader('Content-Range',`bytes ${offset}-${end-1}/${blob.size}`);
+            xhr.upload.onprogress=e=>onProgress(Math.min(blob.size,offset+(e.loaded||0)),blob.size);
+            xhr.onload=()=>{
+              if(xhr.status===200||xhr.status===201){onProgress(end,blob.size);let body=xhr.response;if(!body){try{body=JSON.parse(xhr.responseText||'{}')}catch{body={}}}resolve(body);return}
+              if(xhr.status===308){onProgress(end,blob.size);resolve(null);return}
+              const er=new Error(xhr.response?.error?.message||`Drive upload failed (${xhr.status})`);er.status=xhr.status;reject(er);
+            };
+            xhr.onerror=()=>{const er=new Error('Media upload was interrupted. LotKeys will retry when the app is active.');er.code='MEDIA_UPLOAD_INTERRUPTED';reject(er)};
+            xhr.onabort=()=>{const er=new Error('Media upload was paused. LotKeys will retry when the app is active.');er.code='MEDIA_UPLOAD_INTERRUPTED';reject(er)};
+            xhr.send(chunk);
+          });
+          complete=true;
+        }catch(err){
+          if(err?.status===401){clearSessionAuthorization();err.code='AUTH_REQUIRED';throw err}
+          if(attempt>=4){err.code=err.code||'MEDIA_UPLOAD_INTERRUPTED';throw err}
+          await waitUntilVisible();
+          await new Promise(r=>setTimeout(r,Math.min(4000,600*attempt)));
+        }
+      }
+      offset=end;
+    }
+    if(lastResult?.id)return lastResult;
+    throw Object.assign(new Error('Drive finished receiving the media but did not return a file record.'),{code:'MEDIA_UPLOAD_INTERRUPTED'});
   }
   async function upsertJson({fileId='',name,parentId,data,appProperties={}}){
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -839,32 +897,42 @@ const DriveSync = (() => {
     // previous/repeated LotKeys prefixes before applying the current photo position.
     return String(name||'').replace(/^\s*(?:(?:\d{1,3})\s*-\s*)+/,'').trim();
   }
-  async function syncAssets(items,folderId,vehicleId,kind){
+  async function syncAssets(items,folderId,vehicleId,kind,onProgress=()=>{}){
     items=items||[];
     const remotes=await listFiles(`'${qEscape(folderId)}' in parents and trashed = false`,'files(id,name,mimeType,webViewLink,appProperties,trashed)');
     const byAsset=new Map(remotes.filter(x=>x.appProperties?.lotkeysAssetId).map(x=>[x.appProperties.lotkeysAssetId,x]));
     const localIds=new Set(items.map(x=>x.id));
+    const existingFor=item=>(item.driveFileId&&remotes.find(x=>x.id===item.driveFileId))||byAsset.get(item.id)||null;
+    const uploadable=items.filter(item=>!existingFor(item)&&item.blob);
+    const totalBytes=uploadable.reduce((sum,item)=>sum+Math.max(1,Number(item.blob?.size)||1),0)||1;
+    let completedBytes=0,uploadIndex=0;
     for(let i=0;i<items.length;i++){
-      const item=items[i]; const existing=(item.driveFileId&&remotes.find(x=>x.id===item.driveFileId))||byAsset.get(item.id);
+      const item=items[i]; const existing=existingFor(item);
       const prefix=kind==='photo'?String(i+1).padStart(2,'0')+' - ':'';
       const baseName=kind==='photo'?stripPhotoOrderPrefix(item.name||existing?.name||(`${kind}-${i+1}`)):(item.name||(`${kind}-${i+1}`));
       const wanted=safeName(prefix+baseName,`${kind}-${i+1}`);
       if(kind==='photo') item.name=baseName;
       if(existing){ item.driveFileId=existing.id;item.driveName=wanted; if(existing.name!==wanted) await patchMetadata(existing.id,{name:wanted}); continue; }
       if(!item.blob) continue;
-      const f=await multipartCreate(item.blob,{name:wanted,parents:[folderId],appProperties:{lotkeysAssetId:item.id,lotkeysVehicleId:vehicleId,lotkeysAssetKind:kind}});
-      item.driveFileId=f.id;item.driveName=wanted;
+      uploadIndex++;const fileBytes=Math.max(1,Number(item.blob.size)||1);
+      const report=(loaded=0,status='uploading')=>{const overall=Math.max(0,Math.min(100,Math.round(((completedBytes+Math.min(fileBytes,loaded||0))/totalBytes)*100)));onProgress({kind,status,folder:kind==='photo'?'Photos':kind==='document'?'Documents':'Videos',fileName:item.name||wanted,fileIndex:uploadIndex,fileCount:uploadable.length,percent:overall,loadedBytes:completedBytes+Math.min(fileBytes,loaded||0),totalBytes})};
+      report(0);
+      try{
+        const f=await resumableCreate(item.blob,{name:wanted,parents:[folderId],appProperties:{lotkeysAssetId:item.id,lotkeysVehicleId:vehicleId,lotkeysAssetKind:kind}},loaded=>report(loaded));
+        item.driveFileId=f.id;item.driveName=wanted;report(fileBytes,'complete');completedBytes+=fileBytes;
+      }catch(err){err.stage='media';err.mediaKind=kind;err.mediaFolder=kind==='photo'?'Photos':kind==='document'?'Documents':'Videos';err.mediaFileName=item.name||wanted;throw err}
     }
     for(const r of remotes){
       const assetId=r.appProperties?.lotkeysAssetId;
       if(assetId && r.appProperties?.lotkeysVehicleId===vehicleId && !localIds.has(assetId)) await trashFile(r.id).catch(()=>{});
     }
+    if(uploadable.length)onProgress({kind,status:'complete',folder:kind==='photo'?'Photos':kind==='document'?'Documents':'Videos',fileName:'',fileIndex:uploadable.length,fileCount:uploadable.length,percent:100,loadedBytes:totalBytes,totalBytes});
     return items;
   }
   function assetFingerprint(items){return (items||[]).map(x=>`${x.id||''}:${x.driveFileId||''}:${x.name||''}`).join('|');}
   function directoryFingerprint(v,c,templateId){return JSON.stringify(['v071-text-only',templateId,c.storeName,c.directoryStoreAddress,c.directoryDirectionsUrl,v.year,v.make,v.model,v.stock,v.odometer,v.odometerUnit,v.originalListingUrl,v.carfaxUrl,!!v.carfaxOneOwner,!!v.carfaxLowKm,!!v.carfaxNoAccidents,v.drive?.photosFolderId,v.drive?.videosFolderId,v.drive?.documentsFolderId]);}
   function sheetFingerprint(v){return JSON.stringify([v.name,v.year,v.make,v.model,v.price,v.odometer,v.odometerUnit,v.vin,v.stock,v.originalListingUrl,v.carfaxUrl,!!v.carfaxOneOwner,!!v.carfaxLowKm,!!v.carfaxNoAccidents,v.description,v.createdByUserName||'',v.createdByEmail||'',v.createdAt||0,v.photos?.[0]?.driveFileId,v.drive?.directoryPdfUrl]);}
-  async function syncVehicle(v,{force=false}={}){
+  async function syncVehicle(v,{force=false,onProgress=()=>{}}={}){
     if(!v?.id) throw new Error('Vehicle ID missing.');
     v.name=buildVehicleProfileName(v);const s=await structure();const c=await config();v.drive=v.drive||{};
     let profile=v.drive.profileFolderId&&!force?{id:v.drive.profileFolderId,name:v.name}:null;
@@ -877,13 +945,25 @@ const DriveSync = (() => {
     else{shared=await ensureFolder(profile.id,'Shared','lotkeysVehicleShared',v.id);photos=await ensureFolder(shared.id,'Photos','lotkeysVehiclePhotos',v.id);videos=await ensureFolder(shared.id,'Videos','lotkeysVehicleVideos',v.id);docs=await ensureFolder(shared.id,'Documents','lotkeysVehicleDocuments',v.id);}
     v.drive.sharedFolderId=shared.id;v.drive.photosFolderId=photos.id;v.drive.videosFolderId=videos.id;v.drive.documentsFolderId=docs.id;v.sharedFolderUrl=`https://drive.google.com/drive/folders/${shared.id}`;
     if(c.publicShareEnabled){try{if(force||!v.drive.publicShareReady){await setAnyoneReader(shared.id);v.drive.publicShareReady=true;}v.shareWarning='';}catch(e){v.shareWarning=e.message||'Public sharing could not be enabled';}}
-    const currentAssetFp=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');
-    if(force||v.drive.lastAssetFingerprint!==currentAssetFp){v.photos=await syncAssets(v.photos,photos.id,v.id,'photo');v.attachments=await syncAssets(v.attachments,docs.id,v.id,'document');v.videos=await syncAssets(v.videos,videos.id,v.id,'video');v.drive.lastAssetFingerprint=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');}
+
+    // Save Profile metadata before the heavy media transfer. The Vehicle exists in the
+    // shared Inventory immediately; Photos/Documents/Videos can finish afterwards.
     let sheet=v.drive.adminSheetId&&!force?{id:v.drive.adminSheetId,webViewLink:v.drive.adminSheetUrl}:null;if(!sheet&&v.drive.adminSheetId)sheet=await driveGet(v.drive.adminSheetId,'id,name,mimeType,webViewLink').catch(()=>null);if(!sheet)sheet=await createSpreadsheet(profile.id,v.id);v.drive.adminSheetId=sheet.id;v.drive.adminSheetUrl=sheet.webViewLink||`https://docs.google.com/spreadsheets/d/${sheet.id}/edit`;
     let templateId=await setting('directoryTemplateFileId',''),template=templateId&&!force?{id:templateId}:await ensureDirectoryTemplate(s);templateId=template.id;const dfp=directoryFingerprint(v,c,templateId);
     if(force||!v.drive.directoryPdfId||v.drive.lastDirectoryFingerprint!==dfp){await generateVehicleInfoDirectory(v,template);v.drive.lastDirectoryFingerprint=dfp;}
-    const sfp=sheetFingerprint(v);if(force||v.drive.lastSheetFingerprint!==sfp){await writeVehicleSheet(sheet.id,v);v.drive.lastSheetFingerprint=sfp;}
-    v.syncStatus='synced';v.lastDriveSyncAt=Date.now();v.syncError='';await DB.put('vehicles',v);await updateInventoryIndex(v,s).catch(e=>console.warn('Inventory index update failed',e));return v;
+    let sfp=sheetFingerprint(v);if(force||v.drive.lastSheetFingerprint!==sfp){await writeVehicleSheet(sheet.id,v);v.drive.lastSheetFingerprint=sfp;}
+    await DB.put('vehicles',v);await updateInventoryIndex(v,s).catch(e=>console.warn('Inventory index update failed',e));
+
+    const currentAssetFp=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');
+    if(force||v.drive.lastAssetFingerprint!==currentAssetFp){
+      v.photos=await syncAssets(v.photos,photos.id,v.id,'photo',onProgress);
+      v.attachments=await syncAssets(v.attachments,docs.id,v.id,'document',onProgress);
+      v.videos=await syncAssets(v.videos,videos.id,v.id,'video',onProgress);
+      v.drive.lastAssetFingerprint=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');
+    }
+    // Cover Photo file ID may have changed during upload; refresh metadata once media ends.
+    sfp=sheetFingerprint(v);if(force||v.drive.lastSheetFingerprint!==sfp){await writeVehicleSheet(sheet.id,v);v.drive.lastSheetFingerprint=sfp;}
+    v.syncStatus='synced';v.mediaUpload=null;v.lastDriveSyncAt=Date.now();v.syncError='';await DB.put('vehicles',v);await updateInventoryIndex(v,s).catch(e=>console.warn('Inventory index update failed',e));return v;
   }
   async function deleteVehicle(v){
     if(v?.drive?.profileFolderId) await trashFile(v.drive.profileFolderId);
@@ -1277,6 +1357,7 @@ const App = (()=>{
   const $=s=>document.querySelector(s);
   const main=$('#main'), modal=$('#modal'), modalBody=$('#modal-body');
   let route='home', objectUrls=[],inventoryRefreshTimer=null,inventoryRefreshBusy=false,listingsRefreshBusy=false,driveConnectInProgress=false;
+  const vehicleSyncJobs=new Map(),uploadProgressPersistAt=new Map();
   const uid=(p='ID')=>`${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,7)}`;
   const money=n=>n!==''&&n!=null&&!Number.isNaN(+n)?new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:0}).format(+n):'—';
   const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
@@ -1338,9 +1419,31 @@ const App = (()=>{
 renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#description-add-type').value,block=DescriptionTemplates.defaultBlock(type);if(type==='price')block.config.text='{{PRICE}} + GST';if(type==='financing')block.config.text='Flexible financing options\nOAC (On Approved Credit)\nExtended warranty options available';if(type==='signature')block.config.text='Message {{USER_NAME}} to set up a viewing or to book.';t.blocks.push(block);renderBlocks()};$('#description-template-form').onsubmit=async e=>{e.preventDefault();t.name=$('#description-template-name').value.trim()||'My Marketplace Template';await DescriptionTemplates.save(t);await setSetting('lastDescriptionTemplateId',t.id);await markPersonalProfileChanged();modal.close();toast('Description template saved ✓');if(route==='profile')render()};if(!modal.open)modal.showModal()}
 
 
-  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.8.9</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.8.9</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
-  async function syncVehicleNow(v,{quiet=false,force=false}={}){if(!DriveSync.connected()||!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Saved locally — connect Drive to sync');if(!modal.open&&(route==='home'||route==='vehicles'))render();return v;}v.syncStatus='syncing';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Syncing vehicle in background…');if(!modal.open&&(route==='home'||route==='vehicles'))render();try{const out=await DriveSync.syncVehicle(v,{force});await updateReadinessIndicator();if(!quiet)toast('Vehicle synced to Drive ✓');if(!modal.open&&(route==='home'||route==='vehicles'))render();return out}catch(err){v.syncStatus='error';v.syncError=err.message||String(err);await DB.put('vehicles',v);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))render();if(!quiet)toast('Saved locally — Drive sync needs attention');return v}}
-  function queueVehicleSync(v,{force=false}={}){v.syncStatus='pending';DB.put('vehicles',v).then(()=>syncVehicleNow(v,{quiet:true,force})).catch(console.warn);}
+  function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;if(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'){n.className='protocol-warning protocol-good';n.innerHTML='<strong>LotKeys Drive Test · V0.8.9.1</strong> — hosted mode ready for Google Drive authorization.'}else{n.className='protocol-warning';n.innerHTML='<strong>LotKeys Drive Test · V0.8.9.1</strong> — interface works here, but Google sign-in will not. Open the hosted HTTPS version to test Drive sync.'}}
+  function mediaProgressText(media){if(!media)return'';const pct=Math.max(0,Math.min(100,Number(media.percent)||0)),folder=media.folder||'Media';if(media.status==='paused')return `${folder} · paused at ${pct}%`;if(media.status==='error')return `${folder} · upload needs attention`;if(media.status==='complete')return `${folder} · 100%`;return `${folder} · Uploading ${pct}%`}
+  function updateVehicleUploadDom(v){const card=document.querySelector(`.open-vehicle[data-id="${CSS.escape(String(v.id))}"]`);if(!card)return;const el=card.querySelector('[data-upload-status]');if(el){el.textContent=mediaProgressText(v.mediaUpload);el.className=`vehicle-upload-status ${v.mediaUpload?.status==='paused'?'paused':v.mediaUpload?.status==='error'?'error':''}`;}const meta=card.querySelector('.meta');if(meta&&v.mediaUpload?.status==='uploading')meta.textContent=`STK# ${v.stock||'—'} • ${fmtOdo(v.odometer)} ${v.odometerUnit||'KM'} • Syncing media…`;}
+  function setVehicleMediaProgress(v,progress){v.mediaUpload={...progress,updatedAt:Date.now()};updateVehicleUploadDom(v);const now=Date.now(),last=uploadProgressPersistAt.get(v.id)||0;if(progress.percent>=100||progress.status!=='uploading'||now-last>700){uploadProgressPersistAt.set(v.id,now);DB.put('vehicles',v).catch(console.warn);updateReadinessIndicator().catch(()=>{})}}
+  async function syncVehicleNow(v,{quiet=false,force=false}={}){
+    if(!DriveSync.connected()||!(await DriveSync.ready())){v.syncStatus='local';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Saved locally — connect Drive to sync');if(!modal.open&&(route==='home'||route==='vehicles'))render();return v;}
+    v.syncStatus='syncing';v.syncError='';await DB.put('vehicles',v);await updateReadinessIndicator();if(!quiet)toast('Vehicle saved · media will continue in the background');if(!modal.open&&(route==='home'||route==='vehicles'))render();
+    try{
+      const out=await DriveSync.syncVehicle(v,{force,onProgress:p=>setVehicleMediaProgress(v,p)});uploadProgressPersistAt.delete(v.id);await updateReadinessIndicator();if(!quiet)toast('Vehicle synced to Drive ✓');if(!modal.open&&(route==='home'||route==='vehicles'))render();return out;
+    }catch(err){
+      const transientMedia=err?.code==='MEDIA_UPLOAD_INTERRUPTED'||(err?.stage==='media'&&([408,429,500,502,503,504].includes(Number(err?.status))||err?.name==='TypeError'));
+      if(transientMedia){
+        const folder=err.mediaFolder||v.mediaUpload?.folder||'Media';v.syncStatus='pending';v.syncError='';v.mediaUpload={...(v.mediaUpload||{}),folder,status:'paused',percent:Number(v.mediaUpload?.percent)||0,message:err.message||'Upload paused',updatedAt:Date.now()};await DB.put('vehicles',v);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))render();if(!quiet)toast(`${folder} upload paused · it will retry when LotKeys is active`);if(document.visibilityState!=='hidden'&&navigator.onLine!==false)setTimeout(()=>queueVehicleSync(v),3000);return v;
+      }
+      v.syncStatus='error';v.syncError=err.message||String(err);if(v.mediaUpload)v.mediaUpload={...v.mediaUpload,status:'error'};await DB.put('vehicles',v);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))render();if(!quiet)toast('Saved locally — Drive sync needs attention');return v;
+    }
+  }
+  function queueVehicleSync(v,{force=false}={}){
+    if(!v?.id)return Promise.resolve(v);
+    const running=vehicleSyncJobs.get(v.id);if(running)return running;
+    v.syncStatus='pending';
+    const job=DB.put('vehicles',v).then(()=>syncVehicleNow(v,{quiet:true,force})).catch(err=>{console.warn(err);return v}).finally(()=>vehicleSyncJobs.delete(v.id));
+    vehicleSyncJobs.set(v.id,job);return job;
+  }
+  async function resumePendingVehicleSyncs(){if(!DriveSync.connected()||!(await DriveSync.ready()))return;const pending=(await DB.all('vehicles')).filter(v=>['pending','syncing'].includes(v.syncStatus)||v.mediaUpload?.status==='paused');for(const v of pending)queueVehicleSync(v)}
   async function refreshInventory({quiet=true,forceFull=false}={}){if(inventoryRefreshBusy||modal.open||!DriveSync.connected()||!(await DriveSync.ready()))return;inventoryRefreshBusy=true;await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))await render();try{const n=await DriveSync.refreshInventoryFromDrive({quiet,forceFull});if(!quiet)toast(`Inventory refreshed · ${n} vehicles`);}catch(err){if(!quiet)alert('Could not refresh Store inventory:\n\n'+err.message);else console.warn('Inventory refresh failed',err);}finally{inventoryRefreshBusy=false;await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='vehicles'))await render()}}
   async function refreshListings({quiet=true,forceFull=false}={}){if(listingsRefreshBusy||modal.open||!DriveSync.connected()||!(await DriveSync.ready()))return;listingsRefreshBusy=true;await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='listings'))await render();try{const n=await DriveSync.refreshUserListingsFromDrive({quiet,forceFull});if(!quiet)toast(`My listings refreshed · ${n}`);}catch(err){if(!quiet)alert('Could not refresh your listings:\n\n'+err.message);else console.warn('Listings refresh failed',err);}finally{listingsRefreshBusy=false;await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='listings'))await render()}}
   async function syncListingNow(l,{quiet=false}={}){if(!DriveSync.connected()||!(await DriveSync.ready())){l.syncStatus='local';await DB.put('listings',l);await updateReadinessIndicator();if(!quiet)toast('Listing saved locally — connect Drive to sync');if(!modal.open&&(route==='home'||route==='listings'))render();return l;}l.syncStatus='syncing';await DB.put('listings',l);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='listings'))render();try{const out=await DriveSync.syncListing(l);await updateReadinessIndicator();if(!quiet)toast('Listing synced to your Drive folder ✓');if(!modal.open&&(route==='home'||route==='listings'))render();return out}catch(err){l.syncStatus='error';l.syncError=err.message||String(err);await DB.put('listings',l);await updateReadinessIndicator();if(!modal.open&&(route==='home'||route==='listings'))render();if(!quiet)alert('Listing saved locally, but Drive sync failed:\n\n'+l.syncError);return l}}
@@ -1449,7 +1552,9 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     b.title=st.title;
     if(label){
       let text='Please Sync';
+      const activeUpload=(await DB.all('vehicles')).find(v=>v.mediaUpload?.status==='uploading');
       if(driveConnectInProgress)text='Connecting…';
+      else if(activeUpload)text=`${activeUpload.mediaUpload.folder||'Media'} ${Math.max(0,Math.min(100,Number(activeUpload.mediaUpload.percent)||0))}%`;
       else if(inventoryRefreshBusy||listingsRefreshBusy)text='Syncing…';
       else if(st.level==='good'){
         const inv=+(await setting('lastInventoryRefreshAt',0))||0,lis=+(await setting('lastListingsRefreshAt',0))||0;
@@ -1484,13 +1589,13 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>go(b.dataset.route));
     if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
     inventoryRefreshTimer=setInterval(()=>{refreshInventory({quiet:true});refreshListings({quiet:true});},5*60*1000);
-    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){refreshInventory({quiet:true});refreshListings({quiet:true});}});
-    window.addEventListener('focus',()=>{refreshInventory({quiet:true});refreshListings({quiet:true});});
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){resumePendingVehicleSyncs().catch(console.warn);refreshInventory({quiet:true});refreshListings({quiet:true});}});
+    window.addEventListener('focus',()=>{resumePendingVehicleSyncs().catch(console.warn);refreshInventory({quiet:true});refreshListings({quiet:true});});
     await render();
     if(DriveSync.connected() && await DriveSync.ready()){
       refreshInventory({quiet:true}).catch(console.warn);
       refreshListings({quiet:true}).catch(console.warn);
-      const pending=(await DB.all('vehicles')).filter(v=>['pending','syncing'].includes(v.syncStatus));for(const v of pending)queueVehicleSync(v);
+      await resumePendingVehicleSyncs();
       DriveSync.syncPersonalProfile({preferRemote:true}).then(()=>DriveSync.syncStoreProfileThumbnail()).catch(console.warn);
     }
   }
@@ -1598,7 +1703,7 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
   }
   function bestVehicleMatches(q,vehicles,limit=5){return (vehicles||[]).map(v=>({v,score:scoreVehicleSearch(v,q)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||String(a.v.name||'').localeCompare(String(b.v.name||''))).slice(0,limit)}
   async function renderSearch(q,vehicles,target){q=q.trim();if(!q){target.innerHTML='';return}const scored=bestVehicleMatches(q,vehicles,5);target.innerHTML=scored.length?`<div class="section-title"><h2>Best matches</h2><small>${scored.length} shown</small></div>${(await Promise.all(scored.map(x=>vehicleCard(x.v)))).join('')}`:empty('No matches');bindVehicleCards()}
-  async function vehicleCard(v){const cover=v.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}" alt="">`:'🚙';const viewer=await currentUserRecord();return `<div class="card vehicle-row open-vehicle ${syncCardClass(v.syncStatus)}" data-id="${v.id}">${viewerVehicleFlagHtml(v,viewer)}<div class="thumb">${img}</div><div><div class="row-title">${esc(v.name||`${v.year||''} ${v.make||''} ${v.model||''}`.trim())}</div><div class="meta">STK# ${esc(v.stock||'—')} • ${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}${v.syncStatus==='pending'||v.syncStatus==='syncing'?' • Syncing…':v.syncStatus==='error'?' • Sync needs attention':''}</div><div class="price">${money(v.price)}</div></div><div class="chev">›</div></div>`}
+  async function vehicleCard(v){const cover=v.photos?.[0]?.blob;const img=cover?`<img src="${blobUrl(cover)}" alt="">`:'🚙';const viewer=await currentUserRecord(),media=mediaProgressText(v.mediaUpload);return `<div class="card vehicle-row open-vehicle ${syncCardClass(v.syncStatus)}" data-id="${v.id}">${viewerVehicleFlagHtml(v,viewer)}<div class="thumb">${img}</div><div><div class="row-title">${esc(v.name||`${v.year||''} ${v.make||''} ${v.model||''}`.trim())}</div><div class="meta">STK# ${esc(v.stock||'—')} • ${fmtOdo(v.odometer)} ${esc(v.odometerUnit||'KM')}${v.syncStatus==='pending'||v.syncStatus==='syncing'?' • Syncing…':v.syncStatus==='error'?' • Sync needs attention':''}</div><div class="price-row"><div class="price">${money(v.price)}</div><div class="vehicle-upload-status ${v.mediaUpload?.status==='paused'?'paused':v.mediaUpload?.status==='error'?'error':''}" data-upload-status>${esc(media)}</div></div></div><div class="chev">›</div></div>`}
   function setCardOpening(el,on=true){if(!el)return;el.classList.toggle('opening',!!on);if(on)el.setAttribute('aria-busy','true');else el.removeAttribute('aria-busy');}
   function bindVehicleCards(){document.querySelectorAll('.open-vehicle').forEach(x=>x.onclick=async()=>{if(x.classList.contains('opening'))return;setCardOpening(x,true);try{await showVehicle(x.dataset.id)}finally{setCardOpening(x,false)}})}
   async function renderVehicles(){const sortMode=await setting('inventorySort','new-old'),accidentFreeOnly=!!(await setting('inventoryAccidentFreeOnly',false)),allVehicles=await DB.all('vehicles'),filteredVehicles=accidentFreeOnly?allVehicles.filter(v=>v.carfaxNoAccidents===true):allVehicles,vs=sortVehicleLike(filteredVehicles,sortMode),countText=accidentFreeOnly?`${vs.length} of ${allVehicles.length} vehicles`:`${vs.length} vehicle${vs.length===1?'':'s'}`,canCreate=await currentUserCan('createVehicleProfiles');main.innerHTML=`<div class="actions">${canCreate?'<button class="btn primary" id="add-vehicle">＋ Add Vehicle</button>':''}<button class="btn refresh-action ${inventoryRefreshBusy?'refreshing':''}" id="refresh-inventory" ${inventoryRefreshBusy?'disabled aria-busy="true"':''}><span>↻ Refresh Inventory</span>${inventoryRefreshBusy?'<span class="refresh-action-spinner" role="status" aria-label="Refreshing inventory"></span>':''}</button></div>${!canCreate?'<div class="notice">Vehicle Profile creation has been restricted for this account by administration.</div>':''}<div class="section-title"><div class="section-title-copy"><h2>Inventory</h2><small>${countText}</small></div></div><div class="inventory-control-row"><label class="filter-check" title="Show only vehicles marked No Accidents in their CARFAX highlights"><input type="checkbox" id="inventory-accident-free" ${accidentFreeOnly?'checked':''}><span>Accident-Free CARFAX</span></label><select class="sort-select" id="inventory-sort" aria-label="Sort inventory">${sortOptions(sortMode)}</select></div>${vs.length?(await Promise.all(vs.map(vehicleCard))).join(''):empty(accidentFreeOnly?'No accident-free CARFAX vehicles found':'No vehicles yet',accidentFreeOnly?'Turn off the filter to see the full inventory.':'Connect Drive or add your first vehicle profile.')}`;{const addBtn=$('#add-vehicle');if(addBtn)addBtn.onclick=()=>showVehicleForm();}$('#refresh-inventory').onclick=()=>refreshInventory({quiet:false,forceFull:true});$('#inventory-sort').onchange=async e=>{await setSetting('inventorySort',e.target.value);await renderVehicles()};$('#inventory-accident-free').onchange=async e=>{await setSetting('inventoryAccidentFreeOnly',e.target.checked);await renderVehicles()};bindVehicleCards()}
@@ -1713,7 +1818,7 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     $('#vehicle-photos').onchange=e=>{[...e.target.files].forEach(f=>v.photos.push({id:uid('PH'),name:f.name,type:f.type,blob:f}));rerenderPhotos()};
     $('#vehicle-attachments').onchange=e=>{[...e.target.files].forEach(f=>v.attachments.push({id:uid('ATT'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderAttachments()};
     $('#vehicle-videos').onchange=e=>{[...e.target.files].forEach(f=>v.videos.push({id:uid('VID'),name:f.name,type:f.type,blob:f}));e.target.value='';rerenderVideos()};
-    $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saved ✓';const fd=new FormData(e.target);['year','make','model','vin','stock','description','odometerUnit','originalListingUrl','carfaxUrl'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.name=buildVehicleProfileName(v);v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.carfaxOneOwner=fd.get('carfaxOneOwner')==='on';v.carfaxLowKm=fd.get('carfaxLowKm')==='on';v.carfaxNoAccidents=fd.get('carfaxNoAccidents')==='on';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();const allVehicles=await DB.all('vehicles');const dup=allVehicles.find(x=>x.id!==v.id&&String(x.stock||'').trim()&&String(x.stock||'').trim().toLowerCase()===String(v.stock||'').trim().toLowerCase());if(dup){const proceed=confirm(`STK# ${v.stock} is already being used by another Vehicle Profile (${dup.name||dup.id}).\n\nPress OK to create/save this Vehicle Profile anyway, or Cancel to go back.`);if(!proceed){submit.disabled=false;submit.textContent='Save Vehicle';return}}if(!existing&&!v.createdByUserName){v.createdByUserName=await setting('userName','');v.createdByEmail=await setting('currentAccountEmail','');}v.syncStatus='pending';await DB.put('vehicles',v);modal.close();await render();toast(dup?'Vehicle saved · duplicate STK# warning noted':'Vehicle saved · syncing in background');queueVehicleSync(v)};modal.showModal();
+    $('#vehicle-form').onsubmit=async e=>{e.preventDefault();const submit=e.target.querySelector('button[type=submit]');submit.disabled=true;submit.textContent='Saved ✓';const fd=new FormData(e.target);['year','make','model','vin','stock','description','odometerUnit','originalListingUrl','carfaxUrl'].forEach(k=>v[k]=fd.get(k)?.trim?.()??fd.get(k));v.name=buildVehicleProfileName(v);v.price=fd.get('price')?+fd.get('price'):'';v.odometer=fd.get('odometer')?+fd.get('odometer'):'';v.carfaxOneOwner=fd.get('carfaxOneOwner')==='on';v.carfaxLowKm=fd.get('carfaxLowKm')==='on';v.carfaxNoAccidents=fd.get('carfaxNoAccidents')==='on';v.updatedAt=Date.now();v.createdAt=v.createdAt||Date.now();const allVehicles=await DB.all('vehicles');const dup=allVehicles.find(x=>x.id!==v.id&&String(x.stock||'').trim()&&String(x.stock||'').trim().toLowerCase()===String(v.stock||'').trim().toLowerCase());if(dup){const proceed=confirm(`STK# ${v.stock} is already being used by another Vehicle Profile (${dup.name||dup.id}).\n\nPress OK to create/save this Vehicle Profile anyway, or Cancel to go back.`);if(!proceed){submit.disabled=false;submit.textContent='Save Vehicle';return}}if(!existing&&!v.createdByUserName){v.createdByUserName=await setting('userName','');v.createdByEmail=await setting('currentAccountEmail','');}v.syncStatus='pending';await DB.put('vehicles',v);modal.close();await render();toast(dup?'Vehicle saved · duplicate STK# warning noted':'Vehicle Profile saved · media uploads continue in background');queueVehicleSync(v)};modal.showModal();
   }
   async function copyText(text,label='Copied',button=null){
     text=String(text??'');

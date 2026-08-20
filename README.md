@@ -1,4 +1,15 @@
-# LotKeys Drive Test v0.8.9
+# LotKeys Drive Test v0.8.9.1
+
+## v0.8.9.1 — cross-device refresh + resilient media uploads
+- Fixed the deployed Store refresh crash caused by DriveSync not being able to access `normalizeStoreUsers` / `normalizeUserAccount`.
+- Store Inventory refresh can now rebuild a stale browser cache from the shared Drive Inventory without clearing local browser storage.
+- Vehicle Profile metadata, folders, admin sheet, directory and Inventory Index are saved before large media transfers so a video cannot hold the whole Profile save hostage.
+- Photos, Documents and Videos use resumable chunked Drive uploads with live percentage progress.
+- Inventory cards and the top sync label show which media folder is uploading and the current percentage.
+- If Android/Chrome suspends an upload while LotKeys is backgrounded, the media job pauses safely instead of turning the Vehicle Profile red; it retries when LotKeys becomes active again.
+- Added per-vehicle upload locking to prevent duplicate sync jobs when returning to the app, focusing the browser, or refreshing.
+- Video compression is intentionally not enabled in this patch; reliability and resumable upload behavior are fixed first.
+- Service-worker cache bumped for v0.8.9.1.
 
 ## v0.8.9 — moderation + administration levels
 - User moderation cards are collapsed by default; tap a user row/avatar area to view deletion-request history and Request Ranking.
