@@ -549,3 +549,11 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Store-side `Users/<User>/Profile Thumbnail.jpg` generation now restores authorization independently and forces a complete Store user structure lookup when needed.
 - Personal Account saving and Store thumbnail publishing are treated as separate steps, so a thumbnail registry problem can no longer falsely report that the personal Account file failed to save.
 - Account/photo toast messages no longer claim a cloud save when only the local browser cache was updated.
+
+
+## v0.8.9.6 — Personal Account file write fix
+- Fixed the Account Drive writer failing immediately before `Account.json` creation because the JSON payload referenced the wrong photo-file variable name.
+- Account saves now correctly store the current `Account Photo.jpg` Drive file ID as `profilePhotoFileId` inside `Account.json`.
+- Existing selected Account folders, including the legacy `LotKeys Personal Profile` folder, remain supported and are reused rather than duplicated.
+- The Store-side `Users/<User>/Profile Thumbnail.jpg` flow remains separate and continues after the personal Account write succeeds.
+- Service-worker cache bumped to v0.8.9.6.
