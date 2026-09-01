@@ -1,3 +1,4 @@
-LotKeys Drive Test v0.9.1.6
-Build query: ?build=0916
-Service worker: lotkeys-drive-test-v0916
+LotKeys Drive Test v0.9.1.8
+Build query: ?build=0918
+Service worker: lotkeys-drive-test-v0918
+Universal vehicle price verification + price feedback learning + transparent logo surround
