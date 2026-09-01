@@ -1667,7 +1667,11 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     $('#sync-readiness').onclick=()=>showReadinessModal();
     if($('#sync-status-text')){$('#sync-status-text').onclick=()=>showReadinessModal();$('#sync-status-text').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showReadinessModal()}}}
     document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>go(b.dataset.route));
-    if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) {
+      navigator.serviceWorker.register('./sw.js?v=0900-fixed', {updateViaCache:'none'})
+        .then(reg=>reg.update().catch(()=>{}))
+        .catch(()=>{});
+    }
     inventoryRefreshTimer=setInterval(()=>{refreshInventory({quiet:true});refreshListings({quiet:true});},5*60*1000);
     document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){resumePendingVehicleSyncs().catch(console.warn);refreshInventory({quiet:true});refreshListings({quiet:true});}});
     window.addEventListener('focus',()=>{resumePendingVehicleSyncs().catch(console.warn);refreshInventory({quiet:true});refreshListings({quiet:true});});
