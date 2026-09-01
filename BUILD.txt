@@ -1,3 +1,3 @@
-LotKeys Drive Test v0.9.1.1
-CARFAX listing mirror + price-alert persistence fix
-Service worker: lotkeys-drive-test-v0911
+LotKeys Drive Test v0.9.1.2
+Desktop modal sizing + price source link + listing link loading feedback
+Service worker: lotkeys-drive-test-v0912
