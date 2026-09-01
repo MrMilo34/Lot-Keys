@@ -1,5 +1,5 @@
-const CACHE='lotkeys-drive-test-v0914';
-const CORE=['./','./index.html','./manifest.webmanifest','./icon.svg','./assets/carfax-one-owner.png','./assets/carfax-low-kilometres.png','./assets/carfax-no-reported-accidents.png', './assets/lotkeys-default-logo.png'];
+const CACHE='lotkeys-drive-test-v0916';
+const CORE=['./','./index.html','./manifest.webmanifest','./icon.svg','./assets/carfax-one-owner.png','./assets/carfax-low-kilometres.png','./assets/carfax-no-reported-accidents.png', './assets/lotkeys-default-logo.png','./assets/lotkeys-icon-192.png','./assets/lotkeys-apple-touch-icon.png','./assets/lotkeys-favicon.png'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
