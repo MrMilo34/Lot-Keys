@@ -557,3 +557,14 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Existing selected Account folders, including the legacy `LotKeys Personal Profile` folder, remain supported and are reused rather than duplicated.
 - The Store-side `Users/<User>/Profile Thumbnail.jpg` flow remains separate and continues after the personal Account write succeeds.
 - Service-worker cache bumped to v0.8.9.6.
+
+## v0.9.0 — Contributor, website-price and CARFAX update
+
+- Adds Original Listing Website price checks for saved Marketplace listings.
+- Listings needing a price review show a ❕ on the Listings tab and 💲↗️ / 💲↘️ on the affected listing card.
+- Edit Listing shows only the newly detected Website Price and lets the user use it or mark it inaccurate.
+- Vehicle Profile creators can apply a verified website price directly; other users submit a correction request for review.
+- Renames Vehicle Profile Builders to Top Contributors and awards 5 points per Vehicle Profile, 1 point for an approved own-profile price correction, and 2 points for an approved correction on another user's profile. Only the first valid matching correction receives correction points.
+- Admin Level 2 can make Original Listing Website mandatory from Advanced Google / Store controls.
+- Adds compact CARFAX Findings controls and badges for One Owner, Low Odometer and No Accidents to Vehicle Profiles and Marketplace Listings.
+- Removes duplicate manufacturer text in generated Marketplace descriptions when the model value already includes the make.
