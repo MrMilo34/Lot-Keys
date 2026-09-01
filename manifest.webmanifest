@@ -2,7 +2,7 @@
   "name": "LotKeys",
   "short_name": "LotKeys",
   "description": "Dealership vehicle profiles, customer share folders, and Marketplace listing workflow.",
-  "start_url": "./?build=0919",
+  "start_url": "./?build=0920",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f3f4f6",

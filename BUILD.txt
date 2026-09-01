@@ -1,4 +1,10 @@
-LotKeys Drive Test v0.9.1.9
-Build query: ?build=0919
-Service worker: lotkeys-drive-test-v0919
-Price alert tri-state fix: verified price / Call for Price / unavailable-or-missing
+LotKeys Drive Test v0.9.2.0
+Build query: ?build=0920
+Service worker: lotkeys-drive-test-v0920
+
+Price intelligence update:
+- Call for Price (💲❔) remains visible on the Listing but does not trigger the Listings-tab ❕.
+- Vehicle-page identity is evaluated from multiple signals; one missing field no longer makes the page unavailable.
+- If the normal price extractor is uncertain, LotKeys checks backward for the known Profile/Listing price on the matched page.
+- ⚠️ is reserved for pages where several identity signals are missing, the page explicitly says removed/sold/not found, or the page cannot be read.
+- Successful price/location evidence is saved in Website Price Finding learning observations and reused as domain-level extraction hints from synced Vehicle Profiles.
