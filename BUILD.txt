@@ -1,10 +1,11 @@
-LotKeys Drive Test v0.9.2.1
-Build query: ?build=0921
-Service worker: lotkeys-drive-test-v0921
+LotKeys Drive Test v0.9.2.2
+Build query: ?build=0922
+Service worker: lotkeys-drive-test-v0922
 
-Price intelligence update:
-- Call for Price (💲❔) remains visible on the Listing but does not trigger the Listings-tab ❕.
-- Vehicle-page identity is evaluated from multiple signals; one missing field no longer makes the page unavailable.
-- If the normal price extractor is uncertain, LotKeys checks backward for the known Profile/Listing price on the matched page.
-- ⚠️ is reserved for pages where several identity signals are missing, the page explicitly says removed/sold/not found, or the page cannot be read.
-- Successful price/location evidence is saved in Website Price Finding learning observations and reused as domain-level extraction hints from synced Vehicle Profiles.
+Refresh performance update:
+- Refresh Inventory now uses the normal incremental Drive/index refresh path instead of forcing a complete inventory rescan.
+- Refresh Listings now uses the normal incremental Drive/index refresh path instead of re-reading every Listing JSON.
+- Listing website verification is decoupled from the Refresh Listings spinner and continues in the background when due.
+- A background-check guard prevents duplicate website verification runs from stacking up.
+- Direct website reads time out after 7 seconds; the read-only fallback times out after 9 seconds so a slow/blocked site cannot hold the verifier indefinitely.
+- Existing v0.9.2.1 alert logic remains intact, including informational 💲❔ and conservative ⚠️ behavior.
