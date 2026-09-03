@@ -1,23 +1,17 @@
-LotKeys Drive Test v0.9.3.0
-Build query: ?build=0930
-Service worker: lotkeys-drive-test-v0930
+LotKeys Drive Test v0.9.3.2
+Build query: ?build=0932
+Service worker: lotkeys-drive-test-v0932
 
-Major Garage / public profile / connection update:
-- Settings renamed Garage; Top Contributors moved above Users.
-- Regular Users view now shows public identity only: name, favorite badge, Lot-LVL and tagline; no email.
-- Public user profile bubble added with profile-owner appearance/accent, badges scaffold, all-time contribution score, monthly placement styling, Message placeholder and Report User.
-- Per-user PublicProfile.json is written to Store/Users/<user> alongside Profile Thumbnail.jpg.
-- Account page reorganized into collapsible LotKeys Account Settings with Expand & Edit / Click to Sign In.
-- Text-only 20-character tagline added and invalid emoji/pictograph taglines are cleared.
-- Personal Account.json now carries tagline, favorite badge metadata and saved Store connections.
-- Store Code connection workflow and saved-Store dropdown added; raw Store Folder URL remains Admin Level 2-only UI. A safe Store Access.json discovery record is maintained under Users so public onboarding data can be separated from LotKeys.json.
-- New Store bootstrap uses a folder picker without displaying the raw folder URL; first Store user still becomes Admin Level 2.
-- Blocked/disabled/blacklisted Store users receive the management message and saved Store removal flow.
-- Refresh Status performs a real lightweight authorization/Drive health check; reconnect uses the lightest token flow first.
-- Version status strip shortened to Ready / Authorized and gains an info / What's New bubble and attention pulse.
-- User Reports replaces Profiles Marked for Removal and groups deletion, price-change and user reports.
-- Admin Level 1 can view Privileges but cannot see/use Admin Level 2 promotion/demotion controls.
-- Administrators earn 0.25 stored contribution points for each finalized moderation request.
-- Vehicle Profile creator cards use the compact public identity format and monthly award overlays.
-- Monthly award overlay scaffolding: 1st crown+gold ring, 2nd silver, 3rd bronze.
-- Sold celebration now includes a lightweight synthesized party-popper sound plus the existing 5-second confetti fall.
+Polish / connection fixes:
+- Full deployment package restored with all LotKeys and CARFAX image assets.
+- Top Contributors avatar placement/bar sizing corrected and chart vertical scrollbar suppressed.
+- Public profile bubble hides the stray scrollbar while remaining scrollable when needed.
+- Global version/status card now uses the same real readiness state as the header: green/still when healthy, yellow/red attention only when action is required.
+- Readiness checks no longer deserialize every Vehicle/Listing record (including large media blobs), reducing Refresh/health-check stalls.
+- Admin Level 2 Store Code action is now Save Code and immediately writes the canonical code to LotKeys.json plus Store Access.json.
+- Store Access.json is written at Store root and Users for compatibility/discovery by accounts that already have read access.
+- Store Code lookup first recognizes the currently known Store, then searches accessible Store Access records.
+- Saving a Store Code as a user prompts for a personal Store nickname and retains it in the user Account data.
+- Admin Level 1 can see the canonical Store Code read-only.
+- Account collapsed view now shows LotKeys Account Storage + connection state; Expand & Edit reveals the editor.
+- Save Account Settings gets disabled/grey loading-spinner treatment and improved bottom spacing.
