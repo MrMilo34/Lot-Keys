@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.3.4
-Build query: ?build=0934
-Service worker: lotkeys-drive-test-v0934
+LotKeys Drive Test v0.9.3.5
+Build query: ?build=0935
+Service worker: lotkeys-drive-test-v0935
 
 Avatar identity + monthly Top Contributors wrap-up update:
 - Restores each profile owner's saved accent color as the normal solid avatar ring across shared LotKeys identity placements.
