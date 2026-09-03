@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.3.8
-Build query: ?build=0936
-Service worker: lotkeys-drive-test-v0936
+LotKeys Drive Test v0.9.3.9
+Build query: ?build=0939
+Service worker: lotkeys-drive-test-v0939
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
