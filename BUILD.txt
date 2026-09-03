@@ -1,14 +1,14 @@
-LotKeys Drive Test v0.9.3.3
-Build query: ?build=0933
-Service worker: lotkeys-drive-test-v0933
+LotKeys Drive Test v0.9.3.4
+Build query: ?build=0934
+Service worker: lotkeys-drive-test-v0934
 
-Connection + video upload update:
-- Header readiness, version/status card, and Garage Store status now use the same live connection state.
-- A restored healthy Store session automatically advances the version card to green Authorized; no Refresh Status tap is required.
-- Healthy Store connections show Connected to Store ✓ instead of an active Reconnect button.
-- Reconnect to Store appears only when a saved Store exists but Google/Drive authorization needs recovery.
-- Video uploads now use adaptive large resumable chunks: up to 128 MiB on fast connections instead of fixed 8 MiB chunks.
-- Large video chunks report live XHR upload progress while durable Drive checkpoints remain resumable.
-- When only a video changes, unchanged Photos/Documents media folders are skipped so video transfer begins sooner.
-- A temporary screen wake lock is requested during active video transfer when supported to reduce accidental screen-lock pauses.
-- Existing paused/resumable upload behavior remains intact.
+Avatar identity + monthly Top Contributors wrap-up update:
+- Restores each profile owner's saved accent color as the normal solid avatar ring across shared LotKeys identity placements.
+- Monthly placements override the normal ring with Google-style gradient gold/silver/bronze rings; first place also receives the crown.
+- Top Contributors gains This Month / Last Month / All Time segmented views after a monthly wrap is available.
+- Users who joined after the wrapped month do not receive the Last Month view for a period they were not part of.
+- Administrators gain a separate month-end standings view that includes hidden approval/administrative points.
+- Admin Level 2 can launch the official wrap-up either to all users or on the current device only.
+- Wrapped standings are stored in the Store configuration/history and the top three placements remain active until the next wrap.
+- All-user reveals are stored for the next synced/open user experience; device-only reveals do not push the reveal animation to other users.
+- Existing v0.9.3.3 connection-state and fast resumable video upload behavior is retained.
