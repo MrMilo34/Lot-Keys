@@ -1,4 +1,4 @@
-LotKeys Drive Test v0.9.3.6
+LotKeys Drive Test v0.9.3.7
 Build query: ?build=0936
 Service worker: lotkeys-drive-test-v0936
 
