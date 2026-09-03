@@ -1,14 +1,20 @@
-LotKeys Drive Test v0.9.3.5
-Build query: ?build=0935
-Service worker: lotkeys-drive-test-v0935
+LotKeys Drive Test v0.9.3.6
+Build query: ?build=0936
+Service worker: lotkeys-drive-test-v0936
 
-Avatar identity + monthly Top Contributors wrap-up update:
-- Restores each profile owner's saved accent color as the normal solid avatar ring across shared LotKeys identity placements.
-- Monthly placements override the normal ring with Google-style gradient gold/silver/bronze rings; first place also receives the crown.
-- Top Contributors gains This Month / Last Month / All Time segmented views after a monthly wrap is available.
-- Users who joined after the wrapped month do not receive the Last Month view for a period they were not part of.
-- Administrators gain a separate month-end standings view that includes hidden approval/administrative points.
-- Admin Level 2 can launch the official wrap-up either to all users or on the current device only.
-- Wrapped standings are stored in the Store configuration/history and the top three placements remain active until the next wrap.
-- All-user reveals are stored for the next synced/open user experience; device-only reveals do not push the reveal animation to other users.
-- Existing v0.9.3.3 connection-state and fast resumable video upload behavior is retained.
+Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
+
+Added on top of the v0.9.3.3 baseline:
+- User accent-color avatar rings restored across shared profile placements.
+- 1st/2nd/3rd monthly placements override the normal ring with gradient gold/silver/bronze; 1st also gets the crown.
+- Top Contributors segmented view supports This Month / Last Month / All Time after a month is officially wrapped.
+- New users do not see a wrapped Last Month that ended before they joined.
+- Admin Level 1/2 can preview month-end standings including hidden approval/admin points.
+- Admin Level 2 can launch the monthly wrap-up as All Users or This Device Only.
+- Wrapped standings, placement rings and optional all-user reveal are persisted to Store config / Store Access data.
+
+Preserved unchanged from v0.9.3.3:
+- Working navigation/render startup path and getReadinessState.
+- Store connection/readiness behavior.
+- Faster adaptive resumable video upload path.
+- Inventory/Listings refresh, listing alerts, Sold flow and party-popper celebration.
