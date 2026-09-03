@@ -1,17 +1,14 @@
-LotKeys Drive Test v0.9.3.2
-Build query: ?build=0932
-Service worker: lotkeys-drive-test-v0932
+LotKeys Drive Test v0.9.3.3
+Build query: ?build=0933
+Service worker: lotkeys-drive-test-v0933
 
-Polish / connection fixes:
-- Full deployment package restored with all LotKeys and CARFAX image assets.
-- Top Contributors avatar placement/bar sizing corrected and chart vertical scrollbar suppressed.
-- Public profile bubble hides the stray scrollbar while remaining scrollable when needed.
-- Global version/status card now uses the same real readiness state as the header: green/still when healthy, yellow/red attention only when action is required.
-- Readiness checks no longer deserialize every Vehicle/Listing record (including large media blobs), reducing Refresh/health-check stalls.
-- Admin Level 2 Store Code action is now Save Code and immediately writes the canonical code to LotKeys.json plus Store Access.json.
-- Store Access.json is written at Store root and Users for compatibility/discovery by accounts that already have read access.
-- Store Code lookup first recognizes the currently known Store, then searches accessible Store Access records.
-- Saving a Store Code as a user prompts for a personal Store nickname and retains it in the user Account data.
-- Admin Level 1 can see the canonical Store Code read-only.
-- Account collapsed view now shows LotKeys Account Storage + connection state; Expand & Edit reveals the editor.
-- Save Account Settings gets disabled/grey loading-spinner treatment and improved bottom spacing.
+Connection + video upload update:
+- Header readiness, version/status card, and Garage Store status now use the same live connection state.
+- A restored healthy Store session automatically advances the version card to green Authorized; no Refresh Status tap is required.
+- Healthy Store connections show Connected to Store ✓ instead of an active Reconnect button.
+- Reconnect to Store appears only when a saved Store exists but Google/Drive authorization needs recovery.
+- Video uploads now use adaptive large resumable chunks: up to 128 MiB on fast connections instead of fixed 8 MiB chunks.
+- Large video chunks report live XHR upload progress while durable Drive checkpoints remain resumable.
+- When only a video changes, unchanged Photos/Documents media folders are skipped so video transfer begins sooner.
+- A temporary screen wake lock is requested during active video transfer when supported to reduce accidental screen-lock pauses.
+- Existing paused/resumable upload behavior remains intact.

@@ -177,7 +177,7 @@ body[data-theme="dark"] .profile-photo-edit{border-color:#212121}
       </div>
     </header>
 
-    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.9.3.2</strong> — Ready<button class="protocol-info-btn" id="version-info-btn" type="button" aria-label="What is new in this LotKeys version">ℹ️</button></div>
+    <div id="local-test-note" class="protocol-warning"><strong>LotKeys Drive Test · V0.9.3.3</strong> — Ready<button class="protocol-info-btn" id="version-info-btn" type="button" aria-label="What is new in this LotKeys version">ℹ️</button></div>
     <main id="main"></main>
 
     <nav class="bottom-nav" aria-label="Primary">
@@ -525,16 +525,29 @@ const DriveSync = (() => {
     if(!start.ok){let d='';try{d=(await start.json())?.error?.message||''}catch{};const e=new Error(d||`Could not start Drive upload (${start.status})`);e.status=start.status;throw e}
     return start.headers.get('Location')||'';
   }
+  function uploadChunkSize(blob){
+    const MB=1024*1024,size=Number(blob?.size)||0,isVideo=/^video\//i.test(String(blob?.type||''));
+    if(!isVideo)return 8*MB;
+    if(size<=64*MB)return Math.max(256*1024,size);
+    const effective=String(navigator.connection?.effectiveType||'').toLowerCase();
+    if((!effective||effective==='4g')&&size<=768*MB)return 128*MB;
+    return effective==='2g'||effective==='slow-2g'?16*MB:64*MB;
+  }
+  async function requestUploadWakeLock(blob){
+    if(!/^video\//i.test(String(blob?.type||''))||!navigator.wakeLock||document.visibilityState!=='visible')return null;
+    try{return await navigator.wakeLock.request('screen')}catch{return null}
+  }
   async function resumableCreate(blob,metadata,onProgress=()=>{},resumeKey=''){
     if(!blob?.size)return multipartCreate(blob,metadata);
-    const token=await authorize(false),CHUNK=8*1024*1024;
+    const token=await authorize(false),CHUNK=uploadChunkSize(blob);
+    let wakeLock=null;
     let uploadUrl='',offset=0,lastResult=null;
     const stored=resumeKey?getResumableSession(resumeKey):null;
     if(stored?.uploadUrl&&Number(stored.size)===Number(blob.size)){
       try{
         const status=await queryResumableOffset(stored.uploadUrl,blob.size,token);
         if(status.valid&&!status.complete){uploadUrl=stored.uploadUrl;offset=Math.max(0,Math.min(blob.size,Number(status.offset)||0));}
-        else if(status.complete&&status.body?.id){clearResumableSession(resumeKey);onProgress(blob.size,blob.size);return status.body}
+        else if(status.complete&&status.body?.id){clearResumableSession(resumeKey);onProgress(blob.size,blob.size);try{await wakeLock?.release()}catch{};return status.body}
         else clearResumableSession(resumeKey);
       }catch(err){
         // A backgrounded browser can temporarily block the status check. The last
@@ -544,9 +557,10 @@ const DriveSync = (() => {
     }
     if(!uploadUrl){
       uploadUrl=await createResumableSession(blob,metadata,token);
-      if(!uploadUrl){const f=await multipartCreate(blob,metadata);onProgress(blob.size,blob.size);return f}
+      if(!uploadUrl){const f=await multipartCreate(blob,metadata);onProgress(blob.size,blob.size);try{await wakeLock?.release()}catch{};return f}
       offset=0;saveResumableSession(resumeKey,{uploadUrl,size:blob.size,offset:0,name:metadata?.name||'',type:blob.type||''});
     }
+    wakeLock=await requestUploadWakeLock(blob);
     onProgress(offset,blob.size);
     let failures=0;
     while(offset<blob.size){
@@ -554,8 +568,9 @@ const DriveSync = (() => {
       try{
         const result=await new Promise((resolve,reject)=>{
           const xhr=new XMLHttpRequest();xhr.open('PUT',uploadUrl,true);xhr.responseType='json';xhr.setRequestHeader('Authorization',`Bearer ${token}`);xhr.setRequestHeader('Content-Type',blob.type||'application/octet-stream');xhr.setRequestHeader('Content-Range',`bytes ${startOffset}-${end-1}/${blob.size}`);
-          // Report only bytes Google Drive has acknowledged. This keeps the percentage
-          // authoritative and prevents a background interruption from making progress jump backwards.
+          // Show bytes being sent immediately so large video chunks have smooth progress.
+          // Durable resume checkpoints are still saved only after Drive acknowledges a chunk.
+          if(xhr.upload)xhr.upload.onprogress=e=>{if(e.lengthComputable)onProgress(Math.min(blob.size,startOffset+Number(e.loaded||0)),blob.size)};
           xhr.onload=()=>{
             if(xhr.status===200||xhr.status===201){onProgress(blob.size,blob.size);let body=xhr.response;if(!body){try{body=JSON.parse(xhr.responseText||'{}')}catch{body={}}}resolve({offset:blob.size,body,complete:true});return}
             if(xhr.status===308){const accepted=Math.max(startOffset,Math.min(blob.size,acceptedOffsetFromRange(xhr.getResponseHeader('Range'),end)));onProgress(accepted,blob.size);resolve({offset:accepted,body:null,complete:false});return}
@@ -569,7 +584,7 @@ const DriveSync = (() => {
         saveResumableSession(resumeKey,{uploadUrl,size:blob.size,offset,name:metadata?.name||'',type:blob.type||''});
         if(result.complete)break;
       }catch(err){
-        if(err?.status===401){clearSessionAuthorization();err.code='AUTH_REQUIRED';throw err}
+        if(err?.status===401){clearSessionAuthorization();err.code='AUTH_REQUIRED';try{await wakeLock?.release()}catch{};throw err}
         failures++;
         try{
           const status=await queryResumableOffset(uploadUrl,blob.size,token);
@@ -581,12 +596,13 @@ const DriveSync = (() => {
           offset=Math.max(offset,Math.min(blob.size,Number(status.offset)||0));onProgress(offset,blob.size);
           saveResumableSession(resumeKey,{uploadUrl,size:blob.size,offset,name:metadata?.name||'',type:blob.type||''});
           if(status.complete&&status.body?.id){lastResult=status.body;offset=blob.size;break}
-        }catch(statusErr){if(statusErr?.status===401){clearSessionAuthorization();statusErr.code='AUTH_REQUIRED';throw statusErr}}
-        if(failures>=4){err.code=err.code||'MEDIA_UPLOAD_INTERRUPTED';throw err}
+        }catch(statusErr){if(statusErr?.status===401){clearSessionAuthorization();statusErr.code='AUTH_REQUIRED';try{await wakeLock?.release()}catch{};throw statusErr}}
+        if(failures>=4){err.code=err.code||'MEDIA_UPLOAD_INTERRUPTED';try{await wakeLock?.release()}catch{};throw err}
         await new Promise(r=>setTimeout(r,Math.min(5000,750*failures)));
       }
     }
     clearResumableSession(resumeKey);
+    try{await wakeLock?.release()}catch{}
     if(lastResult?.id)return lastResult;
     // If the final response was lost, the uploaded file is discoverable on the next
     // retry by its LotKeys appProperties, so pause instead of starting a duplicate.
@@ -1113,12 +1129,14 @@ const DriveSync = (() => {
     let sfp=sheetFingerprint(v);if(force||v.drive.lastSheetFingerprint!==sfp){await writeVehicleSheet(sheet.id,v);v.drive.lastSheetFingerprint=sfp;}
     await DB.put('vehicles',v);await updateInventoryIndex(v,s).catch(e=>console.warn('Inventory index update failed',e));
 
-    const currentAssetFp=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');
+    const photoFp=assetFingerprint(v.photos),documentFp=assetFingerprint(v.attachments),videoFp=assetFingerprint(v.videos),currentAssetFp=[photoFp,documentFp,videoFp].join('||');
     if(force||v.drive.lastAssetFingerprint!==currentAssetFp){
-      v.photos=await syncAssets(v.photos,photos.id,v.id,'photo',onProgress);
-      v.attachments=await syncAssets(v.attachments,docs.id,v.id,'document',onProgress);
-      v.videos=await syncAssets(v.videos,videos.id,v.id,'video',onProgress);
-      v.drive.lastAssetFingerprint=[assetFingerprint(v.photos),assetFingerprint(v.attachments),assetFingerprint(v.videos)].join('||');
+      const legacy=String(v.drive.lastAssetFingerprint||'').split('||'),prevPhoto=v.drive.lastPhotoAssetFingerprint??legacy[0]??'',prevDocument=v.drive.lastDocumentAssetFingerprint??legacy[1]??'',prevVideo=v.drive.lastVideoAssetFingerprint??legacy[2]??'';
+      if(force||prevPhoto!==photoFp)v.photos=await syncAssets(v.photos,photos.id,v.id,'photo',onProgress);
+      if(force||prevDocument!==documentFp)v.attachments=await syncAssets(v.attachments,docs.id,v.id,'document',onProgress);
+      if(force||prevVideo!==videoFp)v.videos=await syncAssets(v.videos,videos.id,v.id,'video',onProgress);
+      v.drive.lastPhotoAssetFingerprint=assetFingerprint(v.photos);v.drive.lastDocumentAssetFingerprint=assetFingerprint(v.attachments);v.drive.lastVideoAssetFingerprint=assetFingerprint(v.videos);
+      v.drive.lastAssetFingerprint=[v.drive.lastPhotoAssetFingerprint,v.drive.lastDocumentAssetFingerprint,v.drive.lastVideoAssetFingerprint].join('||');
     }
     // Cover Photo file ID may have changed during upload; refresh metadata once media ends.
     sfp=sheetFingerprint(v);if(force||v.drive.lastSheetFingerprint!==sfp){await writeVehicleSheet(sheet.id,v);v.drive.lastSheetFingerprint=sfp;}
@@ -1612,8 +1630,9 @@ const App = (()=>{
 renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#description-add-type').value,block=DescriptionTemplates.defaultBlock(type);if(type==='price')block.config.text='{{PRICE}} + GST';if(type==='financing')block.config.text='Flexible financing options\nOAC (On Approved Credit)\nExtended warranty options available';if(type==='signature')block.config.text='Message {{USER_NAME}} to set up a viewing or to book.';t.blocks.push(block);renderBlocks()};$('#description-template-form').onsubmit=async e=>{e.preventDefault();t.name=$('#description-template-name').value.trim()||'My Marketplace Template';await DescriptionTemplates.save(t);await setSetting('lastDescriptionTemplateId',t.id);await markPersonalProfileChanged();modal.close();toast('Description template saved ✓');if(route==='profile')render()};if(!modal.open)modal.showModal()}
 
 
-  async function updateProtocolNote(){const n=$('#local-test-note');if(!n)return;const st=await getReadinessState();const cls=st.level==='good'?'protocol-good':st.level==='bad'?'protocol-bad protocol-attention':'protocol-attention';const label=st.level==='good'?'Authorized':st.level==='warn'?'Attention':'Action needed';n.className=`protocol-warning ${cls}`;n.innerHTML=`<strong>LotKeys Drive Test · V0.9.3.2</strong> — ${label}<button class="protocol-info-btn" id="version-info-btn" type="button" aria-label="What is new in this LotKeys version">ℹ️</button>`;$('#version-info-btn')?.addEventListener('click',showVersionInfo)}
-  async function showVersionInfo(){const signed=!!(await setting('currentAccountEmail','')),st=await getReadinessState();modalBody.innerHTML=`<div class="modal-head"><div><div class="eyebrow">LOTKEYS V0.9.3.2</div><h2>What’s new</h2></div><button class="close">×</button></div><div class="card" style="box-shadow:none"><div class="readiness-hero ${st.level}" style="margin-bottom:10px"><span class="readiness-big-dot ${st.level}"></span><div><strong>${esc(st.title)}</strong><div class="small" style="margin-top:4px">${esc(st.summary)}</div></div></div>${st.issues?.length?`<ul class="points-info-list">${st.issues.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}<ul class="points-info-list"><li>Top Contributor avatar placement and chart sizing polished.</li><li>Public profile bubbles no longer show the stray scrollbar.</li><li>Healthy synchronized accounts keep the version card green and still.</li><li>Refresh status checks no longer load every large Vehicle/Listing record just to paint the header.</li><li>Store Code saving now writes the Store access record immediately.</li><li>Account settings collapsed/expanded layout and Save loading state polished.</li></ul>${signed?'':'<div class="notice warning"><strong>New here?</strong><div class="small muted" style="margin-top:5px">Open Account and tap <strong>Click to Sign In</strong>, then use the Store Code your management team gives you.</div></div>'}</div>`;modalBody.querySelector('.close').onclick=()=>modal.close();if(!modal.open)modal.showModal()}
+  function paintProtocolState(st){const n=$('#local-test-note');if(!n||!st)return;const cls=st.level==='good'?'protocol-good':st.level==='bad'?'protocol-bad protocol-attention':'protocol-attention',label=st.level==='good'?'Authorized':st.level==='warn'?'Attention':'Action needed';n.className=`protocol-warning ${cls}`;n.innerHTML=`<strong>LotKeys Drive Test · V0.9.3.3</strong> — ${label}<button class="protocol-info-btn" id="version-info-btn" type="button" aria-label="What is new in this LotKeys version">ℹ️</button>`;$('#version-info-btn')?.addEventListener('click',showVersionInfo)}
+  async function updateProtocolNote(){paintProtocolState(await getReadinessState())}
+  async function showVersionInfo(){const signed=!!(await setting('currentAccountEmail','')),st=await getReadinessState();modalBody.innerHTML=`<div class="modal-head"><div><div class="eyebrow">LOTKEYS V0.9.3.3</div><h2>What’s new</h2></div><button class="close">×</button></div><div class="card" style="box-shadow:none"><div class="readiness-hero ${st.level}" style="margin-bottom:10px"><span class="readiness-big-dot ${st.level}"></span><div><strong>${esc(st.title)}</strong><div class="small" style="margin-top:4px">${esc(st.summary)}</div></div></div>${st.issues?.length?`<ul class="points-info-list">${st.issues.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}<ul class="points-info-list"><li>Healthy Store synchronization now updates the header and version card together — green <strong>Authorized</strong> appears automatically after connection restores.</li><li>The Store action now reads <strong>Connected to Store ✓</strong> when healthy; Reconnect appears only when authorization really needs recovery.</li><li>Video uploads use a faster adaptive resumable transfer path with much larger video chunks, live transfer progress and fewer Google Drive round trips.</li><li>Unchanged photo/document folders are skipped when only a video changed, so video transfer starts sooner.</li><li>LotKeys requests a temporary screen wake lock during an active video transfer when the browser supports it, helping prevent an accidental screen lock from pausing the upload.</li></ul>${signed?'':'<div class="notice warning"><strong>New here?</strong><div class="small muted" style="margin-top:5px">Open Account and tap <strong>Click to Sign In</strong>, then use the Store Code your management team gives you.</div></div>'}</div>`;modalBody.querySelector('.close').onclick=()=>modal.close();if(!modal.open)modal.showModal()}
 
   function readLiveProgressRows(){try{return JSON.parse(localStorage.getItem(LIVE_MEDIA_PROGRESS_STORAGE)||'{}')||{}}catch{return {}}}
   function writeLiveProgressRows(rows){try{localStorage.setItem(LIVE_MEDIA_PROGRESS_STORAGE,JSON.stringify(rows||{}))}catch{}}
@@ -1753,6 +1772,7 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     // repaint the tiny header label, which was stalling tab changes in v0.8.9.1/2.
     if(!force&&paintLiveUploadHeader())return;
     const st=await getReadinessState();
+    paintProtocolState(st);
     b.className=`readiness-btn ${st.level}`;
     b.setAttribute('aria-label',st.title);
     b.title=st.title;
@@ -1783,21 +1803,21 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
     if(!modal.open)modal.showModal();
   }
   async function boot(){
-    await validatePersonalTagline();
-    updateProtocolNote();
     await DB.open();
+    await validatePersonalTagline();
     await ensureDefaults();
     if(await setting('priceAlertLogicVersion','')!=='0921'){await clearLegacyWebsiteWarnings();await setSetting('lastPriceCheckAt',0);await setSetting('priceAlertLogicVersion','0921')}
     await applyPersonalAppearance();
     await DriveSync.restoreSessionAuthorization();
     if(DriveSync.connected()){await DriveSync.loadPersonalProfile().catch(err=>console.warn('Personal profile restore deferred',err));await applyPersonalAppearance();}
+    await updateProtocolNote();
     $('#quick-add').onclick=async()=>{const canCreate=await currentUserCan('createVehicleProfiles'),canList=await currentUserCan('useListings');if(!canCreate&&!canList){toast('Your account cannot create Vehicles or Listings right now.');return}showCreateChooser()};
     $('#sync-readiness').onclick=()=>showReadinessModal();
     if($('#sync-status-text')){$('#sync-status-text').onclick=()=>showReadinessModal();$('#sync-status-text').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showReadinessModal()}}}
     document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>go(b.dataset.route));
     document.addEventListener('click',e=>{const el=e.target.closest?.('.open-public-profile');if(el?.dataset?.userName&&!el.closest('#modal-body .public-profile-shell')){e.preventDefault();showPublicUserProfile(el.dataset.userName)}});
     if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')) {
-      navigator.serviceWorker.register('./sw.js?v=0932', {updateViaCache:'none'})
+      navigator.serviceWorker.register('./sw.js?v=0933', {updateViaCache:'none'})
         .then(reg=>reg.update().catch(()=>{}))
         .catch(()=>{});
     }
@@ -2368,8 +2388,8 @@ renderBlocks();$('#description-add-block').onclick=()=>{const type=$('#descripti
   }
   async function renderSettings(){
     const userName=await setting('userName',''),locs=(await DB.all('locations')).filter(x=>!x.ownerUserName||x.ownerUserName===userName),vehicles=await DB.all('vehicles'),storeName=await setting('storeName',''),folderUrl=await setting('storeFolderUrl',''),ret=await setting('retentionDays',120),clientId=await setting('googleClientId',''),apiKey=await setting('googleApiKey',''),projectNumber=await setting('googleProjectNumber',''),publicShare=await setting('publicShareEnabled',true),originalListingMandatory=await setting('originalListingMandatory',false),directoryStoreAddress=await setting('directoryStoreAddress',''),directoryDirectionsUrl=await setting('directoryDirectionsUrl',''),storeLogoData=await setting('storeLogoDataUrl',''),storeLogoFileId=await setting('storeLogoFileId',''),accountEmail=await setting('currentAccountEmail',''),storeUsers=normalizeStoreUsers(await setting('storeUsers',[])),savedStores=Array.isArray(await setting('savedStores',[]))?await setting('savedStores',[]):[],storeCode=String(await setting('storeCode','')||''),userReports=Array.isArray(await setting('storeUserReports',[]))?await setting('storeUserReports',[]):[],me=findStoreUser(normalizeStoreUsers(await setting('storeUsers',[])),userName,accountEmail)||normalizeUserAccount({userName,email:accountEmail});const ds=await DriveSync.getStatus();
-    const adminLevel=normalizedAdminLevel(me),isAdmin=adminLevel>0,isOwner=adminLevel>=2,returningGoogleUser=!!accountEmail,statusText=!ds.isHttps?'Open HTTPS LotKeys':ds.connected?(ds.storeFolderId?'Connected':'Authorized'):(returningGoogleUser?'Reconnect to Store':'Connect to Store'),savedOptions=savedStores.map(x=>`<option value="${esc(x.code||'')}">${esc(x.name||x.code||'Saved Store')}</option>`).join('');
-    const accountCard=`<div class="card"><div class="section-title" style="margin-top:0"><h2>Google &amp; Store Connection</h2><small>${userName?esc(adminLevelLabel(adminLevel)):'Not registered'}</small></div><div class="kv"><div>User</div><span>${esc(userName||'Not registered yet')}</span><div>Google account</div><span>${esc(accountEmail||'Not signed in')}</span><div>Store</div><span>${esc(storeName||ds.storeFolderName||'Not connected')}</span><div>Status</div><span>${esc(statusText)}</span>${isAdmin&&storeCode?`<div>Store Code</div><span>${esc(storeCode)}${adminLevel===1?' · read only':''}</span>`:''}</div>${savedStores.length?`<div class="field" style="margin-top:12px"><label>Saved Stores</label><select id="saved-store-select"><option value="">Choose a saved Store…</option>${savedOptions}</select></div>`:''}${!userName?`<div class="field" style="margin-top:12px"><label>My User / Sales Name</label><input id="garage-user-name" maxlength="40" placeholder="e.g. Blair"></div>`:''}<div class="store-code-panel"><div class="field" style="margin:0"><label>Store Code</label><div class="store-code-row"><input id="store-code-input" value="" maxlength="24" placeholder="Enter Store Code"><button class="btn" id="save-store-code" type="button">Save</button></div><div class="help">Store Codes connect LotKeys without showing regular users the raw Google Drive Store URL.</div></div></div><div class="actions"><span class="drive-connect-wrap"><button class="btn primary" id="drive-connect">${ds.connected&&ds.storeFolderId?'Reconnect to Store':'Connect to Store'}</button><span class="drive-connect-spinner" id="drive-connect-spinner" hidden></span></span><button class="btn ghost" id="garage-refresh-status" type="button">Refresh Status</button></div></div>`;
+    const adminLevel=normalizedAdminLevel(me),isAdmin=adminLevel>0,isOwner=adminLevel>=2,returningGoogleUser=!!accountEmail,storeHealthy=!!(ds.connected&&ds.storeFolderId),storeSaved=!!ds.storeFolderId,statusText=!ds.isHttps?'Open HTTPS LotKeys':storeHealthy?'Connected to Store ✓':storeSaved?'Reconnect Required':ds.connected?'Google Authorized':'Not Connected',storeActionLabel=storeHealthy?'Connected to Store ✓':storeSaved?'Reconnect to Store':'Connect to Store',savedOptions=savedStores.map(x=>`<option value="${esc(x.code||'')}">${esc(x.name||x.code||'Saved Store')}</option>`).join('');
+    const accountCard=`<div class="card"><div class="section-title" style="margin-top:0"><h2>Google &amp; Store Connection</h2><small>${userName?esc(adminLevelLabel(adminLevel)):'Not registered'}</small></div><div class="kv"><div>User</div><span>${esc(userName||'Not registered yet')}</span><div>Google account</div><span>${esc(accountEmail||'Not signed in')}</span><div>Store</div><span>${esc(storeName||ds.storeFolderName||'Not connected')}</span><div>Status</div><span>${esc(statusText)}</span>${isAdmin&&storeCode?`<div>Store Code</div><span>${esc(storeCode)}${adminLevel===1?' · read only':''}</span>`:''}</div>${savedStores.length?`<div class="field" style="margin-top:12px"><label>Saved Stores</label><select id="saved-store-select"><option value="">Choose a saved Store…</option>${savedOptions}</select></div>`:''}${!userName?`<div class="field" style="margin-top:12px"><label>My User / Sales Name</label><input id="garage-user-name" maxlength="40" placeholder="e.g. Blair"></div>`:''}<div class="store-code-panel"><div class="field" style="margin:0"><label>Store Code</label><div class="store-code-row"><input id="store-code-input" value="" maxlength="24" placeholder="Enter Store Code"><button class="btn" id="save-store-code" type="button">Save</button></div><div class="help">Store Codes connect LotKeys without showing regular users the raw Google Drive Store URL.</div></div></div><div class="actions"><span class="drive-connect-wrap"><button class="btn primary" id="drive-connect" ${storeHealthy?'disabled aria-disabled="true" title="Store connection is healthy"':''}>${esc(storeActionLabel)}</button><span class="drive-connect-spinner" id="drive-connect-spinner" hidden></span></span><button class="btn ghost" id="garage-refresh-status" type="button">Refresh Status</button></div></div>`;
 
     const bootstrapCard=!ds.storeFolderId&&!storeUsers.length?`<div class="card"><div class="section-title" style="margin-top:0"><h2>New Store Setup</h2><small>First-time management setup</small></div><div class="help">Creating a brand-new LotKeys Store is the only pre-administration flow that can choose the Store folder. The first registered Store user becomes Admin Level 2. The raw folder URL is never displayed here.</div><div class="field" style="margin-top:12px"><label>My User / Sales Name</label><input id="bootstrap-user-name" value="${esc(userName)}" placeholder="e.g. Blair"></div><div class="actions"><button class="btn" id="bootstrap-pick-store" type="button">📁 Choose Store Folder</button><button class="btn primary" id="bootstrap-store" type="button" disabled>Initialize Store</button></div><div class="help" id="bootstrap-store-name">No folder selected yet.</div></div>`:'';
 
