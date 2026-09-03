@@ -1,11 +1,23 @@
-LotKeys Drive Test v0.9.2.3
-Build query: ?build=0923
-Service worker: lotkeys-drive-test-v0923
+LotKeys Drive Test v0.9.3.0
+Build query: ?build=0930
+Service worker: lotkeys-drive-test-v0930
 
-Refresh performance update:
-- Refresh Inventory now uses the normal incremental Drive/index refresh path instead of forcing a complete inventory rescan.
-- Refresh Listings now uses the normal incremental Drive/index refresh path instead of re-reading every Listing JSON.
-- Listing website verification is decoupled from the Refresh Listings spinner and continues in the background when due.
-- A background-check guard prevents duplicate website verification runs from stacking up.
-- Direct website reads time out after 7 seconds; the read-only fallback times out after 9 seconds so a slow/blocked site cannot hold the verifier indefinitely.
-- Existing v0.9.2.1 alert logic remains intact, including informational 💲❔ and conservative ⚠️ behavior.
+Major Garage / public profile / connection update:
+- Settings renamed Garage; Top Contributors moved above Users.
+- Regular Users view now shows public identity only: name, favorite badge, Lot-LVL and tagline; no email.
+- Public user profile bubble added with profile-owner appearance/accent, badges scaffold, all-time contribution score, monthly placement styling, Message placeholder and Report User.
+- Per-user PublicProfile.json is written to Store/Users/<user> alongside Profile Thumbnail.jpg.
+- Account page reorganized into collapsible LotKeys Account Settings with Expand & Edit / Click to Sign In.
+- Text-only 20-character tagline added and invalid emoji/pictograph taglines are cleared.
+- Personal Account.json now carries tagline, favorite badge metadata and saved Store connections.
+- Store Code connection workflow and saved-Store dropdown added; raw Store Folder URL remains Admin Level 2-only UI. A safe Store Access.json discovery record is maintained under Users so public onboarding data can be separated from LotKeys.json.
+- New Store bootstrap uses a folder picker without displaying the raw folder URL; first Store user still becomes Admin Level 2.
+- Blocked/disabled/blacklisted Store users receive the management message and saved Store removal flow.
+- Refresh Status performs a real lightweight authorization/Drive health check; reconnect uses the lightest token flow first.
+- Version status strip shortened to Ready / Authorized and gains an info / What's New bubble and attention pulse.
+- User Reports replaces Profiles Marked for Removal and groups deletion, price-change and user reports.
+- Admin Level 1 can view Privileges but cannot see/use Admin Level 2 promotion/demotion controls.
+- Administrators earn 0.25 stored contribution points for each finalized moderation request.
+- Vehicle Profile creator cards use the compact public identity format and monthly award overlays.
+- Monthly award overlay scaffolding: 1st crown+gold ring, 2nd silver, 3rd bronze.
+- Sold celebration now includes a lightweight synthesized party-popper sound plus the existing 5-second confetti fall.
