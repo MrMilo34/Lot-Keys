@@ -1,3 +1,16 @@
+LotKeys Drive Test v0.9.4.16.2
+Build query: ?build=094162
+Service worker: lotkeys-drive-test-v094162
+
+Listing photo selection update:
+- New Listings start with all Vehicle Profile photos unchecked.
+- Photos added directly to a Listing are checked automatically and remain Listing Assets.
+- Removes the separate Choose Vehicle Profile Photos and Reset to Inventory Order buttons.
+- Expand & Order Listing Photos now contains the selected draggable order plus all Vehicle Profile photo check choices in one place.
+- The 20-photo Facebook Marketplace limit is still enforced across Profile and Listing-added photos.
+- Existing Listings preserve their saved photo selection/order when edited.
+- Keeps the v0.9.4.16.1 Listing Drive sync repair and stranded-Listing retry behavior.
+
 LotKeys Drive Test v0.9.4.16.1
 Build query: ?build=094161
 Service worker: lotkeys-drive-test-v094161

@@ -631,3 +631,7 @@ Garage includes an optional management feed positioned below Store Connection. A
 - v0.9.4.15: Management Update video blocks now show a visible thumbnail preview with a play button, and the My Account winner crown was nudged left / rotated slightly for a better fit.
 
 - v0.9.4.15: Management Update video cards now hide file-name / file-size metadata, keep the play badge in the bottom corner, and stop playback cleanly when the modal is closed or the user backs out.
+
+
+## v0.9.4.16.2
+- Unified Marketplace Listing photo selector: Vehicle Profile photos begin unchecked on new Listings; Listing-added photos are selected automatically; selection and drag ordering now live together under Expand & Order Listing Photos; 20-photo maximum retained.
