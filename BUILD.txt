@@ -1,3 +1,16 @@
+LotKeys Drive Test v0.9.4.16.1
+Build query: ?build=094161
+Service worker: lotkeys-drive-test-v094161
+
+Full release based on current v0.9.4.15 source.
+
+Listing sync correction:
+- Restores the known-good DriveSync Listing serialization boundary: DriveSync writes the Listing's already-normalized photoOrder instead of calling App.normalizePhotoOrder across a private scope.
+- Fixes the ReferenceError that left new Marketplace Listings local/error while Inventory continued syncing normally.
+- Keeps schema v7 Facebook Assistant fields and the 20-photo selection UI.
+- Retries local/pending/syncing/error Listings on startup, focus, and app resume so stranded Listings can recover.
+- Restores the normal service worker; no injected release helper is required.
+
 LotKeys Drive Test v0.9.4.16
 Build query: ?build=09416
 Service worker: lotkeys-drive-test-v09416
