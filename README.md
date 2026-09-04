@@ -601,9 +601,14 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Returning either Store reveal sound to the built-in fallback removes the custom canonical file.
 
 
-## v0.9.4.8
+## v0.9.4.9
 - Refines the v0.9.4.5 Month-End Reveal test animation without changing the underlying standings/test data model.
 - Racer profile photos now move with the top of each bar and the live total stays directly under the profile photo.
 - The knockout stage narrows to the final three, enlarges them, adds a checkered finish line, and lets the finalists jockey before the winner pulls ahead.
 - The race now fades/flashes to white into a cleaner podium using actual account profile photos with placement rings and stronger #1 Winner emphasis.
 - Test Month-End Wrap-Up remains non-persistent.
+
+
+### v0.9.4.9 reveal polish
+- Placement-specific podium Admin-approved colors.
+- Silent Vehicle Sold confetti burst now renders above the Month-End reveal modal using a dedicated browser top layer.

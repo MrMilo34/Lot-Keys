@@ -78,3 +78,9 @@ Patch v0.9.4.8:
 - Final-three race now settles toward the checkered finish line instead of driving far past it; #1/#2/#3 finish in their actual vertical order before the white transition.
 - Medals moved beside each podium user's name, freeing the podium face for Contribution and Admin-approved point totals.
 - Podium now reuses the existing Vehicle Sold confetti burst visually, with its audio and Vehicle Sold label disabled during the monthly reveal.
+
+
+Patch v0.9.4.9:
+- Podium Admin-approved totals now use placement-specific dark tones: gold-brown for 1st, dark grey for 2nd, and dark chocolate brown for 3rd.
+- Monthly Reveal reuses the exact Vehicle Sold confetti burst in a dedicated top-layer dialog so the visual celebration renders above the Month-End wrap-up modal.
+- Reveal celebration remains silent and label-free; the configured Reveal Sound remains the only reveal audio at that moment.
