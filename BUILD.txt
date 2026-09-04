@@ -1,102 +1,23 @@
-LotKeys Drive Test v0.9.4.12
-Build query: ?build=09412
-Service worker: lotkeys-drive-test-v09412
+LotKeys Drive Test v0.9.4.16
+Build query: ?build=09416
+Service worker: lotkeys-drive-test-v09416
 
-Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
+Full release source: current v0.9.4.15 repository plus v0.9.4.16 durable Listing reconciliation.
 
-Added on top of the v0.9.3.3 baseline:
-- User accent-color avatar rings restored across shared profile placements.
-- 1st/2nd/3rd monthly placements override the normal ring with gradient gold/silver/bronze; 1st also gets the crown.
-- Top Contributors segmented view supports This Month / Last Month / All Time after a month is officially wrapped.
-- New users do not see a wrapped Last Month that ended before they joined.
-- Admin Level 1/2 can preview month-end standings including hidden approval/admin points.
-- Admin Level 2 can launch the monthly wrap-up as All Users or This Device Only.
-- Wrapped standings, placement rings and optional all-user reveal are persisted to Store config / Store Access data.
+Key v0.9.4.16 fix:
+- Retries local / pending / syncing / error Listings whenever Drive becomes available.
+- Rechecks stranded Listings on startup, focus, online/resume, visibility return and periodically while open.
+- Verifies that a synced Listing file still exists in the correct canonical Drive Listings folder.
+- Detects duplicate/legacy Listings folders for the current user, chooses one deterministic canonical folder and moves the newest Listing records into it.
+- Rebuilds Listings Index.json from the actual Drive Listing files instead of treating the index as authoritative.
+- Preserves existing Listing IDs, status, Facebook URL, photo order, description and other Listing data while recovering cross-device records.
 
-Preserved unchanged from v0.9.3.3:
-- Working navigation/render startup path and getReadinessState.
-- Store connection/readiness behavior.
-- Faster adaptive resumable video upload path.
-- Inventory/Listings refresh, listing alerts, Sold flow and party-popper celebration.
+Preserved from v0.9.4.15:
+- Management Updates with image/video/file blocks and video card cleanup.
+- Month-End Top Contributors reveal, placement rings/crowns and custom audio.
+- Facebook Assistant companion fields and 20-photo Listing workflow.
+- Store connection, Account/Garage/Admin controls, Inventory sync, Listing alerts, Sold flow and media uploads.
 
-Patch v0.9.3.10:
-- Corrected public-profile winner ring positioning by block-centering the award wrapper so the gradient ring stays concentric with the profile photo.
-
-
-Beta v0.9.4.0:
-- Adds Facebook Assistant companion fields and desktop Chrome beta handoff.
-- Vehicle Profile adds Body Style, Exterior Color, Interior Color, Vehicle Condition and Fuel Type.
-
-
-Patch v0.9.4.1:
-- Marketplace Listings are hard-limited to 20 selected photos.
-- Vehicle Profile photos and salesperson-added Listing photos share the same 20-photo limit.
-- Added a Vehicle Profile photo picker so users can choose which Profile photos make the Listing when more than 20 are available.
-- Listing photo counter now shows selected / 20 and over-limit additions are blocked with a clear message.
-
-
-Patch v0.9.4.2:
-- Rebuilt the monthly Top Contributors reveal into a 15-second animated points race.
-- 0–10.5s grows each user at the same points-per-second pace to their normal monthly contribution total; lower totals stop while higher totals continue.
-- 10.5–15s adds hidden approved/admin points as a gold segment and narrows/reorders the field toward the final three.
-- 3rd reveals at 12.5s, 2nd at 13.25s, and the winner at 15s.
-- Final podium shows gold/silver/bronze profile rings, winner crown, total points and the separate approved/admin addition. Places 4–10 display below.
-- Monthly reveals can be replayed after the month has been officially wrapped.
-- Party-popper audio output increased to approximately 3× the prior level with compression, plus a new series of pellet/confetti landing ticks.
-- Added synthesized reveal buildup and placement chimes.
-
-
-Patch v0.9.4.3:
-- Admin Level 2 can configure Monthly Reveal Build up time from 1 to 60 seconds.
-- Final Push timing is optional and must fall inside the Build up time; blank skips the animated Admin-point knockout and jumps to the final podium at reveal end.
-- Admin Level 2 can upload versioned Build up Soundtrack and Reveal sound files from Advanced Google / Store controls, with built-in LotKeys audio retained as fallback.
-- Reveal audio and the eventual winner Celebration Sound are preloaded before a 3 · 2 · 1 · GO countdown starts the points race.
-- Users can upload under-10-second personal Celebration Sounds, keep previous uploads in a personal Celebration Sounds folder, and select one current clip.
-- Only the selected Celebration Sound is mirrored into the active Store user folder; changing it overwrites the Store copy while preserving the personal library.
-- Winner Celebration Sound is archived at official month wrap so later replay keeps that month's exact winner audio even if the user changes their current clip.
-- Official monthly snapshots preserve reveal timing and custom audio references for replay.
-
-
-Patch v0.9.4.4:
-- Removed historical winner Celebration Sound archiving from monthly wrap-up; reveal history no longer creates a winner-audio copy per month.
-- Replaying last month resolves the winning user's CURRENT selected Celebration Sound from the Store user profile, so changing that sound changes the replay too.
-- New monthly standings snapshots no longer store Celebration Sound metadata.
-- Admin Build up Soundtrack and Reveal Sound now use one canonical Store file each; replacing a sound overwrites the existing file instead of creating timestamped copies.
-- Switching a Store reveal sound back to the built-in fallback trashes the custom canonical file to avoid unused Store audio accumulating.
-
-Patch v0.9.4.8:
-- Refined the Month-End Reveal race from the v0.9.4.5 test foundation.
-- Profile photos now ride on top of their growing bar, with the current score directly beneath the avatar.
-- During Final Push, eliminated runners collapse away and the final three enlarge into a focused finish-line race.
-- Added a checkered finish line and close final-three jockeying before #1 pulls ahead at the finish.
-- Added the white-flash transition into the final podium/results screen.
-- Podium uses the actual account profile avatars with gold/silver/bronze placement rings; first place gets larger winner treatment.
-- Test Month-End Wrap-Up remains non-persistent and still uses the current Store reveal timing/audio configuration.
-
-
-Patch v0.9.4.8:
-- Final-three race now settles toward the checkered finish line instead of driving far past it; #1/#2/#3 finish in their actual vertical order before the white transition.
-- Medals moved beside each podium user's name, freeing the podium face for Contribution and Admin-approved point totals.
-- Podium now reuses the existing Vehicle Sold confetti burst visually, with its audio and Vehicle Sold label disabled during the monthly reveal.
-
-
-Patch v0.9.4.9:
-- Podium Admin-approved totals now use placement-specific dark tones: gold-brown for 1st, dark grey for 2nd, and dark chocolate brown for 3rd.
-- Monthly Reveal reuses the exact Vehicle Sold confetti burst in a dedicated top-layer dialog so the visual celebration renders above the Month-End wrap-up modal.
-- Reveal celebration remains silent and label-free; the configured Reveal Sound remains the only reveal audio at that moment.
-- Stability audit: the top-layer reveal confetti dialog now explicitly stays transparent in dark mode and its transparent backdrop cannot block podium controls.
-
-
-
-Patch v0.9.4.10:
-- Removed the lower explanatory copy and top-right Contribution points label from the live Month-End race.
-- Centered TOP CONTRIBUTORS + the month/year Reveal heading.
-- Expanded the race chart and bar tracks vertically to use the reclaimed space for longer bars and a larger race area.
-
-
-Patch v0.9.4.12:
-- Rotates winner crowns roughly 10% farther across Account, public profile, leaderboard, race and podium placements.
-- Moves the podium winner crown slightly down and left so it sits on the winner profile image more naturally.
-- Thickens the gold winner ring on the large public Account profile.
-- Admin Level 1/2 public user profiles now include a lightweight Current Listings dropdown. It reads that user's Listings Index directly from their Store user folder, shows listing title, price and a lightweight Vehicle Profile cover thumbnail, and opens the saved Facebook Listing URL in a new tab.
-- Sold/Archived Listings are excluded; Listings without a Facebook URL remain visible as reference rows but are not clickable.
+Release layout:
+- Standard LotKeys root layout: 11 files + assets folder.
+- v0.9.4.16 runtime helper lives inside assets/lotkeys-v09416.js rather than cluttering the repository root.
