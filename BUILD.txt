@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.4.1
-Build query: ?build=0941
-Service worker: lotkeys-drive-test-v0941
+LotKeys Drive Test v0.9.4.5
+Build query: ?build=0945
+Service worker: lotkeys-drive-test-v0945
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -33,3 +33,38 @@ Patch v0.9.4.1:
 - Vehicle Profile photos and salesperson-added Listing photos share the same 20-photo limit.
 - Added a Vehicle Profile photo picker so users can choose which Profile photos make the Listing when more than 20 are available.
 - Listing photo counter now shows selected / 20 and over-limit additions are blocked with a clear message.
+
+
+Patch v0.9.4.2:
+- Rebuilt the monthly Top Contributors reveal into a 15-second animated points race.
+- 0–10.5s grows each user at the same points-per-second pace to their normal monthly contribution total; lower totals stop while higher totals continue.
+- 10.5–15s adds hidden approved/admin points as a gold segment and narrows/reorders the field toward the final three.
+- 3rd reveals at 12.5s, 2nd at 13.25s, and the winner at 15s.
+- Final podium shows gold/silver/bronze profile rings, winner crown, total points and the separate approved/admin addition. Places 4–10 display below.
+- Monthly reveals can be replayed after the month has been officially wrapped.
+- Party-popper audio output increased to approximately 3× the prior level with compression, plus a new series of pellet/confetti landing ticks.
+- Added synthesized reveal buildup and placement chimes.
+
+
+Patch v0.9.4.3:
+- Admin Level 2 can configure Monthly Reveal Build up time from 1 to 60 seconds.
+- Final Push timing is optional and must fall inside the Build up time; blank skips the animated Admin-point knockout and jumps to the final podium at reveal end.
+- Admin Level 2 can upload versioned Build up Soundtrack and Reveal sound files from Advanced Google / Store controls, with built-in LotKeys audio retained as fallback.
+- Reveal audio and the eventual winner Celebration Sound are preloaded before a 3 · 2 · 1 · GO countdown starts the points race.
+- Users can upload under-10-second personal Celebration Sounds, keep previous uploads in a personal Celebration Sounds folder, and select one current clip.
+- Only the selected Celebration Sound is mirrored into the active Store user folder; changing it overwrites the Store copy while preserving the personal library.
+- Winner Celebration Sound is archived at official month wrap so later replay keeps that month's exact winner audio even if the user changes their current clip.
+- Official monthly snapshots preserve reveal timing and custom audio references for replay.
+
+
+Patch v0.9.4.4:
+- Removed historical winner Celebration Sound archiving from monthly wrap-up; reveal history no longer creates a winner-audio copy per month.
+- Replaying last month resolves the winning user's CURRENT selected Celebration Sound from the Store user profile, so changing that sound changes the replay too.
+- New monthly standings snapshots no longer store Celebration Sound metadata.
+- Admin Build up Soundtrack and Reveal Sound now use one canonical Store file each; replacing a sound overwrites the existing file instead of creating timestamped copies.
+- Switching a Store reveal sound back to the built-in fallback trashes the custom canonical file to avoid unused Store audio accumulating.
+
+Patch v0.9.4.5:
+- Added Admin Level 2 Test Month-End Wrap-Up with nine simulated competitors plus the current user.
+- Current user is always the simulated #1 winner so winner audio/ring/podium behavior can be tested.
+- Test uses current reveal timing, Final Push, Store audio and selected user Celebration Sound without saving standings, placements or month history.

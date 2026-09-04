@@ -573,3 +573,35 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 ## v0.9.4.1
 - Marketplace Listings enforce Facebook's 20-photo maximum across Vehicle Profile and salesperson-added photos.
 - Users can choose which Vehicle Profile photos are included and replace selections without exceeding 20.
+
+## v0.9.4.2
+- Monthly Top Contributors reveal rebuilt as a 15-second animated points race.
+- Normal contribution points build first through 10.5 seconds; approved/admin points then appear as a gold segment through 15 seconds.
+- The field narrows toward the final three, with 3rd revealed at 12.5s, 2nd at 13.25s, and 1st at 15s.
+- Final results show the podium plus positions 4–10, with total points and approved/admin additions separated.
+- Wrapped monthly reveals can be replayed from Top Contributors and the administrative month-end view.
+- Party-popper audio is substantially louder and includes pellet/confetti landing sounds, reveal buildup, and placement chimes.
+
+
+## v0.9.4.3
+
+- Monthly Reveal timing is configurable by Admin Level 2 in Advanced Google / Store controls: **Build up time** supports 1–60 seconds and **Final Push at** is optional. A blank Final Push runs the normal contribution buildup through the full reveal and jumps directly to the podium.
+- Admin Level 2 can upload a custom **Build up Soundtrack** and **Reveal sound**. Built-in LotKeys reveal audio remains the fallback.
+- Reveal media is queued before a **3 · 2 · 1 · GO!** countdown. The custom Reveal sound plays at the podium, followed by the winner's selected Celebration Sound.
+- Every user gets a personal **Celebration Sounds** library under their LotKeys Account. Clips must be under 10 seconds; previously uploaded clips remain available and the user can choose which one is active.
+- Only the active Celebration Sound is copied into that user's Store profile. Selecting a different sound overwrites the Store copy without deleting the user's personal library.
+- Official month wrap archives the winner's Celebration Sound and preserves the reveal settings/audio references so replay can reproduce that month's presentation later.
+
+
+## v0.9.4.4
+
+- Removed per-month winner Celebration Sound archives. Replays intentionally use the winning user's current selected Store-profile celebration sound.
+- Monthly standings history remains lightweight and no longer carries new Celebration Sound snapshot metadata.
+- Store Build up Soundtrack and Reveal Sound replacements now overwrite one canonical file each rather than accumulating timestamped audio copies.
+- Returning either Store reveal sound to the built-in fallback removes the custom canonical file.
+
+
+## v0.9.4.5
+- Added an Admin Level 2 Test Month-End Wrap-Up button with 10 simulated contributors total.
+- The signed-in user always wins the simulation; nine demo accounts provide varied contribution and admin-approved points to exercise bar stopping, reshuffling, elimination and podium states.
+- Test mode is non-persistent and uses the Store's currently configured reveal timing/audio plus the user's current Celebration Sound.
