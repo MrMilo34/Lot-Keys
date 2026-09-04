@@ -84,3 +84,5 @@ Patch v0.9.4.9:
 - Podium Admin-approved totals now use placement-specific dark tones: gold-brown for 1st, dark grey for 2nd, and dark chocolate brown for 3rd.
 - Monthly Reveal reuses the exact Vehicle Sold confetti burst in a dedicated top-layer dialog so the visual celebration renders above the Month-End wrap-up modal.
 - Reveal celebration remains silent and label-free; the configured Reveal Sound remains the only reveal audio at that moment.
+- Stability audit: the top-layer reveal confetti dialog now explicitly stays transparent in dark mode and its transparent backdrop cannot block podium controls.
+
