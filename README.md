@@ -635,3 +635,11 @@ Garage includes an optional management feed positioned below Store Connection. A
 
 ## v0.9.4.16.2
 - Unified Marketplace Listing photo selector: Vehicle Profile photos begin unchecked on new Listings; Listing-added photos are selected automatically; selection and drag ordering now live together under Expand & Order Listing Photos; 20-photo maximum retained.
+
+
+## v0.9.4.16.3
+- Vehicle Profile Exterior Color / Interior Color now use the Facebook-compatible color option list. Vehicle Condition now uses Excellent, Very good, Good, Fair, Poor. Values continue to flow into Marketplace Listings.
+
+
+## v0.9.4.16.4
+- Marketplace Listing photos now use one unified selection/order grid. Tap toggles on/off, unselected photos are grayed out, selected numbering follows grid position, the centered drag handle reorders, and newly added Listing photos are auto-selected and inserted first. `photoPickerOrder` persists the candidate-grid arrangement while `photoOrder` remains the selected Facebook transfer order.

@@ -1,3 +1,28 @@
+LotKeys Drive Test v0.9.4.16.4
+Build query: ?build=094164
+Service worker: lotkeys-drive-test-v094164
+
+Unified Marketplace Listing photo picker:
+- Replaces the duplicate selected-photo + Vehicle Profile photo sections with one grid.
+- Tap any photo to toggle it on/off; unselected photos are visibly grayed out.
+- Selected photo numbering is derived from each selected image's position in the unified grid.
+- Centered drag handle reorders the whole grid and immediately recalculates selected Facebook photo order.
+- Added Listing photos are auto-selected and inserted first in the file-selection order.
+- Up to 20 photos may be selected for Facebook; unselected Listing Assets remain available for later re-use.
+- Adds persisted photoPickerOrder to Listing Drive data while keeping photoOrder as the selected Facebook transfer order.
+- Keeps v0.9.4.16.3 Facebook-compatible color/condition Profile options, v0.9.4.16.2 unified 20-photo rules, and v0.9.4.16.1 Listing Drive sync repair.
+
+LotKeys Drive Test v0.9.4.16.3
+Build query: ?build=094163
+Service worker: lotkeys-drive-test-v094163
+
+Vehicle Profile Facebook field standardization:
+- Exterior Color and Interior Color are dropdowns using Facebook's supported vehicle-color list.
+- Vehicle Condition is a dropdown using Excellent, Very good, Good, Fair, Poor.
+- Existing Grey is normalized to Gray and Off-White variants to Off white; unsupported legacy colors display as Other when edited.
+- These Profile values continue to carry into Marketplace Listings and the Facebook Assistant.
+- Keeps v0.9.4.16.2 unified Listing photo selection and v0.9.4.16.1 Listing Drive sync repair.
+
 LotKeys Drive Test v0.9.4.16.2
 Build query: ?build=094162
 Service worker: lotkeys-drive-test-v094162
