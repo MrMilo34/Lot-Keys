@@ -601,7 +601,7 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Returning either Store reveal sound to the built-in fallback removes the custom canonical file.
 
 
-## v0.9.4.5
+## v0.9.4.6
 - Added an Admin Level 2 Test Month-End Wrap-Up button with 10 simulated contributors total.
 - The signed-in user always wins the simulation; nine demo accounts provide varied contribution and admin-approved points to exercise bar stopping, reshuffling, elimination and podium states.
 - Test mode is non-persistent and uses the Store's currently configured reveal timing/audio plus the user's current Celebration Sound.
