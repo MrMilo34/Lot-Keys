@@ -616,3 +616,9 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 
 ### v0.9.4.10
 - Month-End race layout polish: centered reveal heading, removed explanatory labels during the race, and increased vertical race/bar space.
+
+
+### v0.9.4.11
+- Winner crowns rotate slightly farther everywhere, with the podium crown nudged down/left onto the winner photo.
+- The large public-profile winner ring is thicker and easier to see.
+- Admin Level 1/2 user profile views include a lightweight Current Listings dropdown with title, price, Inventory cover thumbnail and direct Facebook Listing links.
