@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.4.7
-Build query: ?build=0947
-Service worker: lotkeys-drive-test-v0947
+LotKeys Drive Test v0.9.4.8
+Build query: ?build=0948
+Service worker: lotkeys-drive-test-v0948
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -64,7 +64,7 @@ Patch v0.9.4.4:
 - Admin Build up Soundtrack and Reveal Sound now use one canonical Store file each; replacing a sound overwrites the existing file instead of creating timestamped copies.
 - Switching a Store reveal sound back to the built-in fallback trashes the custom canonical file to avoid unused Store audio accumulating.
 
-Patch v0.9.4.7:
+Patch v0.9.4.8:
 - Refined the Month-End Reveal race from the v0.9.4.5 test foundation.
 - Profile photos now ride on top of their growing bar, with the current score directly beneath the avatar.
 - During Final Push, eliminated runners collapse away and the final three enlarge into a focused finish-line race.
@@ -72,3 +72,9 @@ Patch v0.9.4.7:
 - Added the white-flash transition into the final podium/results screen.
 - Podium uses the actual account profile avatars with gold/silver/bronze placement rings; first place gets larger winner treatment.
 - Test Month-End Wrap-Up remains non-persistent and still uses the current Store reveal timing/audio configuration.
+
+
+Patch v0.9.4.8:
+- Final-three race now settles toward the checkered finish line instead of driving far past it; #1/#2/#3 finish in their actual vertical order before the white transition.
+- Medals moved beside each podium user's name, freeing the podium face for Contribution and Admin-approved point totals.
+- Podium now reuses the existing Vehicle Sold confetti burst visually, with its audio and Vehicle Sold label disabled during the monthly reveal.
