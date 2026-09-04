@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.4.11
-Build query: ?build=09411
-Service worker: lotkeys-drive-test-v09411
+LotKeys Drive Test v0.9.4.12
+Build query: ?build=09412
+Service worker: lotkeys-drive-test-v09412
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -94,7 +94,7 @@ Patch v0.9.4.10:
 - Expanded the race chart and bar tracks vertically to use the reclaimed space for longer bars and a larger race area.
 
 
-Patch v0.9.4.11:
+Patch v0.9.4.12:
 - Rotates winner crowns roughly 10% farther across Account, public profile, leaderboard, race and podium placements.
 - Moves the podium winner crown slightly down and left so it sits on the winner profile image more naturally.
 - Thickens the gold winner ring on the large public Account profile.

@@ -618,7 +618,11 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Month-End race layout polish: centered reveal heading, removed explanatory labels during the race, and increased vertical race/bar space.
 
 
-### v0.9.4.11
+### v0.9.4.12
 - Winner crowns rotate slightly farther everywhere, with the podium crown nudged down/left onto the winner photo.
 - The large public-profile winner ring is thicker and easier to see.
 - Admin Level 1/2 user profile views include a lightweight Current Listings dropdown with title, price, Inventory cover thumbnail and direct Facebook Listing links.
+
+
+## v0.9.4.12 — Management Updates
+Garage includes an optional management feed positioned below Store Connection. Admins can enable/disable the section, rename it, and compose posts from reorderable Title, Text, Video Window and File blocks. Admin Level 2 can pin posts 1–5; pin #1 remains visible while the rest stay collapsed. Admin Level 1 posts expire after 30 days and Admin Level 2 posts after 183 days.
