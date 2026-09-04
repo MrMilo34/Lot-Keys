@@ -568,3 +568,8 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Admin Level 2 can make Original Listing Website mandatory from Advanced Google / Store controls.
 - Adds compact CARFAX Findings controls and badges for One Owner, Low Odometer and No Accidents to Vehicle Profiles and Marketplace Listings.
 - Removes duplicate manufacturer text in generated Marketplace descriptions when the model value already includes the make.
+
+
+## v0.9.4.1
+- Marketplace Listings enforce Facebook's 20-photo maximum across Vehicle Profile and salesperson-added photos.
+- Users can choose which Vehicle Profile photos are included and replace selections without exceeding 20.

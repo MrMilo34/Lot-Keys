@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.3.10
-Build query: ?build=09310
-Service worker: lotkeys-drive-test-v09310
+LotKeys Drive Test v0.9.4.1
+Build query: ?build=0941
+Service worker: lotkeys-drive-test-v0941
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -21,3 +21,15 @@ Preserved unchanged from v0.9.3.3:
 
 Patch v0.9.3.10:
 - Corrected public-profile winner ring positioning by block-centering the award wrapper so the gradient ring stays concentric with the profile photo.
+
+
+Beta v0.9.4.0:
+- Adds Facebook Assistant companion fields and desktop Chrome beta handoff.
+- Vehicle Profile adds Body Style, Exterior Color, Interior Color, Vehicle Condition and Fuel Type.
+
+
+Patch v0.9.4.1:
+- Marketplace Listings are hard-limited to 20 selected photos.
+- Vehicle Profile photos and salesperson-added Listing photos share the same 20-photo limit.
+- Added a Vehicle Profile photo picker so users can choose which Profile photos make the Listing when more than 20 are available.
+- Listing photo counter now shows selected / 20 and over-limit additions are blocked with a clear message.
