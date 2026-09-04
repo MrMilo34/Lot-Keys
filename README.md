@@ -612,3 +612,7 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 ### v0.9.4.9 reveal polish
 - Placement-specific podium Admin-approved colors.
 - Silent Vehicle Sold confetti burst now renders above the Month-End reveal modal using a dedicated browser top layer.
+
+
+### v0.9.4.10
+- Month-End race layout polish: centered reveal heading, removed explanatory labels during the race, and increased vertical race/bar space.

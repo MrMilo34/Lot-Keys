@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.4.8
-Build query: ?build=0948
-Service worker: lotkeys-drive-test-v0948
+LotKeys Drive Test v0.9.4.10
+Build query: ?build=09410
+Service worker: lotkeys-drive-test-v09410
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -84,3 +84,11 @@ Patch v0.9.4.9:
 - Podium Admin-approved totals now use placement-specific dark tones: gold-brown for 1st, dark grey for 2nd, and dark chocolate brown for 3rd.
 - Monthly Reveal reuses the exact Vehicle Sold confetti burst in a dedicated top-layer dialog so the visual celebration renders above the Month-End wrap-up modal.
 - Reveal celebration remains silent and label-free; the configured Reveal Sound remains the only reveal audio at that moment.
+- Stability audit: the top-layer reveal confetti dialog now explicitly stays transparent in dark mode and its transparent backdrop cannot block podium controls.
+
+
+
+Patch v0.9.4.10:
+- Removed the lower explanatory copy and top-right Contribution points label from the live Month-End race.
+- Centered TOP CONTRIBUTORS + the month/year Reveal heading.
+- Expanded the race chart and bar tracks vertically to use the reclaimed space for longer bars and a larger race area.
