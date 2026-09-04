@@ -1,6 +1,6 @@
-LotKeys Drive Test v0.9.4.5
-Build query: ?build=0945
-Service worker: lotkeys-drive-test-v0945
+LotKeys Drive Test v0.9.4.6
+Build query: ?build=0946
+Service worker: lotkeys-drive-test-v0946
 
 Clean rebuild base: v0.9.3.3 (user-supplied known-good package)
 
@@ -64,7 +64,11 @@ Patch v0.9.4.4:
 - Admin Build up Soundtrack and Reveal Sound now use one canonical Store file each; replacing a sound overwrites the existing file instead of creating timestamped copies.
 - Switching a Store reveal sound back to the built-in fallback trashes the custom canonical file to avoid unused Store audio accumulating.
 
-Patch v0.9.4.5:
-- Added Admin Level 2 Test Month-End Wrap-Up with nine simulated competitors plus the current user.
-- Current user is always the simulated #1 winner so winner audio/ring/podium behavior can be tested.
-- Test uses current reveal timing, Final Push, Store audio and selected user Celebration Sound without saving standings, placements or month history.
+Patch v0.9.4.6:
+- Refined the Month-End Reveal race from the v0.9.4.5 test foundation.
+- Profile photos now ride on top of their growing bar, with the current score directly beneath the avatar.
+- During Final Push, eliminated runners collapse away and the final three enlarge into a focused finish-line race.
+- Added a checkered finish line and close final-three jockeying before #1 pulls ahead at the finish.
+- Added the white-flash transition into the final podium/results screen.
+- Podium uses the actual account profile avatars with gold/silver/bronze placement rings; first place gets larger winner treatment.
+- Test Month-End Wrap-Up remains non-persistent and still uses the current Store reveal timing/audio configuration.
