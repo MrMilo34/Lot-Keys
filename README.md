@@ -628,4 +628,6 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 Garage includes an optional management feed positioned below Store Connection. Admins can enable/disable the section, rename it, and compose posts from reorderable Title, Text, Video Window and File blocks. Admin Level 2 can pin posts 1–5; pin #1 remains visible while the rest stay collapsed. Admin Level 1 posts expire after 30 days and Admin Level 2 posts after 183 days.
 
 
-- v0.9.4.14: Management Update video blocks now show a visible thumbnail preview with a play button, and the My Account winner crown was nudged left / rotated slightly for a better fit.
+- v0.9.4.15: Management Update video blocks now show a visible thumbnail preview with a play button, and the My Account winner crown was nudged left / rotated slightly for a better fit.
+
+- v0.9.4.15: Management Update video cards now hide file-name / file-size metadata, keep the play badge in the bottom corner, and stop playback cleanly when the modal is closed or the user backs out.
