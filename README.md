@@ -601,7 +601,7 @@ Vehicle Profile names are generated automatically as `STK: <stock> - <year> <mak
 - Returning either Store reveal sound to the built-in fallback removes the custom canonical file.
 
 
-## v0.9.4.6
+## v0.9.4.7
 - Refines the v0.9.4.5 Month-End Reveal test animation without changing the underlying standings/test data model.
 - Racer profile photos now move with the top of each bar and the live total stays directly under the profile photo.
 - The knockout stage narrows to the final three, enlarges them, adds a checkered finish line, and lets the finalists jockey before the winner pulls ahead.
