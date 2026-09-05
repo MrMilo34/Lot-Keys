@@ -1,3 +1,16 @@
+LotKeys Drive Test v0.9.4.16.9
+Build query: ?build=094169
+Service worker: lotkeys-drive-test-v094169
+
+Management Update post header polish:
+- Shows the posting user's LotKeys Account profile photo on each Management Update card.
+- Moves the flagged position number and poster name directly to the right of the profile photo.
+- Removes Admin Level from the visible post header.
+- Shows the original Posted date in M/DD/YYYY format.
+- Shows expiration as a live remaining-day count (for example, Expires in 182 days).
+- The profile photo is tappable and opens the poster's public LotKeys profile.
+- Keeps v0.9.4.16.8 Top Contributors cleanup, v0.9.4.16.7 Listing refresh pacing, and all current Listing/Facebook workflow fixes.
+
 LotKeys Drive Test v0.9.4.16.8
 Build query: ?build=094168
 Service worker: lotkeys-drive-test-v094168
