@@ -1,3 +1,6 @@
+LotKeys V0.9.4.20 FULL RELEASE
+Legacy Vehicle Profile compatibility + non-blocking Profile opening
+
 LotKeys V0.9.4.19 FULL RELEASE
 Startup / service-worker transition polish
 

@@ -1,5 +1,9 @@
 ## v0.9.4.16.10
 
+## V0.9.4.20 — Legacy Vehicle Profiles
+Vehicle Profiles without a recorded creator are now treated explicitly as legacy records. Standard users can open them and use Contribute / Suggest Update, while Administrators retain official edit/delete abilities. Vehicle Profile opening also has a bounded Drive hydration wait so legacy profiles cannot remain stuck behind photo downloads.
+
+
 ## V0.9.4.19 — Startup transition repair
 The initial app shell now shows an explicit loading state instead of stale version/sync information while IndexedDB and Store data restore. Service-worker registration and cache versions are synchronized to V0.9.4.19 to avoid old-build flashes during deployment/update transitions.
 
