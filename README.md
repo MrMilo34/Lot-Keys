@@ -1,4 +1,8 @@
 ## v0.9.4.16.10
+
+## V0.9.4.17 — Vehicle Profile Contributions
+Other users now use Contribute / Suggest Update on Vehicle Profiles they do not own. Pending media uploads once to More Photos, More Videos and More Documents user folders; Administration approval moves approved files into the official folders. Trusted User is off by default and lets photos/videos bypass review. Empty official photo/video folders accept the first media contribution automatically.
+
 - Top Contributors cleanup after the testing phase.
 - Compact winner crowns on Account / Vehicle Profile cards are nudged upward; Top Contributors chart crowns are raised a little farther.
 - Removed the Test Month-End Wrap-Up control and its simulated test data generator.

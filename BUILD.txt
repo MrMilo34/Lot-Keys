@@ -1,3 +1,6 @@
+LotKeys V0.9.4.17 FULL RELEASE
+Vehicle Profile contribution system + Trusted User permissions
+
 LotKeys Drive Test v0.9.4.16.10
 Build query: ?build=0941610
 Service worker: lotkeys-drive-test-v0941610
