@@ -1,10 +1,8 @@
-## v0.9.4.16.10
+## V0.9.4.25 — Stable Listing Photo Toggles
 
-- Prevents Android/Chrome long-press image context menus inside LotKeys photo reorder grids.
-- Drag insertion marker is neutral gray: light gray in light mode, dark gray in dark mode, independent of the user's accent.
-- Renames the visible Account setting from Button color to Accent Color without changing stored user preferences.
-
-## V0.9.4.24 — Mobile Photo Drag Polish
+- Listing photo on/off toggles now update only the existing tile state and numbering.
+- Toggling no longer re-appends the photo grid, preventing browser/mobile scroll anchoring from moving the editor.
+- The Listing dialog preserves its exact scroll position while selection badges/counts refresh.
 - Dragged photos now lift into a floating preview that stays under the finger/cursor.
 - Listing photo reordering updates the existing grid in place instead of rebuilding/reloading every image after each move.
 - Photo selection/order remains an unsaved edit until either Listing Save button is used; LotKeys then confirms the photo selection/order was saved.
@@ -12,6 +10,10 @@
 - Vehicle Profile master-photo reordering also avoids unnecessary image reloads.
 
 
+## V0.9.4.24 — Mobile Photo Drag Polish
+- Prevents Android/Chrome long-press image context menus inside LotKeys photo reorder grids.
+- Drag insertion marker is neutral gray: light gray in light mode, dark gray in dark mode, independent of the user accent.
+- Renames the visible Account setting from Button Color to Accent Color without changing stored user preferences.
 
 ## V0.9.4.21 — Listing Photo Edit Polish
 Existing Marketplace Listings now open with the Listing Photos selector collapsed behind **Click to View Photos**. The unified photo grid is slightly smaller and centered with extra side spacing to reduce accidental touch drags while preserving the exact selected order and 20-photo limit. The Month-End final-race checkered finish line now renders behind the bars and profile markers.

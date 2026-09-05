@@ -1,5 +1,5 @@
-LotKeys V0.9.4.24 FULL RELEASE
-Live photo drag + no-reload Listing photo ordering + save-label polish
+LotKeys V0.9.4.25 FULL RELEASE
+Stable Listing photo toggle position + scroll-anchor repair
 
 Legacy Vehicle Profile compatibility + non-blocking Profile opening
 
