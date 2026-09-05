@@ -1,4 +1,8 @@
-## V0.9.4.25 — Stable Listing Photo Toggles
+## V0.9.4.26 — Automatic Google Sync Recovery
+
+- Google Drive 401/token-expiry responses now trigger one automatic authorization renewal and request retry before LotKeys asks the user to reconnect.
+- Resumable media uploads keep their existing Drive checkpoint and can continue with a renewed token rather than failing the whole Vehicle sync.
+- Long uploads proactively request a token with extra validity before transfer begins.
 
 - Listing photo on/off toggles now update only the existing tile state and numbering.
 - Toggling no longer re-appends the photo grid, preventing browser/mobile scroll anchoring from moving the editor.

@@ -1,4 +1,4 @@
-LotKeys V0.9.4.25 FULL RELEASE
+LotKeys V0.9.4.26 FULL RELEASE
 Stable Listing photo toggle position + scroll-anchor repair
 
 Legacy Vehicle Profile compatibility + non-blocking Profile opening
