@@ -1,3 +1,15 @@
+LotKeys Drive Test v0.9.4.16.8
+Build query: ?build=094168
+Service worker: lotkeys-drive-test-v094168
+
+Top Contributors cleanup:
+- Moves the smallest winner crowns on compact Account / Vehicle Profile cards slightly upward.
+- Moves the small Top Contributors chart crowns upward by roughly twice that adjustment for cleaner avatar alignment.
+- Removes the testing-only Month-End Wrap-Up feature.
+- Removes the duplicate top-level Replay Monthly Reveal button; replay remains available inside the previous-month contributor positions view.
+- Renames the administrative standings button to "View Last Months Contributor Positions".
+- Keeps v0.9.4.16.7 Listings refresh pacing and all current Listing / Facebook workflow fixes.
+
 LotKeys Drive Test v0.9.4.16.7
 Build query: ?build=094167
 Service worker: lotkeys-drive-test-v094167

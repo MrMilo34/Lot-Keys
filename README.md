@@ -1,3 +1,11 @@
+## v0.9.4.16.8
+- Top Contributors cleanup after the testing phase.
+- Compact winner crowns on Account / Vehicle Profile cards are nudged upward; Top Contributors chart crowns are raised a little farther.
+- Removed the Test Month-End Wrap-Up control and its simulated test data generator.
+- Removed the duplicate Top Contributors Replay Monthly Reveal button. Replays remain available inside the previous-month contributor positions view.
+- Renamed the standings shortcut to **View Last Months Contributor Positions**.
+- Preserves v0.9.4.16.7 Listings refresh pacing and all current Listing / Facebook workflow behavior.
+
 ## V0.9.4.16.6 — Combined Listing Workspace
 Marketplace Listings now open directly into the Facebook Posting Assistant. Photo review, Created/Posted dates, Carfax findings, Facebook selling shortcut, copy fields, Facebook URL, view snapshots/history, and Listing management actions are consolidated into one screen.
 
