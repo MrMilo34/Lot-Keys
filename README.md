@@ -1,3 +1,6 @@
+## V0.9.4.16.6 — Combined Listing Workspace
+Marketplace Listings now open directly into the Facebook Posting Assistant. Photo review, Created/Posted dates, Carfax findings, Facebook selling shortcut, copy fields, Facebook URL, view snapshots/history, and Listing management actions are consolidated into one screen.
+
 # LotKeys Drive Test v0.8.9.4
 
 ## v0.8.9.4 — Account data in personal Drive folder
@@ -643,3 +646,7 @@ Garage includes an optional management feed positioned below Store Connection. A
 
 ## v0.9.4.16.4
 - Marketplace Listing photos now use one unified selection/order grid. Tap toggles on/off, unselected photos are grayed out, selected numbering follows grid position, the centered drag handle reorders, and newly added Listing photos are auto-selected and inserted first. `photoPickerOrder` persists the candidate-grid arrangement while `photoOrder` remains the selected Facebook transfer order.
+
+
+## v0.9.4.16.5
+- Added built-in Facebook Marketplace Listing locations: Edmonton, Alberta; Downtown Edmonton; Southeast Edmonton, AB, Canada. These use Facebook's exact displayed names and remain separate from personal Saved Posting Locations.

@@ -1,3 +1,30 @@
+LotKeys Drive Test v0.9.4.16.6
+Build query: ?build=094166
+Service worker: lotkeys-drive-test-v094166
+
+Combined Marketplace Listing workspace:
+- Tapping a Listing now opens the Facebook Posting Assistant directly.
+- Listing details and Posting Assistant are merged into one screen instead of two overlapping modals.
+- Step 1 keeps the saved photo review and now shows Created date, Posted date and Carfax findings.
+- Open Facebook Vehicle Selling is moved near the top immediately after Listing photo/details review.
+- Facebook URL management and cumulative view snapshots live together at the bottom.
+- View history remains visible in the same screen.
+- Duplicate, Edit and Delete remain available at the bottom of the combined workspace.
+- Keeps v0.9.4.16.5 Facebook Marketplace Edmonton location presets and all prior Listing/photo/Profile sync fixes.
+
+LotKeys Drive Test v0.9.4.16.5
+Build query: ?build=094165
+Service worker: lotkeys-drive-test-v094165
+
+Facebook Marketplace Location presets:
+- Adds Edmonton, Alberta.
+- Adds Downtown Edmonton.
+- Adds Southeast Edmonton, AB, Canada.
+- Built-in Facebook presets appear before personal Saved Posting Locations in Listing creation.
+- The exact Facebook location name is stored in the Listing snapshot and carries into the Facebook Assistant.
+- More exact Facebook location presets can be added in future releases.
+- Keeps v0.9.4.16.4 unified Listing photo grid, v0.9.4.16.3 profile field options and v0.9.4.16.1 Listing Drive sync repair.
+
 LotKeys Drive Test v0.9.4.16.4
 Build query: ?build=094164
 Service worker: lotkeys-drive-test-v094164
