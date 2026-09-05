@@ -1,5 +1,14 @@
 ## v0.9.4.16.10
 
+## V0.9.4.22 — Live Photo Reorder Polish
+- Dragged photos now lift into a floating preview that stays under the finger/cursor.
+- Listing photo reordering updates the existing grid in place instead of rebuilding/reloading every image after each move.
+- Photo selection/order remains an unsaved edit until either Listing Save button is used; LotKeys then confirms the photo selection/order was saved.
+- Listing buttons renamed to **Save Listing & Post Later** and **Save & Post Facebook Listing**.
+- Vehicle Profile master-photo reordering also avoids unnecessary image reloads.
+
+
+
 ## V0.9.4.21 — Listing Photo Edit Polish
 Existing Marketplace Listings now open with the Listing Photos selector collapsed behind **Click to View Photos**. The unified photo grid is slightly smaller and centered with extra side spacing to reduce accidental touch drags while preserving the exact selected order and 20-photo limit. The Month-End final-race checkered finish line now renders behind the bars and profile markers.
 
