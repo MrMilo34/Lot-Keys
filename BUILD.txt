@@ -1,3 +1,16 @@
+LotKeys Drive Test v0.9.4.16.7
+Build query: ?build=094167
+Service worker: lotkeys-drive-test-v094167
+
+Listings refresh pacing:
+- Opening/switching to the Listings tab renders cached Listings immediately instead of forcing a Drive refresh every time.
+- The normal startup refresh remains.
+- Background Listing refresh runs only when 5 minutes have elapsed since the last successful Listing refresh.
+- Returning to the app / browser focus checks the 5-minute age first instead of refreshing unconditionally.
+- Refresh Listings always forces an immediate check.
+- A successful Listing Drive write updates the Listing refresh clock so creating/editing a Listing does not immediately trigger a redundant refresh.
+- Keeps v0.9.4.16.6 combined Listing workspace and all prior Listing/photo/Profile sync fixes.
+
 LotKeys Drive Test v0.9.4.16.6
 Build query: ?build=094166
 Service worker: lotkeys-drive-test-v094166

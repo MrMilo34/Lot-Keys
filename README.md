@@ -650,3 +650,6 @@ Garage includes an optional management feed positioned below Store Connection. A
 
 ## v0.9.4.16.5
 - Added built-in Facebook Marketplace Listing locations: Edmonton, Alberta; Downtown Edmonton; Southeast Edmonton, AB, Canada. These use Facebook's exact displayed names and remain separate from personal Saved Posting Locations.
+
+## v0.9.4.16.7
+- Listings now use a 5-minute refresh gate instead of refreshing every time the user switches back to the Listings tab. Startup/manual refresh and Listing write behavior remain immediate.
