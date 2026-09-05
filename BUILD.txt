@@ -1,3 +1,14 @@
+LotKeys Drive Test v0.9.4.16.10
+Build query: ?build=0941610
+Service worker: lotkeys-drive-test-v0941610
+
+Management Update mobile header spacing:
+- Keeps the account photo, flagged position and poster name grouped on the left.
+- Moves Posted date and Expires in days to the far right in the same header row on phones.
+- Removes the mobile rule that stacked dates under the poster name.
+- Uses smaller right-aligned date metadata to reduce visual clutter.
+- Keeps v0.9.4.16.9 Management Update profile/header behavior and all previous LotKeys fixes.
+
 LotKeys Drive Test v0.9.4.16.9
 Build query: ?build=094169
 Service worker: lotkeys-drive-test-v094169

@@ -1,4 +1,4 @@
-## v0.9.4.16.9
+## v0.9.4.16.10
 - Top Contributors cleanup after the testing phase.
 - Compact winner crowns on Account / Vehicle Profile cards are nudged upward; Top Contributors chart crowns are raised a little farther.
 - Removed the Test Month-End Wrap-Up control and its simulated test data generator.
