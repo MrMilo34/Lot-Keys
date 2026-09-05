@@ -1,5 +1,8 @@
-LotKeys V0.9.4.17 FULL RELEASE
-Vehicle Profile contribution system + Trusted User permissions
+LotKeys V0.9.4.19 FULL RELEASE
+Startup / service-worker transition polish
+
+LotKeys V0.9.4.18 FULL RELEASE
+Corrected ring-free LotKeys icon / default app branding
 
 LotKeys Drive Test v0.9.4.16.10
 Build query: ?build=0941610

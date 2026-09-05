@@ -1,5 +1,13 @@
 ## v0.9.4.16.10
 
+## V0.9.4.19 — Startup transition repair
+The initial app shell now shows an explicit loading state instead of stale version/sync information while IndexedDB and Store data restore. Service-worker registration and cache versions are synchronized to V0.9.4.19 to avoid old-build flashes during deployment/update transitions.
+
+
+## V0.9.4.18 — Corrected LotKeys Branding
+The corrected ring-free LotKeys icon is now used across the default app/store logo, PWA icon, Apple touch icon and favicon. V0.9.4.17 Vehicle Profile Contributions remain unchanged.
+
+
 ## V0.9.4.17 — Vehicle Profile Contributions
 Other users now use Contribute / Suggest Update on Vehicle Profiles they do not own. Pending media uploads once to More Photos, More Videos and More Documents user folders; Administration approval moves approved files into the official folders. Trusted User is off by default and lets photos/videos bypass review. Empty official photo/video folders accept the first media contribution automatically.
 
