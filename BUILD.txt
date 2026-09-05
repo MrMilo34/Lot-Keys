@@ -1,4 +1,6 @@
-LotKeys V0.9.4.20 FULL RELEASE
+LotKeys V0.9.4.21 FULL RELEASE
+Listing photo edit polish + reveal finish-line layer fix
+
 Legacy Vehicle Profile compatibility + non-blocking Profile opening
 
 LotKeys V0.9.4.19 FULL RELEASE
