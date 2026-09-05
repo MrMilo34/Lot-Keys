@@ -1,6 +1,10 @@
 ## v0.9.4.16.10
 
-## V0.9.4.23 — Live Photo Reorder Polish
+- Prevents Android/Chrome long-press image context menus inside LotKeys photo reorder grids.
+- Drag insertion marker is neutral gray: light gray in light mode, dark gray in dark mode, independent of the user's accent.
+- Renames the visible Account setting from Button color to Accent Color without changing stored user preferences.
+
+## V0.9.4.24 — Mobile Photo Drag Polish
 - Dragged photos now lift into a floating preview that stays under the finger/cursor.
 - Listing photo reordering updates the existing grid in place instead of rebuilding/reloading every image after each move.
 - Photo selection/order remains an unsaved edit until either Listing Save button is used; LotKeys then confirms the photo selection/order was saved.
