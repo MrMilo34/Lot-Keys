@@ -1,3 +1,12 @@
+## V0.9.4.40 — Neutral Sync Loading State
+
+- Pending/synchronizing Vehicle and Listing cards no longer use orange or the user Accent Color.
+- Light mode uses a gray base with denser darker-gray animated diagonal bars.
+- Dark mode uses a lighter charcoal base with near-white animated bars.
+- Vehicle thumbnails are gently desaturated while the card is processing.
+- Upload progress remains a separate state.
+- All V0.9.4.39 functionality is preserved.
+
 ## V0.9.4.39 — High-Visibility Sync State
 
 - Pending/synchronizing Vehicle and Listing cards now use a neutral animated diagonal-stripe treatment so the state cannot blend into the user's Accent Color.

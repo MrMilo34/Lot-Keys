@@ -1,3 +1,13 @@
+LotKeys V0.9.4.40 FULL RELEASE
+Neutral gray synchronizing cards
+
+- Replaces orange/accent sync-pending card coloring with a neutral gray loading state.
+- Adds denser animated diagonal gray bars for clearer processing visibility.
+- Light mode uses a pale-gray base with darker gray bars; dark mode uses a lighter charcoal base with near-white bars.
+- Vehicle thumbnails are gently desaturated during the pending/synchronizing state.
+- Media-upload progress remains separate and does not trigger this effect by itself.
+- Keeps V0.9.4.39 functional behavior unchanged.
+
 LotKeys V0.9.4.39 FULL RELEASE
 High-visibility sync-state treatment
 
