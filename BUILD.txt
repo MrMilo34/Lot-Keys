@@ -1,3 +1,17 @@
+LotKeys V0.9.4.42 FULL RELEASE
+Messaging V1 + Parties + Bubble Mode + LotKeys sharing + Voice Beta
+
+- Adds Account → Messages with direct chats and named Parties.
+- Message identity is derived from the signed-in Google account email while the visible name remains the user's LotKeys display name.
+- Durable chat history lives in each participant's personal LotKeys / Messages Google Drive area. The Store holds only short-lived encrypted delivery envelopes plus Party membership metadata.
+- New incoming messages raise the familiar red ❕ attention indicator and a five-second message preview bubble.
+- Press and hold Messages for one second to see the 💭 cue; continue holding for another second to open Bubble Mode with the most recent conversation and reply without leaving the current screen.
+- Direct chats can be deleted from the current user's personal Drive without removing the other participant's copy. Leaving a Party removes the current user's Party archive while remaining members keep theirs.
+- Adds LotKeys share cards for Vehicle Profiles, Marketplace Listings and the current user's More Photos / More Videos / More Documents contribution folders.
+- Incoming chat bubbles show the other user's LotKeys avatar, accent ring and current monthly-winner crown where applicable. Outgoing bubbles use the current user's Accent Color.
+- Adds WebRTC Voice Beta for direct chats and Party rooms. Google Drive is used only for encrypted signalling; call audio travels peer-to-peer. TURN fallback is not yet included, so some restrictive networks may not connect.
+- Keeps V0.9.4.41 dark-theme readability, V0.9.4.40 neutral sync loading, and the V0.9.4.38 regression-restored Listing feature set.
+
 LotKeys V0.9.4.41 FULL RELEASE
 Dark-theme readability polish
 

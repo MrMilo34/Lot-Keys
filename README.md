@@ -1,3 +1,7 @@
+# LotKeys V0.9.4.42
+
+Messaging V1 introduces direct chats, named Parties, personal-Drive chat archives, encrypted Store relay delivery, unread alerts, floating Bubble Mode, LotKeys share cards, and WebRTC Voice Beta.
+
 ## V0.9.4.41 — Dark Theme Readability Polish
 
 - Keeps physical podium rank/contribution text dark against the bright gold, silver and bronze podium surfaces in dark theme.
