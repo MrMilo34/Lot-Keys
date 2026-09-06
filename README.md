@@ -1,3 +1,11 @@
+## V0.9.4.34 — Search Filtering Repair + Cohesive Search / Header Alignment
+
+- Inventory and Marketplace Listings search now explicitly hide non-matching cards with a LotKeys filter class, preventing the card grid display rule from overriding the filtered state on mobile browsers.
+- Search remains instant and local to already-loaded data; typing does not trigger Google Drive refresh or authorization.
+- The compact search panel now uses a subtle Accent Color tint / normal LotKeys card colors instead of a saturated red block.
+- On phone, Sync text and the green readiness light move down 3px while the + button remains fixed.
+- Keeps V0.9.4.33 search matching, CARFAX layout, and all V0.9.4.32 sync/import/recovery behavior unchanged.
+
 ## V0.9.4.33 — Fast Inventory / Listings Search + CARFAX Action Position
 
 - Adds a compact Find a vehicle fast search bar to Inventory and Marketplace Listings.

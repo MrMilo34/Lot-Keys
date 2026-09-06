@@ -1,3 +1,12 @@
+LotKeys V0.9.4.34 FULL RELEASE
+Search filtering repair + cohesive search / header alignment
+
+- Fixes Inventory and Listings search so non-matching cards are actually removed from the visible result list.
+- Search remains local/cached and does not refresh Drive while typing.
+- Search panel now uses a subtle Accent Color tint instead of a saturated red block.
+- Phone Sync text + readiness light move down 3px; + button stays fixed.
+- Keeps V0.9.4.33 matching logic and all current sync/import/recovery behavior unchanged.
+
 LotKeys V0.9.4.33 FULL RELEASE
 Fast Inventory / Listings search + CARFAX action position
 
