@@ -1,4 +1,18 @@
-## V0.9.4.26 — Automatic Google Sync Recovery
+## V0.9.4.28 — Interrupted Vehicle Recovery
+
+- Incomplete Drive Vehicle folders now remain visible as **Needs Recovery** instead of silently disappearing from Inventory.
+- If a populated local Vehicle or V0.9.4.27+ recovery snapshot exists, LotKeys restores it and preserves the existing Drive folder IDs.
+- If no local copy survives, LotKeys builds an **Interrupted Vehicle Profile** from the existing Drive folder so Administration can open Edit Vehicle, restore missing fields, and repair the same folder.
+- Interrupted Profiles are distinct from Legacy Profiles and are never marked Synced until the administrative data is successfully rewritten.
+- Shared / Photos / Videos / Documents folders are rediscovered when present so already-uploaded media can remain attached during recovery.
+- Successful repair clears the Needs Recovery state automatically.
+
+## V0.9.4.27 — Google Auth + Vehicle Sync Safety
+- Validates renewed Google Drive access tokens before retrying a failed sync; a silently invalid replacement token triggers one clean renewal instead of exposing Google's raw invalid-credentials error.
+- Protects populated local Vehicle Profiles (including sync-error records) from incomplete Drive folder/spreadsheet shells during Inventory refresh and Vehicle hydration.
+- Writes core Vehicle Profile data and Inventory Index metadata before PDF/media generation so an interrupted sync cannot leave a blank authoritative Profile.
+- Saves a lightweight local recovery snapshot before Vehicle sync attempts.
+
 
 - Google Drive 401/token-expiry responses now trigger one automatic authorization renewal and request retry before LotKeys asks the user to reconnect.
 - Resumable media uploads keep their existing Drive checkpoint and can continue with a renewed token rather than failing the whole Vehicle sync.
