@@ -1,3 +1,10 @@
+## V0.9.4.39 — High-Visibility Sync State
+
+- Pending/synchronizing Vehicle and Listing cards now use a neutral animated diagonal-stripe treatment so the state cannot blend into the user's Accent Color.
+- This effect is only for the normal card sync state; photo/video upload progress keeps its existing separate indicators.
+- Dark mode and reduced-motion behavior are supported.
+- All V0.9.4.38 Listing regression repairs remain intact.
+
 ## V0.9.4.38 — Listing Regression Audit + Stable Feature Restoration
 
 This release was audited against V0.9.4.31 / V0.9.4.32 after a V0.9.4.33 search-bar edit accidentally removed a contiguous block of established helper functions.

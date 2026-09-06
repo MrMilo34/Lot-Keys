@@ -1,3 +1,11 @@
+LotKeys V0.9.4.39 FULL RELEASE
+High-visibility sync-state treatment
+
+- Adds neutral animated diagonal stripes to Vehicle/Listing cards while their normal sync state is pending/synchronizing, so the state remains obvious even when the user's Accent Color is red/orange.
+- The stripe treatment does not represent photo/video upload progress; media upload status remains separate.
+- Dark mode uses a lighter neutral stripe; reduced-motion devices keep the visual state without animation.
+- Keeps the V0.9.4.38 Listing regression restoration and all current search/sort/sync/import/recovery behavior unchanged.
+
 LotKeys V0.9.4.38 FULL RELEASE
 Regression audit against V0.9.4.31 / V0.9.4.32
 
