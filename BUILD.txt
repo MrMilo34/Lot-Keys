@@ -1,3 +1,13 @@
+LotKeys V0.9.4.38 FULL RELEASE
+Regression audit against V0.9.4.31 / V0.9.4.32
+
+- Restores Listing analytics/history helpers accidentally removed in V0.9.4.33.
+- Restores Listing Delete / Sold flow, Drive cleanup, celebration audio/confetti and related helper functions.
+- Restores Top Contributors reveal formatting/audio helpers that were removed in the same regression.
+- Restores Facebook Marketplace Edmonton location preset constant used by Listing creation/editing.
+- Keeps V0.9.4.37 local-first Listing opening, fast Inventory/Listings search, Most Recent sorting, corrected icon assets and current layout/header positions.
+- Phone Sync text and readiness light remain aligned at the same lowered position.
+
 LotKeys V0.9.4.37 FULL RELEASE
 Local-first Marketplace Listing opening repair + final header alignment
 

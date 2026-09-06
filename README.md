@@ -1,3 +1,20 @@
+## V0.9.4.38 — Listing Regression Audit + Stable Feature Restoration
+
+This release was audited against V0.9.4.31 / V0.9.4.32 after a V0.9.4.33 search-bar edit accidentally removed a contiguous block of established helper functions.
+
+Restored:
+- Marketplace Listing view-count analytics/history and chart rendering.
+- Listing Delete / Sold decision flow and Drive cleanup.
+- Vehicle Sold celebration/confetti/audio helpers.
+- Month-End contributor reveal point/audio helpers.
+- Facebook Marketplace location presets used by Listing creation/editing.
+
+Retained from later releases:
+- Local-first Listing workspace opening and background media hydration.
+- Inventory/Listings fast search and filtering repair.
+- Most Recent sorting.
+- Current CARFAX/link layout, corrected LotKeys icon assets, and aligned phone Sync/readiness position.
+
 ## V0.9.4.37 — Local-First Listing Open Repair + Header Alignment
 
 - Marketplace Listing cards now open the Posting Assistant immediately from cached/local data instead of waiting for Drive/photo hydration.
