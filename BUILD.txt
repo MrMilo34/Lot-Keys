@@ -1,3 +1,12 @@
+LotKeys V0.9.4.43 FULL RELEASE
+Messaging visibility + core bridge repair
+
+- Messages is now rendered as its own visible 💭 section directly on Account, with its own unread ❕ badge.
+- Fixes Messaging V1 access to core LotKeys DB / Drive / Store-user APIs through a supported Messaging bridge.
+- Account Messages entry remains visible even if Messaging setup is incomplete; opening it shows Account Storage setup guidance instead of disappearing.
+- Tap Messages to open; hold for the existing 💭 Bubble Mode interaction.
+- Keeps V0.9.4.42 direct chats, named Parties, personal Drive archives, share cards, transient bubbles and Voice Beta behavior.
+
 LotKeys V0.9.4.42 FULL RELEASE
 Messaging V1 + Parties + Bubble Mode + LotKeys sharing + Voice Beta
 

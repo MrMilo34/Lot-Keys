@@ -1,3 +1,7 @@
+# LotKeys V0.9.4.43
+
+Messaging visibility + bridge repair. Messages now has a dedicated 💭 Account section with unread ❕ status and a supported bridge to LotKeys core storage/Drive APIs.
+
 # LotKeys V0.9.4.42
 
 Messaging V1 introduces direct chats, named Parties, personal-Drive chat archives, encrypted Store relay delivery, unread alerts, floating Bubble Mode, LotKeys share cards, and WebRTC Voice Beta.
