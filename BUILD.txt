@@ -1,3 +1,12 @@
+LotKeys V0.9.4.30 FULL RELEASE
+Vehicle link / CARFAX polish + website vehicle-field targeting
+
+- Original Listing and CARFAX now have compact Copy Link actions in Vehicle Profiles.
+- CARFAX branding/findings stay inline across Profile and Listing displays.
+- Posting Assistant View All Details moved below Odometer and before Description.
+- Website vehicle importer now targets Overview/specification labels for colors, transmission, engine displacement, horsepower and fuel type, avoiding Fuel Economy false matches.
+- Fuel and descriptive colors normalize to Facebook-ready Listing categories.
+
 LotKeys V0.9.4.29 FULL RELEASE
 Listing-owned Facebook fields + Posting Assistant details normalization
 

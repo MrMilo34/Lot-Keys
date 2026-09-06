@@ -1,3 +1,14 @@
+## V0.9.4.30 — Vehicle Link / CARFAX + Website Import Field Targeting
+
+- Vehicle Profiles now include compact **Copy Link** actions beside both Original Listing and CARFAX links.
+- The CARFAX brand and confirmed findings stay inline on Vehicle Profiles, Listing Edit, and the Posting Assistant rather than dropping into a separate card.
+- Posting Assistant **View All Details** now sits directly below Odometer and above Description.
+- Website imports now prioritize the vehicle **Overview** for Transmission, Engine, Exterior Colour and Interior Colour.
+- Fuel Type is read from the explicit specification label (for example, **Fuel economy fuel type**) instead of accidentally capturing Fuel Economy. Premium/regular unleaded normalize to Facebook-ready **Gasoline**.
+- Horsepower is read from the explicit Horsepower specification and Engine Size is reduced to the displacement value (for example, **2.0 L**).
+- Descriptive paint names such as Championship White, Black Obsidian, Graphite, Grand Blue Pearl, etc. are mapped to the closest Facebook color category.
+- Website import review rows now show friendly labels such as **Exterior Color**, **Interior Color**, **Fuel Type**, **Engine Size**, and **Horsepower** instead of internal camelCase keys.
+
 ## V0.9.4.29 — Listing-owned Facebook Vehicle Details
 
 - Marketplace Listings now own the Facebook vehicle fields after one-time seeding from the Vehicle Profile.
