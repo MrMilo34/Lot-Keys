@@ -1,3 +1,19 @@
+LotKeys V0.9.4.36 FULL RELEASE
+Listing workspace opening repair + Most Recent sort + readiness alignment
+
+- Fixes Marketplace Listing cards that could remain stuck on the opening spinner while full Vehicle/Profile media hydrated from Drive.
+- Posting Assistant and Edit Listing use a bounded media hydration window and open from cached data instead of waiting indefinitely.
+- Adds Most Recent sort for Inventory and Listings using each record's createdAt date; undated legacy records sort after dated records.
+- Phone Sync text stays at +3px while the green readiness light moves down another 2px to +5px.
+- Includes V0.9.4.35 canonical border-free LotKeys icon assets and keeps V0.9.4.34 search filtering behavior.
+
+LotKeys V0.9.4.35 FULL RELEASE
+Canonical border-free LotKeys icon assets
+
+- Replaces all default LotKeys app/PWA icon assets from the user-supplied corrected source.
+- Bumps browser/PWA cache markers to 09435.
+- Keeps V0.9.4.34 application behavior unchanged.
+
 LotKeys V0.9.4.34 FULL RELEASE
 Search filtering repair + cohesive search / header alignment
 

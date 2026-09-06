@@ -1,3 +1,18 @@
+## V0.9.4.36 — Listing Opening Repair + Most Recent Sort
+
+- Marketplace Listings no longer block the Posting Assistant on full Drive media hydration.
+- Edit Listing and Vehicle selection inside the Listing editor use the same bounded hydration safeguard.
+- Adds **Most Recent** sorting by created date to Inventory and Listings.
+- Moves the phone readiness light 2px lower while leaving Sync text at its current position.
+- Keeps the V0.9.4.35 border-free LotKeys icon assets.
+
+## V0.9.4.35 — Canonical Border-Free LotKeys Icon
+
+- Replaces the default LotKeys logo, installed PWA icon, Apple touch icon and favicon with the newly supplied border-free source artwork.
+- Uses dedicated resized PNG assets generated from the same source so every LotKeys default icon stays visually consistent.
+- Bumps the app/service-worker cache identifiers so browsers do not keep serving the previous icon.
+- Keeps V0.9.4.34 search filtering, sync/header alignment, Drive recovery, importer and Listing behavior unchanged.
+
 ## V0.9.4.34 — Search Filtering Repair + Cohesive Search / Header Alignment
 
 - Inventory and Marketplace Listings search now explicitly hide non-matching cards with a LotKeys filter class, preventing the card grid display rule from overriding the filtered state on mobile browsers.
