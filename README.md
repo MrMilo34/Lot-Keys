@@ -1,3 +1,15 @@
+LotKeys V0.9.4.45 FULL RELEASE
+Chat screen + Android hold-gesture repair
+
+- Chat now opens a visible screen immediately instead of appearing unresponsive while Google Drive messaging setup finishes.
+- Adds clear loading, setup-required and first-user empty states.
+- Makes the Chat navigation state visible while the full Chat screen is open and restores the previous tab after closing it.
+- Repairs Android press-and-hold by capturing the pointer instead of cancelling when the finger drifts outside the small navigation button.
+- Shows the small 💭 cue after a short hold; continuing to hold opens Bubble Mode for the most recent conversation.
+- If no conversation exists yet, Bubble Mode stays on the current screen and reports “No recent chat yet.”
+- Moves the versioned Chat module beside index.html and cache-busts the page, module, manifest and service worker together so the file is included during a full release upload.
+- Keeps V0.9.4.44 Inventory, Listings, Garage, Account, Drive synchronization and established Messaging V1 data behavior unchanged.
+
 LotKeys V0.9.4.44 FULL RELEASE
 Main Chat tab
 

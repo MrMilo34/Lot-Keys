@@ -5,11 +5,13 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
 ## Simple test deployment
 
 1. Create a GitHub repository, for example `lotkeys-test`.
-2. Upload the contents of the `LotKeys-Drive-Test` folder to the root of that repository:
+2. Upload **all contents** of the full LotKeys release folder to the root of that repository. Do not omit the `assets` folder or the versioned Chat file. The required root items include:
    - `index.html`
    - `manifest.webmanifest`
    - `sw.js`
    - `icon.svg`
+   - `lotkeys-messaging-v09445.js`
+   - the complete `assets` folder
 3. Open the repository's **Settings**.
 4. Open **Pages** under Code and automation.
 5. Under Build and deployment, choose **Deploy from a branch**.
