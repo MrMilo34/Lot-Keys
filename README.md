@@ -1,3 +1,12 @@
+LotKeys V0.9.4.44 FULL RELEASE
+Main Chat tab
+
+- Moves Messaging out of Account and gives it its own 💬 Chat tab in the main bottom navigation.
+- Chat carries its own ❕ unread badge, matching Listings attention behavior.
+- Tap Chat to open Messages; press and hold the Chat tab for the existing 💭 Bubble Mode / last conversation interaction.
+- Removes the duplicate Account Messages card so Messaging has one obvious home.
+- Keeps V0.9.4.43 Messaging bridge, direct chats, Parties, personal Drive archives, share cards, transient bubbles and Voice Beta unchanged.
+
 # LotKeys V0.9.4.43
 
 Messaging visibility + bridge repair. Messages now has a dedicated 💭 Account section with unread ❕ status and a supported bridge to LotKeys core storage/Drive APIs.
