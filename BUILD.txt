@@ -1,3 +1,14 @@
+LotKeys V0.9.4.37 FULL RELEASE
+Local-first Marketplace Listing opening repair + final header alignment
+
+- Posting Assistant opens from cached/local Listing data before any Drive/media hydration begins.
+- Drive Vehicle/Listing photo enrichment runs only after the Listing dialog is already visible.
+- Photo-preview/media errors cannot silently prevent a Listing from opening.
+- Listing card errors now surface an explicit message for diagnosis instead of only clearing the spinner.
+- Keeps Most Recent sorting by created date for Inventory and Listings.
+- Moves phone Sync text down 2px to match the readiness light at the same 5px offset.
+- Preserves V0.9.4.36 icon, search, sync, recovery, import and photo-order behavior.
+
 LotKeys V0.9.4.36 FULL RELEASE
 Listing workspace opening repair + Most Recent sort + readiness alignment
 

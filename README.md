@@ -1,3 +1,13 @@
+## V0.9.4.37 — Local-First Listing Open Repair + Header Alignment
+
+- Marketplace Listing cards now open the Posting Assistant immediately from cached/local data instead of waiting for Drive/photo hydration.
+- Vehicle and Listing media hydration starts in the background only after the Listing workspace is visible.
+- A bad/missing photo preview can no longer prevent a Listing workspace from opening.
+- Listing card opening now reports a real error instead of silently dropping back to the Listings page.
+- Keeps Most Recent sorting for Inventory and Listings from V0.9.4.36.
+- Phone Sync text moves down the final 2px so it aligns vertically with the readiness light; the + button remains fixed.
+- Keeps the border-free LotKeys icon assets and all current search, sync, import, recovery, contribution and photo-order behavior.
+
 ## V0.9.4.36 — Listing Opening Repair + Most Recent Sort
 
 - Marketplace Listings no longer block the Posting Assistant on full Drive media hydration.
