@@ -1,3 +1,11 @@
+LotKeys V0.9.4.41 FULL RELEASE
+Dark-theme readability polish
+
+- Physical Month-End podium blocks now keep dark rank/contribution text in dark theme so gold/silver/bronze results remain readable.
+- CARFAX mini-brand in dark theme is inverted to white tiles with black lettering while preserving the red sparkle.
+- CARFAX findings/badges and all reveal/CARFAX data logic remain unchanged.
+- Keeps V0.9.4.40 neutral sync-loading treatment and all V0.9.4.38 regression-restoration behavior.
+
 LotKeys V0.9.4.40 FULL RELEASE
 Neutral gray synchronizing cards
 

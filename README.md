@@ -1,3 +1,9 @@
+## V0.9.4.41 — Dark Theme Readability Polish
+
+- Keeps physical podium rank/contribution text dark against the bright gold, silver and bronze podium surfaces in dark theme.
+- Inverts the CARFAX mini-brand in dark theme to white tiles with black letters while keeping the red sparkle red.
+- No changes to reveal scoring, CARFAX findings, sync, Listings, Inventory or Drive behavior.
+
 ## V0.9.4.40 — Neutral Sync Loading State
 
 - Pending/synchronizing Vehicle and Listing cards no longer use orange or the user Accent Color.
