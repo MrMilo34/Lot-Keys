@@ -1,3 +1,12 @@
+LotKeys V0.9.4.33 FULL RELEASE
+Fast Inventory / Listings search + CARFAX action position
+
+- Adds compact Find a vehicle fast search bars to Inventory and Marketplace Listings.
+- Filters already-loaded cards instantly by year, make, model, Profile/Listing name, Stock # and VIN without triggering Drive refreshes.
+- Marketplace Listing search can match the linked Vehicle Profile Stock # / VIN.
+- Vehicle Profile CARFAX findings now appear before compact 📋 / 🏷️ actions so those controls sit at the far right.
+- Keeps V0.9.4.32 sync, recovery, importer, photo ordering and responsive link behavior unchanged.
+
 LotKeys V0.9.4.32 FULL RELEASE
 Vehicle Profile alignment + compact link polish
 

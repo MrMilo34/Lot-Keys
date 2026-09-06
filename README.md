@@ -1,4 +1,10 @@
-## V0.9.4.32 — Vehicle Profile Alignment + Compact Link Polish
+## V0.9.4.33 — Fast Inventory / Listings Search + CARFAX Action Position
+
+- Adds a compact Find a vehicle fast search bar to Inventory and Marketplace Listings.
+- Search filters the already-loaded cards instantly by year, make, model, Profile/Listing name, Stock # and VIN without triggering Google Drive refreshes.
+- Marketplace Listing search can match the linked Vehicle Profile Stock # / VIN.
+- Vehicle Profile CARFAX rows now show badges first and keep the compact Copy/View buttons at the far right.
+- Keeps V0.9.4.32 sync, importer, recovery, photo-order and responsive link behavior unchanged.
 
 - Vehicle Profile information now uses one tighter value column from **Stock # through CARFAX**, removing the oversized label/value gap on phones.
 - **Original Listing** uses **📋 Copy** and **🏷️ View Link** on phone and PC.
