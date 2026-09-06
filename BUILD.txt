@@ -1,3 +1,12 @@
+LotKeys V0.9.4.31 FULL RELEASE
+Responsive Vehicle Profile actions + manual view count polish
+
+- Original Listing / CARFAX: phone = 📋 + 🏷️; desktop = 📋 Copy + 🏷️ View Link.
+- Copy appears before View; CARFAX findings remain inline.
+- Vehicle Profile bottom actions stay inline with Delete Vehicle shortened to Delete.
+- Add View Snapshot is now Save Count beside the cumulative Marketplace view input.
+- Keeps V0.9.4.30 importer/CARFAX fixes and current sync/recovery behavior unchanged.
+
 LotKeys V0.9.4.30 FULL RELEASE
 Vehicle link / CARFAX polish + website vehicle-field targeting
 

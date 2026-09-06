@@ -1,3 +1,12 @@
+## V0.9.4.31 — Responsive Vehicle Profile + Manual Views Polish
+
+- Vehicle Profile Original Listing and CARFAX actions are now **📋 Copy first, 🏷️ View second**.
+- Phones show compact icon-only controls to preserve room for inline CARFAX findings; desktop views (900px+) expand the same controls to **📋 Copy** and **🏷️ View Link**.
+- Vehicle Profile bottom actions stay inline on phone where possible: **Create Listing · Edit Vehicle · Delete**. `Delete Vehicle` is shortened to **Delete**.
+- Marketplace cumulative views are now entered and saved in one row. **Add View Snapshot** is renamed to **Save Count** and sits directly beside the count field.
+- Saving a count continues to create the same rolling-history snapshot; this update changes the workflow/label, not the analytics data model.
+- Keeps V0.9.4.30 website importer targeting, CARFAX layout, and all V0.9.4.28+ sync/recovery protections unchanged.
+
 ## V0.9.4.30 — Vehicle Link / CARFAX + Website Import Field Targeting
 
 - Vehicle Profiles now include compact **Copy Link** actions beside both Original Listing and CARFAX links.
