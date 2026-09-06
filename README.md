@@ -1,3 +1,11 @@
+## V0.9.4.29 — Listing-owned Facebook Vehicle Details
+
+- Marketplace Listings now own the Facebook vehicle fields after one-time seeding from the Vehicle Profile.
+- Facebook body styles normalize to Coupe, Truck, Sedan, Hatchback, SUV, Convertible, Station wagon, Minivan, Small Car or Other.
+- Posting Assistant Section 2 keeps core fields visible and puts secondary Facebook fields under View All Details.
+- Vehicle Profiles now store Transmission, Engine Size and Horsepower for Listing seeding and website import.
+- Chrome Assistant V0.1.11 is designed to read Facebook field values from the saved Listing, not the Vehicle Profile.
+
 ## V0.9.4.28 — Interrupted Vehicle Recovery
 
 - Incomplete Drive Vehicle folders now remain visible as **Needs Recovery** instead of silently disappearing from Inventory.

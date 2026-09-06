@@ -1,3 +1,6 @@
+LotKeys V0.9.4.29 FULL RELEASE
+Listing-owned Facebook fields + Posting Assistant details normalization
+
 LotKeys V0.9.4.28 FULL RELEASE
 Stable Listing photo toggle position + scroll-anchor repair
 
