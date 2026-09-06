@@ -1,3 +1,13 @@
+## V0.9.4.32 — Vehicle Profile Alignment + Compact Link Polish
+
+- Vehicle Profile information now uses one tighter value column from **Stock # through CARFAX**, removing the oversized label/value gap on phones.
+- **Original Listing** uses **📋 Copy** and **🏷️ View Link** on phone and PC.
+- **CARFAX** deliberately stays compact as **📋 / 🏷️** so confirmed CARFAX badges have maximum inline room.
+- Marketplace Posting Assistant removes the redundant **Findings** text beside CARFAX.
+- A saved Facebook Listing's live-link control is **🏷️** on phone and expands to **🏷️ View Link** on desktop.
+- Phone Store branding can now extend much farther across the unused upper header row and only truncates shortly before the **+** button.
+- Keeps V0.9.4.31 manual view-count workflow, V0.9.4.30 importer fixes, and current Drive/sync/recovery behavior unchanged.
+
 ## V0.9.4.31 — Responsive Vehicle Profile + Manual Views Polish
 
 - Vehicle Profile Original Listing and CARFAX actions are now **📋 Copy first, 🏷️ View second**.

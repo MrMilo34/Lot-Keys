@@ -1,3 +1,14 @@
+LotKeys V0.9.4.32 FULL RELEASE
+Vehicle Profile alignment + compact link polish
+
+- Vehicle Profile value column pulled left consistently from Stock # through CARFAX.
+- Original Listing: 📋 Copy + 🏷️ View Link on phone and desktop.
+- CARFAX: compact 📋 + 🏷️ on all viewports so findings remain inline.
+- Facebook live Listing link: 🏷️ on phone, 🏷️ View Link on desktop.
+- Removes redundant CARFAX Findings text in Listing views.
+- Mobile Store Name can use the upper header row until just before the + button.
+- Keeps V0.9.4.31 view-count controls and all current sync/import behavior unchanged.
+
 LotKeys V0.9.4.31 FULL RELEASE
 Responsive Vehicle Profile actions + manual view count polish
 
