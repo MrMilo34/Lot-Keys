@@ -1,14 +1,16 @@
-LotKeys V0.9.4.45 FULL RELEASE
-Chat screen + Android hold-gesture repair
+LotKeys V0.9.4.46 FULL RELEASE
+Chat hub + contacts, groups and calls test update
 
-- Chat now opens a visible screen immediately instead of appearing unresponsive while Google Drive messaging setup finishes.
-- Adds clear loading, setup-required and first-user empty states.
-- Makes the Chat navigation state visible while the full Chat screen is open and restores the previous tab after closing it.
-- Repairs Android press-and-hold by capturing the pointer instead of cancelling when the finger drifts outside the small navigation button.
-- Shows the small 💭 cue after a short hold; continuing to hold opens Bubble Mode for the most recent conversation.
-- If no conversation exists yet, Bubble Mode stays on the current screen and reports “No recent chat yet.”
-- Moves the versioned Chat module beside index.html and cache-busts the page, module, manifest and service worker together so the file is included during a full release upload.
-- Keeps V0.9.4.44 Inventory, Listings, Garage, Account, Drive synchronization and established Messaging V1 data behavior unchanged.
+- Removes the redundant Chat Exit box. The six-tab bottom navigation stays visible and Chat remains highlighted until another tab is selected.
+- Adds a LotKeys-branded Chat header with search and live time/date, plus All, Unread, Groups and Contacts/Favorites filters.
+- Adds bottom-corner Call and ＋ actions. ＋ opens Add Contact, Create Group Chat and Create Group Call, followed by users from the current LotKeys Store.
+- Adds saved Contacts/Favorites and preserves existing conversations when someone is no longer in the current Store. Cross-Store conversations remain visible; delivery waits for the future LotKeys account directory when the contact is outside the active Store.
+- Adds temporary and Permanent Group Call creation. Temporary calls are not kept in Chat history; Permanent Group Calls stay available.
+- Adds Store-managed groups for administrators plus creator/admin member controls, personal mute and block controls, and creator-assigned Group admins.
+- Adds an optional phone-number field to Account settings and the Call using LotKeys / Call using Phone chooser. The phone option only appears when that user saved a number.
+- Replaces the compact Voice Beta strip with a full LotKeys call screen containing Speaker, Screen Share, Mute, Send File, Video Call and End Call controls.
+- Send File securely carries device files up to 4 MB inside the encrypted Chat envelope and keeps the existing LotKeys Vehicle/Listing share cards.
+- Keeps the repaired Android 💭 hold shortcut and all established Inventory, Listings, Garage, Account and Drive behavior.
 
 LotKeys V0.9.4.44 FULL RELEASE
 Main Chat tab

@@ -10,7 +10,7 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
    - `manifest.webmanifest`
    - `sw.js`
    - `icon.svg`
-   - `lotkeys-messaging-v09445.js`
+   - `lotkeys-messaging-v09446.js`
    - the complete `assets` folder
 3. Open the repository's **Settings**.
 4. Open **Pages** under Code and automation.

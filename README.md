@@ -1,14 +1,15 @@
-LotKeys V0.9.4.45 FULL RELEASE
-Chat screen + Android hold-gesture repair
+LotKeys V0.9.4.46 FULL RELEASE
+Chat hub + contacts, groups and calls test update
 
-- Chat now opens a visible screen immediately instead of appearing unresponsive while Google Drive messaging setup finishes.
-- Adds clear loading, setup-required and first-user empty states.
-- Makes the Chat navigation state visible while the full Chat screen is open and restores the previous tab after closing it.
-- Repairs Android press-and-hold by capturing the pointer instead of cancelling when the finger drifts outside the small navigation button.
-- Shows the small 💭 cue after a short hold; continuing to hold opens Bubble Mode for the most recent conversation.
-- If no conversation exists yet, Bubble Mode stays on the current screen and reports “No recent chat yet.”
-- Moves the versioned Chat module beside index.html and cache-busts the page, module, manifest and service worker together so the file is included during a full release upload.
-- Keeps V0.9.4.44 Inventory, Listings, Garage, Account, Drive synchronization and established Messaging V1 data behavior unchanged.
+- Chat is now a normal persistent tab with no separate Exit box.
+- The Chat hub adds LotKeys branding, search, live time/date and All / Unread / Groups / Contacts filters.
+- Call and ＋ actions provide Add Contact, Group Chat, temporary/Permanent Group Call, LotKeys VOIP and phone-dialer paths.
+- Current Store users appear directly in the new-chat and call pickers. Existing conversations and saved Contacts/Favorites remain visible after a user leaves the active Store.
+- Group creators, appointed Group admins and approved Store admins receive the appropriate member controls. Every user can personally mute or block unwanted communication.
+- Account settings now include an optional phone number used only to offer Call using Phone to people who can already find that account in LotKeys Chat.
+- The full call screen includes Speaker, Screen Share, Mute, Send File, Video Call and End Call.
+- Send File securely carries device files up to 4 MB inside the encrypted Chat envelope and keeps the existing LotKeys Vehicle/Listing share cards.
+- Cross-Store account discovery and delivery are represented safely in the interface but require the future LotKeys account-directory service before they can operate outside the active Store.
 
 LotKeys V0.9.4.44 FULL RELEASE
 Main Chat tab
