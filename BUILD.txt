@@ -1,15 +1,29 @@
-LotKeys V0.9.4.46 FULL RELEASE
-Chat hub + contacts, groups and calls test update
+LotKeys V0.9.4.48 FULL RELEASE
+New canonical LotKeys icon
 
+- Replaces all default LotKeys application icon sizes with the supplied black-and-blue key/tag artwork.
+- Covers the in-app default, Chat fallback, loading view, Android/PWA install icon, Apple touch icon, favicon and offline cache.
+- Keeps custom Store-uploaded logos as Store-specific overrides.
+- Bumps the release, feature modules, service worker and manifest to V0.9.4.48 / 09448.
+- Includes all V0.9.4.47 functionality unchanged for the next test round.
+
+LotKeys V0.9.4.47 FULL RELEASE
+Chat isolation + registered contact lookup + Lot-Lvl/Awards test update
+
+- Fixes Chat background bleed by hiding the live Home/Inventory route and sizing Chat to the measured bottom-navigation height.
 - Removes the redundant Chat Exit box. The six-tab bottom navigation stays visible and Chat remains highlighted until another tab is selected.
 - Adds a LotKeys-branded Chat header with search and live time/date, plus All, Unread, Groups and Contacts/Favorites filters.
 - Adds bottom-corner Call and ＋ actions. ＋ opens Add Contact, Create Group Chat and Create Group Call, followed by users from the current LotKeys Store.
+- Rebuilds the Add Contact person/plus artwork so it stays aligned, and accepts either an exact registered email address or registered phone number.
 - Adds saved Contacts/Favorites and preserves existing conversations when someone is no longer in the current Store. Cross-Store conversations remain visible; delivery waits for the future LotKeys account directory when the contact is outside the active Store.
 - Adds temporary and Permanent Group Call creation. Temporary calls are not kept in Chat history; Permanent Group Calls stay available.
 - Adds Store-managed groups for administrators plus creator/admin member controls, personal mute and block controls, and creator-assigned Group admins.
 - Adds an optional phone-number field to Account settings and the Call using LotKeys / Call using Phone chooser. The phone option only appears when that user saved a number.
 - Replaces the compact Voice Beta strip with a full LotKeys call screen containing Speaker, Screen Share, Mute, Send File, Video Call and End Call controls.
 - Send File securely carries device files up to 4 MB inside the encrypted Chat envelope and keeps the existing LotKeys Vehicle/Listing share cards.
+- Adds the first Awards/Lot-Lvl test system: 14 confirmed badge artworks, one Primary plus five displayed Awards, full gallery/details, repeat counters and public Profile display.
+- Adds account-carried Lot-Lvl 1–100 progress using a test progression curve that reaches Level 100 at 1,000 confirmed Facebook vehicle posts.
+- Adds user requests, Admin Level 1 nominations, Admin Level 2 review/direct grants, and verified automatic correction/Facebook/Monthly Wrap-Up/check-in milestones.
 - Keeps the repaired Android 💭 hold shortcut and all established Inventory, Listings, Garage, Account and Drive behavior.
 
 LotKeys V0.9.4.44 FULL RELEASE

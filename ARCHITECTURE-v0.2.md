@@ -1,5 +1,13 @@
 # LotKeys architecture v0.2
 
+## V0.9.4.47 account Awards and Lot-Lvl
+
+- Store data owns the shared Award definitions, nomination/review queue and each current Store member's public Award summary.
+- Personal `Account.json` carries the user's earned Awards, Primary/five-display choices, Lot-Lvl progress and check-in state across Store changes.
+- Lot-Lvl uses deduplicated, confirmed Facebook Marketplace vehicle-post records. The V0.9.4.47 testing curve spans Level 1–100 and reaches Level 100 at 1,000 confirmed posts.
+- Automatic grants use stable audit IDs so the same correction, Listing or Monthly Wrap-Up event cannot be counted twice.
+- The current Google Drive design provides Store-administered records; a future LotKeys account-directory/backend remains necessary for global cross-Store discovery and stronger server-authoritative enforcement.
+
 ## Core rule
 
 A Vehicle Profile and a Marketplace Listing are different records.

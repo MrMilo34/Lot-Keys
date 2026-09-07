@@ -1,14 +1,30 @@
-LotKeys V0.9.4.46 FULL RELEASE
-Chat hub + contacts, groups and calls test update
+LotKeys V0.9.4.48 FULL RELEASE
+New canonical LotKeys icon
 
+- Uses the supplied black-and-blue LotKeys key/tag artwork as the canonical default app logo.
+- Updates the in-app header/default Store image, loading screen and Chat branding fallback.
+- Updates the installed Android/PWA icon, Apple touch icon and browser favicon with purpose-sized PNG assets.
+- Bumps the app, feature-module and offline-cache versions so browsers request the new artwork.
+- Keeps uploaded Store logos as intentional Store-specific branding overrides.
+- Preserves every V0.9.4.47 Chat, Calls, Contacts, Groups, Awards, Lot-Lvl, Inventory, Listings, Garage, Account and Drive feature for testing.
+
+LotKeys V0.9.4.47 FULL RELEASE
+Chat isolation + registered contact lookup + Lot-Lvl/Awards test update
+
+- Chat now owns an opaque viewport down to the measured top of the bottom navigation, so Home, Inventory and Vehicle cards cannot show through while Chat is open.
 - Chat is now a normal persistent tab with no separate Exit box.
 - The Chat hub adds LotKeys branding, search, live time/date and All / Unread / Groups / Contacts filters.
+- Rebuilds the Add Contact icon as a stable layered person/plus control and supports exact registered email-address or phone-number lookup within the current Store and saved conversations.
 - Call and ＋ actions provide Add Contact, Group Chat, temporary/Permanent Group Call, LotKeys VOIP and phone-dialer paths.
 - Current Store users appear directly in the new-chat and call pickers. Existing conversations and saved Contacts/Favorites remain visible after a user leaves the active Store.
 - Group creators, appointed Group admins and approved Store admins receive the appropriate member controls. Every user can personally mute or block unwanted communication.
 - Account settings now include an optional phone number used only to offer Call using Phone to people who can already find that account in LotKeys Chat.
 - The full call screen includes Speaker, Screen Share, Mute, Send File, Video Call and End Call.
 - Send File securely carries device files up to 4 MB inside the encrypted Chat envelope and keeps the existing LotKeys Vehicle/Listing share cards.
+- Introduces the first LotKeys Awards system with 14 confirmed badge designs, one Primary Award plus five displayed Awards, a full Award gallery/detail view, repeat counters, and public Profile presentation.
+- Adds account-carried Lot-Lvl 1–100 progress. This test curve reaches Lot-Lvl 100 at 1,000 confirmed Facebook Marketplace vehicle posts and is deliberately ready for revision after testing.
+- Adds Admin Level 1 nominations, Admin Level 2 review/direct grants, user Award requests, and verified automatic milestones for approved Vehicle Profile corrections, eligible Facebook posts, Monthly Wrap-Ups and check-in activity.
+- Award definitions and administration records sync through the current Store data; each user's earned Awards, display choices and Lot-Lvl also sync through their personal LotKeys Account data.
 - Cross-Store account discovery and delivery are represented safely in the interface but require the future LotKeys account-directory service before they can operate outside the active Store.
 
 LotKeys V0.9.4.44 FULL RELEASE
