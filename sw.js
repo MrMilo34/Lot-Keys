@@ -1,41 +1,82 @@
-const CACHE='lotkeys-drive-test-v094491';
-const LOTKEYS_GOOGLE_CLIENT_ID='61170708521-468omogqcjqfv4msjjl7pqihcjfocl5i.apps.googleusercontent.com';
-const CORE=['./','./index.html','./manifest.webmanifest','./icon.svg','./lotkeys-creator-access.json','./assets/carfax-one-owner.png','./assets/carfax-low-kilometres.png','./assets/carfax-no-reported-accidents.png','./assets/lotkeys-default-logo.png','./assets/lotkeys-icon-192.png','./assets/lotkeys-apple-touch-icon.png','./assets/lotkeys-favicon.png','./assets/awards/almost-hat-trick.png','./assets/awards/big-number-1.png','./assets/awards/big-runner-up.png','./assets/awards/detail-detective.png','./assets/awards/faster-as-f-boy.png','./assets/awards/folder-freak.png','./assets/awards/hat-trick.png','./assets/awards/ice-streak.png','./assets/awards/iced-iced-baby.png','./assets/awards/mr-over-achiever.png','./assets/awards/no-newbie.png','./assets/awards/runner-up-to-runner-up.png','./assets/awards/true-achiever.png','./assets/awards/you-did-a-thing.png','./lotkeys-messaging-v09449.js','./lotkeys-awards-v09449.js'];
-const GOOGLE_CLIENT_SETTING="clientId: (await setting('googleClientId','')).trim(),";
-const GOOGLE_CLIENT_BOOTSTRAP=`clientId: ((await setting('googleClientId','')).trim() || '${LOTKEYS_GOOGLE_CLIENT_ID}'),`;
-const PERSONAL_LOCATION_SETTING="async function choosePersonalAccountLocation(){const c=await config();";
-const PERSONAL_LOCATION_BOOTSTRAP="async function choosePersonalAccountLocation(){await authorize(false);const automatic=await ensurePersonalProfileRoot({createIfMissing:true,parentId:'root',parentName:'My Drive'});if(automatic)return automatic;const c=await config();";
+const CACHE='lotkeys-drive-test-v09450';
+const CORE=[
+  './',
+  './index.html',
+  './install.html',
+  './privacy.html',
+  './terms.html',
+  './manifest.webmanifest',
+  './icon.svg',
+  './lotkeys-creator-access.json',
+  './lotkeys-store-directory.json',
+  './lotkeys-messaging-v09450.js',
+  './lotkeys-awards-v09450.js',
+  './assets/carfax-one-owner.png',
+  './assets/carfax-low-kilometres.png',
+  './assets/carfax-no-reported-accidents.png',
+  './assets/lotkeys-default-logo.png',
+  './assets/lotkeys-icon-192.png',
+  './assets/lotkeys-apple-touch-icon.png',
+  './assets/lotkeys-favicon.png',
+  './assets/awards/almost-hat-trick.png',
+  './assets/awards/anti-celibratory.png',
+  './assets/awards/big-number-1.png',
+  './assets/awards/big-runner-up.png',
+  './assets/awards/bronze-medal.png',
+  './assets/awards/cash-celebration.png',
+  './assets/awards/cherrys.png',
+  './assets/awards/detail-detective.png',
+  './assets/awards/dude-wheres-my-car.png',
+  './assets/awards/faster-as-f-boy.png',
+  './assets/awards/folder-freak.png',
+  './assets/awards/gold-medal.png',
+  './assets/awards/hat-trick.png',
+  './assets/awards/ice-streak.png',
+  './assets/awards/iced-iced-baby.png',
+  './assets/awards/lotkeys-developer.png',
+  './assets/awards/maaaaybeee.png',
+  './assets/awards/mr-over-achiever.png',
+  './assets/awards/mr-sales-man.png',
+  './assets/awards/new-kid-on-the-lot.png',
+  './assets/awards/no-newbie.png',
+  './assets/awards/quarter-k-club.png',
+  './assets/awards/runner-up-to-runner-up.png',
+  './assets/awards/sales-100.png',
+  './assets/awards/sales-1000.png',
+  './assets/awards/sales-50.png',
+  './assets/awards/sales-500.png',
+  './assets/awards/silver-medal.png',
+  './assets/awards/true-achiever.png',
+  './assets/awards/woop-woop.png',
+  './assets/awards/you-did-a-thing.png'
+];
 
-async function patchLotKeysHtml(response){
-  if(!response) return response;
-  const html=await response.text();
-  let patched=html.includes(GOOGLE_CLIENT_SETTING)?html.split(GOOGLE_CLIENT_SETTING).join(GOOGLE_CLIENT_BOOTSTRAP):html;
-  patched=patched.includes(PERSONAL_LOCATION_SETTING)?patched.split(PERSONAL_LOCATION_SETTING).join(PERSONAL_LOCATION_BOOTSTRAP):patched;
-  const headers=new Headers(response.headers);
-  headers.delete('content-length');
-  headers.delete('content-encoding');
-  return new Response(patched,{status:response.status,statusText:response.statusText,headers});
-}
+self.addEventListener('install',event=>event.waitUntil(
+  caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())
+));
 
-async function seedCache(){
-  const cache=await caches.open(CACHE);
-  await cache.addAll(CORE);
-  for(const key of ['./','./index.html']){
-    const response=await cache.match(key);
-    if(response) await cache.put(key,await patchLotKeysHtml(response));
-  }
-}
+self.addEventListener('activate',event=>event.waitUntil(
+  caches.keys()
+    .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
+    .then(()=>self.clients.claim())
+));
 
-self.addEventListener('install',e=>e.waitUntil(seedCache().then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET') return;
-  const u=new URL(e.request.url);
-  if(u.origin!==location.origin) return;
-  const isAppPage=e.request.mode==='navigate'&&(u.pathname.endsWith('/')||u.pathname.endsWith('/index.html'));
-  if(isAppPage){
-    e.respondWith(fetch(e.request,{cache:'no-store'}).then(async r=>{const patched=await patchLotKeysHtml(r);const copy=patched.clone();caches.open(CACHE).then(c=>c.put('./index.html',copy));return patched;}).catch(()=>caches.match('./index.html').then(r=>r||caches.match('./'))));
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
+  const url=new URL(event.request.url);
+  if(url.origin!==location.origin)return;
+  const navigation=event.request.mode==='navigate';
+  if(navigation){
+    event.respondWith(
+      fetch(event.request,{cache:'no-store'})
+        .then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response})
+        .catch(()=>caches.match(event.request).then(response=>response||caches.match('./index.html')))
+    );
     return;
   }
-  e.respondWith(fetch(e.request,{cache:'no-cache'}).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return r;}).catch(()=>caches.match(e.request)));
+  event.respondWith(
+    fetch(event.request,{cache:'no-cache'})
+      .then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response})
+      .catch(()=>caches.match(event.request))
+  );
 });

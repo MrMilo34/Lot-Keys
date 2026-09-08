@@ -1,3 +1,31 @@
+# LotKeys V0.9.4.50 — Team Test Release
+
+This release joins the new Chat, onboarding, Awards, domain, install and Post Buddy work into one complete test package.
+
+## V0.9.4.50 highlights
+
+- **Always-ready Chat:** cached conversations render immediately; encrypted message polling continues while LotKeys is open; Home/Inventory no longer bleeds through the Chat surface.
+- **Chat controls:** the selected bottom Chat tab stays highlighted, Call/＋ sit above the navigation, and Add Contact accepts an exact registered email address or phone number.
+- **Account setup:** Google sign-in creates or restores the personal `Lot-Keys Account` folder automatically; Store Code connection uses the published Store directory while Google Drive permission remains authoritative.
+- **Awards:** the expanded catalog is tied to Profile creation, Listing activity, Facebook posting/sales, Monthly Wrap-Ups, approved corrections, inactivity and Creator-only grants. Primary art repaints immediately and the full five-badge tiles drag on touch or mouse.
+- **Lock Screen:** manual and device-specific idle locking now uses a salted PBKDF2 credential hash and slows repeated failed attempts.
+- **Lot-Keys.ca:** includes the GitHub Pages `CNAME`, DNS instructions, public Privacy/Terms pages and `install.html` for Home Screen/desktop PWA installation.
+- **Post Buddy:** V0.1.13 uses current LotKeys branding, recognizes `lot-keys.ca`, `www.lot-keys.ca`, and the old GitHub Pages address during transition, and includes its GitHub release check. The in-app card preserves the repository's stable “Latest” download.
+- **Listing/Garage polish:** one-press Description Builder, expandable editable vehicle details, compact Vehicle Profile photo review, separated personal/Store posting locations, and reorganized Awards/analytics controls.
+
+## Release status
+
+This is a controlled **team-test release**. Use approved OAuth test accounts and non-sensitive data. Before public launch, complete the items in `SECURITY-RELEASE-GATE.md`, especially server-side Store/Admin/Creator enforcement, authenticated cross-Store messaging, production OAuth verification, push delivery and call signalling/TURN.
+
+Useful setup files:
+
+- `DNS-SETUP-LOT-KEYS-CA.md`
+- `GOOGLE-CLOUD-SETUP.md`
+- `SECURITY-RELEASE-GATE.md`
+- `DEPLOY-GITHUB-PAGES.md`
+
+---
+
 # LotKeys V0.9.4.49
 
 This testing release adds immediate Awards UI refresh, full-badge Award ordering, Lock Screen, first-run account guidance, personal/Store posting locations, Post Buddy access, one-press description building, and compact Vehicle Profile photo review.

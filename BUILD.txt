@@ -1,3 +1,15 @@
+V0.9.4.50 TEAM TEST RELEASE
+- Chat opens immediately from its local archive, stays isolated from Home/Inventory, and refreshes messages in the background while LotKeys is open.
+- Corrected bottom Chat Call / + placement, active-tab behavior, and Add Contact email-or-phone lookup.
+- Adds Google first-run Account bootstrap, Store Code lookup directory and clearer test-user sign-in errors.
+- Adds Lot-Keys.ca custom-domain files, Privacy/Terms pages and a dedicated install.html PWA link.
+- Connects Post Buddy V0.1.13 with current LotKeys branding, Lot-Keys.ca support, its built-in release check and the repository's always-current download path.
+- Expands and connects the Awards system, including sales, monthly medals, new-account, hidden-time, inactivity and Creator-only recognition.
+- Primary Award changes redraw immediately; its artwork appears before the user name. All five display badges are draggable from the full tile on touch/mouse.
+- Strengthens the local Lock Screen with salted PBKDF2 hashing and repeated-attempt delay.
+- Moves and highlights Garage administration/location/analytics controls, builds descriptions immediately, and compacts existing Vehicle Profile photo review.
+- Includes DNS setup and a public-launch security gate. V0.9.4.50 is for controlled team testing; public Chat/admin security still requires the planned authenticated backend.
+
 V0.9.4.49
 - Immediate Primary Award refresh and artwork-before-name identity display.
 - Whole-badge mouse/touch reordering for five displayed Awards; long-hold context menus suppressed.
