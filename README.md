@@ -1,4 +1,8 @@
-LotKeys V0.9.4.48 FULL RELEASE
+# LotKeys V0.9.4.49
+
+This testing release adds immediate Awards UI refresh, full-badge Award ordering, Lock Screen, first-run account guidance, personal/Store posting locations, Post Buddy access, one-press description building, and compact Vehicle Profile photo review.
+
+LotKeys V0.9.4.49 FULL RELEASE
 New canonical LotKeys icon
 
 - Uses the supplied black-and-blue LotKeys key/tag artwork as the canonical default app logo.

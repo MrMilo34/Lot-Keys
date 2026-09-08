@@ -1,10 +1,20 @@
-LotKeys V0.9.4.48 FULL RELEASE
+V0.9.4.49
+- Immediate Primary Award refresh and artwork-before-name identity display.
+- Whole-badge mouse/touch reordering for five displayed Awards; long-hold context menus suppressed.
+- Local Lock Screen with manual and per-device idle settings.
+- First-run Google/Drive/Store guidance plus PWA install entry point.
+- Personal and Store posting-location separation; Garage section reorganization.
+- FaceBook Post Buddy desktop/mobile CTA with Admin Level 2 release-link fields.
+- One-press Description Builder, expandable editable source details, compact Vehicle Profile photo review.
+- Iced Iced Baby corrected to 30 inactive days and five active-day recovery.
+
+LotKeys V0.9.4.49 FULL RELEASE
 New canonical LotKeys icon
 
 - Replaces all default LotKeys application icon sizes with the supplied black-and-blue key/tag artwork.
 - Covers the in-app default, Chat fallback, loading view, Android/PWA install icon, Apple touch icon, favicon and offline cache.
 - Keeps custom Store-uploaded logos as Store-specific overrides.
-- Bumps the release, feature modules, service worker and manifest to V0.9.4.48 / 09448.
+- Bumps the release, feature modules, service worker and manifest to V0.9.4.49 / 09449.
 - Includes all V0.9.4.47 functionality unchanged for the next test round.
 
 LotKeys V0.9.4.47 FULL RELEASE
