@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "updatedAt": "2026-09-08T05:48:00Z",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-08T06:00:00Z",
   "stores": [
     {
       "storeCode": "INF-SE034",
@@ -8,7 +8,18 @@
       "storeName": "Infiniti South Edmonton",
       "driveFolderId": "1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g",
       "status": "active",
-      "accessModel": "reader-root-limited-folders-v1"
+      "accessModel": "reader-root-limited-folders-v2",
+      "joinRole": "reader",
+      "security": {
+        "neverGrantRegularUserRootWriter": true,
+        "protectedFolderNames": [
+          "Administration",
+          "Vehicle Data - Administrative"
+        ],
+        "userWritableScope": "Users/{approvedUserName}",
+        "inventoryWritePolicy": "brokered-or-approved-contribution-only",
+        "sharedVehicleFolderRole": "reader"
+      }
     }
   ]
 }
