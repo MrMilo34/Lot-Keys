@@ -3,11 +3,14 @@ const LOTKEYS_GOOGLE_CLIENT_ID='61170708521-468omogqcjqfv4msjjl7pqihcjfocl5i.app
 const CORE=['./','./index.html','./manifest.webmanifest','./icon.svg','./lotkeys-creator-access.json','./assets/carfax-one-owner.png','./assets/carfax-low-kilometres.png','./assets/carfax-no-reported-accidents.png','./assets/lotkeys-default-logo.png','./assets/lotkeys-icon-192.png','./assets/lotkeys-apple-touch-icon.png','./assets/lotkeys-favicon.png','./assets/awards/almost-hat-trick.png','./assets/awards/big-number-1.png','./assets/awards/big-runner-up.png','./assets/awards/detail-detective.png','./assets/awards/faster-as-f-boy.png','./assets/awards/folder-freak.png','./assets/awards/hat-trick.png','./assets/awards/ice-streak.png','./assets/awards/iced-iced-baby.png','./assets/awards/mr-over-achiever.png','./assets/awards/no-newbie.png','./assets/awards/runner-up-to-runner-up.png','./assets/awards/true-achiever.png','./assets/awards/you-did-a-thing.png','./lotkeys-messaging-v09449.js','./lotkeys-awards-v09449.js'];
 const GOOGLE_CLIENT_SETTING="clientId: (await setting('googleClientId','')).trim(),";
 const GOOGLE_CLIENT_BOOTSTRAP=`clientId: ((await setting('googleClientId','')).trim() || '${LOTKEYS_GOOGLE_CLIENT_ID}'),`;
+const PERSONAL_LOCATION_SETTING="async function choosePersonalAccountLocation(){const c=await config();";
+const PERSONAL_LOCATION_BOOTSTRAP="async function choosePersonalAccountLocation(){await authorize(false);const automatic=await ensurePersonalProfileRoot({createIfMissing:true,parentId:'root',parentName:'My Drive'});if(automatic)return automatic;const c=await config();";
 
 async function patchLotKeysHtml(response){
   if(!response) return response;
   const html=await response.text();
-  const patched=html.includes(GOOGLE_CLIENT_SETTING)?html.split(GOOGLE_CLIENT_SETTING).join(GOOGLE_CLIENT_BOOTSTRAP):html;
+  let patched=html.includes(GOOGLE_CLIENT_SETTING)?html.split(GOOGLE_CLIENT_SETTING).join(GOOGLE_CLIENT_BOOTSTRAP):html;
+  patched=patched.includes(PERSONAL_LOCATION_SETTING)?patched.split(PERSONAL_LOCATION_SETTING).join(PERSONAL_LOCATION_BOOTSTRAP):patched;
   const headers=new Headers(response.headers);
   headers.delete('content-length');
   headers.delete('content-encoding');
