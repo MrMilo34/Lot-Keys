@@ -1,3 +1,37 @@
+# LotKeys V0.9.4.52 — Post Buddy Pointer Release
+
+This update removes the duplicate Post Buddy `Latest.zip` workflow. LotKeys now reads `extension/latest.json`, which points to the current versioned ZIP. Updating Post Buddy only requires uploading the new versioned archive and changing the pointer after the upload completes.
+
+## V0.9.4.52 highlights
+
+- The Garage download button reads the trusted GitHub Post Buddy release pointer before downloading.
+- The Admin Level 2 field now stores the release pointer URL instead of a direct ZIP URL.
+- Existing direct trusted ZIP overrides remain readable as a compatibility fallback.
+- GitHub needs one current versioned Post Buddy ZIP; no duplicate `Latest.zip` is required.
+
+## Previous fixed release
+
+# LotKeys V0.9.4.51 — Fixed Team Test Release
+
+This build completes the Awards correction round and the connected account, Listing, Vehicle Profile, Garage, Management and synchronization tweaks requested during V0.9.4.50 testing.
+
+## V0.9.4.51 highlights
+
+- **Verified Facebook sales:** `I Sold This Vehicle` works only on the Listing owner’s valid, unique Facebook Marketplace item URL. Non-Facebook, generic Marketplace and reused item links cannot increase sales totals or unlock milestone Awards.
+- **Corrected Awards:** confirmed names, artwork and unlock descriptions are included through 1,000 tracked sales. `Faster as F Boy!` requires a successful source-page check that explicitly found a call/contact-for-price placeholder before a numeric Listing is posted.
+- **Developer Tool Kit:** the registered Creator account can deliver one-off special Awards and Store celebrations to selected users. “All users in Store” deliberately excludes the sender unless selected manually, and every special grant has an audit record.
+- **Pending Deal workflow:** Vehicle Profile owners, Trusted users and Administrators can apply Pending Deal directly; other users send a review request. `I Sold This Vehicle` starts the same workflow automatically.
+- **New-account guidance:** first sign-in begins with name and phone fields, then guided spotlights help genuinely new accounts connect to a Store, import and approve their first Vehicle Profile, and add a profile photo. Help can replay the walkthrough later.
+- **Account privacy and recovery:** Lock Screen settings now travel in the user’s private `Account.json`; Sign Out is available beside Save Account Settings; connected regular users no longer see the Store Code, while Admin Level 1 and 2 retain access.
+- **Interface fixes:** compact Vehicle creator identity rows, static Profile photo review, neutral secondary Copy/View controls, corrected Listing action emphasis, cleaner Management dates/flag, folded Google test credentials and modern inset Lock/Sign-In fields.
+- **Sync-state repair:** completed startup Vehicle synchronization repaints Home and Inventory immediately so the striped loading treatment cannot linger until a tab change.
+
+## Release status
+
+V0.9.4.51 remains a controlled **team-test release**. Google OAuth, Drive authorization, cross-account delivery and live Facebook behavior must still be verified with approved test accounts. Public security gates remain documented in `SECURITY-RELEASE-GATE.md`.
+
+---
+
 # LotKeys V0.9.4.50 — Team Test Release
 
 This release joins the new Chat, onboarding, Awards, domain, install and Post Buddy work into one complete test package.

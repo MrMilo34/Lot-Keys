@@ -5,17 +5,20 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
 ## Team-test deployment
 
 1. Open the existing `MrMilo34/Lot-Keys` repository and use its `main` branch.
-2. Upload **all contents** of the full LotKeys release folder to the repository root. Do not omit the `assets` or `downloads` folders or either versioned feature module. The required root items include:
+2. Upload **all contents** of the full LotKeys release folder to the repository root. Do not omit the `assets` or `extension` folders or either versioned feature module. The required root items include:
    - `index.html`
    - `manifest.webmanifest`
    - `sw.js`
    - `icon.svg`
-   - `lotkeys-messaging-v09450.js`
-   - `lotkeys-awards-v09450.js`
+   - `lotkeys-messaging-v09452.js`
+   - `lotkeys-awards-v09452.js`
    - `install.html`, `privacy.html`, and `terms.html`
    - `lotkeys-store-directory.json`, `lotkeys-creator-access.json`, and `CNAME`
    - the complete `assets` folder
-   - the existing `extension/latest` and `extension/releases/LotKeys-Facebook-Assistant-Latest.zip` Post Buddy files
+   - `extension/latest.json`
+   - the existing `extension/latest` unpacked Post Buddy source
+   - `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.13.zip`
+   - no duplicate `LotKeys-Facebook-Assistant-Latest.zip` is required
 3. Open the repository's **Settings**.
 4. Open **Pages** under Code and automation.
 5. Under Build and deployment, choose **Deploy from a branch**.

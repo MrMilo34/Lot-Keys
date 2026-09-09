@@ -1,4 +1,4 @@
-const CACHE='lotkeys-drive-test-v09450-account-safe1';
+const CACHE='lotkeys-drive-test-v09452-post-buddy-pointer';
 const CORE=[
   './',
   './index.html',
@@ -9,8 +9,8 @@ const CORE=[
   './icon.svg',
   './lotkeys-creator-access.json',
   './lotkeys-store-directory.json',
-  './lotkeys-messaging-v09450.js',
-  './lotkeys-awards-v09450.js',
+  './lotkeys-messaging-v09452.js',
+  './lotkeys-awards-v09452.js',
   './assets/carfax-one-owner.png',
   './assets/carfax-low-kilometres.png',
   './assets/carfax-no-reported-accidents.png',
@@ -26,6 +26,7 @@ const CORE=[
   './assets/awards/cash-celebration.png',
   './assets/awards/cherrys.png',
   './assets/awards/detail-detective.png',
+  './assets/awards/the-dark-knight.png',
   './assets/awards/dude-wheres-my-car.png',
   './assets/awards/faster-as-f-boy.png',
   './assets/awards/folder-freak.png',

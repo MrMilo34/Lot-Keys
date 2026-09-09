@@ -2,7 +2,7 @@
 
 Use this only for the current test build. The release version should not ask dealership users to enter developer credentials.
 
-## V0.9.4.50 team-test note
+## V0.9.4.51 team-test note
 
 The official build now includes the current LotKeys OAuth Web Client ID, so normal testers should not paste developer credentials into the app. Keep the Google Auth Platform app in **Testing** and add every tester's exact Google account email under **Test users**.
 
@@ -12,7 +12,7 @@ Add these Authorized JavaScript origins to the Web Client:
 - `https://www.lot-keys.ca`
 - `https://mrmilo34.github.io` during the domain transition
 
-The current Store Code discovery design requests `drive.file` plus `drive.readonly`. `drive.readonly` is broader than the intended public scope and is a production release gate: either complete Google's required scope/security verification or replace discovery with the planned authenticated backend and a narrower file-access flow. Do not describe the current V0.9.4.50 scope as `drive.file`-only.
+The current Store Code discovery design requests `drive.file` plus `drive.readonly`. `drive.readonly` is broader than the intended public scope and is a production release gate: either complete Google's required scope/security verification or replace discovery with the planned authenticated backend and a narrower file-access flow. Do not describe the current V0.9.4.51 scope as `drive.file`-only.
 
 For public release, move to a separate production Google Cloud project, verify `lot-keys.ca`, publish the included Privacy/Terms pages, and complete the production readiness work in `SECURITY-RELEASE-GATE.md`.
 
@@ -36,7 +36,7 @@ In Google Auth Platform:
 - Use External audience for a normal personal Google account.
 - Keep the app in Testing while we develop.
 - Add your own Google account under Test users.
-- V0.9.4.50 requests `openid`, `email`, `drive.file`, and `drive.readonly` for the controlled team test.
+- V0.9.4.51 requests `openid`, `email`, `drive.file`, and `drive.readonly` for the controlled team test.
 
 `drive.file` covers files the user granted to or created with LotKeys. The additional `drive.readonly` scope currently enables Store Code discovery across an already-shared Store folder and must be removed or formally reviewed before public launch.
 
@@ -84,7 +84,7 @@ Tap **Save Google Test Credentials**.
 
 Use **Connect Google Drive** and approve access.
 
-Then use **Choose Store Folder**. Selecting the folder through Google Picker is still the preferred explicit setup path. V0.9.4.50's optional Store Code discovery currently also uses read-only Drive discovery as documented above.
+Then use **Choose Store Folder**. Selecting the folder through Google Picker is still the preferred explicit setup path. V0.9.4.51's optional Store Code discovery currently also uses read-only Drive discovery as documented above.
 
 Enter the Store name and your user name, then tap **Initialize / Repair Store Structure**.
 

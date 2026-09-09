@@ -1,3 +1,21 @@
+V0.9.4.52 POST BUDDY POINTER RELEASE
+- Uses extension/latest.json as the single trusted pointer for the current Post Buddy download.
+- Downloads the versioned Post Buddy ZIP named by the pointer instead of a duplicate Latest ZIP.
+- Keeps legacy direct trusted ZIP URLs readable while new Admin Level 2 settings store the pointer URL.
+- Packages the GitHub extension/latest and extension/releases structure with only the current versioned archive.
+
+V0.9.4.51 FIXED TEAM TEST RELEASE
+- Corrects and expands the LotKeys Award catalog, artwork and descriptions through 1,000 verified Facebook Marketplace sales.
+- Requires the Listing owner, a valid unique Facebook Marketplace item URL and the I Sold This Vehicle action before a sale counts.
+- Adds Creator-bound Developer tools for audited one-off badge drops and selected/Store-wide celebrations.
+- Adds direct-versus-requested Pending Deal handling based on Vehicle owner, Trusted User and Administrator permissions.
+- Adds the simplified name/phone Google sign-in surface, first-account Store/Profile guidance, replayable Help walkthroughs and Sign Out.
+- Saves Lock Screen hash/salt and idle settings to the user’s private Account.json.
+- Hides Store Code from connected regular users while retaining it for Admin Level 1 and 2.
+- Adds compact creator rows, static Profile photo review, neutral secondary link actions and corrected Listing button emphasis.
+- Organizes Garage settings into Vehicle Profiles • Inventory and Google Test Credentials disclosures.
+- Clears stale Vehicle synchronization visuals immediately after startup jobs settle.
+
 V0.9.4.50 TEAM TEST RELEASE
 - Account sign-in is now strictly read-first: an existing Account.json is restored before any save, and an unreadable existing account blocks without overwriting Drive data.
 - Chat opens immediately from its local archive, stays isolated from Home/Inventory, and refreshes messages in the background while LotKeys is open.
