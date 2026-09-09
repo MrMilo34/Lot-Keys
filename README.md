@@ -1,3 +1,32 @@
+# LotKeys V0.9.4.54 — Dev Tool Kit and Post Buddy Mobile Fixes
+
+This fixed team-test release corrects the Dev Tool Kit recipient and preview behavior shown during phone testing. It also removes the redundant mobile website button from the Post Buddy card and makes the desktop ZIP-download workflow explicit.
+
+## V0.9.4.54 highlights
+
+- **Safe Store-wide selection:** All users in Store excludes the sender using all permanent account identifiers; the sender can still check themselves manually.
+- **Real previews:** Preview Celebration displays the actual headline, message and optional Award with the party effect, but does not write an event or grant an Award.
+- **No duplicate Dev action:** Special Award Builder and the separate generic preview were duplicates, so the Dev Tool Kit now presents Store-wide Celebration and Special Award Drop only. Each opens its own editor and preview.
+- **Phone Post Buddy card:** mobile users see a short PC-only explanation with no Open LotKeys Website button.
+- **PC Post Buddy card:** the button reads Download Post Buddy ZIP and explains the required extract / Load unpacked step.
+- **One release setting:** Admin Level 2 keeps the Post Buddy Release Pointer URL; the unused public-website URL field is removed.
+
+## Previous release
+
+# LotKeys V0.9.4.53 — Transparent Awards and Pending Ribbon
+
+This fixed team-test release replaces every catalogued Award with Blair’s corrected transparent PNG artwork and finishes the remaining Award, Pending Deal and Account-display corrections.
+
+## V0.9.4.53 highlights
+
+- All 31 catalogued Award images now use the supplied transparent-background PNG files.
+- Repeatable Award counters are smaller and sit on the upper-right edge without covering the artwork.
+- Inventory cards display a user-accent-coloured **Pending** ribbon only after Pending Deal is directly applied or an Administration request is approved.
+- The closed Account disclosure button now reads **Edit Account** and retains its gray **Expanded** state when open.
+- The V0.9.4.52 Post Buddy pointer workflow remains unchanged.
+
+## Previous release
+
 # LotKeys V0.9.4.52 — Post Buddy Pointer Release
 
 This update removes the duplicate Post Buddy `Latest.zip` workflow. LotKeys now reads `extension/latest.json`, which points to the current versioned ZIP. Updating Post Buddy only requires uploading the new versioned archive and changing the pointer after the upload completes.

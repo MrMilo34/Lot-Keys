@@ -1,3 +1,19 @@
+V0.9.4.54 DEV TOOL KIT + POST BUDDY MOBILE FIXED RELEASE
+- Corrects All users in Store so the sender stays unchecked until selected manually.
+- Preview Celebration now shows the composed headline, message and optional Award without sending anything.
+- Removes the duplicate Special Award Builder and stand-alone preview buttons; both remaining Dev tools include their own editor and preview.
+- Removes the redundant Open LotKeys Website action from phones.
+- Clarifies that the PC action downloads the Post Buddy ZIP for manual installation in desktop Chrome.
+- Removes the obsolete Public LotKeys website URL field from the Post Buddy release settings.
+- Keeps V0.9.4.53 transparent Award artwork, counters, Pending ribbon and all earlier fixes.
+
+V0.9.4.53 TRANSPARENT AWARDS + PENDING RIBBON FIXED RELEASE
+- Replaces all 31 catalogued Award images with the supplied real RGBA transparent PNG files.
+- Repositions repeatable Award counters to the upper-right edge and reduces their obstruction of small artwork.
+- Adds the user Accent Color Pending ribbon to Inventory cards after Pending Deal is directly applied or approved.
+- Renames the closed Account disclosure action to Edit Account while preserving the gray Expanded state.
+- Retains the V0.9.4.52 Post Buddy pointer behavior and single versioned extension archive.
+
 V0.9.4.52 POST BUDDY POINTER RELEASE
 - Uses extension/latest.json as the single trusted pointer for the current Post Buddy download.
 - Downloads the versioned Post Buddy ZIP named by the pointer instead of a duplicate Latest ZIP.
