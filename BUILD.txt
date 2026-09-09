@@ -1,4 +1,5 @@
 V0.9.4.50 TEAM TEST RELEASE
+- Account sign-in is now strictly read-first: an existing Account.json is restored before any save, and an unreadable existing account blocks without overwriting Drive data.
 - Chat opens immediately from its local archive, stays isolated from Home/Inventory, and refreshes messages in the background while LotKeys is open.
 - Corrected bottom Chat Call / + placement, active-tab behavior, and Add Contact email-or-phone lookup.
 - Adds Google first-run Account bootstrap, Store Code lookup directory and clearer test-user sign-in errors.

@@ -15,6 +15,7 @@ Use approved Google OAuth test accounts and non-sensitive dealership test data. 
 - Confirm LotKeys automatically creates or restores `Lot-Keys Account/Account.json` in that user's My Drive.
 - Connect with Store Code `INF-SE034` and confirm it resolves to Infiniti South Edmonton only when that Google account has Drive permission.
 - Close and reopen LotKeys; confirm Account, appearance, Awards, personal posting locations, and saved Store restore correctly.
+- Before testing with a valuable existing account, make a Drive copy of `Lot-Keys Account`. Confirm first sign-in restores its `Account.json` before any save; an intentionally unreadable test copy must stop with “Nothing was overwritten.”
 - Confirm an unapproved Google account receives a clear test-user message and an account without Store Drive permission is not admitted by knowing the Store Code.
 
 ## 3. Chat on two test accounts

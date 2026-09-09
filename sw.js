@@ -1,4 +1,4 @@
-const CACHE='lotkeys-drive-test-v09450';
+const CACHE='lotkeys-drive-test-v09450-account-safe1';
 const CORE=[
   './',
   './index.html',

@@ -7,6 +7,7 @@ This release joins the new Chat, onboarding, Awards, domain, install and Post Bu
 - **Always-ready Chat:** cached conversations render immediately; encrypted message polling continues while LotKeys is open; Home/Inventory no longer bleeds through the Chat surface.
 - **Chat controls:** the selected bottom Chat tab stays highlighted, Call/＋ sit above the navigation, and Add Contact accepts an exact registered email address or phone number.
 - **Account setup:** Google sign-in creates or restores the personal `Lot-Keys Account` folder automatically; Store Code connection uses the published Store directory while Google Drive permission remains authoritative.
+- **Read-first account recovery:** when `Account.json` already exists, sign-in restores the Drive copy regardless of the new device's local timestamp. An unreadable existing account stops with a no-overwrite warning instead of replacing it with blank local defaults.
 - **Awards:** the expanded catalog is tied to Profile creation, Listing activity, Facebook posting/sales, Monthly Wrap-Ups, approved corrections, inactivity and Creator-only grants. Primary art repaints immediately and the full five-badge tiles drag on touch or mouse.
 - **Lock Screen:** manual and device-specific idle locking now uses a salted PBKDF2 credential hash and slows repeated failed attempts.
 - **Lot-Keys.ca:** includes the GitHub Pages `CNAME`, DNS instructions, public Privacy/Terms pages and `install.html` for Home Screen/desktop PWA installation.
