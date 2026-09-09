@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "creatorGoogleAccounts": [
+    "blairk34@live.com"
+  ],
+  "specialAwardIds": [
+    "lotkeys-developer"
+  ],
+  "note": "Creator access is matched case-insensitively against the email returned by Google sign-in."
+}
