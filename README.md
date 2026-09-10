@@ -1,8 +1,11 @@
-# LotKeys V0.9.4.57 — Store Code Connection Correction
+# LotKeys V0.9.4.58 — GitHub Root + Store Code Correction
 
-This corrected team-test release fixes the Store Code failure that appeared after Google sign-in and LotKeys Account creation. OAuth Test User approval and Google Drive folder editing are separate permissions: V0.9.4.57 requests a fresh Drive-write token for the existing Store folder and verifies that the signed-in account can add Store content.
+This corrected team-test release keeps the V0.9.4.57 Store Code fix and packages the GitHub Pages files directly at the ZIP root. The required custom-domain file is named exactly `CNAME` and sits beside `index.html`. OAuth Test User approval and Google Drive folder editing are separate permissions: V0.9.4.58 requests a fresh Drive-write token for the existing Store folder and verifies that the signed-in account can add Store content.
 
-## V0.9.4.57 highlights
+## V0.9.4.58 highlights
+
+- **GitHub-root package:** extracting the ZIP reveals the files that belong directly in the repository root, without another version folder to open.
+- **Exact custom-domain filename:** `CNAME` is included beside `index.html` and contains only `lot-keys.ca`.
 
 - **Correct Drive authorization:** replaces the read-oriented Store Code token combination with the Drive scope required to create LotKeys folders and files inside an existing shared Store.
 - **Fresh permission grant:** ignores the older cached authorization session so Google can request the corrected access once after the update.

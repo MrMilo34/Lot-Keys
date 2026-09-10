@@ -1,4 +1,4 @@
-const CACHE='lotkeys-drive-test-v09457-store-connection-fix';
+const CACHE='lotkeys-drive-test-v09458-github-root-fix';
 const CORE=[
   './',
   './index.html',

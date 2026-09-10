@@ -1,6 +1,6 @@
-# LotKeys V0.9.4.57 Store Code connection checklist
+# LotKeys V0.9.4.58 Store Code connection checklist
 
-- Upload the complete release, then open `https://lot-keys.ca/?build=09457` and confirm the version bar says V0.9.4.57.
+- Upload the complete release, then open `https://lot-keys.ca/?build=09458` and confirm the version bar says V0.9.4.58.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
 - Confirm the Store contains or creates the registered user's folder under `Users`, with `Listings` and `Listing Assets` inside it.
@@ -8,7 +8,7 @@
 - Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
 - Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.57 service-worker cache.
+- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.58 service-worker cache.
 
 ## Previous V0.9.4.56 checks
 

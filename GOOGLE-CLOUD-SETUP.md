@@ -2,7 +2,7 @@
 
 Use this only for the current test build. The release version should not ask dealership users to enter developer credentials.
 
-## V0.9.4.57 team-test note
+## V0.9.4.58 team-test note
 
 The official build now includes the current LotKeys OAuth Web Client ID, so normal testers should not paste developer credentials into the app. Keep the Google Auth Platform app in **Testing** and add every tester's exact Google account email under **Test users**.
 
@@ -12,7 +12,7 @@ Add these Authorized JavaScript origins to the Web Client:
 - `https://www.lot-keys.ca`
 - `https://mrmilo34.github.io` during the domain transition
 
-The current Store Code design resolves an existing shared Store folder and creates/updates content inside it. V0.9.4.57 therefore requests `https://www.googleapis.com/auth/drive` for the controlled team test. The previous `drive.file` plus `drive.readonly` combination could discover the folder but could not create children unless the folder had first been opened through Google Picker. Full Drive access is a production release gate: complete Google's required verification/security work or replace Store discovery with the planned authenticated backend and narrower picker/broker flow before public launch.
+The current Store Code design resolves an existing shared Store folder and creates/updates content inside it. V0.9.4.58 therefore requests `https://www.googleapis.com/auth/drive` for the controlled team test. The previous `drive.file` plus `drive.readonly` combination could discover the folder but could not create children unless the folder had first been opened through Google Picker. Full Drive access is a production release gate: complete Google's required verification/security work or replace Store discovery with the planned authenticated backend and narrower picker/broker flow before public launch.
 
 OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls which Store folders that person can edit. Share the root LotKeys Store folder with each tester's exact Google account as **Editor**.
 
@@ -39,7 +39,7 @@ In Google Auth Platform:
 - Keep the app in Testing while we develop.
 - Add your own Google account under Test users.
 - Under **Data Access**, add `https://www.googleapis.com/auth/drive` to the app's requested scopes.
-- V0.9.4.57 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
+- V0.9.4.58 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
 
 The Drive scope lets LotKeys locate the Store selected by its Store Code and build the required folders/files there. Treat it as a restricted team-test scope and do not move this static build to public production without completing the release gate.
 

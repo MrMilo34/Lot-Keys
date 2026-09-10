@@ -1,4 +1,4 @@
-V0.9.4.57 STORE CODE CONNECTION CORRECTION
+V0.9.4.58 GITHUB ROOT + STORE CODE CONNECTION CORRECTION
 - Requests fresh Google Drive write authorization for Store Code connections to existing Store folders.
 - Retires the previous cached authorization session so the corrected permission prompt can run once after updating.
 - Checks whether the signed-in Google account can add content to the Store folder and distinguishes OAuth Test User access from Drive Editor access.
