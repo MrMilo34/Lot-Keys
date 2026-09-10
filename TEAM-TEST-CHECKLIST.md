@@ -1,17 +1,26 @@
-# LotKeys V0.9.4.59 deployment and Store Code checklist
+# LotKeys V0.9.4.60 secure Store + More checklist
 
-- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09459` and confirm the version bar says V0.9.4.59.
+- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09460` and confirm the version bar says V0.9.4.60.
 - Confirm the repository root contains the exact file `CNAME` beside `index.html`; it must contain only `lot-keys.ca`.
-- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.59`, build `09459`, and cache `lotkeys-app-v09459-deployment-cache-polish`.
+- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.60`, build `09460`, and cache `lotkeys-app-v09460-least-privilege-more`.
 - Open `https://lot-keys.ca/install.html` once and confirm it returns to the current LotKeys build.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
-- Confirm the Store contains or creates the registered user's folder under `Users`, with `Listings` and `Listing Assets` inside it.
-- If an Administrator or Trusted test account must exercise automatic Store updates and LotKeys reports that it cannot add files, confirm management shared the root Store folder with that exact account as **Editor**. Keep regular users as **Viewer** until the separate Management approval path is released. OAuth Test User status alone does not grant Drive folder editing.
+- As Admin Level 2, add each exact Google email under **Garage → Approved Users**, press **Repair Store Structure**, and confirm its `Users/<name>` folder contains `Listings`, `Listing Assets`, and `More`.
+- Install the bundled Store Processor using `PROCESSOR-SETUP.md`; confirm `getLotKeysProcessorStatus` says `triggerInstalled: true`.
+- In Google Drive, confirm ordinary and Trusted users are Viewer/Reader on Store and Inventory, Writer only on their own user workspace, and not Editor on official Vehicle Profile folders.
+- Connect as an ordinary user and confirm Garage reaches **Connected to Store ✓** without asking management to share official Inventory as Editor.
+- Open any Vehicle Profile and confirm **View Your More Media Folder** opens that user’s per-vehicle Client Media folder.
+- Submit an ordinary user’s information correction and media. Confirm both appear for Administration review and official Inventory stays unchanged until approval.
+- Approve the contribution. Confirm approved media is copied into official Inventory while the user’s More copy remains available.
+- Submit a Trusted user information/price/Pending Deal correction. Confirm it applies after the processor runs, but Trusted photos/videos/documents still wait for Administration.
+- Create a genuinely new vehicle as a regular user. Confirm it becomes creator-owned after processing; then confirm the creator can update its information/media without receiving Drive Editor access to Inventory.
+- Attempt another profile with the same VIN (or, if no VIN, the same Stock Number). Confirm LotKeys blocks the duplicate claim and directs the user to the existing profile.
+- Confirm only Administrators see direct Delete; other users submit a removal request.
 - Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
 - Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.59 service-worker cache.
+- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.60 service-worker cache.
 - If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
 
 ## Previous V0.9.4.56 checks

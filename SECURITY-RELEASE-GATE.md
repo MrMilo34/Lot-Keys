@@ -2,15 +2,18 @@
 
 ## Current status: team testing
 
-V0.9.4.59 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
+V0.9.4.60 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
 
-The current release is a static browser application. Google Drive enforces file access, but browser code cannot safely be the final authority for Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, or long-lived authorization secrets.
+The website remains a static browser application. Google Drive enforces file access, and the installed Store Processor is the trusted writer for the current Inventory test model; a production service is still required as the final authority for multi-Store Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, and long-lived authorization secrets.
 
 ## Team-test controls now present
 
 - Google Identity Services account selection and explicit Drive authorization.
 - Automatic personal `Lot-Keys Account` creation/restoration in the signed-in user's My Drive.
 - Store Code lookup still requires the Google account to have permission to the Store Drive folder.
+- Official Inventory remains Viewer-only for ordinary and Trusted accounts; each user writes only to their own limited-access Listings/More workspace.
+- The Admin Level 2 Apps Script processor validates requests by their actual user workspace, applies the creator/Trusted exceptions, and leaves contributed media pending for Administration.
+- Approved media is copied into official Inventory, so later deletion of a user’s More copy cannot delete the official copy.
 - Creator-only award checks are case-insensitively bound to the configured Google account email.
 - Chat envelopes are encrypted in-browser under the current test design.
 - Account Lock Screen credentials use PBKDF2-SHA-256, a unique random device salt, and delays after repeated failures.
@@ -25,7 +28,8 @@ The current release is a static browser application. Google Drive enforces file 
 - The public creator-access file is a UI authorization hint in this static build. Public release must validate Creator/Admin actions server-side.
 - Polling can collect messages while LotKeys is open. Reliable notifications or message receipt while the app is fully closed needs authenticated push delivery.
 - WebRTC calling needs production signalling, TURN fallback, call authorization, and abuse controls for reliable use across restrictive networks.
-- The current team-test build requests the full Google Drive scope so Store Codes can write inside existing shared Store folders. This restricted scope requires Google's applicable verification/security work or replacement with a narrower authenticated broker/picker architecture before public launch.
+- The current team-test build requests the full Google Drive scope so users can locate the Store and maintain their own Drive workspaces. This restricted scope requires Google's applicable verification/security work or replacement with a narrower authenticated broker/picker architecture before public launch.
+- The bundled Apps Script processor is a controlled-test management boundary, not a general public backend. Protect the Admin Level 2 Google account and Apps Script project, limit editors on that project, and replace it with a production-reviewed service if LotKeys becomes public or multi-dealership.
 - End-to-end encryption, key changes, recovery, attachments, group membership changes, and multi-device behavior require an independent security review before sensitive use.
 
 ## Required before public launch
@@ -63,10 +67,12 @@ The current release is a static browser application. Google Drive enforces file 
    - Test direct/group Chat, block/mute/admin removal, unread state, key changes, attachments, and calls across two networks.
    - Complete accessibility, privacy, threat-model, and independent security reviews.
 
-## Safe V0.9.4.59 test rules
+## Safe V0.9.4.60 test rules
 
 - Keep Google OAuth in **Testing** and explicitly add every tester.
 - Share the Store folder only with those same tester Google accounts.
+- Keep ordinary and Trusted users as Store/Inventory Viewers. Give Editor/manager access only to Administration accounts.
+- Install the processor only from the registered Admin Level 2 account and do not deploy it as a public web app.
 - Use test/non-sensitive customer and dealership data.
 - Back up the Store folder before testing migrations or administration actions.
 - Do not advertise Chat/calls as production-secure or always-on while the app is closed.

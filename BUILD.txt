@@ -1,3 +1,18 @@
+V0.9.4.60 SECURE STORE + PER-USER MORE
+- Allows Approved Users to connect while official Inventory stays Viewer-only.
+- Provisions each exact Google email as Writer only on its own Users/<name> workspace.
+- Adds a per-user, per-vehicle More workspace with Client Media and Pending/Approved/Rejected request folders.
+- Adds View Your More Media Folder to every Vehicle Profile.
+- Keeps all contributed photos, videos and documents under Administration approval, including Trusted-user media.
+- Lets genuine profile creators update their own information/media without receiving Drive Editor access to Inventory.
+- Lets Trusted users automatically correct vehicle details, price and Pending Deal through the Admin Level 2 Store Processor.
+- Prevents duplicate profile claims by checking VIN first and Stock Number second.
+- Limits direct Vehicle Profile deletion to Administration.
+- Adds Approved Users.json, a viewer-readable Store Access record and a root Inventory Index.
+- Adds Store access repair that downgrades old non-admin Editor permissions, revokes disabled accounts, and attempts limited access on the Store root, Inventory, Administration and user workspaces.
+- Bundles processor/Code.gs, processor/appsscript.json and PROCESSOR-SETUP.md for the management approval worker.
+- Bumps every live deployment fingerprint to build 09460 and cache lotkeys-app-v09460-least-privilege-more.
+
 V0.9.4.59 DEPLOYMENT + CACHE POLISH
 - Starts the service-worker update check before normal LotKeys startup work.
 - Requests the exact current worker build from both index.html and install.html without reusing its HTTP-cached script.

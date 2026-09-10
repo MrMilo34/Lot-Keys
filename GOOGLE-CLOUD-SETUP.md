@@ -2,7 +2,7 @@
 
 Use this only for the current test build. The release version should not ask dealership users to enter developer credentials.
 
-## V0.9.4.59 team-test note
+## V0.9.4.60 team-test note
 
 The official build now includes the current LotKeys OAuth Web Client ID, so normal testers should not paste developer credentials into the app. Keep the Google Auth Platform app in **Testing** and add every tester's exact Google account email under **Test users**.
 
@@ -12,9 +12,11 @@ Add these Authorized JavaScript origins to the Web Client:
 - `https://www.lot-keys.ca`
 - `https://mrmilo34.github.io` during the domain transition
 
-The current Store Code design resolves an existing shared Store folder and creates/updates content inside it. V0.9.4.59 therefore requests `https://www.googleapis.com/auth/drive` for the controlled team test. The previous `drive.file` plus `drive.readonly` combination could discover the folder but could not create children unless the folder had first been opened through Google Picker. Full Drive access is a production release gate: complete Google's required verification/security work or replace Store discovery with the planned authenticated backend and narrower picker/broker flow before public launch.
+The Store Code design resolves an existing shared Store folder. V0.9.4.60 requests `https://www.googleapis.com/auth/drive` for the controlled team test so a user can maintain their own Listings/More workspace and read official Inventory. Full Drive access remains a production release gate: complete Google's required verification/security work or replace Store discovery with a narrower authenticated broker/picker flow before public launch.
 
-OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls which Store folders that person can edit. For this controlled test, share the root LotKeys Store folder as **Editor** only with Administrator or Trusted test accounts that must exercise automatic updates. Keep regular users as **Viewer** until the separate Management approval path is available.
+OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls Store access. In V0.9.4.60, Administrators are Store writers/managers; ordinary and Trusted users are Store/Inventory readers plus writers only on their own `Users/<name>` workspace. Do not share official Inventory as Editor with Trusted users—the bundled Store Processor applies their allowed automatic information changes as the Admin Level 2 installer.
+
+After deploying the website, follow `PROCESSOR-SETUP.md`. The processor is required for creator-owned profile updates, Trusted automatic corrections, and the management queue while Inventory remains Viewer-only.
 
 For public release, move to a separate production Google Cloud project, verify `lot-keys.ca`, publish the included Privacy/Terms pages, and complete the production readiness work in `SECURITY-RELEASE-GATE.md`.
 
@@ -39,7 +41,7 @@ In Google Auth Platform:
 - Keep the app in Testing while we develop.
 - Add your own Google account under Test users.
 - Under **Data Access**, add `https://www.googleapis.com/auth/drive` to the app's requested scopes.
-- V0.9.4.59 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
+- V0.9.4.60 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
 
 The Drive scope lets LotKeys locate the Store selected by its Store Code and build the required folders/files there. Treat it as a restricted team-test scope and do not move this static build to public production without completing the release gate.
 
@@ -87,7 +89,7 @@ Tap **Save Google Test Credentials**.
 
 Use **Connect Google Drive** and approve access.
 
-Then use **Choose Store Folder** for creator-led Store setup, or give an existing tester the Store Code after sharing the root Store folder with their exact Google account as **Editor**.
+Then use **Choose Store Folder** for creator-led Store setup. For an existing tester, add their exact Google email under **Garage → Approved Users**, press **Repair Store Structure**, and give them the Store Code. They do not need Store Editor access.
 
 Enter the Store name and your user name, then tap **Initialize / Repair Store Structure**.
 

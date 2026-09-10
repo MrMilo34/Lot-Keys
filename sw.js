@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09459-deployment-cache-polish';
+const CACHE='lotkeys-app-v09460-least-privilege-more';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

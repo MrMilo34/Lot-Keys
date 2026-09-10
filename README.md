@@ -1,3 +1,25 @@
+# LotKeys V0.9.4.60 — Secure Store + Per-User More
+
+This release completes the Viewer-safe Store connection and the permission model agreed for Vehicle Profiles, Marketplace Listings, and per-user More submissions. Ordinary and Trusted users no longer need Editor access to official Inventory. A bundled Admin Level 2 Store Processor applies authorized automatic changes and indexes everything else for management approval.
+
+## V0.9.4.60 highlights
+
+- **Viewer-safe connection:** approved users can connect to the Store with Viewer access to official Inventory plus Writer access only on their own user workspace.
+- **Per-user, per-vehicle More:** every Vehicle Profile has a **View Your More Media Folder** action. Its Client Media folder contains that user’s Photos, Videos, and Documents; its separate Requests folders track Pending, Approved, and Rejected work.
+- **Media approval:** photos, videos, and documents contributed to an existing profile always require Administration approval, including Trusted-user media. Approval copies the file into official Inventory and preserves the user’s More copy.
+- **Creator ownership:** a user who introduces a genuinely new VIN/Stock profile becomes its LotKeys creator and can update that profile’s information and media through the processor. Duplicate VIN is checked before Stock Number so another user cannot claim an existing vehicle.
+- **Trusted exception:** Trusted users may automatically correct vehicle details, price, and Pending Deal. They cannot delete official Inventory and do not bypass media approval.
+- **Administrative control:** Admin Level 1 can manage ordinary privileges and Trusted status. Only Admin Level 2 can change Administration levels. Admins remain the direct official-Inventory writers.
+- **Access repair:** Garage can provision exact-email workspaces, protect the Store root, Inventory, Administration, and user workspaces with limited access where supported, downgrade stale Inventory Editor grants, and revoke disabled accounts from their Store workspace.
+- **Management processor:** `processor/Code.gs`, `processor/appsscript.json`, and `PROCESSOR-SETUP.md` provide the one-time Admin Level 2 installation required for automatic creator/Trusted processing.
+- **Deployment identity:** the visible version, manifest, runtime modules, `version.json`, installer, and service-worker cache all identify V0.9.4.60 / build 09460.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Then follow `PROCESSOR-SETUP.md` from the Admin Level 2 Google account and run **Repair Store Structure** before ordinary-user testing.
+
+## Previous release
+
 # LotKeys V0.9.4.59 — Deployment & Cache Polish
 
 This release retains the V0.9.4.58 Store Code correction and hardens update delivery across the custom domain, GitHub Pages redirect, normal browser tabs, and the installed LotKeys app. The deployment remains a flat GitHub-root package with the exact `CNAME` file beside `index.html`.

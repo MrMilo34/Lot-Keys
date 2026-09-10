@@ -14,6 +14,7 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
    - `lotkeys-awards.js`
    - `install.html`, `privacy.html`, and `terms.html`
    - `lotkeys-store-directory.json`, `lotkeys-creator-access.json`, `version.json`, and the exact file `CNAME`
+   - `PROCESSOR-SETUP.md` and the complete `processor` folder (Admin Level 2 setup source)
    - the complete `assets` folder
    - `extension/latest.json`
    - the existing `extension/latest` unpacked Post Buddy source
@@ -26,6 +27,8 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
 7. Save.
 8. Wait for GitHub to publish the page, then use the HTTPS URL GitHub provides.
 9. Open that URL in Chrome on Android.
+
+After the website is current, sign in as Admin Level 2, run **Repair Store Structure**, and complete `PROCESSOR-SETUP.md`. The static website can accept More requests without the trigger, but creator/Trusted automatic changes and Administration queue delivery require the processor.
 
 The GitHub Pages project URL is `https://mrmilo34.github.io/Lot-Keys/`. With the root `CNAME` active, GitHub redirects it to the canonical public address, `https://lot-keys.ca/`; this redirect is expected.
 

@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.59",
-  "build": "09459",
-  "release": "deployment-cache-polish",
+  "version": "0.9.4.60",
+  "build": "09460",
+  "release": "least-privilege-more",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09459-deployment-cache-polish",
+  "serviceWorkerCache": "lotkeys-app-v09460-least-privilege-more",
   "publishedAt": "2026-09-10"
 }

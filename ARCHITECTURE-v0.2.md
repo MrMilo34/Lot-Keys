@@ -1,5 +1,9 @@
 # LotKeys architecture v0.2
 
+## V0.9.4.60 least-privilege Store model
+
+The official Inventory remains on the Store side. Ordinary and Trusted users receive Viewer access to it; each user receives Writer access only to their own limited-access workspace. The Admin Level 2 Store Processor validates the workspace that contains a request instead of trusting identity fields supplied by the browser.
+
 ## V0.9.4.47 account Awards and Lot-Lvl
 
 - Store data owns the shared Award definitions, nomination/review queue and each current Store member's public Award summary.
@@ -21,14 +25,29 @@ A Vehicle Profile and a Marketplace Listing are different records.
 STORE FOLDER
 ├── Users
 │   └── Blair
+│       ├── PublicProfile.json
+│       ├── Profile Thumbnail.jpg
 │       ├── Listings
 │       │   ├── Listings Index.json
 │       │   └── <Marketplace Listing>.json
-│       └── Listing Assets
+│       ├── Listing Assets
 │           └── <Vehicle>
 │               └── Photos
+│       └── More
+│           └── <Vehicle>
+│               ├── Client Media
+│               │   ├── Photos
+│               │   ├── Videos
+│               │   └── Documents
+│               └── Requests
+│                   ├── Pending
+│                   ├── Approved
+│                   └── Rejected
 ├── Administration
-│   └── LotKeys Store Config.json
+│   ├── LotKeys.json
+│   └── Approved Users.json
+├── Store Access.json
+├── Inventory Index.json
 └── Inventory
     └── 2023 Challenger Scat 392 - PCH0336A
         ├── Vehicle Data - Administrative
@@ -42,11 +61,15 @@ STORE FOLDER
 
 ### Shared/store data
 
-Authorized users may add and update Vehicle Profiles. A vehicle created by a salesperson becomes part of the store inventory, not that salesperson's personal inventory.
+Any approved user may propose or introduce a Vehicle Profile, but official files are written only by Administrators or the Store Processor. The user who introduces a genuinely new VIN/Stock profile receives LotKeys creator rights for that profile; Drive ownership of official Inventory does not transfer to that user. Another user’s corrections require Administration approval, except Trusted users may automatically change vehicle information, price, and Pending Deal. Trusted users cannot delete official content, and their media still requires approval.
 
 ### User listing data
 
 Each salesperson's Marketplace listing records live under that user's Store/Users folder. Management can retain visibility into listing activity while the app keeps Facebook-specific descriptions separate from store vehicle descriptions.
+
+### More and approval data
+
+Every user has a separate More folder for every Vehicle Profile they work with. `Client Media` can be shared by link with a client. Request JSON stays beside it under `Requests`, not inside the client-shared folder. When Administration approves media, LotKeys copies it into the official Vehicle Profile and leaves the user’s More copy intact. Deleting the user copy later cannot delete the approved official copy.
 
 ## Local cache
 
@@ -80,7 +103,7 @@ Info From Photo is an assisted data-entry layer only. It does not become a new s
 
 ## v0.7 additions
 - `Administration/LotKeys.json` stores Store-wide configuration plus the LotKeys user registry. Personal posting locations remain local/user-side.
-- `Administration/Inventory Index.json` is a fast Store inventory cache generated from vehicle Administrative Sheets. LotKeys verifies Inventory folders on refresh and can rebuild the index with a full scan.
+- Root `Inventory Index.json` is the viewer-readable Store inventory cache generated from vehicle Administrative Sheets. LotKeys verifies Inventory folders on refresh and can rebuild the index with a full scan.
 - The signed-in Google account is bound to a unique LotKeys user name. The first registered Store user becomes Administrator.
 - Store inventory refreshes from Drive every five minutes while the app is active, when returning to the app, and on manual refresh.
 
