@@ -1,3 +1,18 @@
+V0.9.4.57 STORE CODE CONNECTION CORRECTION
+- Requests fresh Google Drive write authorization for Store Code connections to existing Store folders.
+- Retires the previous cached authorization session so the corrected permission prompt can run once after updating.
+- Checks whether the signed-in Google account can add content to the Store folder and distinguishes OAuth Test User access from Drive Editor access.
+- Restores the previous local Store settings when a connection attempt fails.
+- Limits New Store Setup to the registered LotKeys Creator.
+- Renames the Inventory Pending ribbon to Deal / Pending and widens it for the full label.
+
+V0.9.4.56 STABLE RELEASE FILENAMES
+- Uses permanent root filenames for Awards, Chat, checksums and the team-test checklist.
+- Keeps release identification inside each file and in the downloadable LotKeys ZIP.
+- Uses build query parameters plus a new service-worker cache name to force current browser assets.
+- Keeps extension/latest.json as the permanent pointer to one exact versioned Post Buddy ZIP.
+- Allows future GitHub updates to be simple file replacement without accumulating prior app modules or documents.
+
 V0.9.4.55 PENDING RIBBON POLISH RELEASE
 - Moves the Accent Color slash on the Inventory Pending ribbon 4 px to the right.
 - Closes the slash cleanly into the Pending box so the white triangular notch no longer appears.

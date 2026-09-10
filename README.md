@@ -1,3 +1,31 @@
+# LotKeys V0.9.4.57 — Store Code Connection Correction
+
+This corrected team-test release fixes the Store Code failure that appeared after Google sign-in and LotKeys Account creation. OAuth Test User approval and Google Drive folder editing are separate permissions: V0.9.4.57 requests a fresh Drive-write token for the existing Store folder and verifies that the signed-in account can add Store content.
+
+## V0.9.4.57 highlights
+
+- **Correct Drive authorization:** replaces the read-oriented Store Code token combination with the Drive scope required to create LotKeys folders and files inside an existing shared Store.
+- **Fresh permission grant:** ignores the older cached authorization session so Google can request the corrected access once after the update.
+- **Clear access diagnosis:** checks the Store folder's add-child capability and explains that management must share the folder as **Editor** if the Google account can sign in but still cannot write.
+- **Clean retry state:** restores the prior Store settings if connection fails instead of leaving a partial local connection.
+- **Safer first-run Garage:** shows New Store Setup only to the registered LotKeys Creator.
+- **Inventory wording:** expands the ribbon label from **Pending** to **Deal / Pending**.
+
+## Previous release
+
+# LotKeys V0.9.4.56 — Stable Release Filenames
+
+This fixed release stops replaceable app files from stacking up in GitHub. Awards, Chat, checksums and the team-test checklist now retain permanent filenames; the version remains inside the files and in the downloadable release ZIP.
+
+## V0.9.4.56 highlights
+
+- **Easy replacement:** future releases overwrite `lotkeys-awards.js`, `lotkeys-messaging.js`, `CHECKSUMS.txt` and `TEAM-TEST-CHECKLIST.md`.
+- **Fresh browser loading:** stable JavaScript names use a build query and the service-worker cache name changes each release, preventing an old cached copy from surviving an update.
+- **No duplicate Post Buddy ZIP:** `extension/latest.json` remains the permanent pointer to the one current versioned extension ZIP.
+- **One-time cleanup:** remove old root-level versioned Awards, Chat, checksum, checklist and stray version-labelled CNAME files after uploading this complete release. Keep the normal `CNAME` file.
+
+## Previous release
+
 # LotKeys V0.9.4.55 — Pending Ribbon Polish
 
 This small fixed release shifts the Accent Color slash on the Inventory Pending ribbon 4 px to the right and closes it neatly into the label box, removing the open white notch shown during phone testing.
@@ -672,7 +700,7 @@ Adds the customer-facing **Vehicle Info Directory** system.
 - Existing photo/video/document and Facebook Posting Assistant behavior remains.
 
 ## One-time Google Cloud change
-Enable **Google Docs API** in the same LotKeys Google Cloud project. No new OAuth client is required; the existing `drive.file` scope is accepted by the Docs API.
+Enable **Google Docs API** in the same LotKeys Google Cloud project. No new OAuth client is required; the Docs workflow uses the same current Google authorization grant.
 
 ## Template rule
 Administrators can edit branding, graphics, fonts, wording and layout. Keep the `{{...}}` placeholder tokens intact so LotKeys can replace them when creating each PDF.

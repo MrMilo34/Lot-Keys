@@ -2,7 +2,7 @@
 
 Use this only for the current test build. The release version should not ask dealership users to enter developer credentials.
 
-## V0.9.4.51 team-test note
+## V0.9.4.57 team-test note
 
 The official build now includes the current LotKeys OAuth Web Client ID, so normal testers should not paste developer credentials into the app. Keep the Google Auth Platform app in **Testing** and add every tester's exact Google account email under **Test users**.
 
@@ -12,7 +12,9 @@ Add these Authorized JavaScript origins to the Web Client:
 - `https://www.lot-keys.ca`
 - `https://mrmilo34.github.io` during the domain transition
 
-The current Store Code discovery design requests `drive.file` plus `drive.readonly`. `drive.readonly` is broader than the intended public scope and is a production release gate: either complete Google's required scope/security verification or replace discovery with the planned authenticated backend and a narrower file-access flow. Do not describe the current V0.9.4.51 scope as `drive.file`-only.
+The current Store Code design resolves an existing shared Store folder and creates/updates content inside it. V0.9.4.57 therefore requests `https://www.googleapis.com/auth/drive` for the controlled team test. The previous `drive.file` plus `drive.readonly` combination could discover the folder but could not create children unless the folder had first been opened through Google Picker. Full Drive access is a production release gate: complete Google's required verification/security work or replace Store discovery with the planned authenticated backend and narrower picker/broker flow before public launch.
+
+OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls which Store folders that person can edit. Share the root LotKeys Store folder with each tester's exact Google account as **Editor**.
 
 For public release, move to a separate production Google Cloud project, verify `lot-keys.ca`, publish the included Privacy/Terms pages, and complete the production readiness work in `SECURITY-RELEASE-GATE.md`.
 
@@ -36,9 +38,10 @@ In Google Auth Platform:
 - Use External audience for a normal personal Google account.
 - Keep the app in Testing while we develop.
 - Add your own Google account under Test users.
-- V0.9.4.51 requests `openid`, `email`, `drive.file`, and `drive.readonly` for the controlled team test.
+- Under **Data Access**, add `https://www.googleapis.com/auth/drive` to the app's requested scopes.
+- V0.9.4.57 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
 
-`drive.file` covers files the user granted to or created with LotKeys. The additional `drive.readonly` scope currently enables Store Code discovery across an already-shared Store folder and must be removed or formally reviewed before public launch.
+The Drive scope lets LotKeys locate the Store selected by its Store Code and build the required folders/files there. Treat it as a restricted team-test scope and do not move this static build to public production without completing the release gate.
 
 ## 4. Create the OAuth Web Client
 
@@ -84,10 +87,10 @@ Tap **Save Google Test Credentials**.
 
 Use **Connect Google Drive** and approve access.
 
-Then use **Choose Store Folder**. Selecting the folder through Google Picker is still the preferred explicit setup path. V0.9.4.51's optional Store Code discovery currently also uses read-only Drive discovery as documented above.
+Then use **Choose Store Folder** for creator-led Store setup, or give an existing tester the Store Code after sharing the root Store folder with their exact Google account as **Editor**.
 
 Enter the Store name and your user name, then tap **Initialize / Repair Store Structure**.
 
 ## v0.7 user identity note
 
-LotKeys v0.7 requests the standard Google `openid` + `email` scopes in addition to the existing `drive.file` scope. This is used only to bind a LotKeys user name to the Google account that signed in, so another person cannot simply claim an existing LotKeys user name. After upgrading, existing users should reconnect Google Drive once and approve the basic account-email permission.
+LotKeys v0.7 added the standard Google `openid` + `email` scopes to bind a LotKeys user name to the Google account that signed in, so another person cannot simply claim an existing LotKeys user name. This historical identity requirement remains part of the current grant.

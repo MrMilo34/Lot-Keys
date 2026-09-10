@@ -2,7 +2,7 @@
 
 ## Current status: team testing
 
-V0.9.4.51 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
+V0.9.4.57 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
 
 The current release is a static browser application. Google Drive enforces file access, but browser code cannot safely be the final authority for Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, or long-lived authorization secrets.
 
@@ -25,7 +25,7 @@ The current release is a static browser application. Google Drive enforces file 
 - The public creator-access file is a UI authorization hint in this static build. Public release must validate Creator/Admin actions server-side.
 - Polling can collect messages while LotKeys is open. Reliable notifications or message receipt while the app is fully closed needs authenticated push delivery.
 - WebRTC calling needs production signalling, TURN fallback, call authorization, and abuse controls for reliable use across restrictive networks.
-- The current Google Drive scope includes `drive.readonly` to discover approved Store content. That scope requires a deliberate production verification/security decision or replacement with a narrower broker/picker architecture.
+- The current team-test build requests the full Google Drive scope so Store Codes can write inside existing shared Store folders. This restricted scope requires Google's applicable verification/security work or replacement with a narrower authenticated broker/picker architecture before public launch.
 - End-to-end encryption, key changes, recovery, attachments, group membership changes, and multi-device behavior require an independent security review before sensitive use.
 
 ## Required before public launch
@@ -63,7 +63,7 @@ The current release is a static browser application. Google Drive enforces file 
    - Test direct/group Chat, block/mute/admin removal, unread state, key changes, attachments, and calls across two networks.
    - Complete accessibility, privacy, threat-model, and independent security reviews.
 
-## Safe V0.9.4.51 test rules
+## Safe V0.9.4.57 test rules
 
 - Keep Google OAuth in **Testing** and explicitly add every tester.
 - Share the Store folder only with those same tester Google accounts.

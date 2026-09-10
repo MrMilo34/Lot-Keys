@@ -1,4 +1,4 @@
-const CACHE='lotkeys-drive-test-v09455-pending-ribbon-polish';
+const CACHE='lotkeys-drive-test-v09457-store-connection-fix';
 const CORE=[
   './',
   './index.html',
@@ -9,8 +9,8 @@ const CORE=[
   './icon.svg',
   './lotkeys-creator-access.json',
   './lotkeys-store-directory.json',
-  './lotkeys-messaging-v09455.js',
-  './lotkeys-awards-v09455.js',
+  './lotkeys-messaging.js',
+  './lotkeys-awards.js',
   './assets/carfax-one-owner.png',
   './assets/carfax-low-kilometres.png',
   './assets/carfax-no-reported-accidents.png',
