@@ -1,14 +1,18 @@
-# LotKeys V0.9.4.58 Store Code connection checklist
+# LotKeys V0.9.4.59 deployment and Store Code checklist
 
-- Upload the complete release, then open `https://lot-keys.ca/?build=09458` and confirm the version bar says V0.9.4.58.
+- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09459` and confirm the version bar says V0.9.4.59.
+- Confirm the repository root contains the exact file `CNAME` beside `index.html`; it must contain only `lot-keys.ca`.
+- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.59`, build `09459`, and cache `lotkeys-app-v09459-deployment-cache-polish`.
+- Open `https://lot-keys.ca/install.html` once and confirm it returns to the current LotKeys build.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
 - Confirm the Store contains or creates the registered user's folder under `Users`, with `Listings` and `Listing Assets` inside it.
-- If the app reports that the account cannot add files, confirm management shared the root Store folder with that exact Google account as **Editor**; OAuth Test User status alone does not grant Drive folder editing.
+- If an Administrator or Trusted test account must exercise automatic Store updates and LotKeys reports that it cannot add files, confirm management shared the root Store folder with that exact account as **Editor**. Keep regular users as **Viewer** until the separate Management approval path is released. OAuth Test User status alone does not grant Drive folder editing.
 - Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
 - Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.58 service-worker cache.
+- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.59 service-worker cache.
+- If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
 
 ## Previous V0.9.4.56 checks
 

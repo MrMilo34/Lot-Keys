@@ -1,4 +1,5 @@
-const CACHE='lotkeys-drive-test-v09458-github-root-fix';
+const CACHE='lotkeys-app-v09459-deployment-cache-polish';
+const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',
   './index.html',
@@ -6,6 +7,7 @@ const CORE=[
   './privacy.html',
   './terms.html',
   './manifest.webmanifest',
+  './version.json',
   './icon.svg',
   './lotkeys-creator-access.json',
   './lotkeys-store-directory.json',
@@ -52,31 +54,52 @@ const CORE=[
 ];
 
 self.addEventListener('install',event=>event.waitUntil(
-  caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())
+  caches.open(CACHE)
+    .then(cache=>cache.addAll(CORE.map(url=>new Request(new URL(url,self.registration.scope),{cache:'reload'}))))
+    .then(()=>self.skipWaiting())
 ));
 
 self.addEventListener('activate',event=>event.waitUntil(
   caches.keys()
-    .then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key))))
+    .then(keys=>Promise.all(keys.filter(key=>key!==CACHE&&LOTKEYS_CACHE_PREFIXES.some(prefix=>key.startsWith(prefix))).map(key=>caches.delete(key))))
     .then(()=>self.clients.claim())
 ));
+
+function scopedCacheKey(url,{navigation=false}={}){
+  const scope=new URL(self.registration.scope);
+  let relative=url.pathname.startsWith(scope.pathname)?url.pathname.slice(scope.pathname.length):'';
+  if(navigation){
+    relative=relative||'index.html';
+    const candidate=`./${relative}`;
+    return new Request(new URL(CORE.includes(candidate)?candidate:'./index.html',scope));
+  }
+  return new Request(`${url.origin}${url.pathname}`);
+}
+
+async function fetchAndCache(request,cacheKey,cacheMode){
+  const response=await fetch(request,{cache:cacheMode});
+  if(response?.ok){
+    const cache=await caches.open(CACHE);
+    await cache.put(cacheKey,response.clone());
+  }
+  return response;
+}
 
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
   if(url.origin!==location.origin)return;
   const navigation=event.request.mode==='navigate';
+  const cacheKey=scopedCacheKey(url,{navigation});
   if(navigation){
     event.respondWith(
-      fetch(event.request,{cache:'no-store'})
-        .then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response})
-        .catch(()=>caches.match(event.request).then(response=>response||caches.match('./index.html')))
+      fetchAndCache(event.request,cacheKey,'no-store')
+        .catch(()=>caches.match(cacheKey,{ignoreSearch:true}).then(response=>response||caches.match('./index.html',{ignoreSearch:true})))
     );
     return;
   }
   event.respondWith(
-    fetch(event.request,{cache:'no-cache'})
-      .then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response})
-      .catch(()=>caches.match(event.request))
+    fetchAndCache(event.request,cacheKey,'no-cache')
+      .catch(()=>caches.match(cacheKey,{ignoreSearch:true}))
   );
 });

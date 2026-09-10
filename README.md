@@ -1,3 +1,18 @@
+# LotKeys V0.9.4.59 — Deployment & Cache Polish
+
+This release retains the V0.9.4.58 Store Code correction and hardens update delivery across the custom domain, GitHub Pages redirect, normal browser tabs, and the installed LotKeys app. The deployment remains a flat GitHub-root package with the exact `CNAME` file beside `index.html`.
+
+## V0.9.4.59 highlights
+
+- **Early update check:** requests the current service worker before account, Store, or inventory startup can delay it.
+- **Installer parity:** `install.html` requests the same exact build and bypasses an older HTTP-cached service-worker script.
+- **Canonical cache keys:** build-query URLs resolve to the current cached app files, including offline recovery.
+- **Scoped cleanup:** removes old LotKeys caches without deleting caches belonging to unrelated GitHub Pages projects on the same origin.
+- **Deployment fingerprint:** `version.json`, the manifest, runtime modules, visible version bar, and service-worker cache all identify V0.9.4.59 / build 09459.
+- **Clear permission boundary:** Store connection messaging now says that temporary Editor access is for Administrator or Trusted test accounts; regular users should remain Viewers until the separate Management approval path is built.
+
+## Previous release
+
 # LotKeys V0.9.4.58 — GitHub Root + Store Code Correction
 
 This corrected team-test release keeps the V0.9.4.57 Store Code fix and packages the GitHub Pages files directly at the ZIP root. The required custom-domain file is named exactly `CNAME` and sits beside `index.html`. OAuth Test User approval and Google Drive folder editing are separate permissions: V0.9.4.58 requests a fresh Drive-write token for the existing Store folder and verifies that the signed-in account can add Store content.

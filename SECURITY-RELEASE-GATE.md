@@ -2,7 +2,7 @@
 
 ## Current status: team testing
 
-V0.9.4.58 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
+V0.9.4.59 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
 
 The current release is a static browser application. Google Drive enforces file access, but browser code cannot safely be the final authority for Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, or long-lived authorization secrets.
 
@@ -63,7 +63,7 @@ The current release is a static browser application. Google Drive enforces file 
    - Test direct/group Chat, block/mute/admin removal, unread state, key changes, attachments, and calls across two networks.
    - Complete accessibility, privacy, threat-model, and independent security reviews.
 
-## Safe V0.9.4.58 test rules
+## Safe V0.9.4.59 test rules
 
 - Keep Google OAuth in **Testing** and explicitly add every tester.
 - Share the Store folder only with those same tester Google accounts.

@@ -5,15 +5,15 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
 ## Team-test deployment
 
 1. Open the existing `MrMilo34/Lot-Keys` repository and use its `main` branch.
-2. Upload **all contents** of the full LotKeys release folder to the repository root. Do not omit the `assets` or `extension` folders or either versioned feature module. The required root items include:
+2. Extract the release ZIP, then upload **everything inside it** directly to the repository root. The ZIP is already flat: `index.html` and `CNAME` appear immediately after extraction, with no version-named wrapper folder. Do not omit the `assets` or `extension` folders or either feature module. The required root items include:
    - `index.html`
    - `manifest.webmanifest`
    - `sw.js`
    - `icon.svg`
-   - `lotkeys-messaging-v09452.js`
-   - `lotkeys-awards-v09452.js`
+   - `lotkeys-messaging.js`
+   - `lotkeys-awards.js`
    - `install.html`, `privacy.html`, and `terms.html`
-   - `lotkeys-store-directory.json`, `lotkeys-creator-access.json`, and `CNAME`
+   - `lotkeys-store-directory.json`, `lotkeys-creator-access.json`, `version.json`, and the exact file `CNAME`
    - the complete `assets` folder
    - `extension/latest.json`
    - the existing `extension/latest` unpacked Post Buddy source
@@ -27,7 +27,7 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
 8. Wait for GitHub to publish the page, then use the HTTPS URL GitHub provides.
 9. Open that URL in Chrome on Android.
 
-The transition URL is `https://mrmilo34.github.io/Lot-Keys/`. Once the custom-domain DNS and certificate are active, the public address is `https://lot-keys.ca/`.
+The GitHub Pages project URL is `https://mrmilo34.github.io/Lot-Keys/`. With the root `CNAME` active, GitHub redirects it to the canonical public address, `https://lot-keys.ca/`; this redirect is expected.
 
 Google OAuth Authorized JavaScript origins contain only the scheme and hostname: use `https://mrmilo34.github.io`, `https://lot-keys.ca`, and `https://www.lot-keys.ca` during the transition.
 

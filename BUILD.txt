@@ -1,3 +1,11 @@
+V0.9.4.59 DEPLOYMENT + CACHE POLISH
+- Starts the service-worker update check before normal LotKeys startup work.
+- Requests the exact current worker build from both index.html and install.html without reusing its HTTP-cached script.
+- Normalizes build-query URLs to stable cache keys for current offline assets and navigation.
+- Removes only previous LotKeys cache generations, preserving unrelated origin caches.
+- Adds version.json as an independently checkable deployment fingerprint.
+- Clarifies that temporary Store Editor sharing is only for Administrator or Trusted test accounts; regular users await the Management approval path.
+
 V0.9.4.58 GITHUB ROOT + STORE CODE CONNECTION CORRECTION
 - Requests fresh Google Drive write authorization for Store Code connections to existing Store folders.
 - Retires the previous cached authorization session so the corrected permission prompt can run once after updating.
