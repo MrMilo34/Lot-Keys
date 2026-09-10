@@ -1,3 +1,13 @@
+# LotKeys V0.9.4.55 — Pending Ribbon Polish
+
+This small fixed release shifts the Accent Color slash on the Inventory Pending ribbon 4 px to the right and closes it neatly into the label box, removing the open white notch shown during phone testing.
+
+## V0.9.4.55 highlight
+
+- **Pending ribbon:** cleaner slash spacing and a fully closed Accent Color label while preserving every V0.9.4.54 correction.
+
+## Previous release
+
 # LotKeys V0.9.4.54 — Dev Tool Kit and Post Buddy Mobile Fixes
 
 This fixed team-test release corrects the Dev Tool Kit recipient and preview behavior shown during phone testing. It also removes the redundant mobile website button from the Post Buddy card and makes the desktop ZIP-download workflow explicit.

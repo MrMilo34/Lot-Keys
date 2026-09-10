@@ -1,3 +1,8 @@
+V0.9.4.55 PENDING RIBBON POLISH RELEASE
+- Moves the Accent Color slash on the Inventory Pending ribbon 4 px to the right.
+- Closes the slash cleanly into the Pending box so the white triangular notch no longer appears.
+- Keeps the V0.9.4.54 Dev Tool Kit and Post Buddy corrections unchanged.
+
 V0.9.4.54 DEV TOOL KIT + POST BUDDY MOBILE FIXED RELEASE
 - Corrects All users in Store so the sender stays unchecked until selected manually.
 - Preview Celebration now shows the composed headline, message and optional Award without sending anything.
