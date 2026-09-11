@@ -1,12 +1,12 @@
 /**
- * LotKeys Store Processor V0.9.4.63
+ * LotKeys Store Processor V0.9.4.64
  *
  * This script is installed once by an Admin Level 2 account. It is the trusted
  * writer between each user's private More request queue and the official,
  * Viewer-only Inventory. Never deploy it to execute as the visiting web user.
  */
 
-const LOTKEYS_PROCESSOR_VERSION = '0.9.4.63';
+const LOTKEYS_PROCESSOR_VERSION = '0.9.4.64';
 const LOTKEYS_STORE_FOLDER_ID = '1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g';
 const LK_FOLDER = 'application/vnd.google-apps.folder';
 const LK_SHEET = 'application/vnd.google-apps.spreadsheet';
@@ -683,46 +683,69 @@ function lkProcessMessageOutboxes_(state, limit) {
   active.forEach(function(user) {
     const address = String(user.messaging && user.messaging.address || '');
     const workspace = lkMessagingWorkspace_(state, user);
-    if (address && workspace) mailboxes[address] = {user: user, workspace: workspace};
+    if (!address || !workspace) return;
+    const delivered = {};
+    const inboxFiles = lkListChildren_(workspace.inbox.id, "mimeType != '" + LK_FOLDER + "'").filter(function(file) {
+      return lkMessageMetadata_(file).lotkeysRole === 'messageEnvelope';
+    });
+    inboxFiles.forEach(function(file) {
+      const metadata = lkMessageMetadata_(file);
+      const fromAddress = String(metadata.verifiedFromAddress || metadata.fromAddress || '');
+      const messageId = String(metadata.messageId || metadata.relaySourceFileId || file.id || '');
+      const key = fromAddress && messageId ? fromAddress + '|' + messageId : '';
+      if (!key) return;
+      if (delivered[key]) lkTrash_(file.id);
+      else delivered[key] = file.id;
+    });
+    mailboxes[address] = {user: user, workspace: workspace, delivered: delivered};
   });
   active.forEach(function(actor) {
     if (result.processed >= limit) return;
     const senderAddress = String(actor.messaging && actor.messaging.address || '');
     const senderBox = senderAddress && mailboxes[senderAddress] ? mailboxes[senderAddress].workspace : null;
     if (!senderBox) return;
-    const files = lkListChildren_(senderBox.outbox.id, "mimeType != '" + LK_FOLDER + "'")
-      .filter(function(file) {
-        const metadata = Object.assign({}, file.appProperties || {}, file.properties || {});
-        return metadata.lotkeysRole === 'messageEnvelope';
-      });
+    const files = lkOutboxEnvelopeFiles_(senderBox.outbox.id);
     files.forEach(function(file) {
       if (result.processed >= limit) return;
-      result.processed += 1;
       try {
+        const metadata = lkMessageMetadata_(file);
+        const metadataTo = String(metadata.toAddress || '');
+        const metadataFrom = String(metadata.fromAddress || '');
+        const metadataMessageId = String(metadata.messageId || file.id || '');
+        const knownRecipient = metadataTo ? mailboxes[metadataTo] : null;
+        const knownDeliveryKey = senderAddress + '|' + metadataMessageId;
+        // Delivered source envelopes intentionally remain in their sender-owned
+        // Outbox/live lane. Skip them from Drive metadata alone so the fallback
+        // processor does not repeatedly download and parse an old backlog.
+        if (knownRecipient && metadataFrom === senderAddress && knownRecipient.delivered[knownDeliveryKey]) return;
         const envelope = lkReadJsonFile_(file.id);
-        const metadata = Object.assign({}, file.appProperties || {}, file.properties || {});
         const toAddress = String(envelope && envelope.toAddress || metadata.toAddress || '');
         const claimedFrom = String(envelope && envelope.fromAddress || metadata.fromAddress || '');
         if (!toAddress || !senderAddress || claimedFrom !== senderAddress) {
-          lkTrash_(file.id);
-          result.errors += 1;
+          console.warn('Ignored an invalid message envelope owned by ' + (lkUserName_(actor) || senderAddress));
           return;
         }
         const recipient = mailboxes[toAddress];
         if (!recipient) return;
+        const messageId = metadataMessageId;
+        const deliveryKey = senderAddress + '|' + messageId;
+        if (recipient.delivered[deliveryKey]) return;
+        result.processed += 1;
         const appProperties = Object.assign({}, file.appProperties || {}, {
           lotkeysRole: 'messageEnvelope',
           toAddress: toAddress,
           fromAddress: senderAddress,
-          verifiedFromAddress: senderAddress
+          verifiedFromAddress: senderAddress,
+          relaySourceFileId: file.id,
+          messageId: messageId
         });
         Drive.Files.copy({
           name: file.name,
           parents: [recipient.workspace.inbox.id],
           appProperties: appProperties,
-          properties: Object.assign({}, file.properties || {}, {lotkeysRole: 'messageEnvelope', verifiedFromAddress: senderAddress})
+          properties: Object.assign({}, file.properties || {}, {lotkeysRole: 'messageEnvelope', verifiedFromAddress: senderAddress, relaySourceFileId: file.id, messageId: messageId})
         }, file.id, {supportsAllDrives: true, fields: 'id,name,parents,appProperties,properties'});
-        lkTrash_(file.id);
+        recipient.delivered[deliveryKey] = file.id;
         result.delivered += 1;
       } catch (error) {
         result.errors += 1;
@@ -731,6 +754,25 @@ function lkProcessMessageOutboxes_(state, limit) {
     });
   });
   return result;
+}
+
+function lkMessageMetadata_(file) {
+  return Object.assign({}, file && file.properties || {}, file && file.appProperties || {});
+}
+
+function lkOutboxEnvelopeFiles_(outboxId) {
+  const children = lkListChildren_(outboxId, '');
+  let files = children.filter(function(file) {
+    return file.mimeType !== LK_FOLDER && lkMessageMetadata_(file).lotkeysRole === 'messageEnvelope';
+  });
+  children.filter(function(file) {
+    return file.mimeType === LK_FOLDER && lkMessageMetadata_(file).lotkeysRole === 'messageLiveLane';
+  }).forEach(function(lane) {
+    files = files.concat(lkListChildren_(lane.id, "mimeType != '" + LK_FOLDER + "'").filter(function(file) {
+      return lkMessageMetadata_(file).lotkeysRole === 'messageEnvelope';
+    }));
+  });
+  return files;
 }
 
 function lkFindVehicle_(state, vehicleId) {
@@ -1407,7 +1449,7 @@ function lkUpdateMetadata_(fileId, resource) {
 function lkCopyFile_(sourceId, parentId, name, properties) {
   return Drive.Files.copy({name: name, parents: [parentId], properties: properties || {}}, sourceId, {supportsAllDrives: true, fields: 'id,name,mimeType,parents,properties,webViewLink'});
 }
-function lkTrash_(fileId) { try { Drive.Files.update({trashed: true}, fileId, null, {supportsAllDrives: true}); } catch (error) { console.error(error); } }
+function lkTrash_(fileId) { try { Drive.Files.update({trashed: true}, fileId, null, {supportsAllDrives: true}); return true; } catch (error) { console.warn('Drive cleanup deferred for ' + fileId + ': ' + String(error && error.message || error)); return false; } }
 function lkMove_(fileId, fromParent, toParent) {
   Drive.Files.update({}, fileId, null, {supportsAllDrives: true, addParents: toParent, removeParents: fromParent, fields: 'id,parents'});
 }
