@@ -1,22 +1,23 @@
-# LotKeys V0.9.4.60 — Secure Store + Per-User More
+# LotKeys V0.9.4.61 — Live Requests, Chat & Cache Polish
 
-This release completes the Viewer-safe Store connection and the permission model agreed for Vehicle Profiles, Marketplace Listings, and per-user More submissions. Ordinary and Trusted users no longer need Editor access to official Inventory. A bundled Admin Level 2 Store Processor applies authorized automatic changes and indexes everything else for management approval.
+This release keeps the Viewer-safe Store model from V0.9.4.60 and finishes the first complete approval and direct-Chat test path. Google Drive files remain the source of truth, while safe local caches make Inventory, More folders, open conversations, and queued submissions react immediately.
 
-## V0.9.4.60 highlights
+## V0.9.4.61 highlights
 
-- **Viewer-safe connection:** approved users can connect to the Store with Viewer access to official Inventory plus Writer access only on their own user workspace.
-- **Per-user, per-vehicle More:** every Vehicle Profile has a **View Your More Media Folder** action. Its Client Media folder contains that user’s Photos, Videos, and Documents; its separate Requests folders track Pending, Approved, and Rejected work.
-- **Media approval:** photos, videos, and documents contributed to an existing profile always require Administration approval, including Trusted-user media. Approval copies the file into official Inventory and preserves the user’s More copy.
-- **Creator ownership:** a user who introduces a genuinely new VIN/Stock profile becomes its LotKeys creator and can update that profile’s information and media through the processor. Duplicate VIN is checked before Stock Number so another user cannot claim an existing vehicle.
-- **Trusted exception:** Trusted users may automatically correct vehicle details, price, and Pending Deal. They cannot delete official Inventory and do not bypass media approval.
-- **Administrative control:** Admin Level 1 can manage ordinary privileges and Trusted status. Only Admin Level 2 can change Administration levels. Admins remain the direct official-Inventory writers.
-- **Access repair:** Garage can provision exact-email workspaces, protect the Store root, Inventory, Administration, and user workspaces with limited access where supported, downgrade stale Inventory Editor grants, and revoke disabled accounts from their Store workspace.
-- **Management processor:** `processor/Code.gs`, `processor/appsscript.json`, and `PROCESSOR-SETUP.md` provide the one-time Admin Level 2 installation required for automatic creator/Trusted processing.
-- **Deployment identity:** the visible version, manifest, runtime modules, `version.json`, installer, and service-worker cache all identify V0.9.4.60 / build 09460.
+- **Direct Chat delivery:** messages are saved to the open conversation immediately, encrypted into the sender’s private Outbox, delivered by the Admin Level 2 Store Processor, and collected from the recipient’s private Inbox. The existing pop-up bubble appears for an incoming message while LotKeys is open.
+- **Activated Store directory:** Store Access remains authoritative instead of being overwritten by an older private admin snapshot. User photos, Messaging readiness, monthly placements, and crowns are published from user-owned Public Profiles and reconciled by the processor.
+- **Per-field approval:** Administrators can approve any checked information fields and media while denying unchecked items. The completed request disappears from Reports / Requests and the Vehicle Profile without a manual page refresh.
+- **Contribution points:** each approved information field and each approved photo, video, or document awards one idempotent contribution point, including information that the processor automatically approves for a Trusted user. Administration completion points remain supported.
+- **No terminal request archive:** new requests use only the Pending folder. Approved or denied request JSON is removed; media stays in the submitting user’s More folder, and approved media is copied into official Inventory.
+- **Fast, durable submissions:** a request is committed locally before background Drive work starts, displays upload progress, and automatically retries after an interruption.
+- **Faster More and Inventory:** cached More links open immediately while verified in the background, and an unchanged Inventory Index is not downloaded and rebuilt again.
+- **Pending control polish:** **Mark Vehicle as Pending** now lives in Edit Vehicle with the smaller helper “Displays Pending Deal alert in the Vehicle Profile.”
+- **Visible Store repair:** Repair Store Structure now shows its current stage and percentage while auditing permissions and folders.
+- **Deployment identity:** the visible version, manifest, runtime modules, `version.json`, installer, processor, and service-worker cache identify V0.9.4.61 / build 09461.
 
 ## Required rollout
 
-Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Then follow `PROCESSOR-SETUP.md` from the Admin Level 2 Google account and run **Repair Store Structure** before ordinary-user testing.
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Then replace both Apps Script files and run `installLotKeysProcessor` again from the Admin Level 2 Google account. Open V0.9.4.61 once on each user account so their current Messaging identity/Public Profile can be published.
 
 ## Previous release
 
@@ -446,7 +447,7 @@ Marketplace Listings now open directly into the Facebook Posting Assistant. Phot
 - Added ⭐ Admin Level 1 and 🌟 Admin Level 2 with owner-only Store/Google configuration at Level 2.
 - Removal requests are resolved per Vehicle Profile: Approve+Delete approves all reporters, Deny gives all open reporters a false-report tally, Remove Requests clears them neutrally.
 - Admins see ❕ on flagged Profiles/users; the reporting user sees ❔ on a Vehicle Profile they personally flagged.
-- User Reports acts as a review queue and returns to Garage after resolution; Inventory-origin reviews return to Inventory.
+- Reports / Requests acts as a review queue and returns to Garage after resolution; Inventory-origin reviews return to Inventory.
 - Legacy Administrator accounts migrate to Admin Level 2.
 - The Posting Assistant hero now follows the selected accent gradient as part of the theme-consistency cleanup.
 - Service-worker cache bumped for v0.8.9.
@@ -459,7 +460,7 @@ Marketplace Listings now open directly into the Facebook Posting Assistant. Phot
 - Removal requests use a clear selectable reason flow: **Duplicate Vehicle Profile**, **Missing Details**, **Wrong Vehicle Listed**, or **Other** with a custom explanation.
 - Deletion requests are stored with the Vehicle Profile's administrative data and Inventory Index so they survive refreshes and are visible across authorized Store sessions.
 - Only Administrators see the **❕** removal marker and request details. Requests show the reporting user's name/profile thumbnail and submitted reason.
-- Garage → Administrator / Store Configuration now includes a **User Reports** review area with dismiss, false-report, open, and delete actions.
+- Garage → Administrator / Store Configuration now includes a **Reports / Requests** review area with dismiss, false-report, open, and delete actions.
 - User administration now stores per-user permissions for Vehicle Profile creation, deletion reporting, Listings, leaderboard visibility, Description Builder, future Chrome extension access, and full account status.
 - User moderation counters track submitted, approved, dismissed and false deletion reports so repeated misuse is visible to Administration.
 - Duplicate stock numbers are allowed, but LotKeys warns before saving when that STK# already exists.

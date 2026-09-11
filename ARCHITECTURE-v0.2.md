@@ -1,6 +1,6 @@
 # LotKeys architecture v0.2
 
-## V0.9.4.60 least-privilege Store model
+## V0.9.4.61 least-privilege Store model
 
 The official Inventory remains on the Store side. Ordinary and Trusted users receive Viewer access to it; each user receives Writer access only to their own limited-access workspace. The Admin Level 2 Store Processor validates the workspace that contains a request instead of trusting identity fields supplied by the browser.
 
@@ -31,8 +31,11 @@ STORE FOLDER
 │       │   ├── Listings Index.json
 │       │   └── <Marketplace Listing>.json
 │       ├── Listing Assets
-│           └── <Vehicle>
-│               └── Photos
+│       │   └── <Vehicle>
+│       │       └── Photos
+│       ├── Messaging
+│       │   ├── Inbox
+│       │   └── Outbox
 │       └── More
 │           └── <Vehicle>
 │               ├── Client Media
@@ -40,9 +43,7 @@ STORE FOLDER
 │               │   ├── Videos
 │               │   └── Documents
 │               └── Requests
-│                   ├── Pending
-│                   ├── Approved
-│                   └── Rejected
+│                   └── Pending
 ├── Administration
 │   ├── LotKeys.json
 │   └── Approved Users.json
@@ -69,11 +70,11 @@ Each salesperson's Marketplace listing records live under that user's Store/User
 
 ### More and approval data
 
-Every user has a separate More folder for every Vehicle Profile they work with. `Client Media` can be shared by link with a client. Request JSON stays beside it under `Requests`, not inside the client-shared folder. When Administration approves media, LotKeys copies it into the official Vehicle Profile and leaves the user’s More copy intact. Deleting the user copy later cannot delete the approved official copy.
+Every user has a separate More folder for every Vehicle Profile they work with. `Client Media` can be shared by link with a client. Pending request JSON stays beside it under `Requests/Pending`, not inside the client-shared folder. Approval or denial removes the request JSON. When Administration approves media, LotKeys copies it into the official Vehicle Profile and leaves the user’s More copy intact. Deleting the user copy later cannot delete the approved official copy.
 
 ## Local cache
 
-IndexedDB is the fast client-side cache and offline working copy. Google Drive is the shared store storage layer once a vehicle/listing is synced.
+IndexedDB is the fast client-side cache and offline working copy. Google Drive remains the shared source of truth once a vehicle, listing, profile, request, or message is synchronized. Cached More links and Inventory Index metadata are verified in the background.
 
 ## Shared link
 

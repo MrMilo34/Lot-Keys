@@ -1,7 +1,22 @@
+V0.9.4.61 LIVE REQUESTS + CHAT + CACHE POLISH
+- Routes encrypted direct messages through sender-owned Outbox and recipient-owned Inbox folders using the Admin Level 2 Store Processor.
+- Makes sent messages appear immediately and incoming messages refresh the conversation and popup bubble while LotKeys is open.
+- Keeps Store Access as the live cross-account directory so activated users, avatars, placements and Messaging identities are not overwritten by an old private configuration.
+- Adds checkbox approval for individual information fields and contributed photos, videos and documents.
+- Awards one idempotent contribution point for each approved field/media item, including Trusted-user fields approved by the processor, and removes completed requests from the visible request queues immediately.
+- Deletes terminal request JSON instead of maintaining Approved/Rejected request archives; user More media remains available.
+- Saves user submissions to a durable local queue before background Drive upload, with progress and automatic retry.
+- Opens cached per-user More links immediately and verifies them in the background.
+- Skips full Inventory download/rebuild when the Drive Inventory Index modification time is unchanged.
+- Moves Mark Vehicle as Pending into Edit Vehicle and preserves the Vehicle Profile alert/ribbon.
+- Adds live stage and percentage feedback to Repair Store Structure.
+- Resets the Admin Level 2 processor to clean completed state requests, refresh public profiles, restore Store placement/crown data and courier Chat envelopes.
+- Bumps every live deployment fingerprint to build 09461 and cache lotkeys-app-v09461-live-requests-chat-cache.
+
 V0.9.4.60 SECURE STORE + PER-USER MORE
 - Allows Approved Users to connect while official Inventory stays Viewer-only.
 - Provisions each exact Google email as Writer only on its own Users/<name> workspace.
-- Adds a per-user, per-vehicle More workspace with Client Media and Pending/Approved/Rejected request folders.
+- Adds a per-user, per-vehicle More workspace with Client Media and a Pending request folder.
 - Adds View Your More Media Folder to every Vehicle Profile.
 - Keeps all contributed photos, videos and documents under Administration approval, including Trusted-user media.
 - Lets genuine profile creators update their own information/media without receiving Drive Editor access to Inventory.
@@ -11,7 +26,6 @@ V0.9.4.60 SECURE STORE + PER-USER MORE
 - Adds Approved Users.json, a viewer-readable Store Access record and a root Inventory Index.
 - Adds Store access repair that downgrades old non-admin Editor permissions, revokes disabled accounts, and attempts limited access on the Store root, Inventory, Administration and user workspaces.
 - Bundles processor/Code.gs, processor/appsscript.json and PROCESSOR-SETUP.md for the management approval worker.
-- Bumps every live deployment fingerprint to build 09460 and cache lotkeys-app-v09460-least-privilege-more.
 
 V0.9.4.59 DEPLOYMENT + CACHE POLISH
 - Starts the service-worker update check before normal LotKeys startup work.
