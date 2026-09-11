@@ -1,8 +1,8 @@
-# LotKeys V0.9.4.65 Vehicle Profile repair + instant Chat checklist
+# LotKeys V0.9.4.67 background-safe staged synchronization checklist
 
-- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09465` and confirm the version bar says V0.9.4.65.
+- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09467` and confirm the version bar says V0.9.4.67.
 - Confirm the repository root contains the exact file `CNAME` beside `index.html`; it must contain only `lot-keys.ca`.
-- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.65`, build `09465`, and cache `lotkeys-app-v09465-vehicle-profile-scope-repair`.
+- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.67`, build `09467`, and cache `lotkeys-app-v09467-background-safe-staged-sync`.
 - Open `https://lot-keys.ca/install.html` once and confirm it returns to the current LotKeys build.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
@@ -15,10 +15,15 @@
 - Before contributing media, open a Vehicle Profile and press **Open Your More Media Folder**. Confirm it only shows “You currently don’t have anything uploaded for this vehicle” and does not create a per-vehicle More folder.
 - Submit an information-only correction. Confirm `Requests/Pending` is created for the request but no `Client Media`, `Photos`, `Videos`, or `Documents` folder is created.
 - Submit one photo. Confirm LotKeys creates `Client Media/Photos` and keeps both `Videos` and `Documents` absent.
+- During that photo submission, confirm the top stoplight label advances as **Sync NN%** and the Inventory card shows the current More phase or **More Photos 1 of 1 · filename · NN%** beneath **Syncing…**.
 - Submit one video and then one document. Confirm `Videos` and `Documents` appear only after their respective submissions.
 - Press **Open Your More Media Folder** again and confirm the populated Client Media folder opens. Confirm its cached link opens immediately on the next attempt and Drive verification continues in the background.
 - Submit an ordinary user’s information correction and media. Confirm both appear for Administration review and official Inventory stays unchanged until approval.
 - Approve selected fields/media and leave at least one unchecked. Confirm only checked items apply, points are awarded once, the request disappears without a manual refresh, approved media is copied into official Inventory, and every submitted media file remains in the user’s More folder.
+- While applying that request, confirm the approval button, top stoplight area, and Inventory card visibly advance through request processing, official Vehicle Profile update, contribution points, and cleanup.
+- As an Administrator, add two new photos directly to a Vehicle Profile. Confirm the card identifies each photo and item number while the top label advances from preparation through 100%.
+- Repeat with one very small photo and confirm **100%** remains visible briefly before the header returns to its normal last-sync time.
+- Interrupt an upload once, reopen LotKeys, and confirm the saved operation says **paused** rather than falsely continuing to animate. Resume it and confirm no percentage remains stuck after success or a handled error.
 - Start two approvals close together, close the Vehicle Profile before they finish, and enter Chat. Wait at least one minute. Confirm the Vehicle Profile does not reopen over Chat or jump back to its loading/top position.
 - While leaving the Vehicle Profile open, approve one request. Confirm only that open review refreshes, its Drive-loading splash does not repeat, and the page stays near the same scroll position.
 - Confirm new More request workspaces contain only `Requests/Pending`; completed request JSON is removed instead of moved into Approved or Rejected folders.
@@ -29,7 +34,13 @@
 - Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
 - Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Open V0.9.4.65 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
+- Create a complete Vehicle Profile containing at least one document, two photos and one larger video. Confirm progress runs in the order **Vehicle information → Documents → Photos → Videos → Finalizing**.
+- After Documents and Photos finish and while the Video percentage is moving, switch from Chrome to a text-message app for at least ten seconds. Confirm LotKeys records the upload as paused without turning every Vehicle Profile unusable.
+- Return to Chrome. Confirm the same video resumes from its acknowledged checkpoint, completed Documents/Photos are not uploaded again, and the Vehicle finishes at 100%.
+- Open the interrupted Jeep and at least three unrelated Vehicle Profiles. Confirm all open immediately from the local cache, even while the Jeep is paused or retrying.
+- Confirm an older V0.9.4.64 card with a network/media **Sync needs attention** state retries automatically after V0.9.4.67 starts. Permission or authorization errors must remain stopped for user action.
+- Repeat the background test with a regular user submitting media through More. Confirm the partial request keeps the same request identity and produces no duplicate files after resuming.
+- Open V0.9.4.67 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
 - After the first message, confirm each sender has only one recipient-specific **LotKeys Live Messages** folder in their own Messaging Outbox. The recipient must have Reader access only to that encrypted lane; no Inventory permission changes are allowed.
 - Run `processLotKeysRequests` twice. Confirm the second run does not deliver duplicate copies and does not log “insufficient permissions” while trying to trash another user’s Outbox message.
 - On both accounts, open the exact Vehicle Profile that previously showed a card spinner and then stopped. Confirm its modal appears immediately. Repeat with several Inventory vehicles; photos/details may reconcile quietly afterward, but the card must not fail silently or leave “Opening vehicle profile…” indefinitely.
@@ -37,7 +48,7 @@
 - Confirm both user profile photos and the previous monthly placement/crown appear in Chat and Store user views. This must also recover a user who already had `Profile Thumbnail.jpg` from an earlier build.
 - Refresh unchanged Inventory twice and confirm the second check completes quickly from the local cache while Drive remains the source of truth.
 - Run Repair Store Structure and confirm the stage label and percentage visibly advance to 100%.
-- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.65 service-worker cache.
+- Reload once and confirm Awards, Chat, and staged synchronization progress still load from the V0.9.4.67 service-worker cache.
 - If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
 
 ## Previous V0.9.4.56 checks

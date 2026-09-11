@@ -1,3 +1,46 @@
+# LotKeys V0.9.4.67 — Background-Safe Staged Sync
+
+This browser-only update addresses the interrupted Vehicle creation reproduced on Android Chrome. An active media request is deliberately paused when LotKeys moves into the background, its acknowledged Google Drive upload session is retained, and it resumes when the user returns. Vehicle creation again commits smaller work before the largest video stage.
+
+## V0.9.4.67 highlights
+
+- **Safe order restored:** save Vehicle information first, then Documents, then Photos, then Videos last, followed by the final metadata save.
+- **Durable stage checkpoints:** completed Documents and Photos are committed before video transfer begins.
+- **Phone-background pause:** switching to a text message or another app aborts only the active network request and retains Drive’s acknowledged upload position.
+- **Resume rather than restart:** returning to LotKeys resumes the saved video session and partial owner/More request without duplicating completed media.
+- **Older error recovery:** recoverable network/media errors stored by V0.9.4.64 are automatically eligible for retry.
+- **Inventory remains usable:** the V0.9.4.65 application-scope repair remains present, so one interrupted Vehicle cannot prevent unrelated Vehicle Profiles from opening.
+- **Progress retained:** V0.9.4.66’s top stoplight percentage and Inventory-card phase/item details remain active throughout the staged operation.
+- **No permission change:** official Inventory remains Viewer-only for ordinary and Trusted users.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`, then open `https://lot-keys.ca/?build=09467`. Do not rerun `installLotKeysProcessor` if Apps Script already reports V0.9.4.64 with its trigger installed.
+
+## Previous release
+
+# LotKeys V0.9.4.66 — End-to-End Sync Progress
+
+This browser-only update restores visible synchronization feedback across the complete Vehicle Profile workflow. The progress display now covers preparation, Drive folder checks, information-sheet work, each photo/video/document transfer, More-request submission, Administration approval, points, and final cleanup—not only the raw file-transfer portion.
+
+## V0.9.4.66 highlights
+
+- **Top stoplight percentage:** the header displays **Sync 0–100%** for the active Vehicle Profile operation.
+- **Useful item detail:** Inventory cards show the current phase and, while media transfers, the media folder, item number, filename, and percentage beneath **Syncing…**.
+- **User More progress:** ordinary-user submissions remain quick and locally durable while visibly reporting creation/upload of the necessary More workspace and request.
+- **Administration approval progress:** applying selected fields and media reports official-profile updates, contribution points, and request cleanup.
+- **Visible finish:** 100% stays on screen briefly so a small upload cannot complete too quickly to be noticed.
+- **Restart clarity:** an interrupted operation restores as paused rather than pretending it is still actively uploading.
+- **No permission change:** official Inventory remains Viewer-only for ordinary and Trusted users.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current because this update is entirely in the website.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`, then open `https://lot-keys.ca/?build=09466`. Do not rerun `installLotKeysProcessor` if Apps Script already reports V0.9.4.64 with its trigger installed.
+
+## Previous release
+
 # LotKeys V0.9.4.65 — Vehicle Profile Scope Repair
 
 This browser-only hotfix repairs the Inventory-card failure reported during multi-account testing. The cache-first Vehicle Profile path called an ownership helper that existed only inside the private DriveSync module, so every card click stopped before the modal could render. V0.9.4.65 places that check in the application scope and adds a visible retry screen for any future display exception.

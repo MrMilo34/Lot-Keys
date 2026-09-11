@@ -1,3 +1,22 @@
+V0.9.4.67 BACKGROUND-SAFE STAGED SYNC
+- Restores the safe Vehicle creation order: information, Documents, Photos, Videos last, then final metadata.
+- Commits a durable local checkpoint after Documents, Photos and Videos so completed stages survive interruption.
+- Pauses active resumable requests when Android backgrounds Chrome and retains the last Drive-acknowledged byte position.
+- Resumes partially uploaded owner/More submissions with the same request identity instead of duplicating completed media.
+- Automatically retries older saved errors whose messages identify a recoverable network or media interruption.
+- Retains the V0.9.4.65 all-Profile opening repair and V0.9.4.66 end-to-end synchronization display.
+- Keeps the V0.9.4.64 Store Processor current; no Apps Script reinstall is required.
+- Bumps every live website fingerprint to build 09467 and cache `lotkeys-app-v09467-background-safe-staged-sync`.
+
+V0.9.4.66 END-TO-END SYNC PROGRESS
+- Restores a live Sync 0–100% label beside the top stoplight for the full Vehicle Profile operation.
+- Shows the current phase and per-file item/name/percentage below Syncing on Inventory cards.
+- Covers Administrator official-profile uploads, ordinary-user More submissions, information requests, and request approval processing.
+- Keeps 100% visible briefly so fast uploads have an unmistakable completion state.
+- Restores interrupted saved progress as paused and clears completed progress back to the normal last-sync time.
+- Keeps the V0.9.4.64 Store Processor as the minimum current processor; no Apps Script reinstall is required.
+- Bumps every live website fingerprint to build 09466 and cache `lotkeys-app-v09466-end-to-end-sync-progress`.
+
 V0.9.4.65 VEHICLE PROFILE SCOPE REPAIR
 - Fixes the runtime scope error that stopped every Inventory card before its Vehicle Profile modal could render.
 - Keeps the cache-first profile path and background Drive hydration introduced in V0.9.4.64.

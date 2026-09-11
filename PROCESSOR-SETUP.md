@@ -1,10 +1,10 @@
 # LotKeys Store Processor setup
 
-The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.4.65 is a browser-only Vehicle Profile repair and continues to use Processor V0.9.4.64, so an existing healthy V0.9.4.64 installation does not need to be rerun.
+The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.4.67 is a browser-only background-safe synchronization update and continues to use Processor V0.9.4.64, so an existing healthy V0.9.4.64 installation does not need to be rerun.
 
 ## Before installing
 
-1. Upload the complete V0.9.4.65 website package to GitHub Pages.
+1. Upload the complete V0.9.4.67 website package to GitHub Pages.
 2. Sign in to LotKeys as Admin Level 2.
 3. In **Garage → Approved Users**, add every tester using their exact Google account email.
 4. Press **Repair Store Structure** once. This creates each user’s writable `Listings` and `More` workspace and applies the Viewer/Administrator Drive roles.
@@ -39,9 +39,9 @@ Then test with an ordinary user:
 
 Repeat with a Trusted user. Vehicle information, price, and Pending Deal changes should apply after the processor runs; photos, videos, and documents must still remain pending for Administration.
 
-Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.64 · current**. If it reports an earlier version or no trigger, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete. Do not reinstall solely because the website says V0.9.4.65.
+Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.64 · current**. If it reports an earlier version or no trigger, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete. Do not reinstall solely because the website says V0.9.4.67.
 
-For profile-photo and Chat testing, open website V0.9.4.65 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the V0.9.4.64 processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
+For profile-photo and Chat testing, open website V0.9.4.67 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the V0.9.4.64 processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
 
 ## Important boundaries
 

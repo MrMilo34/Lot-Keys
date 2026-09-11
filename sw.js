@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09465-vehicle-profile-scope-repair';
+const CACHE='lotkeys-app-v09467-background-safe-staged-sync';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

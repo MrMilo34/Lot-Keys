@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.65",
-  "build": "09465",
-  "release": "vehicle-profile-scope-repair",
+  "version": "0.9.4.67",
+  "build": "09467",
+  "release": "background-safe-staged-sync",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09465-vehicle-profile-scope-repair",
+  "serviceWorkerCache": "lotkeys-app-v09467-background-safe-staged-sync",
   "publishedAt": "2026-09-11"
 }
