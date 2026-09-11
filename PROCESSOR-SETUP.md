@@ -1,10 +1,10 @@
 # LotKeys Store Processor setup
 
-The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it once from the Google account registered in LotKeys as **Admin Level 2**.
+The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities, messages and monthly crowns. It allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes.
 
 ## Before installing
 
-1. Upload the complete V0.9.4.61 website package to GitHub Pages.
+1. Upload the complete V0.9.4.63 website package to GitHub Pages.
 2. Sign in to LotKeys as Admin Level 2.
 3. In **Garage → Approved Users**, add every tester using their exact Google account email.
 4. Press **Repair Store Structure** once. This creates each user’s writable `Listings` and `More` workspace and applies the Viewer/Administrator Drive roles.
@@ -24,7 +24,7 @@ The install function verifies the executing Google email against the LotKeys Adm
 
 Run `getLotKeysProcessorStatus` from Apps Script. Its execution result should report:
 
-- `version: 0.9.4.61`
+- `version: 0.9.4.63`
 - `triggerInstalled: true`
 - the expected Store folder ID
 - the number of Approved Users
@@ -32,14 +32,16 @@ Run `getLotKeysProcessorStatus` from Apps Script. Its execution result should re
 Then test with an ordinary user:
 
 1. Connect using the Store Code while the Store/Inventory role is Viewer.
-2. Open any Vehicle Profile and press **View Your More Media Folder**.
-3. Submit one information correction and one photo.
+2. Open any Vehicle Profile and press **Open Your More Media Folder** before contributing. The app should report that nothing is uploaded and must not create empty folders.
+3. Submit one information correction and one photo. Only `Client Media/Photos` is created for media; Videos and Documents remain absent.
 4. Within about one minute, the information and photo should appear in the Administration contribution queue—not in official Inventory yet.
 5. Approve the contribution as an Administrator. The photo is copied into the official Vehicle Profile while the user’s More copy remains available.
 
 Repeat with a Trusted user. Vehicle information, price, and Pending Deal changes should apply after the processor runs; photos, videos, and documents must still remain pending for Administration.
 
-For Chat testing, open V0.9.4.61 once as every test user. Their user-owned Public Profile publishes the encrypted Messaging identity; the processor refreshes Store Access and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for a newly sent message to be couriered, then keep LotKeys open to confirm the normal conversation and incoming popup bubble both update.
+Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.63 · current**. If it still reports the previous version, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
+
+For profile-photo and Chat testing, open V0.9.4.63 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for reconciliation. Then refresh Store status on both accounts, confirm their photos appear, send messages both directions, and keep LotKeys open to confirm the normal conversation and incoming popup bubble both update.
 
 ## Important boundaries
 

@@ -1,23 +1,32 @@
-# LotKeys V0.9.4.61 — Live Requests, Chat & Cache Polish
+# LotKeys V0.9.4.63 — Review Session and Public Profile Repair
 
-This release keeps the Viewer-safe Store model from V0.9.4.60 and finishes the first complete approval and direct-Chat test path. Google Drive files remain the source of truth, while safe local caches make Inventory, More folders, open conversations, and queued submissions react immediately.
+This release fixes the delayed approval callback seen in the test recording and completes the public Store-profile handoff needed for teammate photos, Chat readiness, message delivery, and monthly crowns. Google Drive files remain the source of truth while local caches keep Inventory, Chat, and populated More links responsive.
 
-## V0.9.4.61 highlights
+## V0.9.4.63 highlights
 
+- **No surprise Vehicle Profile:** an approval or denial refresh is tied to the exact modal session that started it. Closing the profile, changing pages, or entering Chat invalidates pending callbacks, so the old GMC profile cannot reopen later.
+- **Stable review position:** a still-open review refresh skips the full Drive-loading splash and restores the reviewer’s scroll position.
+- **Processor status is visible:** Garage shows the detected Store Processor version. Admin Level 2 receives a clear update card when the installed processor is missing or older than this release, and Chat no longer mislabels that condition as a user setup problem.
+- **Profile-photo recovery:** the processor reconciles `PublicProfile.json`, falls back to an existing `Profile Thumbnail.jpg` when needed, and safely grants active Store users Reader access to that thumbnail.
+- **Shared-directory race fixed:** the app publishes the user-owned Public Profile first and preserves processor-owned photos, Messaging identities, Awards, contribution points, placements/crowns, and processor metadata during later Store configuration writes.
+- **Lookup-only More button:** **Open Your More Media Folder** does not create a folder. If that user has no submitted media for the vehicle, LotKeys shows the bottom message “You currently don’t have anything uploaded for this vehicle.”
+- **Media-type folders on demand:** a photo submission creates only `Client Media/Photos`; a video creates only `Client Media/Videos`; and a document creates only `Client Media/Documents`. Later media types add their matching folder without creating the others.
+- **Clean information requests:** information, price, and Pending Deal requests can use `Requests/Pending` without creating Client Media or empty Photos/Videos/Documents folders.
+- **User-bound cache:** cached More links include the current user workspace identity, protecting account switches while allowing populated folders to open immediately and verify against Drive in the background.
 - **Direct Chat delivery:** messages are saved to the open conversation immediately, encrypted into the sender’s private Outbox, delivered by the Admin Level 2 Store Processor, and collected from the recipient’s private Inbox. The existing pop-up bubble appears for an incoming message while LotKeys is open.
 - **Activated Store directory:** Store Access remains authoritative instead of being overwritten by an older private admin snapshot. User photos, Messaging readiness, monthly placements, and crowns are published from user-owned Public Profiles and reconciled by the processor.
 - **Per-field approval:** Administrators can approve any checked information fields and media while denying unchecked items. The completed request disappears from Reports / Requests and the Vehicle Profile without a manual page refresh.
 - **Contribution points:** each approved information field and each approved photo, video, or document awards one idempotent contribution point, including information that the processor automatically approves for a Trusted user. Administration completion points remain supported.
 - **No terminal request archive:** new requests use only the Pending folder. Approved or denied request JSON is removed; media stays in the submitting user’s More folder, and approved media is copied into official Inventory.
 - **Fast, durable submissions:** a request is committed locally before background Drive work starts, displays upload progress, and automatically retries after an interruption.
-- **Faster More and Inventory:** cached More links open immediately while verified in the background, and an unchanged Inventory Index is not downloaded and rebuilt again.
+- **Faster Inventory:** an unchanged Inventory Index is not downloaded and rebuilt again.
 - **Pending control polish:** **Mark Vehicle as Pending** now lives in Edit Vehicle with the smaller helper “Displays Pending Deal alert in the Vehicle Profile.”
 - **Visible Store repair:** Repair Store Structure now shows its current stage and percentage while auditing permissions and folders.
-- **Deployment identity:** the visible version, manifest, runtime modules, `version.json`, installer, processor, and service-worker cache identify V0.9.4.61 / build 09461.
+- **Deployment identity:** the visible version, manifest, runtime modules, `version.json`, installer, processor, and service-worker cache identify V0.9.4.63 / build 09463.
 
 ## Required rollout
 
-Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Then replace both Apps Script files and run `installLotKeysProcessor` again from the Admin Level 2 Google account. Open V0.9.4.61 once on each user account so their current Messaging identity/Public Profile can be published.
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Then replace both Apps Script files and run `installLotKeysProcessor` again from the Admin Level 2 Google account. Open V0.9.4.63 once on each user account so the current website files, Messaging identity, and user-bound More cache are active.
 
 ## Previous release
 

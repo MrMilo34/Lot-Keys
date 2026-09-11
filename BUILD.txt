@@ -1,3 +1,14 @@
+V0.9.4.63 REVIEW SESSION + PUBLIC PROFILE REPAIR
+- Prevents completed approval work from reopening or jumping a Vehicle Profile after the reviewer closed it, changed pages, or entered Chat.
+- Refreshes only the Vehicle Profile review session that is still open, without repeating the Drive hydration splash, and restores the reviewer’s scroll position.
+- Closes and invalidates the Vehicle Profile modal whenever Chat opens.
+- Detects and displays the installed Store Processor version in Garage and explains when an update is required instead of leaving users at an unexplained Setup pending state.
+- Recovers published profile photos from an existing Profile Thumbnail file when an older/incomplete Public Profile record omitted its ID.
+- Preserves processor-owned public profiles, Messaging identities, monthly crowns, Awards, points and processor metadata when an Administrator saves Store configuration.
+- Publishes a user’s Public Profile before any Administrator Store-directory write, removing the profile-photo race.
+- Retains V0.9.4.62 lookup-only, on-demand More Media folders and its user-bound fast cache.
+- Bumps every live deployment fingerprint to build 09463 and cache lotkeys-app-v09463-review-profile-sync.
+
 V0.9.4.61 LIVE REQUESTS + CHAT + CACHE POLISH
 - Routes encrypted direct messages through sender-owned Outbox and recipient-owned Inbox folders using the Admin Level 2 Store Processor.
 - Makes sent messages appear immediately and incoming messages refresh the conversation and popup bubble while LotKeys is open.
@@ -11,7 +22,7 @@ V0.9.4.61 LIVE REQUESTS + CHAT + CACHE POLISH
 - Moves Mark Vehicle as Pending into Edit Vehicle and preserves the Vehicle Profile alert/ribbon.
 - Adds live stage and percentage feedback to Repair Store Structure.
 - Resets the Admin Level 2 processor to clean completed state requests, refresh public profiles, restore Store placement/crown data and courier Chat envelopes.
-- Bumps every live deployment fingerprint to build 09461 and cache lotkeys-app-v09461-live-requests-chat-cache.
+- Bumped every live deployment fingerprint to build 09461 and cache lotkeys-app-v09461-live-requests-chat-cache.
 
 V0.9.4.60 SECURE STORE + PER-USER MORE
 - Allows Approved Users to connect while official Inventory stays Viewer-only.

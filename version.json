@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.61",
-  "build": "09461",
-  "release": "live-requests-chat-cache",
+  "version": "0.9.4.63",
+  "build": "09463",
+  "release": "review-profile-sync",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09461-live-requests-chat-cache",
+  "serviceWorkerCache": "lotkeys-app-v09463-review-profile-sync",
   "publishedAt": "2026-09-11"
 }
