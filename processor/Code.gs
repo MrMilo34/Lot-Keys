@@ -1,12 +1,12 @@
 /**
- * LotKeys Store Processor V0.9.4.60
+ * LotKeys Store Processor V0.9.4.63
  *
  * This script is installed once by an Admin Level 2 account. It is the trusted
  * writer between each user's private More request queue and the official,
  * Viewer-only Inventory. Never deploy it to execute as the visiting web user.
  */
 
-const LOTKEYS_PROCESSOR_VERSION = '0.9.4.60';
+const LOTKEYS_PROCESSOR_VERSION = '0.9.4.63';
 const LOTKEYS_STORE_FOLDER_ID = '1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g';
 const LK_FOLDER = 'application/vnd.google-apps.folder';
 const LK_SHEET = 'application/vnd.google-apps.spreadsheet';
@@ -16,13 +16,15 @@ const LK_PROFILE_FIELDS = [
   'year', 'make', 'model', 'bodyStyle', 'exteriorColor', 'interiorColor',
   'vehicleCondition', 'transmission', 'fuelType', 'engineSize', 'horsepower',
   'price', 'odometer', 'odometerUnit', 'vin', 'stock', 'originalListingUrl',
-  'carfaxUrl', 'carfaxOneOwner', 'carfaxLowKm', 'carfaxNoAccidents', 'description'
+  'carfaxUrl', 'carfaxOneOwner', 'carfaxLowKm', 'carfaxNoAccidents', 'description',
+  'pendingDeal'
 ];
 const LK_NUMERIC_FIELDS = {price: true, odometer: true};
 const LK_BOOLEAN_FIELDS = {
   carfaxOneOwner: true,
   carfaxLowKm: true,
-  carfaxNoAccidents: true
+  carfaxNoAccidents: true,
+  pendingDeal: true
 };
 
 /** Run this once after pasting the project files and enabling Drive API v3. */
@@ -101,13 +103,20 @@ function repairLotKeysAccess() {
     const listings = lkEnsureFolder_(userFolder.id, 'Listings', {lotkeysRole: 'userListings', lotkeysUserName: userName});
     const listingAssets = lkEnsureFolder_(userFolder.id, 'Listing Assets', {lotkeysRole: 'userListingAssets', lotkeysUserName: userName});
     const more = lkEnsureFolder_(userFolder.id, 'More', {lotkeysRole: 'userMore', lotkeysUserName: userName});
+    lkCleanupLegacyRequestArchives_(more);
+    const messaging = lkEnsureFolder_(userFolder.id, 'Messaging', {lotkeysRole: 'userMessaging', lotkeysUserName: userName});
+    const messageInbox = lkEnsureFolder_(messaging.id, 'Inbox', {lotkeysRole: 'messageInbox', lotkeysUserName: userName});
+    const messageOutbox = lkEnsureFolder_(messaging.id, 'Outbox', {lotkeysRole: 'messageOutbox', lotkeysUserName: userName});
 
-    user.drive = {
+    user.drive = Object.assign({}, existingDrive, {
       userFolderId: userFolder.id,
       listingsFolderId: listings.id,
       listingAssetsFolderId: listingAssets.id,
-      moreFolderId: more.id
-    };
+      moreFolderId: more.id,
+      messagingFolderId: messaging.id,
+      messageInboxFolderId: messageInbox.id,
+      messageOutboxFolderId: messageOutbox.id
+    });
     lkSetUserPermission_(userFolder.id, email, 'writer');
     adminUsers.forEach(function(admin) {
       lkSetUserPermission_(userFolder.id, lkEmail_(admin), state.sharedDrive ? 'fileOrganizer' : 'writer');
@@ -139,6 +148,7 @@ function repairLotKeysAccess() {
   const protectedInventory = lkTryLimitedAccess_(state.inventoryFolder.id);
   const protectedAdministration = lkTryLimitedAccess_(state.adminFolder.id);
   lkHardenVehiclePermissions_(state, adminUsers);
+  lkRefreshPublicProfiles_(state, true);
   lkPersistUserRegistry_(state);
   return {
     repaired: true,
@@ -155,10 +165,15 @@ function repairLotKeysAccess() {
 function processLotKeysRequests() {
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(25000)) return {skipped: true, reason: 'Another processor run is active.'};
-  const result = {processed: 0, approved: 0, indexed: 0, rejected: 0, errors: 0, startedAt: new Date().toISOString()};
+  const result = {processed: 0, approved: 0, indexed: 0, rejected: 0, messagesDelivered: 0, errors: 0, startedAt: new Date().toISOString()};
   try {
     const state = lkLoadState_();
+    if (lkRefreshPublicProfiles_(state)) lkPersistUserRegistry_(state);
     let remaining = LK_REQUEST_LIMIT;
+    const messageResult = lkProcessMessageOutboxes_(state, remaining);
+    result.messagesDelivered = messageResult.delivered;
+    result.errors += messageResult.errors;
+    remaining = Math.max(0, remaining - messageResult.processed);
     state.users.filter(lkActive_).forEach(function(actor) {
       if (remaining <= 0) return;
       const drive = actor.drive && typeof actor.drive === 'object' ? actor.drive : {};
@@ -197,6 +212,7 @@ function processLotKeysRequests() {
         });
       });
     });
+    if (state.userRegistryDirty) lkPersistUserRegistry_(state);
     result.finishedAt = new Date().toISOString();
     PropertiesService.getScriptProperties().setProperties({
       lotkeysLastRunAt: result.finishedAt,
@@ -215,6 +231,17 @@ function lkProcessRequest_(state, actor, request, file, context) {
   if (type === 'vehicle-contribution') return lkProcessContribution_(state, actor, request, file, context);
   if (type === 'vehicle-state') return lkProcessVehicleState_(state, actor, request, file, context);
   return lkRejectRequest_(request, file, context, 'Unsupported request type.');
+}
+
+function lkAwardContribution_(state, actor, points, key, reason, awardedAt) {
+  if (!actor || !key || !points) return false;
+  const current = actor.contributions && typeof actor.contributions === 'object' ? actor.contributions : {};
+  const awards = Array.isArray(current.awards) ? current.awards.slice() : [];
+  if (awards.some(function(award) { return String(award && award.key || '') === String(key); })) return false;
+  awards.push({key: String(key), points: Number(points), reason: String(reason || ''), awardedAt: String(awardedAt || new Date().toISOString())});
+  actor.contributions = {points: Math.max(0, (Number(current.points) || 0) + Number(points)), awards: awards};
+  state.userRegistryDirty = true;
+  return true;
 }
 
 function lkProcessVehicleCreate_(state, actor, request, file, context) {
@@ -293,6 +320,9 @@ function lkProcessContribution_(state, actor, request, file, context) {
   if (trusted && Object.keys(changes).length) {
     lkApplyChanges_(vehicle, changes);
     lkAssertUniqueVehicle_(state, vehicle);
+    Object.keys(changes).forEach(function(field) {
+      lkAwardContribution_(state, actor, 1, 'contribution:' + String(request.id || file.id) + ':field:' + field, 'Automatically approved ' + field + ' correction', request.createdAt);
+    });
     request.autoAppliedChanges = changes;
     request.changes = {};
     request.informationAppliedAt = new Date().toISOString();
@@ -350,10 +380,6 @@ function lkProcessVehicleState_(state, actor, request, file, context) {
     const price = Number(newest.detectedPrice);
     if (Number.isFinite(price) && price >= 0) {
       vehicle.price = price;
-      newest.status = 'approved';
-      newest.reportedByUserName = lkUserName_(actor);
-      newest.resolvedAt = new Date().toISOString();
-      vehicle.priceChangeRequests = (vehicle.priceChangeRequests || []).concat([lkCleanPriceRequest_(newest, actor, vehicle)]);
       automaticChange = true;
     }
   } else if (creator && Object.prototype.hasOwnProperty.call(payload, 'price')) {
@@ -380,6 +406,8 @@ function lkProcessVehicleState_(state, actor, request, file, context) {
     return lkApproveRequest_(request, file, context, automaticChange ? 'Authorized Vehicle Profile state applied.' : 'No pending approval items.');
   }
   if (lkStateRefsResolved_(vehicle, request)) {
+    lkClearResolvedStateRefs_(vehicle, request);
+    lkWriteVehicle_(state, vehicle);
     return lkApproveRequest_(request, file, context, 'Administration completed the indexed request.');
   }
   lkWriteJsonFile_(file.id, request, file.name);
@@ -404,6 +432,14 @@ function lkLoadState_() {
   const rawUsers = Array.isArray(approved.users) && approved.users.length ? approved.users :
     (Array.isArray(config.users) && config.users.length ? config.users : (Array.isArray(rootAccess.accessUsers) ? rootAccess.accessUsers : []));
   const users = lkNormalizeUsers_(rawUsers);
+  const registeredPublicUsers = Array.isArray(rootAccess.publicUsers) ? rootAccess.publicUsers : [];
+  users.forEach(function(user) {
+    const publicUser = registeredPublicUsers.find(function(row) {
+      return String(row && row.userName || '').toLowerCase() === String(user.userName || '').toLowerCase();
+    });
+    if (publicUser) lkMergePublicProfile_(user, publicUser, true);
+  });
+  lkRestoreLatestPlacements_(users, rootAccess, config);
   if (!users.length) throw new Error('No Approved Users were found. Add the Admin Level 2 account in LotKeys first.');
   return {
     root: root,
@@ -457,9 +493,7 @@ function lkPersistUserRegistry_(state) {
   state.config.updatedAt = now;
   state.configFile = lkUpsertJson_(state.configFile, state.adminFolder.id, 'LotKeys.json', state.config, {lotkeysRole: 'storeConfig'});
 
-  const publicUsers = Array.isArray(state.rootAccess.publicUsers) ? state.rootAccess.publicUsers : state.users.map(function(user) {
-    return {userName: user.userName, profileDisplayName: user.profileDisplayName || user.userName, status: lkActive_(user) ? 'active' : 'disabled'};
-  });
+  const publicUsers = state.users.map(lkPublicUser_);
   state.rootAccess = Object.assign({}, state.rootAccess, {
     schemaVersion: 9,
     app: 'LotKeys',
@@ -485,6 +519,137 @@ function lkPersistUserRegistry_(state) {
   state.rootAccessFile = lkUpsertJson_(state.rootAccessFile, state.root.id, 'Store Access.json', state.rootAccess, {lotkeysRole: 'storeAccess'});
 }
 
+function lkPublicUser_(user) {
+  return {
+    userName: String(user.userName || ''),
+    profileDisplayName: String(user.profileDisplayName || user.userName || ''),
+    phoneNumber: String(user.phoneNumber || ''),
+    profilePhotoFileId: String(user.profilePhotoFileId || ''),
+    profileUpdatedAt: String(user.profileUpdatedAt || ''),
+    tagline: String(user.tagline || ''),
+    favoriteBadge: String(user.favoriteBadge || ''),
+    primaryAwardId: String(user.primaryAwardId || ''),
+    displayAwardIds: Array.isArray(user.displayAwardIds) ? user.displayAwardIds : [],
+    lotLevel: Math.max(1, Number(user.lotLevel) || 1),
+    confirmedFacebookPosts: Math.max(0, Number(user.confirmedFacebookPosts) || 0),
+    unlockedBadges: Array.isArray(user.unlockedBadges) ? user.unlockedBadges : [],
+    awards: Array.isArray(user.awards) ? user.awards : [],
+    facebookSaleHistory: Array.isArray(user.facebookSaleHistory) ? user.facebookSaleHistory : [],
+    profileTheme: String(user.profileTheme || 'system'),
+    profileAccent: String(user.profileAccent || '#2563eb'),
+    monthlyPlacement: user.monthlyPlacement || null,
+    monthlyPlacementMonth: String(user.monthlyPlacementMonth || ''),
+    celebrationSoundFileId: String(user.celebrationSoundFileId || ''),
+    celebrationSoundName: String(user.celebrationSoundName || ''),
+    celebrationSoundMimeType: String(user.celebrationSoundMimeType || ''),
+    celebrationSoundDuration: Number(user.celebrationSoundDuration) || 0,
+    celebrationSoundUpdatedAt: String(user.celebrationSoundUpdatedAt || ''),
+    messaging: user.messaging && typeof user.messaging === 'object' ? user.messaging : null,
+    contributions: {
+      points: Number(user.contributions && user.contributions.points) || 0,
+      awards: (Array.isArray(user.contributions && user.contributions.awards) ? user.contributions.awards : []).map(function(award) {
+        return {key: String(award && award.key || ''), points: Number(award && award.points) || 0, reason: String(award && award.reason || ''), awardedAt: String(award && award.awardedAt || '')};
+      }).filter(function(award) { return !!award.key; })
+    },
+    status: lkActive_(user) ? 'active' : 'disabled'
+  };
+}
+
+function lkRestoreLatestPlacements_(users, rootAccess, config) {
+  const histories = [];
+  const add = function(rows) { if (Array.isArray(rows)) Array.prototype.push.apply(histories, rows); };
+  add(rootAccess && rootAccess.topContributors && rootAccess.topContributors.history);
+  add(config && config.topContributors && config.topContributors.history);
+  add(config && config.monthlyContributionHistory);
+  const latest = histories.filter(function(row) { return row && Array.isArray(row.standings); }).sort(function(a, b) {
+    return String(b.monthKey || b.wrappedAt || '').localeCompare(String(a.monthKey || a.wrappedAt || ''));
+  })[0];
+  if (!latest) return users;
+  const monthKey = String(latest.monthKey || '');
+  users.forEach(function(user) {
+    const standing = latest.standings.find(function(row) {
+      return String(row && row.userName || '').toLowerCase() === String(user.userName || '').toLowerCase();
+    });
+    if (!standing) return;
+    const placement = Number(standing.placement) || null;
+    if (!user.monthlyPlacementMonth || String(user.monthlyPlacementMonth) <= monthKey) {
+      user.monthlyPlacement = placement;
+      user.monthlyPlacementMonth = monthKey;
+    }
+  });
+  return users;
+}
+
+function lkMergePublicProfile_(user, profile, includeProtected) {
+  if (!profile || typeof profile !== 'object') return user;
+  const copy = function(key, value) { if (value !== undefined && value !== null) user[key] = value; };
+  copy('profileDisplayName', profile.profileDisplayName !== undefined ? profile.profileDisplayName : profile.displayName);
+  copy('phoneNumber', profile.phoneNumber);
+  copy('profilePhotoFileId', profile.profilePhotoFileId);
+  copy('profileUpdatedAt', profile.profileUpdatedAt !== undefined ? profile.profileUpdatedAt : profile.updatedAt);
+  copy('tagline', profile.tagline);
+  copy('favoriteBadge', profile.favoriteBadge);
+  copy('primaryAwardId', profile.primaryAwardId);
+  copy('displayAwardIds', Array.isArray(profile.displayAwardIds) ? profile.displayAwardIds : undefined);
+  copy('profileTheme', profile.profileTheme !== undefined ? profile.profileTheme : profile.appearance && profile.appearance.theme);
+  copy('profileAccent', profile.profileAccent !== undefined ? profile.profileAccent : profile.appearance && profile.appearance.accent);
+  copy('messaging', profile.messaging && typeof profile.messaging === 'object' ? profile.messaging : undefined);
+  if (includeProtected) {
+    copy('lotLevel', profile.lotLevel);
+    copy('confirmedFacebookPosts', profile.confirmedFacebookPosts);
+    copy('unlockedBadges', Array.isArray(profile.unlockedBadges) ? profile.unlockedBadges : undefined);
+    copy('awards', Array.isArray(profile.awards) ? profile.awards : undefined);
+    copy('facebookSaleHistory', Array.isArray(profile.facebookSaleHistory) ? profile.facebookSaleHistory : undefined);
+    copy('contributions', profile.contributions && typeof profile.contributions === 'object' ? profile.contributions : undefined);
+    copy('monthlyPlacement', profile.monthlyPlacement);
+    copy('monthlyPlacementMonth', profile.monthlyPlacementMonth);
+    copy('celebrationSoundFileId', profile.celebrationSoundFileId);
+    copy('celebrationSoundName', profile.celebrationSoundName);
+    copy('celebrationSoundMimeType', profile.celebrationSoundMimeType);
+    copy('celebrationSoundDuration', profile.celebrationSoundDuration);
+    copy('celebrationSoundUpdatedAt', profile.celebrationSoundUpdatedAt);
+  }
+  return user;
+}
+
+function lkRefreshPublicProfiles_(state, forcePhotoAccess) {
+  let changed = false;
+  const activeEmails = state.users.filter(lkActive_).map(lkEmail_).filter(Boolean);
+  state.users.forEach(function(user) {
+    const drive = user.drive && typeof user.drive === 'object' ? user.drive : {};
+    let userFolder = drive.userFolderId ? lkTryGet_(drive.userFolderId) : null;
+    if (!userFolder) userFolder = lkFindFolder_(state.usersFolder.id, lkUserName_(user));
+    if (!userFolder) return;
+    const file = lkFindFile_(userFolder.id, 'PublicProfile.json');
+    const thumbnail = lkFindFile_(userFolder.id, 'Profile Thumbnail.jpg');
+    if (!file && !thumbnail) return;
+    try {
+      const profile = file ? lkReadJsonFile_(file.id) : {};
+      const publishedAt = Date.parse(profile.profileUpdatedAt || profile.updatedAt || '') || 0;
+      const thumbnailAt = Date.parse(thumbnail && thumbnail.modifiedTime || '') || 0;
+      if (thumbnail && !String(profile.profilePhotoFileId || '') && (!Object.prototype.hasOwnProperty.call(profile, 'profilePhotoFileId') || thumbnailAt >= publishedAt)) {
+        profile.profilePhotoFileId = thumbnail.id;
+        profile.profileUpdatedAt = thumbnail.modifiedTime || profile.updatedAt || new Date().toISOString();
+      }
+      const before = JSON.stringify(lkPublicUser_(user));
+      const previousPhotoId = String(user.profilePhotoFileId || '');
+      const previousUpdatedAt = String(user.profileUpdatedAt || '');
+      lkMergePublicProfile_(user, profile, false);
+      const photoId = String(user.profilePhotoFileId || '');
+      if (photoId && (forcePhotoAccess || photoId !== previousPhotoId || String(user.profileUpdatedAt || '') !== previousUpdatedAt)) {
+        activeEmails.forEach(function(email) {
+          try { lkSetUserPermission_(photoId, email, 'reader'); }
+          catch (permissionError) { console.warn('Profile photo sharing deferred for ' + email + ': ' + String(permissionError && permissionError.message || permissionError)); }
+        });
+      }
+      if (before !== JSON.stringify(lkPublicUser_(user))) changed = true;
+    } catch (error) {
+      console.warn('Public profile refresh deferred for ' + lkUserName_(user) + ': ' + String(error && error.message || error));
+    }
+  });
+  return changed;
+}
+
 function lkHardenVehiclePermissions_(state, admins) {
   const profiles = lkListChildren_(state.inventoryFolder.id, "mimeType = '" + LK_FOLDER + "'");
   const nonAdmins = state.users.filter(function(user) { return lkAdminLevel_(user) === 0 && lkEmail_(user); });
@@ -494,19 +659,111 @@ function lkHardenVehiclePermissions_(state, admins) {
   });
 }
 
+function lkMessagingWorkspace_(state, user) {
+  const drive = user.drive && typeof user.drive === 'object' ? user.drive : {};
+  let userFolder = drive.userFolderId ? lkTryGet_(drive.userFolderId) : null;
+  if (!userFolder) userFolder = lkFindFolder_(state.usersFolder.id, lkUserName_(user));
+  if (!userFolder) return null;
+  const root = lkEnsureFolder_(userFolder.id, 'Messaging', {lotkeysRole: 'userMessaging', lotkeysUserName: lkUserName_(user)});
+  const inbox = lkEnsureFolder_(root.id, 'Inbox', {lotkeysRole: 'messageInbox', lotkeysUserName: lkUserName_(user)});
+  const outbox = lkEnsureFolder_(root.id, 'Outbox', {lotkeysRole: 'messageOutbox', lotkeysUserName: lkUserName_(user)});
+  user.drive = Object.assign({}, drive, {
+    userFolderId: userFolder.id,
+    messagingFolderId: root.id,
+    messageInboxFolderId: inbox.id,
+    messageOutboxFolderId: outbox.id
+  });
+  return {root: root, inbox: inbox, outbox: outbox};
+}
+
+function lkProcessMessageOutboxes_(state, limit) {
+  const result = {processed: 0, delivered: 0, errors: 0};
+  const active = state.users.filter(lkActive_);
+  const mailboxes = {};
+  active.forEach(function(user) {
+    const address = String(user.messaging && user.messaging.address || '');
+    const workspace = lkMessagingWorkspace_(state, user);
+    if (address && workspace) mailboxes[address] = {user: user, workspace: workspace};
+  });
+  active.forEach(function(actor) {
+    if (result.processed >= limit) return;
+    const senderAddress = String(actor.messaging && actor.messaging.address || '');
+    const senderBox = senderAddress && mailboxes[senderAddress] ? mailboxes[senderAddress].workspace : null;
+    if (!senderBox) return;
+    const files = lkListChildren_(senderBox.outbox.id, "mimeType != '" + LK_FOLDER + "'")
+      .filter(function(file) {
+        const metadata = Object.assign({}, file.appProperties || {}, file.properties || {});
+        return metadata.lotkeysRole === 'messageEnvelope';
+      });
+    files.forEach(function(file) {
+      if (result.processed >= limit) return;
+      result.processed += 1;
+      try {
+        const envelope = lkReadJsonFile_(file.id);
+        const metadata = Object.assign({}, file.appProperties || {}, file.properties || {});
+        const toAddress = String(envelope && envelope.toAddress || metadata.toAddress || '');
+        const claimedFrom = String(envelope && envelope.fromAddress || metadata.fromAddress || '');
+        if (!toAddress || !senderAddress || claimedFrom !== senderAddress) {
+          lkTrash_(file.id);
+          result.errors += 1;
+          return;
+        }
+        const recipient = mailboxes[toAddress];
+        if (!recipient) return;
+        const appProperties = Object.assign({}, file.appProperties || {}, {
+          lotkeysRole: 'messageEnvelope',
+          toAddress: toAddress,
+          fromAddress: senderAddress,
+          verifiedFromAddress: senderAddress
+        });
+        Drive.Files.copy({
+          name: file.name,
+          parents: [recipient.workspace.inbox.id],
+          appProperties: appProperties,
+          properties: Object.assign({}, file.properties || {}, {lotkeysRole: 'messageEnvelope', verifiedFromAddress: senderAddress})
+        }, file.id, {supportsAllDrives: true, fields: 'id,name,parents,appProperties,properties'});
+        lkTrash_(file.id);
+        result.delivered += 1;
+      } catch (error) {
+        result.errors += 1;
+        console.warn('Message delivery deferred: ' + String(error && error.message || error));
+      }
+    });
+  });
+  return result;
+}
+
 function lkFindVehicle_(state, vehicleId) {
   vehicleId = String(vehicleId || '');
   if (!vehicleId) return null;
   const index = lkReadInventoryIndex_(state);
   const entry = index.vehicles.find(function(row) { return String(row.id || '') === vehicleId; });
   let profile = entry && entry.drive && entry.drive.profileFolderId ? lkTryGet_(entry.drive.profileFolderId) : null;
+  const profiles = lkListChildren_(state.inventoryFolder.id, "mimeType = '" + LK_FOLDER + "'");
   if (!profile) {
-    profile = lkListChildren_(state.inventoryFolder.id, "mimeType = '" + LK_FOLDER + "'").find(function(folder) {
-      return folder.properties && String(folder.properties.lotkeysVehicleId || '') === vehicleId;
+    profile = profiles.find(function(folder) {
+      const publicProperties = folder.properties || {};
+      const privateProperties = folder.appProperties || {};
+      return String(publicProperties.lotkeysVehicleId || privateProperties.lotkeysVehicleId || '') === vehicleId;
     }) || null;
   }
-  if (!profile) return null;
-  return lkReadVehicle_(profile, entry || {});
+  if (profile) return lkReadVehicle_(profile, entry || {});
+
+  // Older LotKeys website builds stored the Vehicle Profile ID in appProperties
+  // or only inside the administrative sheet. Fall back to the sheet once, then
+  // repair both metadata styles and the Inventory Index so future requests use
+  // the fast path above.
+  for (let i = 0; i < profiles.length; i += 1) {
+    const candidate = lkReadVehicle_(profiles[i], {});
+    if (String(candidate.id || '') !== vehicleId) continue;
+    const metadata = {lotkeysRole: 'vehicleProfile', lotkeysVehicleId: vehicleId};
+    try { lkUpdateMetadata_(profiles[i].id, {properties: metadata, appProperties: metadata}); } catch (error) {
+      console.warn('Vehicle Profile metadata repair deferred: ' + String(error && error.message || error));
+    }
+    lkWriteInventoryEntry_(state, candidate);
+    return candidate;
+  }
+  return null;
 }
 
 function lkFindDuplicateVehicle_(state, candidate, excludeId) {
@@ -915,6 +1172,21 @@ function lkStateRefsResolved_(vehicle, request) {
   });
 }
 
+function lkClearResolvedStateRefs_(vehicle, request) {
+  const pendingIds = new Set((request.indexedPendingDealRequestIds || []).map(String));
+  const deletionIds = new Set((request.indexedDeletionRequestIds || []).map(String));
+  const priceIds = new Set((request.indexedPriceRequestIds || []).map(String));
+  vehicle.pendingDealRequests = (vehicle.pendingDealRequests || []).filter(function(row) {
+    return !pendingIds.has(String(row.id || ''));
+  });
+  vehicle.deletionRequests = (vehicle.deletionRequests || []).filter(function(row) {
+    return !deletionIds.has(String(row.id || ''));
+  });
+  vehicle.priceChangeRequests = (vehicle.priceChangeRequests || []).filter(function(row) {
+    return !priceIds.has(String(row.id || ''));
+  });
+}
+
 function lkMoreContext_(moreVehicle) {
   const media = lkFindFolder_(moreVehicle.id, 'Client Media');
   const requests = lkFindFolder_(moreVehicle.id, 'Requests');
@@ -925,9 +1197,7 @@ function lkMoreContext_(moreVehicle) {
     videosFolder: media ? lkFindFolder_(media.id, 'Videos') : null,
     documentsFolder: media ? lkFindFolder_(media.id, 'Documents') : null,
     requestsFolder: requests,
-    pendingFolder: requests ? lkFindFolder_(requests.id, 'Pending') : null,
-    approvedFolder: requests ? lkEnsureFolder_(requests.id, 'Approved', {lotkeysRole: 'moreRequestsApproved'}) : null,
-    rejectedFolder: requests ? lkEnsureFolder_(requests.id, 'Rejected', {lotkeysRole: 'moreRequestsRejected'}) : null
+    pendingFolder: requests ? lkFindFolder_(requests.id, 'Pending') : null
   };
 }
 
@@ -941,23 +1211,35 @@ function lkRequestFolders_(context) {
     photosFolderId: context.photosFolder ? context.photosFolder.id : '', photosFolderUrl: url(context.photosFolder),
     videosFolderId: context.videosFolder ? context.videosFolder.id : '', videosFolderUrl: url(context.videosFolder),
     documentsFolderId: context.documentsFolder ? context.documentsFolder.id : '', documentsFolderUrl: url(context.documentsFolder),
-    pendingFolderId: context.pendingFolder ? context.pendingFolder.id : '',
-    approvedFolderId: context.approvedFolder ? context.approvedFolder.id : '',
-    rejectedFolderId: context.rejectedFolder ? context.rejectedFolder.id : ''
+    pendingFolderId: context.pendingFolder ? context.pendingFolder.id : ''
   };
+}
+
+function lkCleanupLegacyRequestArchives_(moreFolder) {
+  if (!moreFolder) return;
+  lkListChildren_(moreFolder.id, "mimeType = '" + LK_FOLDER + "'").forEach(function(moreVehicle) {
+    const requests = lkFindFolder_(moreVehicle.id, 'Requests');
+    if (!requests) return;
+    ['Approved', 'Rejected'].forEach(function(name) {
+      const legacy = lkFindFolder_(requests.id, name);
+      if (!legacy) return;
+      lkListChildren_(legacy.id, "mimeType != '" + LK_FOLDER + "'").forEach(function(file) {
+        if (/\.json$/i.test(String(file.name || ''))) lkTrash_(file.id);
+      });
+      if (!lkListChildren_(legacy.id).length) lkTrash_(legacy.id);
+    });
+  });
 }
 
 function lkApproveRequest_(request, file, context, note) {
   request.status = 'approved'; request.resolvedAt = new Date().toISOString(); request.processorNote = note || '';
-  lkWriteJsonFile_(file.id, request, file.name);
-  lkMove_(file.id, context.pendingFolder.id, context.approvedFolder.id);
+  lkTrash_(file.id);
   return 'approved';
 }
 
 function lkRejectRequest_(request, file, context, reason) {
   request.status = 'rejected'; request.resolvedAt = new Date().toISOString(); request.processorError = String(reason || 'Request rejected.');
-  lkWriteJsonFile_(file.id, request, file.name);
-  lkMove_(file.id, context.pendingFolder.id, context.rejectedFolder.id);
+  lkTrash_(file.id);
   return 'rejected';
 }
 
@@ -1086,7 +1368,7 @@ function lkOrderedPhotoName_(value, index) { return String(index + 1).padStart(2
 function lkQ_(value) { return String(value || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
 
 function lkGet_(fileId) {
-  return Drive.Files.get(fileId, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,properties,webViewLink,trashed,inheritedPermissionsDisabled,capabilities,permissionIds'});
+  return Drive.Files.get(fileId, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed,inheritedPermissionsDisabled,capabilities,permissionIds'});
 }
 function lkTryGet_(fileId) { try { const file = lkGet_(fileId); return file.trashed ? null : file; } catch (error) { return null; } }
 
@@ -1098,7 +1380,7 @@ function lkListChildren_(parentId, extraQuery) {
     const response = Drive.Files.list({
       q: query, pageSize: 1000, pageToken: pageToken,
       supportsAllDrives: true, includeItemsFromAllDrives: true,
-      fields: 'nextPageToken,files(id,name,mimeType,driveId,parents,properties,webViewLink,trashed,modifiedTime)'
+      fields: 'nextPageToken,files(id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed,modifiedTime)'
     });
     Array.prototype.push.apply(out, response.files || []);
     pageToken = response.nextPageToken;
@@ -1117,10 +1399,10 @@ function lkEnsureFolder_(parentId, name, properties) { return lkFindFolder_(pare
 function lkCreateFolder_(parentId, name, properties) { return lkCreateFile_({name: name, mimeType: LK_FOLDER, parents: [parentId], properties: properties || {}}); }
 
 function lkCreateFile_(resource, blob) {
-  return Drive.Files.create(resource, blob || null, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,properties,webViewLink,trashed'});
+  return Drive.Files.create(resource, blob || null, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed'});
 }
 function lkUpdateMetadata_(fileId, resource) {
-  return Drive.Files.update(resource, fileId, null, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,properties,webViewLink,trashed'});
+  return Drive.Files.update(resource, fileId, null, {supportsAllDrives: true, fields: 'id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed'});
 }
 function lkCopyFile_(sourceId, parentId, name, properties) {
   return Drive.Files.copy({name: name, parents: [parentId], properties: properties || {}}, sourceId, {supportsAllDrives: true, fields: 'id,name,mimeType,parents,properties,webViewLink'});
