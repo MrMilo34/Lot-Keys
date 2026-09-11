@@ -1,3 +1,22 @@
+# LotKeys V0.9.4.65 — Vehicle Profile Scope Repair
+
+This browser-only hotfix repairs the Inventory-card failure reported during multi-account testing. The cache-first Vehicle Profile path called an ownership helper that existed only inside the private DriveSync module, so every card click stopped before the modal could render. V0.9.4.65 places that check in the application scope and adds a visible retry screen for any future display exception.
+
+## V0.9.4.65 highlights
+
+- **Vehicle Profiles open again:** the More-workspace ownership check is now available in the same application scope as `showVehicle`.
+- **Fast path preserved:** cached vehicle information still renders before background Drive hydration.
+- **No silent spinner:** an unexpected profile rendering problem now produces a readable error and **Try Again** action.
+- **Regression coverage:** the release checks both JavaScript syntax and the application-scope dependency required by the Vehicle Profile path.
+- **No permission change:** official Inventory remains Viewer-only for ordinary and Trusted users.
+- **No Processor reinstall needed:** the already-installed V0.9.4.64 Store Processor remains current because this correction is entirely in the website code.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`, then open `https://lot-keys.ca/?build=09465`. Do not rerun `installLotKeysProcessor` if Apps Script already reports V0.9.4.64 with its trigger installed.
+
+## Previous release
+
 # LotKeys V0.9.4.64 — Instant Chat and Cache-First Vehicle Profiles
 
 This release removes the two blocking paths found during multi-device testing. Vehicle Profiles now open from IndexedDB immediately and reconcile with Google Drive in the background. Chat uses an encrypted recipient-only live lane for normal delivery, while the Admin Level 2 processor remains the durable recovery path. Official Inventory permissions are unchanged.

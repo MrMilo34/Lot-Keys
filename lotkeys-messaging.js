@@ -16,7 +16,7 @@ const lotKeysUserKey=Core.lotKeysUserKey;
 */
 
 const MSG_VERSION=1;
-const APP_VERSION='0.9.4.64';
+const APP_VERSION='0.9.4.65';
 const CONV_KEY='lotkeysMessagingConversationsV1';
 const ID_KEY='lotkeysMessagingIdentityV1';
 const LAST_KEY='lotkeysMessagingLastConversationV1';
@@ -593,6 +593,6 @@ async function endVoiceCall(){if(!activeCall)return;const room=activeCall,me=awa
 function showMiniToast(text){let t=document.getElementById('toast');if(t){t.textContent=text;t.hidden=false;setTimeout(()=>t.hidden=true,2400)}}
 
 async function init(){ensureBaseUI();ensureV09450Styles();window.__lotKeysMessagingMyAddress=String((await setting(ID_KEY,null))?.address||'');const resizeChat=()=>{if(document.body.classList.contains('lkmsg-chat-open'))syncChatViewport()};window.addEventListener('resize',resizeChat,{passive:true});window.visualViewport?.addEventListener?.('resize',resizeChat,{passive:true});document.querySelectorAll('.bottom-nav .nav-btn[data-route]').forEach(btn=>btn.addEventListener('click',()=>{if(panel&&!panel.hidden)closePanel();if(activeCall){activeCall.minimized=true;showCallBar()}},true));const obs=new MutationObserver(()=>{injectAccountCard().catch(console.warn);updateUnreadBadges().catch(console.warn)});obs.observe(document.getElementById('main')||document.body,{childList:true,subtree:true});injectAccountCard().catch(console.warn);updateUnreadBadges().catch(console.warn);setTimeout(async()=>{const restored=await DriveSync.restoreSessionAuthorization?.().catch(()=>false);schedulePoll(350);if(restored||DriveSync.connected?.())refreshMessagingInBackground().catch(()=>{})},250);document.addEventListener('visibilitychange',()=>{if(!document.hidden){pollInbox().catch(()=>{});refreshMessagingInBackground({force:true}).catch(()=>{});schedulePoll(250)}});window.addEventListener('online',()=>{pollInbox().catch(()=>{});refreshMessagingInBackground({force:true}).catch(()=>{});schedulePoll(250)});window.addEventListener('pagehide',()=>{if(activeCall)endVoiceCall().catch(()=>{})})}
-window.LotKeysMessaging={open:openMessagesHome,openUser,openLastBubble,close:closePanel,refresh:()=>refreshMessagingInBackground({force:true}),version:'0.9.4.64'};
+window.LotKeysMessaging={open:openMessagesHome,openUser,openLastBubble,close:closePanel,refresh:()=>refreshMessagingInBackground({force:true}),version:'0.9.4.65'};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

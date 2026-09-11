@@ -43,7 +43,7 @@
     addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;button.disabled=false;status.textContent='LotKeys is ready to install on this device.'});
     button.addEventListener('click',async()=>{if(!promptEvent){status.textContent='Use the matching browser instructions below to add LotKeys.';document.getElementById('manual-steps').scrollIntoView({behavior:'smooth'});return}button.disabled=true;await promptEvent.prompt();const choice=await promptEvent.userChoice.catch(()=>({outcome:'dismissed'}));status.textContent=choice.outcome==='accepted'?'LotKeys installation started ✓':'Installation was cancelled — you can try again anytime.';promptEvent=null;if(choice.outcome!=='accepted')button.disabled=false});
     addEventListener('appinstalled',()=>{button.disabled=true;button.textContent='✓ LotKeys installed';status.textContent='LotKeys is now available from your Home Screen or app list.'});
-    if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js?v=09464',{updateViaCache:'none'}).then(registration=>registration.update().catch(()=>{})).catch(()=>{});
+    if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js?v=09465',{updateViaCache:'none'}).then(registration=>registration.update().catch(()=>{})).catch(()=>{});
   </script>
 </body>
 </html>

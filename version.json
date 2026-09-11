@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.64",
-  "build": "09464",
-  "release": "instant-chat-cache-first-profiles",
+  "version": "0.9.4.65",
+  "build": "09465",
+  "release": "vehicle-profile-scope-repair",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09464-instant-chat-cache-first-profiles",
+  "serviceWorkerCache": "lotkeys-app-v09465-vehicle-profile-scope-repair",
   "publishedAt": "2026-09-11"
 }

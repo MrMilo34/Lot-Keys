@@ -1,3 +1,11 @@
+V0.9.4.65 VEHICLE PROFILE SCOPE REPAIR
+- Fixes the runtime scope error that stopped every Inventory card before its Vehicle Profile modal could render.
+- Keeps the cache-first profile path and background Drive hydration introduced in V0.9.4.64.
+- Adds a visible Vehicle Profile recovery message and Try Again action instead of silently ending on a stopped card spinner.
+- Keeps the V0.9.4.64 Store Processor as the minimum current processor; no Apps Script reinstall is required for this browser-only hotfix.
+- Preserves Viewer-only official Inventory permissions for ordinary and Trusted users.
+- Bumps every live website fingerprint to build 09465 and cache `lotkeys-app-v09465-vehicle-profile-scope-repair`.
+
 V0.9.4.64 INSTANT CHAT + CACHE-FIRST VEHICLE PROFILES
 - Opens every locally cached Vehicle Profile immediately and hydrates current Drive data/media in a bounded background job.
 - Runs the three official media-folder scans together instead of one after another.
