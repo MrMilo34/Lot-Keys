@@ -1,3 +1,14 @@
+V0.9.4.64 INSTANT CHAT + CACHE-FIRST VEHICLE PROFILES
+- Opens every locally cached Vehicle Profile immediately and hydrates current Drive data/media in a bounded background job.
+- Runs the three official media-folder scans together instead of one after another.
+- Adds encrypted, recipient-only live Chat lanes so open browsers normally receive messages and popup alerts within a few seconds.
+- Keeps the one-minute Admin Level 2 processor as durable recovery delivery rather than the normal live-message courier.
+- Makes processor delivery idempotent by sender/message ID and stops attempting to trash files owned by another user, eliminating the repeated 403/copy backlog.
+- Saves incoming messages to IndexedDB and repaints Chat before archiving personal Drive history.
+- Caches published Messaging mailbox IDs and removes Store-directory refresh from the blocking Chat poll path.
+- Preserves Viewer-only official Inventory access for ordinary and Trusted users.
+- Bumps every live deployment fingerprint to build 09464 and cache lotkeys-app-v09464-instant-chat-cache-first-profiles.
+
 V0.9.4.63 REVIEW SESSION + PUBLIC PROFILE REPAIR
 - Prevents completed approval work from reopening or jumping a Vehicle Profile after the reviewer closed it, changed pages, or entered Chat.
 - Refreshes only the Vehicle Profile review session that is still open, without repeating the Drive hydration splash, and restores the reviewer’s scroll position.

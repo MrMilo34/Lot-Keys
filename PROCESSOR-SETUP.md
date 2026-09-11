@@ -1,10 +1,10 @@
 # LotKeys Store Processor setup
 
-The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities, messages and monthly crowns. It allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes.
+The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes.
 
 ## Before installing
 
-1. Upload the complete V0.9.4.63 website package to GitHub Pages.
+1. Upload the complete V0.9.4.64 website package to GitHub Pages.
 2. Sign in to LotKeys as Admin Level 2.
 3. In **Garage → Approved Users**, add every tester using their exact Google account email.
 4. Press **Repair Store Structure** once. This creates each user’s writable `Listings` and `More` workspace and applies the Viewer/Administrator Drive roles.
@@ -24,7 +24,7 @@ The install function verifies the executing Google email against the LotKeys Adm
 
 Run `getLotKeysProcessorStatus` from Apps Script. Its execution result should report:
 
-- `version: 0.9.4.63`
+- `version: 0.9.4.64`
 - `triggerInstalled: true`
 - the expected Store folder ID
 - the number of Approved Users
@@ -39,15 +39,15 @@ Then test with an ordinary user:
 
 Repeat with a Trusted user. Vehicle information, price, and Pending Deal changes should apply after the processor runs; photos, videos, and documents must still remain pending for Administration.
 
-Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.63 · current**. If it still reports the previous version, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
+Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.64 · current**. If it still reports the previous version, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
 
-For profile-photo and Chat testing, open V0.9.4.63 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for reconciliation. Then refresh Store status on both accounts, confirm their photos appear, send messages both directions, and keep LotKeys open to confirm the normal conversation and incoming popup bubble both update.
+For profile-photo and Chat testing, open V0.9.4.64 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
 
 ## Important boundaries
 
 - `Approved Users.json` is the LotKeys Store role list. It does **not** replace the Google OAuth **Test users** list while the OAuth app is in Testing.
 - Never share official Inventory as Editor with an ordinary or Trusted user.
-- Direct Chat envelopes are encrypted and cross user boundaries only through the installed processor. A normal user does not need access to `Administration` or another user’s workspace.
+- Direct Chat envelopes are encrypted. Normal live delivery grants the exact recipient Reader access to one lane inside the sender’s Outbox; the processor creates one deduplicated private-Inbox fallback copy. A normal user does not need access to `Administration`, official Inventory editing, or another user’s general workspace.
 - Never deploy this script as a public web app or as the visiting user. The time trigger must run as the Admin Level 2 installer.
 - Do not move `Administration`, `Users`, or `Inventory` outside the configured Store folder.
 - If an Admin Level changes or a user is disabled, LotKeys immediately updates that account's direct access. Run **Repair Store Structure** as well to audit every Store permission and limited-access boundary.

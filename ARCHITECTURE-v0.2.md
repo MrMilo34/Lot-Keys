@@ -1,6 +1,6 @@
 # LotKeys architecture v0.2
 
-## V0.9.4.63 least-privilege Store model
+## V0.9.4.64 least-privilege Store model
 
 The official Inventory remains on the Store side. Ordinary and Trusted users receive Viewer access to it; each user receives Writer access only to their own limited-access workspace. The Admin Level 2 Store Processor validates the workspace that contains a request instead of trusting identity fields supplied by the browser.
 
@@ -36,6 +36,7 @@ STORE FOLDER
 │       ├── Messaging
 │       │   ├── Inbox
 │       │   └── Outbox
+│       │       └── LotKeys Live Messages - <recipient address>
 │       └── More
 │           └── <Vehicle>
 │               ├── Client Media [only after a media submission]
@@ -74,7 +75,11 @@ Every user has a separate More folder for every Vehicle Profile they work with. 
 
 ## Local cache
 
-IndexedDB is the fast client-side cache and offline working copy. Google Drive remains the shared source of truth once a vehicle, listing, profile, request, or message is synchronized. Cached More links and Inventory Index metadata are verified in the background.
+IndexedDB is the fast client-side cache and offline working copy. Google Drive remains the shared source of truth once a vehicle, listing, profile, request, or message is synchronized. Vehicle Profiles paint from IndexedDB first; cached More links, Vehicle media, and Inventory Index metadata are verified in the background.
+
+## Chat delivery
+
+Each encrypted message is written into a lane owned by its sender and shared Reader-only with the exact recipient Google account. The open recipient browser checks known lanes every few seconds, saves the decrypted message locally, updates the UI, and then archives history to the recipient's personal Drive. The Store Processor separately makes one deduplicated Inbox copy as recovery. It never deletes another user's Outbox file; the owning browser expires old envelopes.
 
 ## Shared link
 

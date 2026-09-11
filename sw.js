@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09463-review-profile-sync';
+const CACHE='lotkeys-app-v09464-instant-chat-cache-first-profiles';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

@@ -1,15 +1,15 @@
-# LotKeys V0.9.4.63 review session + public profile checklist
+# LotKeys V0.9.4.64 instant Chat + Vehicle Profile checklist
 
-- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09463` and confirm the version bar says V0.9.4.63.
+- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09464` and confirm the version bar says V0.9.4.64.
 - Confirm the repository root contains the exact file `CNAME` beside `index.html`; it must contain only `lot-keys.ca`.
-- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.63`, build `09463`, and cache `lotkeys-app-v09463-review-profile-sync`.
+- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.64`, build `09464`, and cache `lotkeys-app-v09464-instant-chat-cache-first-profiles`.
 - Open `https://lot-keys.ca/install.html` once and confirm it returns to the current LotKeys build.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
 - As Admin Level 2, add each exact Google email under **Garage → Approved Users**, press **Repair Store Structure**, and confirm its `Users/<name>` folder contains `Listings`, `Listing Assets`, and `More`.
 - Before updating Apps Script, open Garage as Admin Level 2 and confirm **Store Processor** identifies the old version (or says **Not detected**) and displays the update-required card.
-- Replace both bundled Apps Script files, run `installLotKeysProcessor` again using `PROCESSOR-SETUP.md`, and confirm `getLotKeysProcessorStatus` reports V0.9.4.63 and `triggerInstalled: true`.
-- In LotKeys press **Refresh Status** or reopen Garage. Confirm **Store Processor · V0.9.4.63 · current** appears and the update card is gone.
+- Replace both bundled Apps Script files, run `installLotKeysProcessor` again using `PROCESSOR-SETUP.md`, and confirm `getLotKeysProcessorStatus` reports V0.9.4.64 and `triggerInstalled: true`.
+- In LotKeys press **Refresh Status** or reopen Garage. Confirm **Store Processor · V0.9.4.64 · current** appears and the update card is gone.
 - In Google Drive, confirm ordinary and Trusted users are Viewer/Reader on Store and Inventory, Writer only on their own user workspace, and not Editor on official Vehicle Profile folders.
 - Connect as an ordinary user and confirm Garage reaches **Connected to Store ✓** without asking management to share official Inventory as Editor.
 - Before contributing media, open a Vehicle Profile and press **Open Your More Media Folder**. Confirm it only shows “You currently don’t have anything uploaded for this vehicle” and does not create a per-vehicle More folder.
@@ -29,11 +29,14 @@
 - Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
 - Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Open V0.9.4.63 once as each test user, wait for the processor, refresh Store status, and confirm neither user says Setup pending. Send both directions, confirm the sender sees its message immediately, and confirm the recipient receives both the normal Chat message and popup bubble while LotKeys is open.
+- Open V0.9.4.64 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
+- After the first message, confirm each sender has only one recipient-specific **LotKeys Live Messages** folder in their own Messaging Outbox. The recipient must have Reader access only to that encrypted lane; no Inventory permission changes are allowed.
+- Run `processLotKeysRequests` twice. Confirm the second run does not deliver duplicate copies and does not log “insufficient permissions” while trying to trash another user’s Outbox message.
+- Open several Inventory vehicles on both accounts. Each cached Vehicle Profile must appear immediately; photos/details may reconcile quietly afterward, but “Opening vehicle profile…” must never wait indefinitely.
 - Confirm both user profile photos and the previous monthly placement/crown appear in Chat and Store user views. This must also recover a user who already had `Profile Thumbnail.jpg` from an earlier build.
 - Refresh unchanged Inventory twice and confirm the second check completes quickly from the local cache while Drive remains the source of truth.
 - Run Repair Store Structure and confirm the stage label and percentage visibly advance to 100%.
-- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.63 service-worker cache.
+- Reload once and confirm Awards, Chat, and the new connection behavior still load from the V0.9.4.64 service-worker cache.
 - If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
 
 ## Previous V0.9.4.56 checks

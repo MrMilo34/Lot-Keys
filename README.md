@@ -1,3 +1,24 @@
+# LotKeys V0.9.4.64 — Instant Chat and Cache-First Vehicle Profiles
+
+This release removes the two blocking paths found during multi-device testing. Vehicle Profiles now open from IndexedDB immediately and reconcile with Google Drive in the background. Chat uses an encrypted recipient-only live lane for normal delivery, while the Admin Level 2 processor remains the durable recovery path. Official Inventory permissions are unchanged.
+
+## V0.9.4.64 highlights
+
+- **Cache-first Vehicle Profiles:** the saved vehicle information and media paint immediately; Drive hydration can no longer hold the modal on “Opening vehicle profile…”.
+- **Bounded background refresh:** a Drive stall does not stall the user interface, and only the exact profile session still open can repaint when fresher data arrives.
+- **Live encrypted Chat:** the sender creates one recipient-specific read-only lane in their own Messaging Outbox. The recipient polls that lane every few seconds while LotKeys is open.
+- **Processor fallback, not bottleneck:** the one-minute processor still makes one durable Inbox copy, but live delivery no longer waits for its trigger.
+- **No 403 relay loop:** the processor no longer tries to trash sender-owned files and deduplicates by sender plus message ID before copying.
+- **Immediate messages and alerts:** incoming data is committed to IndexedDB and rendered before personal Drive history archival.
+- **Less Drive traffic:** mailbox folder IDs are retained, directory refresh no longer blocks each Chat poll, media folder scans run together, and old sender-owned envelopes are cleaned by their owner.
+- **Least privilege retained:** ordinary and Trusted users remain Viewer-only on official Inventory. A live Chat lane grants only its exact recipient Reader access to encrypted envelopes.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the GitHub repository root. Keep the filename exactly `CNAME` beside `index.html`. Replace both Apps Script files and rerun `installLotKeysProcessor` from the Admin Level 2 Google account. Open `https://lot-keys.ca/?build=09464` once on both test accounts before the live Chat test.
+
+## Previous release
+
 # LotKeys V0.9.4.63 — Review Session and Public Profile Repair
 
 This release fixes the delayed approval callback seen in the test recording and completes the public Store-profile handoff needed for teammate photos, Chat readiness, message delivery, and monthly crowns. Google Drive files remain the source of truth while local caches keep Inventory, Chat, and populated More links responsive.

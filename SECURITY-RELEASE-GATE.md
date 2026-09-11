@@ -2,7 +2,7 @@
 
 ## Current status: team testing
 
-V0.9.4.63 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
+V0.9.4.64 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
 
 The website remains a static browser application. Google Drive enforces file access, and the installed Store Processor is the trusted writer for the current Inventory test model; a production service is still required as the final authority for multi-Store Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, and long-lived authorization secrets.
 
@@ -15,7 +15,7 @@ The website remains a static browser application. Google Drive enforces file acc
 - The Admin Level 2 Apps Script processor validates requests by their actual user workspace, applies the creator/Trusted exceptions, and leaves contributed media pending for Administration.
 - Approved media is copied into official Inventory, so later deletion of a user’s More copy cannot delete the official copy.
 - Creator-only award checks are case-insensitively bound to the configured Google account email.
-- Direct Chat envelopes are encrypted in-browser, written to the sender’s private Outbox, and copied into the recipient’s private Inbox only by the Admin Level 2 processor under the current test design.
+- Direct Chat envelopes are encrypted in-browser and written to a sender-owned lane shared Reader-only with the exact recipient Google account. The Admin Level 2 processor provides one deduplicated private-Inbox recovery copy; it is not the live courier.
 - Account Lock Screen credentials use PBKDF2-SHA-256, a unique random device salt, and delays after repeated failures.
 - Lock state survives a page refresh in the current tab.
 - Public source contains no Google client secret, Drive access token, user password, or customer financial record.
@@ -26,7 +26,7 @@ The website remains a static browser application. Google Drive enforces file acc
 - The local Lock Screen is walk-away privacy. It cannot replace the device lock, Google account security, or server authentication; someone controlling browser storage/developer tools can bypass it.
 - A Store Code locates a Store. It is not a password or security boundary.
 - The public creator-access file is a UI authorization hint in this static build. Public release must validate Creator/Admin actions server-side.
-- Polling can collect messages while LotKeys is open. Reliable notifications or message receipt while the app is fully closed needs authenticated push delivery.
+- Short-interval polling can collect messages while LotKeys is open. Reliable notifications or message receipt while the app is fully closed needs authenticated push delivery.
 - WebRTC calling needs production signalling, TURN fallback, call authorization, and abuse controls for reliable use across restrictive networks.
 - The current team-test build requests the full Google Drive scope so users can locate the Store and maintain their own Drive workspaces. This restricted scope requires Google's applicable verification/security work or replacement with a narrower authenticated broker/picker architecture before public launch.
 - The bundled Apps Script processor is a controlled-test management boundary, not a general public backend. Protect the Admin Level 2 Google account and Apps Script project, limit editors on that project, and replace it with a production-reviewed service if LotKeys becomes public or multi-dealership.
@@ -67,7 +67,7 @@ The website remains a static browser application. Google Drive enforces file acc
    - Test direct/group Chat, block/mute/admin removal, unread state, key changes, attachments, and calls across two networks.
    - Complete accessibility, privacy, threat-model, and independent security reviews.
 
-## Safe V0.9.4.63 test rules
+## Safe V0.9.4.64 test rules
 
 - Keep Google OAuth in **Testing** and explicitly add every tester.
 - Share the Store folder only with those same tester Google accounts.
