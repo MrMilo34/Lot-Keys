@@ -1,3 +1,17 @@
+V0.9.4.69 LISTING SYNC VISIBILITY + POSTING BUDDY
+- Shows Facebook Listing-only photo phase, filename, item count and 0–100% progress on Listing cards and beside the top stoplight.
+- Uses resumable Listing-photo uploads with stable per-item session keys.
+- Makes each user’s Account.json the source of truth for My Saved Facebook Listing Locations, including durable deletions.
+- Gives Use Website Price the existing gold applied confirmation.
+- Adds Post Buddy V0.1.14 with current LotKeys accent/light-dark appearance, Location-last handling and a safe scroll-only Facebook finish.
+- Masks URL/view follow-up details until a live Marketplace item URL is saved.
+- Adds Admin Level 2 Google OAuth Test-user shortcut and clearer Error 403 guidance for first-user onboarding.
+- Prevents a half-built Processor folder from becoming a false Needs Recovery card, then retires any matching local recovery twin and stuck 95% state when the official profile arrives.
+- Makes the Post Buddy download use the Extension package beside the current LotKeys build, with trusted TEST/production pointer fallback.
+- Deliberately leaves Vehicle Profile photo-transfer timing unchanged for a separately testable next release.
+- Keeps the V0.9.4.64 Store Processor current; no Apps Script reinstall is required.
+- Bumps every live website fingerprint to build 09469 and cache `lotkeys-app-v09469-listing-progress-personal-locations-themed-helper`.
+
 V0.9.4.68 AUTOMATIC FAST SYNC + CLEAN REQUESTS
 - Automatically hands an interrupted Vehicle or More upload to a fresh saved job after Chrome becomes visible/online; no manual Sync press is required.
 - Stores lightweight Drive stage checkpoints without repeatedly cloning full Vehicle photo/video blobs into IndexedDB.

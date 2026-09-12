@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.68",
-  "build": "09468",
-  "release": "automatic-fast-sync-clean-requests",
+  "version": "0.9.4.69",
+  "build": "09469",
+  "release": "listing-progress-personal-locations-themed-helper",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09468-automatic-fast-sync-clean-requests",
+  "serviceWorkerCache": "lotkeys-app-v09469-listing-progress-personal-locations-themed-helper",
   "publishedAt": "2026-09-12"
 }

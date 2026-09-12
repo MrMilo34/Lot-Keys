@@ -1,3 +1,31 @@
+# LotKeys V0.9.4.69 — Listing Sync Visibility & Posting Buddy
+
+This browser-and-extension update makes Facebook Listing work visibly traceable, moves each user’s personal posting locations to their own Google Drive account data, and aligns the Posting Buddy with the user’s LotKeys appearance. Vehicle Profile photo-transfer timing is intentionally unchanged in this release so its separate performance work can be tested cleanly in the following build.
+
+## V0.9.4.69 highlights
+
+- **Facebook Listing upload progress:** Listing-only photos report phase, filename, item count and 0–100% progress on the Listing card and beside the header stoplight.
+- **Resumable Listing media:** Listing photo uploads keep stable resumable-session keys and can continue safely without duplicate files.
+- **Personal location source of truth:** **My Saved Facebook Listing Locations** are written to the signed-in user’s `Account.json`; a save or deletion is not reported as complete until that account write finishes or is clearly marked for retry.
+- **Website-price feedback:** **Use Website Price** now flashes LotKeys’ existing gold applied confirmation.
+- **Posting Buddy V0.1.14:** the Chrome extension follows the current LotKeys accent and light/dark appearance, refreshes it on open/sync/interval, handles Location last, and scrolls to Facebook’s final action without clicking it.
+- **Protected follow-up:** Marketplace URL/view details remain covered until **Save / Use this Website** captures a live Facebook item page.
+- **OAuth Testing clarity:** Admin Level 2 gets a direct **Open Google OAuth Test Users** shortcut, and 403 sign-in errors explain that Google OAuth Test-user approval is separate from LotKeys Store approval.
+- **First-profile reconciliation:** a fresh Processor-created Drive folder is allowed to finish before LotKeys judges it as interrupted; once its healthy Inventory entry arrives, any temporary local **Needs Recovery** twin and stale 95% marker are removed automatically.
+- **Reliable Post Buddy download:** the Garage button reads the Extension release bundled with the current LotKeys website first and falls back safely when an older saved GitHub pointer is unavailable.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
+- **Least privilege retained:** ordinary and Trusted users remain Viewer-only on official Inventory.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09469`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every real tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+
+## Deferred intentionally
+
+Vehicle Profile photo-processing performance was assessed but not altered in V0.9.4.69. That optimization belongs in the next isolated release, as requested, so any regression has one clear version boundary.
+
+## Previous release
+
 # LotKeys V0.9.4.68 — Automatic Fast Sync & Clean Requests
 
 This browser-only update closes the return-to-upload race reproduced on Android Chrome and removes avoidable work from Vehicle and More submissions. A suspended browser keeps a lightweight Drive checkpoint; when LotKeys is visible and online again, a fresh job resumes automatically without requiring the Vehicle Profile Sync button.
