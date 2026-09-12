@@ -1,3 +1,20 @@
+V0.9.4.72 PLATFORM INFO, PHOTO SPEED & CROSS-DEVICE INVENTORY REPAIR
+- Reconciles the local Inventory cache against the actual Drive Vehicle Profile folder set on foreground/manual checks.
+- Runs a targeted repair when a cached Listing references a Vehicle Profile missing on the current device, restoring its Profile data and cover photo.
+- Keeps Inventory and Listings cache-first; a folder-ID audit does not scan every Vehicle sheet unless a folder is missing or changed.
+- Opens Inventory from cache immediately and verifies real Drive folders behind the page.
+- Uploads Vehicle Profile photos through a bounded three-worker queue on normal connections while retaining sequential mode for slow/Data Saver connections.
+- Preserves the recovery-safe order: Vehicle information, Documents, Photos/checkpoint, Videos last, then final metadata.
+- Renders public Profiles with the viewed user’s saved light/dark theme, accent, contrast, cards and controls.
+- Adds one platform-wide LotKeys Info message with a mobile logo control, desktop label, per-message unread dot, local cache and 120-second refresh.
+- Gives registered developers a Dev Tool Kit composer with heading, text, image, video, link and file blocks; publishing remains protected by GitHub repository permission.
+- Checks uncached deployment version metadata so stale custom-domain/service-worker sessions can move to the newest build in their own repository.
+- Downloads the included Post Buddy V0.1.14 ZIP before trusted pointer fallbacks, avoiding the reported 404 release-pointer failure.
+- Includes lotkeys-info.js and lotkeys-info.json in the service-worker application shell.
+- Keeps Processor V0.9.4.64 current; no Apps Script reinstall is required.
+- Build: 09472.
+- Service worker cache: lotkeys-app-v09472-platform-info-inventory-reconcile.
+
 V0.9.4.71 LISTINGS NULL-PROGRESS REPAIR
 - Fixes the V0.9.4.69 regression where Listings with no active upload tried to read `null.status` and every card fell into its safety state.
 - Opens Home and Listings from IndexedDB immediately instead of waiting for missing Drive cover photos.

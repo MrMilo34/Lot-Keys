@@ -1,3 +1,30 @@
+# LotKeys V0.9.4.72 — Platform Info & Cross-Device Inventory Repair
+
+This browser release keeps Inventory and Listings cache-first while repairing the missing-profile gap found with the 2019 Ford Transit Connect: a Listing can no longer remain disconnected from a Vehicle Profile that exists in the Store’s real Drive Inventory. It also introduces one protected platform-wide LotKeys Info message, fixes viewed-user public-profile colors, makes the Post Buddy download resilient to an old 404 pointer, and delivers the separately staged Vehicle-photo performance update.
+
+## V0.9.4.72 highlights
+
+- **Cross-device Inventory truth:** a lightweight folder audit compares actual Drive Vehicle Profile folders with the device cache instead of trusting an unchanged `Inventory Index.json` alone.
+- **Linked Listing recovery:** if a Listing references a Vehicle Profile missing on that device, LotKeys performs one targeted reconciliation and restores the linked Profile data and cover photo without blocking the Listings page.
+- **Cache-first navigation retained:** Inventory and Listings paint saved data immediately; Drive verification and missing-folder scans run behind the page.
+- **Faster Vehicle photos:** Profile photo uploads use at most three workers on a normal connection. Slow/Data Saver connections remain sequential. Documents still complete first, photos are checkpointed second, and videos remain last.
+- **Viewed-user theme:** public Profiles use the viewed user’s saved light/dark choice and accent—not the viewer’s—with local readable text, card, border, and button colors.
+- **One LotKeys Info message:** the LotKeys-logo control opens the one current platform-wide message; mobile shows the logo only, desktop shows **LotKeys Info**, and a red dot remains until the current message is viewed.
+- **Developer-controlled publishing:** registered LotKeys developers can compose, preview, reorder, save a draft, and download the protected `lotkeys-info.json` publication file from Dev Tool Kit. GitHub repository permission remains the global publishing boundary.
+- **Fresh-build detection:** each deployment checks uncached version metadata from its own GitHub repository so a stale service-worker/custom-domain tab can move to the current build safely.
+- **Reliable Post Buddy download:** Garage tries the V0.1.14 ZIP included in this exact release before trusted release-pointer fallbacks, so a missing `extension/latest.json` no longer blocks the download.
+- **V0.9.4.71 retained:** normal Listing rendering, background thumbnails, Listing photo progress, durable personal Facebook locations, gold Website Price feedback, OAuth test-user guidance, and first-profile cleanup remain included.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
+- **Drive remains authoritative:** local IndexedDB/cache is for speed; Store Drive folders and data remain the source of truth.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, including `lotkeys-info.js`, `lotkeys-info.json`, `extension/latest.json`, and the complete `extension/releases` folder. Then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09472`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+
+The TEST and production repositories are separate deployments. Uploading V0.9.4.72 to `Lot-Keys-TEST` does not update `lot-keys.ca`; promote the tested files separately to `MrMilo34/Lot-Keys` while preserving that repository’s `CNAME`. The fresh-build check clears browser/service-worker staleness inside a deployment, but it intentionally does not promote TEST code into production.
+
+## Previous release
+
 # LotKeys V0.9.4.71 — Listings Rendering Repair
 
 This cache-safe browser hotfix repairs the V0.9.4.69/70 Listings regression. A Listing without an active upload correctly reports no progress instead of attempting to read `null.status`, so normal card details and photos render again. Listing cards also appear from IndexedDB without waiting on Google Drive; any missing cover photos fill in afterward in a limited background queue. It retains the remaining V0.9.4.69 work. Vehicle Profile photo-transfer timing remains intentionally unchanged so that separate performance work keeps a clear test boundary.

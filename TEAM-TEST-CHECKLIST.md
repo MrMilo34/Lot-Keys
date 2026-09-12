@@ -1,3 +1,29 @@
+# LotKeys V0.9.4.72 platform info and cross-device Inventory checklist
+
+- Upload every item inside the release ZIP directly to `Lot-Keys-TEST`, including both `lotkeys-info` files and the complete `extension/releases` folder. Keep `CNAME` absent.
+- Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09472`; confirm the version strip and `version.json` report V0.9.4.72 / build `09472` / cache `lotkeys-app-v09472-platform-info-inventory-reconcile`.
+- On the phone account, confirm the 2019 Ford Transit Connect is in Inventory and Listings. On the PC account/device, open Listings first and confirm the cached Listing appears immediately even if its cover starts blank.
+- Without performing a full refresh, confirm the PC detects the Listing’s missing linked Vehicle Profile, adds the Transit to Inventory, and fills the Listing cover photo. Navigate to Inventory again and confirm it remains present.
+- Create another Vehicle Profile on one device, wait for Drive processing, then open Inventory on the other device. Confirm the cached page paints first and the new Vehicle appears after the lightweight folder audit.
+- Delete only a disposable test Vehicle through the normal Admin flow and confirm its stale cached card is removed on another device after reopening Inventory.
+- Confirm an unchanged Inventory check remains fast and does not rescan every Vehicle Profile sheet.
+- Create an Admin Vehicle with one document, at least six photos, and one video. Confirm the order remains **information → documents → photos → videos → finalizing**, photo percentages never move backward, and up to three photos transfer concurrently on a normal connection.
+- Repeat a smaller photo upload with Android Data Saver or a simulated slow connection and confirm the safe sequential path completes.
+- Interrupt the photo/video creation once by backgrounding Chrome. Return without pressing Sync and confirm saved resumable sessions continue without duplicate Drive files.
+- From a light-themed account, open Akash’s dark public Profile. Confirm the modal, text, award area, listing area and buttons use Akash’s dark background/accent with readable contrast.
+- Change the viewed user to a light theme with a different accent, reopen their public Profile, and confirm that viewed-user appearance replaces the viewer’s appearance.
+- On a phone, confirm the version strip shows a compact LotKeys-logo button. On desktop, confirm it shows the logo plus **LotKeys Info**.
+- Confirm a new LotKeys Info publication shows one red unread dot, opens one current message, supports heading/text/image/video/link/file blocks, and clears its dot after viewing.
+- As the registered developer, open **Garage → Dev Tool Kit → LotKeys Info**. Add/reorder/delete blocks, preview, save a local draft, and download `lotkeys-info.json`. Confirm a normal Admin/user does not receive this editor.
+- Publish the downloaded JSON only through the protected `MrMilo34/Lot-Keys` repository. Confirm a second Store/device receives the new message on visibility or within two minutes while its cached message opens immediately.
+- Temporarily open an older cached custom-domain tab after the production repository has a newer `version.json`. Confirm it adds a current build cache-buster once and does not enter a reload loop.
+- Remember that `Lot-Keys-TEST` and production `Lot-Keys` are separate deployments: updating TEST alone must not be described as updating `lot-keys.ca`.
+- In Garage on desktop, press **Download Post Buddy ZIP** with a missing/404 local `extension/latest.json`. Confirm the bundled V0.1.14 ZIP still downloads and extracts successfully.
+- Recheck normal Listings, Facebook Listing photo progress, gold Website Price feedback, saved Facebook locations, Chat, contribution cleanup, and first-profile duplicate cleanup from V0.9.4.71.
+- Confirm Apps Script still reports Processor V0.9.4.64 with its existing time trigger. Do not reinstall solely for V0.9.4.72.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.71 Listings rendering repair checklist
 
 - Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09471` and confirm the version bar says V0.9.4.71.

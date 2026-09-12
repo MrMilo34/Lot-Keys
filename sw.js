@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09471-listings-progress-null-fix';
+const CACHE='lotkeys-app-v09472-platform-info-inventory-reconcile';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',
@@ -13,6 +13,8 @@ const CORE=[
   './lotkeys-store-directory.json',
   './lotkeys-messaging.js',
   './lotkeys-awards.js',
+  './lotkeys-info.js',
+  './lotkeys-info.json',
   './assets/carfax-one-owner.png',
   './assets/carfax-low-kilometres.png',
   './assets/carfax-no-reported-accidents.png',
