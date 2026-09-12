@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.70",
-  "build": "09470",
-  "release": "instant-listings-hotfix",
+  "version": "0.9.4.71",
+  "build": "09471",
+  "release": "listings-progress-null-fix",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09470-instant-listings-hotfix",
+  "serviceWorkerCache": "lotkeys-app-v09471-listings-progress-null-fix",
   "publishedAt": "2026-09-12"
 }

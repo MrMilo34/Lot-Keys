@@ -1,4 +1,5 @@
-V0.9.4.70 INSTANT LISTINGS HOTFIX
+V0.9.4.71 LISTINGS NULL-PROGRESS REPAIR
+- Fixes the V0.9.4.69 regression where Listings with no active upload tried to read `null.status` and every card fell into its safety state.
 - Opens Home and Listings from IndexedDB immediately instead of waiting for missing Drive cover photos.
 - Loads uncached Listing thumbnails in a three-worker background queue after cards are already usable.
 - Isolates malformed Listing cards so one bad record cannot prevent the Listings tab from opening.
@@ -13,7 +14,7 @@ V0.9.4.70 INSTANT LISTINGS HOTFIX
 - Makes the Post Buddy download use the Extension package beside the current LotKeys build, with trusted TEST/production pointer fallback.
 - Deliberately leaves Vehicle Profile photo-transfer timing unchanged for a separately testable next release.
 - Keeps the V0.9.4.64 Store Processor current; no Apps Script reinstall is required.
-- Bumps every live website fingerprint to build 09470 and cache `lotkeys-app-v09470-instant-listings-hotfix`.
+- Bumps every live website fingerprint to build 09471 and cache `lotkeys-app-v09471-listings-progress-null-fix`.
 
 V0.9.4.68 AUTOMATIC FAST SYNC + CLEAN REQUESTS
 - Automatically hands an interrupted Vehicle or More upload to a fresh saved job after Chrome becomes visible/online; no manual Sync press is required.

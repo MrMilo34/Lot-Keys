@@ -1,9 +1,10 @@
-# LotKeys V0.9.4.70 — Instant Listings Hotfix
+# LotKeys V0.9.4.71 — Listings Rendering Repair
 
-This cache-safe browser hotfix makes the Listings tab local-first again. Listing cards appear from IndexedDB without waiting on Google Drive; any missing cover photos fill in afterward in a limited background queue. It retains the V0.9.4.69 Listing progress, personal-location, Posting Buddy, OAuth guidance, first-profile cleanup and Extension download work. Vehicle Profile photo-transfer timing remains intentionally unchanged so that separate performance work keeps a clear test boundary.
+This cache-safe browser hotfix repairs the V0.9.4.69/70 Listings regression. A Listing without an active upload correctly reports no progress instead of attempting to read `null.status`, so normal card details and photos render again. Listing cards also appear from IndexedDB without waiting on Google Drive; any missing cover photos fill in afterward in a limited background queue. It retains the remaining V0.9.4.69 work. Vehicle Profile photo-transfer timing remains intentionally unchanged so that separate performance work keeps a clear test boundary.
 
-## V0.9.4.70 highlights
+## V0.9.4.71 highlights
 
+- **Normal Listing cards restored:** no-upload Listings no longer crash while checking their optional progress state.
 - **Instant Listings opening:** Home and Listings no longer await Drive cover-photo downloads before rendering.
 - **Background thumbnails:** uncached cover photos fill in after the Listing cards are already visible and tappable, with at most three background workers.
 - **Per-card fault isolation:** one damaged or incomplete cached Listing renders an attention card instead of blocking the complete tab.
@@ -21,11 +22,11 @@ This cache-safe browser hotfix makes the Listings tab local-first again. Listing
 
 ## Required rollout
 
-Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09470`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every real tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09471`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every real tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
 
 ## Deferred intentionally
 
-Vehicle Profile photo-processing performance was assessed but not altered in V0.9.4.70. That optimization belongs in the next isolated release, as requested, so any regression has one clear version boundary.
+Vehicle Profile photo-processing performance was assessed but not altered in V0.9.4.71. That optimization belongs in the next isolated release, as requested, so any regression has one clear version boundary.
 
 ## Previous release
 
