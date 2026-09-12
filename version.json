@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.67",
-  "build": "09467",
-  "release": "background-safe-staged-sync",
+  "version": "0.9.4.68",
+  "build": "09468",
+  "release": "automatic-fast-sync-clean-requests",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09467-background-safe-staged-sync",
-  "publishedAt": "2026-09-11"
+  "serviceWorkerCache": "lotkeys-app-v09468-automatic-fast-sync-clean-requests",
+  "publishedAt": "2026-09-12"
 }

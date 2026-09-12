@@ -1,9 +1,9 @@
-# LotKeys V0.9.4.67 background-safe staged synchronization checklist
+# LotKeys V0.9.4.68 automatic fast synchronization and clean-request checklist
 
-- Upload every item inside the release ZIP directly to the GitHub repository root, then open `https://lot-keys.ca/?build=09467` and confirm the version bar says V0.9.4.67.
-- Confirm the repository root contains the exact file `CNAME` beside `index.html`; it must contain only `lot-keys.ca`.
-- Confirm `https://lot-keys.ca/version.json` reports version `0.9.4.67`, build `09467`, and cache `lotkeys-app-v09467-background-safe-staged-sync`.
-- Open `https://lot-keys.ca/install.html` once and confirm it returns to the current LotKeys build.
+- Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09468` and confirm the version bar says V0.9.4.68.
+- Confirm the `Lot-Keys-TEST` repository does **not** contain `CNAME`, so `https://mrmilo34.github.io/Lot-Keys-TEST/` remains an independent test address. Preserve the production repository’s existing `CNAME` only when promoting the release to `lot-keys.ca`.
+- Confirm `https://mrmilo34.github.io/Lot-Keys-TEST/version.json` reports version `0.9.4.68`, build `09468`, and cache `lotkeys-app-v09468-automatic-fast-sync-clean-requests`.
+- Open `https://mrmilo34.github.io/Lot-Keys-TEST/install.html` once and confirm it returns to the current LotKeys build.
 - On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
 - Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
 - As Admin Level 2, add each exact Google email under **Garage → Approved Users**, press **Repair Store Structure**, and confirm its `Users/<name>` folder contains `Listings`, `Listing Assets`, and `More`.
@@ -36,11 +36,11 @@
 - View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
 - Create a complete Vehicle Profile containing at least one document, two photos and one larger video. Confirm progress runs in the order **Vehicle information → Documents → Photos → Videos → Finalizing**.
 - After Documents and Photos finish and while the Video percentage is moving, switch from Chrome to a text-message app for at least ten seconds. Confirm LotKeys records the upload as paused without turning every Vehicle Profile unusable.
-- Return to Chrome. Confirm the same video resumes from its acknowledged checkpoint, completed Documents/Photos are not uploaded again, and the Vehicle finishes at 100%.
+- Return to Chrome. Do not open the Vehicle Profile or press Sync. Confirm the same video resumes automatically from its acknowledged checkpoint, completed Documents/Photos are not uploaded again, and the Vehicle finishes at 100%.
 - Open the interrupted Jeep and at least three unrelated Vehicle Profiles. Confirm all open immediately from the local cache, even while the Jeep is paused or retrying.
-- Confirm an older V0.9.4.64 card with a network/media **Sync needs attention** state retries automatically after V0.9.4.67 starts. Permission or authorization errors must remain stopped for user action.
+- Confirm an older V0.9.4.64 card with a network/media **Sync needs attention** state retries automatically after V0.9.4.68 starts. Permission or authorization errors must remain stopped for user action.
 - Repeat the background test with a regular user submitting media through More. Confirm the partial request keeps the same request identity and produces no duplicate files after resuming.
-- Open V0.9.4.67 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
+- Open V0.9.4.68 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
 - After the first message, confirm each sender has only one recipient-specific **LotKeys Live Messages** folder in their own Messaging Outbox. The recipient must have Reader access only to that encrypted lane; no Inventory permission changes are allowed.
 - Run `processLotKeysRequests` twice. Confirm the second run does not deliver duplicate copies and does not log “insufficient permissions” while trying to trash another user’s Outbox message.
 - On both accounts, open the exact Vehicle Profile that previously showed a card spinner and then stopped. Confirm its modal appears immediately. Repeat with several Inventory vehicles; photos/details may reconcile quietly afterward, but the card must not fail silently or leave “Opening vehicle profile…” indefinitely.
@@ -48,7 +48,7 @@
 - Confirm both user profile photos and the previous monthly placement/crown appear in Chat and Store user views. This must also recover a user who already had `Profile Thumbnail.jpg` from an earlier build.
 - Refresh unchanged Inventory twice and confirm the second check completes quickly from the local cache while Drive remains the source of truth.
 - Run Repair Store Structure and confirm the stage label and percentage visibly advance to 100%.
-- Reload once and confirm Awards, Chat, and staged synchronization progress still load from the V0.9.4.67 service-worker cache.
+- Reload once and confirm Awards, Chat, and staged synchronization progress still load from the V0.9.4.68 service-worker cache.
 - If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
 
 ## Previous V0.9.4.56 checks

@@ -1,3 +1,27 @@
+# LotKeys V0.9.4.68 — Automatic Fast Sync & Clean Requests
+
+This browser-only update closes the return-to-upload race reproduced on Android Chrome and removes avoidable work from Vehicle and More submissions. A suspended browser keeps a lightweight Drive checkpoint; when LotKeys is visible and online again, a fresh job resumes automatically without requiring the Vehicle Profile Sync button.
+
+## V0.9.4.68 highlights
+
+- **Automatic resume handoff:** visibility, focus and online recovery start a new saved upload job after the interrupted job fully exits; no manual Sync press is needed.
+- **Lightweight checkpoints:** Drive IDs, fingerprints and the current stage are saved separately without repeatedly cloning every photo/video blob into IndexedDB.
+- **Upload priority:** pending Vehicle, More-request and Listing work runs before optional directory, Inventory and Listing refresh traffic.
+- **Safe order retained:** Vehicle information is saved first, followed by Documents, Photos, Videos last, and final official metadata.
+- **Duplicate prevention retained:** resumable upload sessions, stable request IDs and stable media IDs rediscover accepted Drive work instead of posting it again.
+- **Clean Reports / Requests:** resolved contribution requests disappear immediately and are omitted from the Inventory Index and Vehicle sheet; submitted media stays in the user’s More folder.
+- **Cache-first navigation:** Garage and Account paint from the local cache while optional Store verification runs afterward.
+- **Progress retained:** the header stoplight and Inventory cards continue showing the stage, filename, item count and 0–100% progress.
+- **Browser limitation handled:** Android can suspend Chrome networking in the background; LotKeys pauses safely and resumes automatically when visible and online again.
+- **No permission change:** official Inventory remains Viewer-only for ordinary and Trusted users.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09468`. Keep `CNAME` absent from the TEST repository so this independent GitHub Pages address continues to work. When the same files are promoted to the production repository, preserve its existing `CNAME` for `lot-keys.ca`. Do not rerun `installLotKeysProcessor` if Apps Script already reports V0.9.4.64 with its trigger installed.
+
+## Previous release
+
 # LotKeys V0.9.4.67 — Background-Safe Staged Sync
 
 This browser-only update addresses the interrupted Vehicle creation reproduced on Android Chrome. An active media request is deliberately paused when LotKeys moves into the background, its acknowledged Google Drive upload session is retained, and it resumes when the user returns. Vehicle creation again commits smaller work before the largest video stage.

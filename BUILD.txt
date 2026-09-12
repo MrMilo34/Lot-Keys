@@ -1,3 +1,14 @@
+V0.9.4.68 AUTOMATIC FAST SYNC + CLEAN REQUESTS
+- Automatically hands an interrupted Vehicle or More upload to a fresh saved job after Chrome becomes visible/online; no manual Sync press is required.
+- Stores lightweight Drive stage checkpoints without repeatedly cloning full Vehicle photo/video blobs into IndexedDB.
+- Prioritizes pending Vehicle, More-request and Listing writes ahead of optional Store directory, Inventory and Listing refresh traffic.
+- Retains the safe information, Documents, Photos, Videos-last and final-metadata order.
+- Reuses acknowledged Drive sessions and stable request/media IDs so a resumed operation cannot duplicate completed work.
+- Removes approved/denied contribution requests from local UI and future Vehicle sheet/Inventory Index metadata while preserving every user More media file.
+- Paints Garage and Account from local cache before optional remote verification.
+- Keeps the V0.9.4.64 Store Processor current; no Apps Script reinstall is required.
+- Bumps every live website fingerprint to build 09468 and cache `lotkeys-app-v09468-automatic-fast-sync-clean-requests`.
+
 V0.9.4.67 BACKGROUND-SAFE STAGED SYNC
 - Restores the safe Vehicle creation order: information, Documents, Photos, Videos last, then final metadata.
 - Commits a durable local checkpoint after Documents, Photos and Videos so completed stages survive interruption.

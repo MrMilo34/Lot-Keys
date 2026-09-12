@@ -2,7 +2,7 @@
 
 Use this only for the current test build. The release version should not ask dealership users to enter developer credentials.
 
-## V0.9.4.67 team-test note
+## V0.9.4.68 team-test note
 
 The official build now includes the current LotKeys OAuth Web Client ID, so normal testers should not paste developer credentials into the app. Keep the Google Auth Platform app in **Testing** and add every tester's exact Google account email under **Test users**.
 
@@ -12,9 +12,9 @@ Add these Authorized JavaScript origins to the Web Client:
 - `https://www.lot-keys.ca`
 - `https://mrmilo34.github.io` during the domain transition
 
-The Store Code design resolves an existing shared Store folder. V0.9.4.67 requests `https://www.googleapis.com/auth/drive` for the controlled team test so a user can maintain their own Listings/More/Messaging workspace and read official Inventory. Full Drive access remains a production release gate: complete Google's required verification/security work or replace Store discovery with a narrower authenticated broker/picker flow before public launch.
+The Store Code design resolves an existing shared Store folder. V0.9.4.68 requests `https://www.googleapis.com/auth/drive` for the controlled team test so a user can maintain their own Listings/More/Messaging workspace and read official Inventory. Full Drive access remains a production release gate: complete Google's required verification/security work or replace Store discovery with a narrower authenticated broker/picker flow before public launch.
 
-OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls Store access. In V0.9.4.67, Administrators are Store writers/managers; ordinary and Trusted users are Store/Inventory readers plus writers only on their own `Users/<name>` workspace. Do not share official Inventory as Editor with Trusted users—the V0.9.4.64 Store Processor applies their allowed automatic information changes and provides deduplicated Chat recovery delivery as the Admin Level 2 installer.
+OAuth **Test users** controls who can authorize LotKeys. Google Drive sharing separately controls Store access. In V0.9.4.68, Administrators are Store writers/managers; ordinary and Trusted users are Store/Inventory readers plus writers only on their own `Users/<name>` workspace. Do not share official Inventory as Editor with Trusted users—the V0.9.4.64 Store Processor applies their allowed automatic information changes and provides deduplicated Chat recovery delivery as the Admin Level 2 installer.
 
 After deploying the website, follow `PROCESSOR-SETUP.md`. The processor is required for creator-owned profile updates, Trusted automatic corrections, and the management queue while Inventory remains Viewer-only.
 
@@ -41,7 +41,7 @@ In Google Auth Platform:
 - Keep the app in Testing while we develop.
 - Add your own Google account under Test users.
 - Under **Data Access**, add `https://www.googleapis.com/auth/drive` to the app's requested scopes.
-- V0.9.4.67 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
+- V0.9.4.68 requests `openid`, `email`, and `https://www.googleapis.com/auth/drive` for the controlled team test.
 
 The Drive scope lets LotKeys locate the Store selected by its Store Code and build the required folders/files there. Treat it as a restricted team-test scope and do not move this static build to public production without completing the release gate.
 

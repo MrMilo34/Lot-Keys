@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09467-background-safe-staged-sync';
+const CACHE='lotkeys-app-v09468-automatic-fast-sync-clean-requests';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',
