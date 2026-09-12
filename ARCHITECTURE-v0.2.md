@@ -1,6 +1,6 @@
 # LotKeys architecture v0.2
 
-## V0.9.4.69 least-privilege Store model
+## V0.9.4.70 least-privilege Store model
 
 The official Inventory remains on the Store side. Ordinary and Trusted users receive Viewer access to it; each user receives Writer access only to their own limited-access workspace. The Admin Level 2 Store Processor validates the workspace that contains a request instead of trusting identity fields supplied by the browser.
 

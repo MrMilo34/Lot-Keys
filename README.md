@@ -1,9 +1,12 @@
-# LotKeys V0.9.4.69 — Listing Sync Visibility & Posting Buddy
+# LotKeys V0.9.4.70 — Instant Listings Hotfix
 
-This browser-and-extension update makes Facebook Listing work visibly traceable, moves each user’s personal posting locations to their own Google Drive account data, and aligns the Posting Buddy with the user’s LotKeys appearance. Vehicle Profile photo-transfer timing is intentionally unchanged in this release so its separate performance work can be tested cleanly in the following build.
+This cache-safe browser hotfix makes the Listings tab local-first again. Listing cards appear from IndexedDB without waiting on Google Drive; any missing cover photos fill in afterward in a limited background queue. It retains the V0.9.4.69 Listing progress, personal-location, Posting Buddy, OAuth guidance, first-profile cleanup and Extension download work. Vehicle Profile photo-transfer timing remains intentionally unchanged so that separate performance work keeps a clear test boundary.
 
-## V0.9.4.69 highlights
+## V0.9.4.70 highlights
 
+- **Instant Listings opening:** Home and Listings no longer await Drive cover-photo downloads before rendering.
+- **Background thumbnails:** uncached cover photos fill in after the Listing cards are already visible and tappable, with at most three background workers.
+- **Per-card fault isolation:** one damaged or incomplete cached Listing renders an attention card instead of blocking the complete tab.
 - **Facebook Listing upload progress:** Listing-only photos report phase, filename, item count and 0–100% progress on the Listing card and beside the header stoplight.
 - **Resumable Listing media:** Listing photo uploads keep stable resumable-session keys and can continue safely without duplicate files.
 - **Personal location source of truth:** **My Saved Facebook Listing Locations** are written to the signed-in user’s `Account.json`; a save or deletion is not reported as complete until that account write finishes or is clearly marked for retry.
@@ -18,11 +21,11 @@ This browser-and-extension update makes Facebook Listing work visibly traceable,
 
 ## Required rollout
 
-Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09469`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every real tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09470`. Keep `CNAME` absent from the TEST repository. Install the included `LotKeys-Facebook-Assistant-Beta-v0.1.14.zip` as an unpacked Chrome extension for Posting Buddy testing. While Google Auth Platform remains in Testing, add every real tester’s exact Google email under **Audience → Test users** as well as approving that email inside LotKeys. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
 
 ## Deferred intentionally
 
-Vehicle Profile photo-processing performance was assessed but not altered in V0.9.4.69. That optimization belongs in the next isolated release, as requested, so any regression has one clear version boundary.
+Vehicle Profile photo-processing performance was assessed but not altered in V0.9.4.70. That optimization belongs in the next isolated release, as requested, so any regression has one clear version boundary.
 
 ## Previous release
 

@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.69",
-  "build": "09469",
-  "release": "listing-progress-personal-locations-themed-helper",
+  "version": "0.9.4.70",
+  "build": "09470",
+  "release": "instant-listings-hotfix",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09469-listing-progress-personal-locations-themed-helper",
+  "serviceWorkerCache": "lotkeys-app-v09470-instant-listings-hotfix",
   "publishedAt": "2026-09-12"
 }

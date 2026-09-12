@@ -1,4 +1,7 @@
-V0.9.4.69 LISTING SYNC VISIBILITY + POSTING BUDDY
+V0.9.4.70 INSTANT LISTINGS HOTFIX
+- Opens Home and Listings from IndexedDB immediately instead of waiting for missing Drive cover photos.
+- Loads uncached Listing thumbnails in a three-worker background queue after cards are already usable.
+- Isolates malformed Listing cards so one bad record cannot prevent the Listings tab from opening.
 - Shows Facebook Listing-only photo phase, filename, item count and 0–100% progress on Listing cards and beside the top stoplight.
 - Uses resumable Listing-photo uploads with stable per-item session keys.
 - Makes each user’s Account.json the source of truth for My Saved Facebook Listing Locations, including durable deletions.
@@ -10,7 +13,7 @@ V0.9.4.69 LISTING SYNC VISIBILITY + POSTING BUDDY
 - Makes the Post Buddy download use the Extension package beside the current LotKeys build, with trusted TEST/production pointer fallback.
 - Deliberately leaves Vehicle Profile photo-transfer timing unchanged for a separately testable next release.
 - Keeps the V0.9.4.64 Store Processor current; no Apps Script reinstall is required.
-- Bumps every live website fingerprint to build 09469 and cache `lotkeys-app-v09469-listing-progress-personal-locations-themed-helper`.
+- Bumps every live website fingerprint to build 09470 and cache `lotkeys-app-v09470-instant-listings-hotfix`.
 
 V0.9.4.68 AUTOMATIC FAST SYNC + CLEAN REQUESTS
 - Automatically hands an interrupted Vehicle or More upload to a fresh saved job after Chrome becomes visible/online; no manual Sync press is required.

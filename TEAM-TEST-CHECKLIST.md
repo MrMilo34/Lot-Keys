@@ -1,12 +1,14 @@
-# LotKeys V0.9.4.69 Listing sync visibility and Posting Buddy checklist
+# LotKeys V0.9.4.70 instant Listings hotfix checklist
 
-- Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09469` and confirm the version bar says V0.9.4.69.
-- Confirm `version.json` reports version `0.9.4.69`, build `09469`, and cache `lotkeys-app-v09469-listing-progress-personal-locations-themed-helper`.
+- Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09470` and confirm the version bar says V0.9.4.70.
+- Confirm `version.json` reports version `0.9.4.70`, build `09470`, and cache `lotkeys-app-v09470-instant-listings-hotfix`.
+- Open **Listings** with several cached Listings and confirm the controls/cards appear immediately. Missing cover photos may fill in afterward, but they must not delay navigation.
+- Temporarily test a Listing whose cover cannot be read from Drive and confirm the remaining Listings still open and remain usable.
 - Do not upload `CNAME` to `Lot-Keys-TEST`; preserve the production repository’s existing `CNAME` only when promoting the same build.
 - In Google Cloud → Auth Platform → Audience, add the exact Google email of every tester. Verify a newly added real user can authorize without Error 403 after also being approved in LotKeys.
 - As Admin Level 2, open Garage → Approved Users and confirm **Open Google OAuth Test Users ↗** opens project `lotkeys`’s protected Audience page in a new tab.
 - As a newly approved ordinary user, create the first Vehicle Profile and switch tabs while the Processor finishes. Confirm only one healthy Inventory card remains, its upload marker clears from 95% to normal, and no duplicate **Needs Recovery** card appears.
-- If that account already has a false recovery twin from V0.9.4.68, press **Refresh Inventory** once in V0.9.4.69 and confirm the twin disappears without deleting the official Vehicle Profile.
+- If that account already has a false recovery twin from V0.9.4.68, press **Refresh Inventory** once in V0.9.4.70 and confirm the twin disappears without deleting the official Vehicle Profile.
 - On desktop, press **Download Post Buddy ZIP** in Garage and confirm the ZIP bundled with this LotKeys build downloads without a raw-GitHub error.
 - Create or edit a Facebook Listing with Listing-only photos. Confirm its card shows phase, current filename, item number and percent, while the header shows **Sync 0–100%** beside the stoplight.
 - Interrupt a Listing-only photo transfer once, return online, and confirm the resumable job completes without creating a duplicate Drive file.
@@ -16,8 +18,8 @@
 - Change the LotKeys user’s accent and light/dark appearance. Open or sync the Helper and confirm its panels, cards and main action colors follow that appearance.
 - Run Fill Facebook Listing and confirm Location is last. If the saved option matches, confirm Facebook selects it and LotKeys scrolls to the final Next/Submit button without clicking it; otherwise confirm Location remains highlighted for the user.
 - Confirm the URL/view area is masked until **Save / Use this Website** succeeds on a live `/marketplace/item/…` page, then unlocks and keeps the same Listing ready for a view count.
-- Recheck Vehicle Profile photo uploads for regression only. V0.9.4.69 intentionally does not contain the next photo-speed optimization.
-- Confirm Apps Script still reports Processor V0.9.4.64 and its existing time trigger. Do not reinstall solely for V0.9.4.69.
+- Recheck Vehicle Profile photo uploads for regression only. V0.9.4.70 intentionally does not contain the next photo-speed optimization.
+- Confirm Apps Script still reports Processor V0.9.4.64 and its existing time trigger. Do not reinstall solely for V0.9.4.70.
 
 ## Previous release checklist
 
