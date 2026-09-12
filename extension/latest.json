@@ -1,13 +1,15 @@
 {
   "name": "LotKeys Facebook Posting Buddy",
   "channel": "beta",
-  "version": "0.1.13",
-  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.13.zip",
+  "version": "0.1.14",
+  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.14.zip",
   "releaseNotesUrl": "https://github.com/MrMilo34/Lot-Keys/tree/main/extension",
-  "publishedAt": "2026-09-08T00:00:00Z",
+  "publishedAt": "2026-09-12T00:00:00Z",
+  "minimumLotKeysVersion": "0.9.4.69",
   "notes": [
-    "New black-key and blue-tag LotKeys logo throughout the extension.",
-    "Built-in GitHub release pointer to the current versioned download.",
-    "Existing Facebook fill workflow and manual final Publish safeguard preserved."
+    "Follows the current LotKeys user accent and light/dark appearance.",
+    "Fills Facebook Location last and selects an exact matching suggestion when available.",
+    "Scrolls to Facebook's final action without ever pressing it.",
+    "Keeps view tracking covered until the live Facebook Marketplace URL is saved."
   ]
 }

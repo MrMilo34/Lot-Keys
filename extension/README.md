@@ -1,10 +1,12 @@
 # LotKeys Facebook Posting Buddy
 
-Current beta: **V0.1.13**
+Current beta: **V0.1.14**
+
+V0.1.14 follows the active LotKeys accent and light/dark appearance, handles Facebook Location last, scrolls to the final Next/Submit control without clicking it, and keeps view tracking covered until a live Marketplace URL is saved.
 
 ## Download
 
-- [Download the newest Posting Buddy — V0.1.13](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.13.zip)
+- [Download the newest Posting Buddy — V0.1.14](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.14.zip)
 
 ## Install or update
 
