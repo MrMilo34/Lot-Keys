@@ -25,17 +25,19 @@
     if(fresh&&host){host.remove();host=null}
     if(host){host.style.display='block';return}
     host=document.createElement('div');host.id=DOCK_ID;
-    host.style.cssText='all:initial;position:fixed;top:72px;right:0;height:calc(100vh - 92px);z-index:2147483647;display:block;pointer-events:none;';
+    host.style.cssText='all:initial;--lk-dock-bg:#f4f5f7;--lk-dock-card:#fff;--lk-dock-ink:#111827;--lk-dock-line:rgba(17,24,39,.18);position:fixed;top:72px;right:0;height:calc(100vh - 92px);z-index:2147483647;display:block;pointer-events:none;';
     const shadow=host.attachShadow({mode:'open'});
     shadow.innerHTML=`<style>
       :host{all:initial}.dock{position:relative;height:100%;width:min(524px,calc(100vw - 20px));transition:width .18s ease;pointer-events:none}.dock.collapsed{width:30px}
-      iframe{position:absolute;right:0;top:0;width:min(510px,calc(100vw - 34px));height:100%;border:1px solid rgba(17,24,39,.18);border-right:0;border-radius:16px 0 0 16px;background:#f4f5f7;box-shadow:-8px 10px 30px rgba(17,24,39,.18);pointer-events:auto}
-      .dock.collapsed iframe{display:none}.toggle{position:absolute;left:-30px;top:42%;width:30px;height:56px;border:1px solid rgba(17,24,39,.18);border-right:0;border-radius:12px 0 0 12px;background:#fff;color:#111827;font:800 22px/1 system-ui;box-shadow:-5px 6px 18px rgba(17,24,39,.14);cursor:pointer;pointer-events:auto}
-      .dock.collapsed .toggle{left:0}.toggle:hover{background:#f3f4f6}
+      iframe{position:absolute;right:0;top:0;width:min(510px,calc(100vw - 34px));height:100%;border:1px solid var(--lk-dock-line);border-right:0;border-radius:16px 0 0 16px;background:var(--lk-dock-bg);box-shadow:-8px 10px 30px rgba(17,24,39,.18);pointer-events:auto}
+      .dock.collapsed iframe{display:none}.toggle{position:absolute;left:-30px;top:42%;width:30px;height:56px;border:1px solid var(--lk-dock-line);border-right:0;border-radius:12px 0 0 12px;background:var(--lk-dock-card);color:var(--lk-dock-ink);font:800 22px/1 system-ui;box-shadow:-5px 6px 18px rgba(17,24,39,.14);cursor:pointer;pointer-events:auto}
+      .dock.collapsed .toggle{left:0}.toggle:hover{filter:brightness(.94)}
     </style><div class="dock"><button class="toggle" type="button" title="Collapse LotKeys" aria-label="Collapse LotKeys">›</button><iframe title="LotKeys Facebook Assistant"></iframe></div>`;
     const dock=shadow.querySelector('.dock'),toggle=shadow.querySelector('.toggle'),frame=shadow.querySelector('iframe');
     const frameUrl=safeRuntimeUrl('sidepanel.html?embedded=1');if(!frameUrl)return;frame.src=frameUrl;
-    const pref=await safeStorageGet('lotkeysAssistantCollapsed');
+    const pref=await safeStorageGet(['lotkeysAssistantCollapsed','lotkeysAppearance']),appearance=pref.lotkeysAppearance||{};
+    const dockColor=(name,value,fallback)=>{const candidate=String(value||fallback||'').trim();host.style.setProperty(name,CSS.supports('color',candidate)?candidate:fallback)};
+    dockColor('--lk-dock-bg',appearance.background,'#f4f5f7');dockColor('--lk-dock-card',appearance.card,'#fff');dockColor('--lk-dock-ink',appearance.ink,'#111827');dockColor('--lk-dock-line',appearance.line,'rgba(17,24,39,.18)');
     const setCollapsed=collapsed=>{if(!isCurrentGeneration())return;dock.classList.toggle('collapsed',!!collapsed);toggle.textContent=collapsed?'‹':'›';toggle.title=collapsed?'Open LotKeys':'Collapse LotKeys';toggle.setAttribute('aria-label',toggle.title);safeStorageSet({lotkeysAssistantCollapsed:!!collapsed});};
     setCollapsed(!!pref.lotkeysAssistantCollapsed);
     toggle.addEventListener('click',()=>setCollapsed(!dock.classList.contains('collapsed')));
@@ -106,6 +108,7 @@
   function clearManualHighlight(key){document.querySelectorAll('[data-lotkeys-manual-field]').forEach(el=>{if(String(el.getAttribute('data-lotkeys-manual-field')||'')!==String(key||''))return;el.style.outline='';el.style.outlineOffset='';el.style.boxShadow='';el.removeAttribute('data-lotkeys-manual-field')})}
   function highlightManualField(key){const el=controlForKey(key);if(!el)return false;el.setAttribute('data-lotkeys-manual-field',String(key));el.style.outline='3px solid #f59e0b';el.style.outlineOffset='3px';el.style.boxShadow='0 0 0 7px rgba(245,158,11,.20)';return true}
   async function jumpToField(key){const el=controlForKey(key);if(!el)return {ok:false,error:'Facebook field not found'};el.scrollIntoView({block:'center',behavior:'smooth'});try{el.focus({preventScroll:true})}catch{};highlightManualField(key);await wait(80);return {ok:true,key}}
+  async function scrollToFinalAction(){const buttons=[...document.querySelectorAll('button,[role=button]')].filter(el=>visible(el)&&!el.disabled&&/^(next|submit)$/i.test(textOf(el)));const target=buttons.at(-1);if(!target)return {ok:false,error:'Facebook final action was not found'};target.scrollIntoView({block:'center',behavior:'smooth'});await wait(80);return {ok:true,label:textOf(target)}}
   async function waitForControl(key,timeout=1000){const until=Date.now()+timeout;let el;while(Date.now()<until){el=controlForKey(key);if(el)return el;await wait(70)}return null}
   async function ensureVehicleForSale(){
     if(controlForKey('vehicleType'))return true;
@@ -129,6 +132,7 @@
       const options=optionElements();
       let match=options.find(el=>wants.includes(labelNorm(textOf(el)||el.value)));
       if(!match)match=options.find(el=>{const t=labelNorm(textOf(el)||el.value);return t&&wants.some(w=>t.startsWith(w)||w.startsWith(t))});
+      if(!match)match=options.find(el=>{const t=labelNorm(textOf(el)||el.value);return t&&wants.some(w=>w.length>=4&&(t.includes(w)||w.includes(t)))});
       if(match){match.scrollIntoView({block:'nearest'});if(match.tagName==='OPTION'){const sel=match.parentElement;nativeSet(sel,match.value)}else match.click();await wait(70);return true}
       await wait(65);
     }
@@ -229,17 +233,22 @@
     record('price','7. Price',await setTextKey('price',listing.price===''?'':Math.trunc(Number(listing.price)),{required:true}));
     record('bodyStyle','8. Body Style',await selectDropdownKey('bodyStyle',listing.bodyStyle,bodyStyleAliases(listing.bodyStyle),{required:true}));
     record('description','9. Description',await setTextKey('description',listing.description,{required:true}));
-    // Location uses its own exact control path so Description can never be written into it.
-    record('location','Location',await fillLocation(listing));
     const exteriorColor=facebookColor(listing.exteriorColor),interiorColor=facebookColor(listing.interiorColor);
-    record('exteriorColor','Exterior color',exteriorColor?await selectDropdownKey('exteriorColor',exteriorColor,[exteriorColor]):{status:'skipped',reason:'blank in LotKeys'});
-    record('interiorColor','Interior color',interiorColor?await selectDropdownKey('interiorColor',interiorColor,[interiorColor]):{status:'skipped',reason:'blank in LotKeys'});
+    record('exteriorColor','10. Exterior color',exteriorColor?await selectDropdownKey('exteriorColor',exteriorColor,[exteriorColor]):{status:'skipped',reason:'blank in LotKeys'});
+    record('interiorColor','11. Interior color',interiorColor?await selectDropdownKey('interiorColor',interiorColor,[interiorColor]):{status:'skipped',reason:'blank in LotKeys'});
     const condition=facebookCondition(listing.vehicleCondition);
-    record('condition','Vehicle condition',condition?await selectDropdownKey('condition',condition,[condition]):{status:'skipped',reason:listing.vehicleCondition?'LotKeys condition does not map to Facebook':'blank in LotKeys'});
-    record('fuelType','Fuel type',await selectDropdownKey('fuelType',listing.fuelType,[listing.fuelType]));
+    record('condition','12. Vehicle condition',condition?await selectDropdownKey('condition',condition,[condition]):{status:'skipped',reason:listing.vehicleCondition?'LotKeys condition does not map to Facebook':'blank in LotKeys'});
+    record('fuelType','13. Fuel type',await selectDropdownKey('fuelType',listing.fuelType,[listing.fuelType]));
+    // Facebook requires the user to pick a live suggestion. Do Location last so the handoff
+    // naturally rests here when Facebook cannot accept the saved value automatically.
+    const locationResult=record('location','14. Location',await fillLocation(listing));
     const manualKeys=steps.filter(s=>s.status==='manual').map(s=>s.key);manualKeys.forEach(highlightManualField);
+    let restingAt='location';
+    if(locationResult.status!=='done'){highlightManualField('location');await jumpToField('location')}
+    else if(manualKeys.length){restingAt=manualKeys[0];await jumpToField(restingAt)}
+    else{const finalAction=await scrollToFinalAction();restingAt=finalAction.ok?'finalAction':'location'}
     fillFinished=true;
-    return {ok:true,listingId:activeListingId,steps,manualKeys,needsManual:manualKeys.length,done:steps.filter(s=>s.status==='done').length};
+    return {ok:true,listingId:activeListingId,steps,manualKeys,needsManual:manualKeys.length,done:steps.filter(s=>s.status==='done').length,restingAt};
   }
 
 
@@ -276,7 +285,7 @@
     else if(key==='price')result=await setTextKey('price',listing.price===''?'':Math.trunc(Number(listing.price)),{required:true});
     else if(key==='bodyStyle')result=await selectDropdownKey('bodyStyle',listing.bodyStyle,bodyStyleAliases(listing.bodyStyle),{required:true});
     else if(key==='description')result=await setTextKey('description',listing.description,{required:true});
-    else if(key==='location')result=await fillLocation(listing);
+    else if(key==='location'){result=await fillLocation(listing);if(result?.status==='done')await scrollToFinalAction()}
     else if(key==='exteriorColor'){const c=facebookColor(listing.exteriorColor);result=c?await selectDropdownKey('exteriorColor',c,[c]):{status:'skipped',reason:'blank in LotKeys'}}
     else if(key==='interiorColor'){const c=facebookColor(listing.interiorColor);result=c?await selectDropdownKey('interiorColor',c,[c]):{status:'skipped',reason:'blank in LotKeys'}}
     else if(key==='condition'){const c=facebookCondition(listing.vehicleCondition);result=c?await selectDropdownKey('condition',c,[c]):{status:'skipped',reason:listing.vehicleCondition?'LotKeys condition does not map to Facebook':'blank in LotKeys'}}
@@ -295,7 +304,7 @@
   if(extensionContextAlive()){
     try{chrome.runtime.onMessage.addListener((msg,sender,sendResponse)=>{
       if(!isCurrentGeneration())return;
-      if(msg?.type==='LOTKEYS_PING'){sendResponse({ok:true,version:'0.1.13'});return}
+      if(msg?.type==='LOTKEYS_PING'){sendResponse({ok:true,version:'0.1.14'});return}
       if(msg?.type==='LOTKEYS_JUMP_TO_FIELD'){jumpToField(msg.key).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}
       if(msg?.type==='LOTKEYS_RETRY_FIELD'){retryField(msg.key,msg.listing||{}).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}
       if(msg?.type==='LOTKEYS_CHECK_FIELDS'){inspectFields(msg.keys||[]).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}

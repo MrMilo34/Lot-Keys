@@ -1,6 +1,6 @@
-const LOTKEYS_PREFIX = 'https://mrmilo34.github.io/Lot-Keys';
+const LOTKEYS_RE = /^https:\/\/(?:mrmilo34\.github\.io\/Lot-Keys(?:-TEST)?(?:\/|$)|(?:www\.)?lot-keys\.ca(?:\/|$))/i;
 const FB_RE = /^https:\/\/(?:www\.)?facebook\.com\//i;
-const HELPER_VERSION = '0.1.13';
+const HELPER_VERSION = '0.1.14';
 const RUNTIME_VERSION_KEY = 'lotkeysHelperRuntimeVersion';
 
 function configurePanel(){try{chrome.sidePanel?.setPanelBehavior?.({ openPanelOnActionClick: true }).catch(() => {})}catch{}}
@@ -30,7 +30,7 @@ async function allTabs() {
 }
 async function findLotKeysTab() {
   const tabs = await allTabs();
-  return tabs.filter(t => String(t.url || '').startsWith(LOTKEYS_PREFIX))
+  return tabs.filter(t => LOTKEYS_RE.test(String(t.url || '')))
     .sort((a,b) => Number(b.lastAccessed||0)-Number(a.lastAccessed||0))[0] || null;
 }
 async function findFacebookTab() {
@@ -53,6 +53,32 @@ async function executeLotKeys(func, args=[]) {
   const value = result[0].result;
   if (value?.error) throw new Error(value.error);
   return value;
+}
+
+async function lotKeysAppearanceReader() {
+  try {
+    const body=document.body||document.documentElement,styles=getComputedStyle(body),read=(name,fallback)=>String(styles.getPropertyValue(name)||'').trim()||fallback;
+    return {
+      theme:String(document.body?.dataset?.theme||'light')==='dark'?'dark':'light',
+      accent:read('--accent','#2563eb'),
+      accentInk:read('--accent-ink','#ffffff'),
+      background:read('--bg',String(styles.backgroundColor||'').trim()||'#f3f4f6'),
+      card:read('--card','#ffffff'),
+      ink:read('--ink','#111827'),
+      muted:read('--muted','#6b7280'),
+      line:read('--line','#e5e7eb'),
+      updatedAt:Date.now()
+    };
+  } catch(err) {
+    return {error:String(err?.message||err)};
+  }
+}
+
+async function refreshLotKeysAppearance() {
+  const appearance=await executeLotKeys(lotKeysAppearanceReader,[]);
+  if(!appearance||appearance.error)throw new Error(appearance?.error||'Could not read LotKeys appearance.');
+  await chrome.storage.local.set({lotkeysAppearance:appearance});
+  return appearance;
 }
 
 async function lotKeysListingsReader() {
@@ -228,8 +254,13 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if(msg?.type==='SYNC_LISTINGS') {
       const rows=await executeLotKeys(lotKeysListingsReader,[]);
       if(!Array.isArray(rows)) throw new Error(rows?.error||'Could not read LotKeys Listings.');
+      let appearance=null;try{appearance=await refreshLotKeysAppearance()}catch{}
       await chrome.storage.local.set({lotkeysListings:rows,lotkeysListingsSyncedAt:Date.now()});
-      return {ok:true,listings:rows};
+      return {ok:true,listings:rows,appearance};
+    }
+    if(msg?.type==='GET_LOTKEYS_APPEARANCE') {
+      const appearance=await refreshLotKeysAppearance();
+      return {ok:true,appearance};
     }
     if(msg?.type==='GET_PHOTO') {
       const photo=await executeLotKeys(lotKeysPhotoReader,[String(msg.listingId||''),Number(msg.photoIndex||0),'full',String(msg.photoId||'')]);
