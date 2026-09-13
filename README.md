@@ -1,25 +1,27 @@
-# LotKeys V0.9.4.74 — Leaderboard Clarity, Vehicle Placeholder & Posting Time
+# LotKeys V0.9.4.75 — Popup Shell & Leaderboard Contrast Repair
 
-This browser release makes contributor scores readable at every bar height, keeps private admin-approved points visibly separate for administrators, adopts one tiny shared missing-vehicle image, and extends the existing celebration with slower fading streamers. It bundles Posting Buddy V0.1.16 with persistent elapsed/time-saved milestones while retaining the proven V0.9.4.73 workflows.
+This small browser release repairs the shared popup presentation shown in the V0.9.4.74 phone recording, adds contrast to tiny leaderboard scores, and removes duplicate Posting Buddy source/history from the public website package. It retains the V0.9.4.74 feature set and Posting Buddy V0.1.16.
 
-## V0.9.4.74 highlights
+## V0.9.4.75 highlights
 
-- **Readable Top Contributors:** every normal-point bar shows its value. Small bars place the number above the bar in that bar’s own color.
-- **Private administrative stack:** administrators see admin-approved points as a separate gold segment and separate personal subtotal. Current live ranking order remains based on normal points; regular-user leaderboard markup contains no admin subtotal.
-- **Month-end score clearance:** the climbing score is moved 5px lower so it no longer clips into the Profile photo.
-- **Lightweight missing-vehicle art:** Inventory, Listings, Home, public/admin Listing references, vehicle selectors and Posting Buddy share the supplied 320×320 WebP placeholder. It is only 1.6 KB, is cached once, and is never uploaded as a Vehicle photo. A real Drive photo that is still loading continues to use a loading state.
-- **Extended shared celebration:** the current party-popper presentation is preserved and gains one canvas layer of smaller cyan, blue, pink, yellow, purple and green streamers from the same origin. They fall more slowly and fade over roughly five seconds in front of the popup; reduced-motion users do not receive the extra layer.
-- **Posting Buddy V0.1.16 timing:** the Buddy starts timing at **Fill Facebook Listing**, freezes the auto-fill milestone when all fields are complete, continues total time through the URL step, and freezes the result after the live Marketplace URL is saved. It compares against the 12:30 manual benchmark, never shows negative saved time, and restores timing after the side panel reopens.
-- **Neutral URL handoff:** the locked URL/View panel is dark with light text in a light theme and light with dark text in a dark theme. The Listing source remains greyed/blurred until **Back** or a successful **Save / Use this Website**.
-- **Clear extension layout:** maintained unpacked source now lives in `extension/source`. The unnecessary `extension/latest` folder is gone; `extension/latest.json` remains because it is the small update/download pointer used by both products.
+- **Shared popup repair:** closing a viewed user’s themed public Profile through Android Back or Escape can no longer leave its transparent dialog class on the next Inventory, Listing, wrap-up or other popup. Generic dialogs also declare their solid light/dark theme surface explicitly.
+- **Readable tiny scores:** values above very short leaderboard bars keep the user/bar color and receive a compact dark drop shadow so light accent colors remain readable against white.
+- **Actually clean extension delivery:** the public LotKeys ZIP ships only `extension/latest.json` and the current `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`. It excludes maintained development source and superseded V0.1.13–V0.1.15 ZIPs.
+- **No Buddy reinstall required:** Posting Buddy remains V0.1.16 because this update does not change its runtime.
 - **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
-- **V0.9.4.73 retained:** Drive-published LotKeys Info, Award categories and arrival popups, unified top-layer celebrations, reliable downloads, and V0.9.4.72 Inventory reconciliation remain included.
+- **V0.9.4.74 retained:** normal/admin point separation, month-end spacing, the 1.6 KB vehicle placeholder, longer combined celebration and Posting Buddy timing remain included.
 
 ## Required rollout
 
-Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, including `assets/vehicle-placeholder.webp`, `extension/source`, `extension/latest.json`, and `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`. Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09474` and keep `CNAME` absent from TEST. Load the extracted V0.1.16 ZIP as the unpacked Chrome extension and reload the LotKeys/Facebook tabs once. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09475`. Keep `CNAME` absent from TEST. Because GitHub file uploads do not delete older paths automatically, remove stale `extension/latest/`, `extension/source/`, and V0.1.13–V0.1.15 release ZIPs from TEST once; the only deployed extension files should be `extension/README.md`, `extension/latest.json`, and the V0.1.16 ZIP. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
 
-After TEST passes, promote the same V0.9.4.74 files to `MrMilo34/Lot-Keys` while preserving that production repository’s `CNAME`.
+After TEST passes, promote the same V0.9.4.75 files to `MrMilo34/Lot-Keys`, repeat the one-time stale extension-file cleanup there, and preserve that production repository’s `CNAME`.
+
+## Previous release
+
+# LotKeys V0.9.4.74 — Leaderboard Clarity, Vehicle Placeholder & Posting Time
+
+V0.9.4.74 made contributor scores readable at every bar height, separated private admin-approved points for administrators, adopted one tiny shared missing-vehicle image, extended the existing celebration with slower fading streamers, and bundled Posting Buddy V0.1.16 timing.
 
 ## Previous release
 

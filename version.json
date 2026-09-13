@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.74",
-  "build": "09474",
-  "release": "leaderboard-placeholder-streamers-post-buddy-timing",
+  "version": "0.9.4.75",
+  "build": "09475",
+  "release": "modal-shell-leaderboard-shadow-clean-extension-package",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09474-leaderboard-placeholder-streamers",
+  "serviceWorkerCache": "lotkeys-app-v09475-modal-leaderboard-cleanup",
   "publishedAt": "2026-09-13"
 }

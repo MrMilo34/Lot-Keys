@@ -1,3 +1,16 @@
+# LotKeys V0.9.4.75 popup shell, score contrast and package-cleanup checklist
+
+- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09475`.
+- Confirm the strip, `version.json`, and service worker report V0.9.4.75 / `09475` / `lotkeys-app-v09475-modal-leaderboard-cleanup`.
+- Open another user’s public Profile, then close it with Android Back or Escape. Open an Inventory Vehicle, a Listing, Current/Last Month standings, and a month-end replay. Confirm each popup has its normal solid rounded light/dark panel and padding rather than floating directly over the dimmed page.
+- Repeat the public Profile sequence using its visible close button and the Message User path. Confirm the viewed user’s special public-profile theme still works when intended.
+- In Top Contributors, confirm a very short bar’s colored score has a compact dark shadow and stays readable on white. Confirm taller bars and private admin gold stacks remain unchanged.
+- Inspect the release ZIP. Confirm it contains `extension/latest.json` and `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`, but no `extension/latest/`, no `extension/source/`, and no V0.1.13–V0.1.15 ZIPs.
+- Recheck V0.9.4.74 leaderboard/admin separation, missing-vehicle placeholder, month-end spacing, combined celebration and Posting Buddy V0.1.16 timing.
+- Confirm Processor V0.9.4.64 remains current and is not reinstalled.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.74 leaderboard, placeholder, streamers and Buddy timing checklist
 
 - Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09474`.

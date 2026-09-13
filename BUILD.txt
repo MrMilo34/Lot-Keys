@@ -1,3 +1,13 @@
+V0.9.4.75 POPUP SHELL, LEADERBOARD CONTRAST & CLEAN EXTENSION PACKAGE
+- Removes a stale public-profile modal class on every close/cancel and whenever ordinary modal content replaces a public Profile.
+- Restores an explicit solid theme surface for Inventory, Listing, wrap-up and other ordinary dialogs.
+- Adds a compact dark drop shadow to colored point values displayed above very short leaderboard bars.
+- Keeps Posting Buddy V0.1.16 unchanged.
+- Public release packaging includes only extension/latest.json and the current V0.1.16 release ZIP; extension development source and superseded V0.1.13-V0.1.15 ZIPs are excluded.
+- Retains all V0.9.4.74 behavior and keeps Processor V0.9.4.64 current; no Apps Script reinstall is required.
+- Build: 09475.
+- Service worker cache: lotkeys-app-v09475-modal-leaderboard-cleanup.
+
 V0.9.4.74 LEADERBOARD CLARITY, VEHICLE PLACEHOLDER & POST BUDDY TIMING
 - Shows every user’s normal contribution total on the Top Contributors chart.
 - Places a tiny bar’s value above it in that bar’s own accent color; taller bars retain their high-contrast internal value.

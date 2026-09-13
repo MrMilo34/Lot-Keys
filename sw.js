@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09474-leaderboard-placeholder-streamers';
+const CACHE='lotkeys-app-v09475-modal-leaderboard-cleanup';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

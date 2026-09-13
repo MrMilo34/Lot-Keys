@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09474",
+  "id": "lotkeys-info-v09475",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.74 team-test build is ready for leaderboard, placeholder, celebration and Posting Buddy testing.",
-  "updatedAt": "2026-09-13T09:00:00Z",
+  "summary": "The V0.9.4.75 team-test build repairs shared popup surfaces, clarifies tiny leaderboard scores, and cleans the public extension package.",
+  "updatedAt": "2026-09-13T16:15:00Z",
   "blocks": [
     {
-      "id": "v09474-heading",
+      "id": "v09475-heading",
       "type": "heading",
-      "text": "V0.9.4.74 test release"
+      "text": "V0.9.4.75 test release"
     },
     {
-      "id": "v09474-text",
+      "id": "v09475-text",
       "type": "text",
-      "text": "Top Contributors now shows every normal score, with tiny values above their bar and private admin-approved points stacked in gold for administrators without changing the live public order. Missing vehicles use the optimized shared placeholder, month-end scores clear Profile photos, and the existing celebration now includes a slower fading streamer layer. Posting Buddy V0.1.16 adds persistent posting-time and time-saved milestones."
+      "text": "Inventory, Listing, wrap-up and other popups now reliably restore their solid rounded theme surface after a viewed public Profile is closed with Android Back or Escape. Tiny colored leaderboard scores gain a compact dark shadow for readability. The public package keeps only the current Posting Buddy V0.1.16 download and its update pointer; duplicate source and older release ZIPs are excluded."
     }
   ]
 }
