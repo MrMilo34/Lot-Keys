@@ -1,3 +1,29 @@
+# LotKeys V0.9.4.73 — Drive-Published Info & Unified Award Celebrations
+
+This browser release gives the developer-facing LotKeys Info editor a single Google Drive-backed **Save & Publish** action, expands Award Drop into clear categories, and gives every newly granted Award the same recipient popup and unified top-layer celebration. It also removes the successful Post Buddy download’s `toast is not a function` alert. The proven V0.9.4.72 Inventory reconciliation and upload path are retained unchanged.
+
+## V0.9.4.73 highlights
+
+- **One-button platform notice:** **Garage → Dev Tool Kit → LotKeys Info** now ends in one **Save & Publish** action.
+- **Developer Files truth:** the first publish verifies or, with confirmation, creates `Lot-Keys Account / Developer Files` in the registered developer’s personal Google Drive. Every later publish replaces the same `LotKeys Info.json` file instead of creating clutter.
+- **Store delivery pointer:** the stable public-read Drive file ID is included in Store Access, so Store users read the current Drive message. The protected repository/bundled message remains the bootstrap and offline fallback.
+- **Automatic recovery:** a moved Developer Files folder keeps working by Drive ID, while a fresh device searches the personal account folder by role and name before asking to create anything. If the saved folder was deleted and cannot be found, LotKeys asks before creating a replacement.
+- **Info controls swapped:** the Information bubble now appears before the LotKeys Info bubble on phone and desktop.
+- **Five Award Drop categories:** **Special**, **Admin awarded**, **By Level**, **Automatic**, and **Other** are available without weakening Creator-only award rules.
+- **Award arrival popup:** automatic, Admin-approved, direct-grant and developer-grant paths queue one recipient-specific window with the Award artwork, public meaning and grant reason.
+- **Unified celebration:** Vehicle Sold, Monthly Wrap-Up and Award experiences now share the party-popper/confetti effect, rendered in its own browser top layer in front of the popup.
+- **Post Buddy success notice:** downloading the included V0.1.14 ZIP no longer calls an out-of-scope `toast` symbol or displays a browser error after the download succeeds.
+- **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
+- **V0.9.4.72 retained:** cross-device Inventory reconciliation, cache-first navigation, targeted Listing/Profile repair, faster bounded photo uploads, viewed-user public themes and deployment freshness checks remain included.
+
+## Required rollout
+
+Upload every item in the ZIP directly into the `Lot-Keys-TEST` repository root, including `lotkeys-info.js`, `lotkeys-info.json`, `extension/latest.json`, and the complete `extension/releases` folder. Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09473` and keep `CNAME` absent from TEST. Do not rerun `installLotKeysProcessor` when Apps Script already reports V0.9.4.64 with its trigger installed.
+
+After TEST passes, promote the same V0.9.4.73 files to `MrMilo34/Lot-Keys` while preserving that production repository’s `CNAME`. The first **Save & Publish** from the developer account creates or restores the stable Drive source and publishes its pointer into the connected Store’s access files; later edits replace that same file.
+
+## Previous release
+
 # LotKeys V0.9.4.72 — Platform Info & Cross-Device Inventory Repair
 
 This browser release keeps Inventory and Listings cache-first while repairing the missing-profile gap found with the 2019 Ford Transit Connect: a Listing can no longer remain disconnected from a Vehicle Profile that exists in the Store’s real Drive Inventory. It also introduces one protected platform-wide LotKeys Info message, fixes viewed-user public-profile colors, makes the Post Buddy download resilient to an old 404 pointer, and delivers the separately staged Vehicle-photo performance update.

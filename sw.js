@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09472-platform-info-inventory-reconcile';
+const CACHE='lotkeys-app-v09473-drive-info-award-celebrations';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

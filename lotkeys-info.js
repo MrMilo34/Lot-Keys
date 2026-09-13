@@ -1,13 +1,12 @@
 (function(){
 'use strict';
 
-const VERSION='0.9.4.72';
+const VERSION='0.9.4.73';
 const LOCAL_SOURCE=new URL('./lotkeys-info.json',location.href).href;
 const CANONICAL_SOURCE='https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/lotkeys-info.json';
 const CACHE_KEY='lotkeys-platform-info-cache-v1';
 const SEEN_KEY='lotkeys-platform-info-seen-v1';
 const DRAFT_KEY='lotkeys-platform-info-developer-draft-v1';
-const PUBLISH_URL='https://github.com/MrMilo34/Lot-Keys/edit/main/lotkeys-info.json';
 const TYPES=new Set(['heading','text','image','video','link','file']);
 let current=readJson(CACHE_KEY,null);
 let refreshPromise=null;
@@ -78,13 +77,27 @@ function paintButtons(){
   }
 }
 
+async function fetchDriveSource(){
+  const app=bridge(),drive=app?.DriveSync;
+  if(!drive?.fetchFileBlob||!drive?.connected?.())return null;
+  const fileId=String(await app.getSetting?.('lotkeysPlatformInfoDriveFileId','')||'').trim();
+  if(!fileId)return null;
+  const raw=JSON.parse(await (await drive.fetchFileBlob(fileId)).text());
+  if(!String(raw?.id||'').trim())throw new Error('The Developer Files LotKeys Info message is missing its message ID.');
+  return normalizeInfo(raw);
+}
+
 async function fetchCurrent({quiet=true}={}){
   if(refreshPromise)return refreshPromise;
   refreshPromise=(async()=>{
-    // The protected production file is the platform-wide source of truth. The
-    // bundled copy keeps a new TEST build useful until that file is published.
-    const urls=[CANONICAL_SOURCE,LOCAL_SOURCE].filter((url,index,rows)=>rows.indexOf(url)===index);
+    // A Developer Files message is the live Drive truth. The protected production
+    // and bundled copies keep LotKeys useful before the first Drive publication.
     let lastError=null;
+    try{
+      const driveInfo=await fetchDriveSource();
+      if(driveInfo){current=driveInfo;writeJson(CACHE_KEY,driveInfo);paintButtons();window.dispatchEvent(new CustomEvent('lotkeys-info-updated',{detail:driveInfo}));return driveInfo}
+    }catch(error){lastError=error}
+    const urls=[CANONICAL_SOURCE,LOCAL_SOURCE].filter((url,index,rows)=>rows.indexOf(url)===index);
     for(const url of urls){
       try{
         const target=new URL(url);target.searchParams.set('lotkeys-info-check',Date.now());
@@ -161,17 +174,14 @@ function buildPublishInfo(body,draft,{newIdentity=false}={}){
     blocks:draft
   });
 }
-function downloadJson(info){
-  const blob=new Blob([`${JSON.stringify(info,null,2)}\n`],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');
-  link.href=url;link.download='lotkeys-info.json';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
-}
 async function isDeveloper(){
   try{return !!(await window.LotKeysAwards?.isDeveloper?.())}catch{return false}
 }
 async function openEditor(){
   if(!await isDeveloper())return;
-  const saved=readJson(DRAFT_KEY,null),base=normalizeInfo(saved||current||{}),draft=base.blocks.map(block=>({...block,id:block.id||uid('BLOCK')}));
-  const body=showModal(`<div class="modal-head"><div><div class="eyebrow">DEV TOOL KIT · PLATFORM WIDE</div><h2>Edit LotKeys Info</h2></div><button class="close lkinfo-close" type="button">×</button></div><label class="lkinfo-active"><input id="lkinfo-active" type="checkbox" ${base.active?'checked':''}> Show this LotKeys Info message</label><div class="field"><label>Headline</label><input id="lkinfo-title" maxlength="100" value="${esc(base.title)}"></div><div class="field"><label>Short introduction · optional</label><textarea id="lkinfo-summary" maxlength="500">${esc(base.summary)}</textarea></div><div class="lkinfo-add-grid"><button class="btn" type="button" data-info-add="heading">＋ Heading</button><button class="btn" type="button" data-info-add="text">＋ Text</button><button class="btn" type="button" data-info-add="image">＋ Image</button><button class="btn" type="button" data-info-add="video">＋ Video</button><button class="btn" type="button" data-info-add="link">＋ Link</button><button class="btn" type="button" data-info-add="file">＋ File</button></div><div class="lkinfo-draft-list" id="lkinfo-draft-list"></div><div class="notice lkinfo-publish-note"><strong>One protected platform message</strong><div class="small">Preparing a new file changes the unread ID. Replace <code>lotkeys-info.json</code> in the main LotKeys repository; repository permissions remain the publishing security boundary.</div></div><div class="actions"><button class="btn ghost" id="lkinfo-save-draft" type="button">Save Draft</button><button class="btn" id="lkinfo-preview" type="button">Preview</button><button class="btn primary" id="lkinfo-download" type="button">Download Publish File</button><a class="btn ghost" id="lkinfo-open-publisher" href="${PUBLISH_URL}" target="_blank" rel="noopener noreferrer">Open Publisher ↗</a></div>`);
+  const app=bridge(),drive=app?.DriveSync,saved=readJson(DRAFT_KEY,null),base=normalizeInfo(saved||current||{}),draft=base.blocks.map(block=>({...block,id:block.id||uid('BLOCK')}));
+  const storage=await drive?.getDeveloperFilesStatus?.({verifyRemote:true}).catch(()=>null),storageCopy=storage?.linked?'Publishing replaces the same Developer Files / LotKeys Info.json file in your personal Google Drive.':'Developer Files was not found. Save & Publish will ask before creating it inside your personal Lot-Keys Account folder.';
+  const body=showModal(`<div class="modal-head"><div><div class="eyebrow">DEV TOOL KIT · PLATFORM WIDE</div><h2>Edit LotKeys Info</h2></div><button class="close lkinfo-close" type="button">×</button></div><label class="lkinfo-active"><input id="lkinfo-active" type="checkbox" ${base.active?'checked':''}> Show this LotKeys Info message</label><div class="field"><label>Headline</label><input id="lkinfo-title" maxlength="100" value="${esc(base.title)}"></div><div class="field"><label>Short introduction · optional</label><textarea id="lkinfo-summary" maxlength="500">${esc(base.summary)}</textarea></div><div class="lkinfo-add-grid"><button class="btn" type="button" data-info-add="heading">＋ Heading</button><button class="btn" type="button" data-info-add="text">＋ Text</button><button class="btn" type="button" data-info-add="image">＋ Image</button><button class="btn" type="button" data-info-add="video">＋ Video</button><button class="btn" type="button" data-info-add="link">＋ Link</button><button class="btn" type="button" data-info-add="file">＋ File</button></div><div class="lkinfo-draft-list" id="lkinfo-draft-list"></div><div class="notice lkinfo-publish-note"><strong>One live platform message · Google Drive backed</strong><div class="small">${esc(storageCopy)}</div></div><button class="btn primary block" id="lkinfo-save-publish" type="button">Save &amp; Publish</button>`);
   if(!body)return;
   const list=body.querySelector('#lkinfo-draft-list');let dragIndex=null;
   const sync=()=>draftFromEditor(body,draft);
@@ -186,9 +196,19 @@ async function openEditor(){
     });
   };
   body.querySelectorAll('[data-info-add]').forEach(button=>button.onclick=()=>{sync();const type=button.dataset.infoAdd;draft.push(cleanBlock({id:uid('BLOCK'),type,text:type==='heading'?'Update':''},draft.length));render()});
-  body.querySelector('#lkinfo-save-draft').onclick=()=>{const info=buildPublishInfo(body,draft);writeJson(DRAFT_KEY,info);miniToast('LotKeys Info draft saved on this device ✓')};
-  body.querySelector('#lkinfo-preview').onclick=()=>{const info=buildPublishInfo(body,draft);writeJson(DRAFT_KEY,info);showModal(`${infoBody(info,{preview:true})}<button class="btn primary block" id="lkinfo-back-editor" type="button">Back to Editor</button>`)?.querySelector('#lkinfo-back-editor')?.addEventListener('click',openEditor)};
-  body.querySelector('#lkinfo-download').onclick=async()=>{const info=buildPublishInfo(body,draft,{newIdentity:true});writeJson(DRAFT_KEY,info);try{await navigator.clipboard?.writeText?.(`${JSON.stringify(info,null,2)}\n`)}catch{}downloadJson(info);miniToast('Publish file downloaded · JSON also copied ✓')};
+  body.querySelector('#lkinfo-save-publish').onclick=async()=>{
+    const button=body.querySelector('#lkinfo-save-publish');
+    if(!drive?.publishPlatformInfo)return miniToast('LotKeys Info publishing is still loading. Try again in a moment.');
+    let status=await drive.getDeveloperFilesStatus({verifyRemote:true}).catch(()=>null),createIfMissing=!status?.linked;
+    if(createIfMissing&&!confirm('LotKeys could not find your Developer Files folder. Create Developer Files inside your personal Lot-Keys Account folder and publish LotKeys Info there?'))return;
+    const info=buildPublishInfo(body,draft,{newIdentity:true});writeJson(DRAFT_KEY,info);button.disabled=true;button.textContent='Saving & Publishing…';
+    try{
+      const result=await drive.publishPlatformInfo(info,{createIfMissing});
+      current=info;writeJson(CACHE_KEY,info);try{localStorage.removeItem(DRAFT_KEY)}catch{}paintButtons();window.dispatchEvent(new CustomEvent('lotkeys-info-updated',{detail:info}));
+      const published=result.storePublished?'Published to LotKeys users ✓':'Saved in Developer Files · Store broadcast will finish on the next Admin sync';
+      miniToast(published);showModal(infoBody(info));markSeen();
+    }catch(error){button.disabled=false;button.textContent='Save & Publish';alert(error?.message||error)}
+  };
   render();
 }
 function miniToast(text){

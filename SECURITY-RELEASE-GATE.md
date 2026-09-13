@@ -2,7 +2,7 @@
 
 ## Current status: team testing
 
-V0.9.4.72 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
+V0.9.4.73 is suitable for controlled testing with approved Google accounts and non-sensitive dealership test data. It is **not yet the public-production security finish line**.
 
 The website remains a static browser application. Google Drive enforces file access, and the installed Store Processor is the trusted writer for the current Inventory test model; a production service is still required as the final authority for multi-Store Creator/Admin roles, global contact discovery, cross-Store message delivery, abuse controls, and long-lived authorization secrets.
 
@@ -15,6 +15,7 @@ The website remains a static browser application. Google Drive enforces file acc
 - The Admin Level 2 Apps Script processor validates requests by their actual user workspace, applies the creator/Trusted exceptions, and leaves contributed media pending for Administration.
 - Approved media is copied into official Inventory, so later deletion of a user’s More copy cannot delete the official copy.
 - Creator-only award checks are case-insensitively bound to the configured Google account email.
+- The developer's `Developer Files / LotKeys Info.json` announcement is intentionally shared as anyone-readable and its stable ID is distributed through Store Access. It must contain public platform information only—never credentials, customer data, internal Store documents, or private links.
 - Direct Chat envelopes are encrypted in-browser and written to a sender-owned lane shared Reader-only with the exact recipient Google account. The Admin Level 2 processor provides one deduplicated private-Inbox recovery copy; it is not the live courier.
 - Account Lock Screen credentials use PBKDF2-SHA-256, a unique random device salt, and delays after repeated failures.
 - Lock state survives a page refresh in the current tab.
@@ -67,7 +68,7 @@ The website remains a static browser application. Google Drive enforces file acc
    - Test direct/group Chat, block/mute/admin removal, unread state, key changes, attachments, and calls across two networks.
    - Complete accessibility, privacy, threat-model, and independent security reviews.
 
-## Safe V0.9.4.72 test rules
+## Safe V0.9.4.73 test rules
 
 - Keep Google OAuth in **Testing** and explicitly add every tester.
 - Share the Store folder only with those same tester Google accounts.

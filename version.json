@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.72",
-  "build": "09472",
-  "release": "platform-info-profile-theme-inventory-reconcile",
+  "version": "0.9.4.73",
+  "build": "09473",
+  "release": "drive-info-award-celebrations-post-buddy-notice",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09472-platform-info-inventory-reconcile",
-  "publishedAt": "2026-09-12"
+  "serviceWorkerCache": "lotkeys-app-v09473-drive-info-award-celebrations",
+  "publishedAt": "2026-09-13"
 }

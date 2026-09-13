@@ -1,3 +1,24 @@
+# LotKeys V0.9.4.73 Drive Info and Award celebration checklist
+
+- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09473`.
+- Confirm the strip, `version.json`, and service worker report V0.9.4.73 / `09473` / `lotkeys-app-v09473-drive-info-award-celebrations`.
+- Recheck the Ford Transit and several existing Inventory/Listing records first. They must remain present and open quickly; V0.9.4.73 must not regress the V0.9.4.72 reconciliation fix.
+- On desktop, confirm the Information bubble appears immediately left of **LotKeys Info**, followed by **Lock Screen**. On phone, confirm the Information icon appears left of the LotKeys logo icon, followed by the lock icon.
+- As the registered developer, open **Garage → Dev Tool Kit → LotKeys Info**. Confirm the old Save Draft, Preview, Download and Open Publisher controls are gone and only **Save & Publish** remains.
+- On the first publish, allow creation when prompted. Confirm personal Drive contains exactly one `Lot-Keys Account / Developer Files / LotKeys Info.json` and later publishes replace that file instead of making numbered copies.
+- Confirm the published file is readable and the connected Store Access controls contain its stable Drive file ID, URL and update timestamp.
+- Open LotKeys as a second Store user, refresh Store state or return to the foreground, and confirm the newly published notice appears with one unread dot without uploading another website build.
+- Move the Developer Files folder within personal Drive and publish again; the same Drive folder/file IDs should continue working. For a disposable test only, delete the folder and confirm LotKeys asks before creating a replacement.
+- Open **Special Award Drop** and confirm Award Category offers **Special**, **Admin awarded**, **By Level**, **Automatic**, and **Other**. An empty future category should clearly say it has no awards yet.
+- Grant a non-Creator Award to a second account. Confirm that account receives one popup showing the correct Award art, meaning and grant reason.
+- Approve an Award nomination and trigger one safe automatic Award on a disposable account. Confirm both paths produce the same recipient experience and do not duplicate an already-granted non-repeatable Award.
+- Confirm the confetti/party-popper effect renders in front of the Award popup, not behind it.
+- Recheck **I Sold This Vehicle** and a Monthly Wrap-Up preview/replay. Confirm they use the same visual celebration treatment and retain their expected audio behavior.
+- In Garage on desktop, download Post Buddy V0.1.14. Confirm the ZIP downloads and LotKeys shows its normal success bubble with no `toast is not a function` browser alert.
+- Confirm Apps Script still reports Processor V0.9.4.64 and its trigger remains installed. Do not reinstall solely for V0.9.4.73.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.72 platform info and cross-device Inventory checklist
 
 - Upload every item inside the release ZIP directly to `Lot-Keys-TEST`, including both `lotkeys-info` files and the complete `extension/releases` folder. Keep `CNAME` absent.

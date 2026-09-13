@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09472",
+  "id": "lotkeys-info-v09473",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.72 team-test build is ready for cross-device testing.",
-  "updatedAt": "2026-09-12T20:30:00Z",
+  "summary": "The V0.9.4.73 team-test build is ready for award and LotKeys Info testing.",
+  "updatedAt": "2026-09-13T09:00:00Z",
   "blocks": [
     {
-      "id": "v09472-heading",
+      "id": "v09473-heading",
       "type": "heading",
-      "text": "V0.9.4.72 test release"
+      "text": "V0.9.4.73 test release"
     },
     {
-      "id": "v09472-text",
+      "id": "v09473-text",
       "type": "text",
-      "text": "Inventory now reconciles missing Vehicle Profiles across devices and reconnects their Listing photos. Vehicle Profile photos upload through a faster bounded queue, public profiles use the profile owner's appearance, and the Facebook Post Buddy download no longer depends on one release pointer."
+      "text": "LotKeys Info now saves and publishes one stable Google Drive file from Developer Files. Award Drop is organized by category, every new award can reach its recipient in a celebratory popup, and one top-layer celebration effect is shared across LotKeys. The successful Post Buddy download no longer produces a toast error."
     }
   ]
 }

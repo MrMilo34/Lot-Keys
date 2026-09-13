@@ -1,3 +1,21 @@
+V0.9.4.73 DRIVE-PUBLISHED INFO & UNIFIED AWARD CELEBRATIONS
+- Swaps the Information and LotKeys Info controls on desktop and phone.
+- Replaces the four-step LotKeys Info draft/download/publisher workflow with one Save & Publish button.
+- Verifies or creates Lot-Keys Account / Developer Files on the registered developer's personal Google Drive.
+- Rediscovers an existing Developer Files folder and LotKeys Info.json on a fresh browser before offering to create replacements.
+- Replaces one stable Developer Files / LotKeys Info.json file, grants read access, and publishes its Drive pointer through Store Access.
+- Reads the Drive file as the live LotKeys Info truth, with the protected GitHub and bundled copies retained as bootstrap/offline fallbacks.
+- Divides Award Drop into Special, Admin awarded, By Level, Automatic and Other categories while retaining Creator-only award protection.
+- Queues recipient-specific Award popups for automatic, approved and directly granted Awards.
+- Shows Award artwork, meaning and reason in the recipient popup.
+- Uses the same party-popper/confetti treatment for Vehicle Sold, Monthly Wrap-Up and Award experiences.
+- Renders the unified celebration in a browser top layer in front of its popup.
+- Fixes the successful Post Buddy ZIP download path so it uses a real LotKeys toast helper instead of throwing `toast is not a function`.
+- Retains the V0.9.4.72 Inventory reconciliation and photo-speed changes without modifying their logic.
+- Keeps Processor V0.9.4.64 current; no Apps Script reinstall is required.
+- Build: 09473.
+- Service worker cache: lotkeys-app-v09473-drive-info-award-celebrations.
+
 V0.9.4.72 PLATFORM INFO, PHOTO SPEED & CROSS-DEVICE INVENTORY REPAIR
 - Reconciles the local Inventory cache against the actual Drive Vehicle Profile folder set on foreground/manual checks.
 - Runs a targeted repair when a cached Listing references a Vehicle Profile missing on the current device, restoring its Profile data and cover photo.

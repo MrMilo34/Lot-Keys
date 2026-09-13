@@ -48,7 +48,7 @@ Verify the domain through Google Search Console before production brand verifica
 
 ## 5. Verify the release
 
-- Open `https://lot-keys.ca/?build=09472` in a private browser tab after V0.9.4.72 has been promoted to the production `Lot-Keys` repository. Uploading TEST alone does not update this domain.
+- Open `https://lot-keys.ca/?build=09473` in a private browser tab after V0.9.4.73 has been promoted to the production `Lot-Keys` repository. Uploading TEST alone does not update this domain.
 - Confirm the address remains HTTPS.
 - Confirm Account sign-in opens Google's real account chooser.
 - Confirm `https://lot-keys.ca/install.html` loads and offers installation on supported devices.
