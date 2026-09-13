@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.73",
-  "build": "09473",
-  "release": "drive-info-award-celebrations-post-buddy-notice",
+  "version": "0.9.4.74",
+  "build": "09474",
+  "release": "leaderboard-placeholder-streamers-post-buddy-timing",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09473-drive-info-award-celebrations",
+  "serviceWorkerCache": "lotkeys-app-v09474-leaderboard-placeholder-streamers",
   "publishedAt": "2026-09-13"
 }

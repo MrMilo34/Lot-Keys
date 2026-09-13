@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09473-drive-info-award-celebrations';
+const CACHE='lotkeys-app-v09474-leaderboard-placeholder-streamers';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',
@@ -19,6 +19,7 @@ const CORE=[
   './assets/carfax-low-kilometres.png',
   './assets/carfax-no-reported-accidents.png',
   './assets/lotkeys-default-logo.png',
+  './assets/vehicle-placeholder.webp',
   './assets/lotkeys-icon-192.png',
   './assets/lotkeys-apple-touch-icon.png',
   './assets/lotkeys-favicon.png',

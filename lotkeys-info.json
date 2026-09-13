@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09473",
+  "id": "lotkeys-info-v09474",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.73 team-test build is ready for award and LotKeys Info testing.",
+  "summary": "The V0.9.4.74 team-test build is ready for leaderboard, placeholder, celebration and Posting Buddy testing.",
   "updatedAt": "2026-09-13T09:00:00Z",
   "blocks": [
     {
-      "id": "v09473-heading",
+      "id": "v09474-heading",
       "type": "heading",
-      "text": "V0.9.4.73 test release"
+      "text": "V0.9.4.74 test release"
     },
     {
-      "id": "v09473-text",
+      "id": "v09474-text",
       "type": "text",
-      "text": "LotKeys Info now saves and publishes one stable Google Drive file from Developer Files. Award Drop is organized by category, every new award can reach its recipient in a celebratory popup, and one top-layer celebration effect is shared across LotKeys. The successful Post Buddy download no longer produces a toast error."
+      "text": "Top Contributors now shows every normal score, with tiny values above their bar and private admin-approved points stacked in gold for administrators without changing the live public order. Missing vehicles use the optimized shared placeholder, month-end scores clear Profile photos, and the existing celebration now includes a slower fading streamer layer. Posting Buddy V0.1.16 adds persistent posting-time and time-saved milestones."
     }
   ]
 }

@@ -1,3 +1,21 @@
+V0.9.4.74 LEADERBOARD CLARITY, VEHICLE PLACEHOLDER & POST BUDDY TIMING
+- Shows every user’s normal contribution total on the Top Contributors chart.
+- Places a tiny bar’s value above it in that bar’s own accent color; taller bars retain their high-contrast internal value.
+- Keeps administrative point subtotals a separate gold stack visible only to administrators while live horizontal order remains based only on normal points.
+- Keeps regular-user leaderboard rendering free of the private administrative subtotal.
+- Moves the climbing month-end score 5px lower so it no longer clips into the Profile photo.
+- Adds the supplied missing-vehicle image artwork as a shared 320x320 WebP asset of about 1.6 KB across Inventory, Listings, Home, public/admin Listing references and selectors.
+- Uses a loading shimmer when a real Drive photo is still pending, so the placeholder is only used for a confirmed missing/failure.
+- Preserves the existing celebration burst and adds one lightweight foreground canvas layer of smaller, slower, fading cyan/blue/pink/yellow/purple/green streamers from the same origin.
+- Honors reduced motion by omitting the new streamer layer.
+- Bundles Posting Buddy V0.1.16 with persistent fields-filled, total-posting and time-saved milestones against a 12:30 manual benchmark.
+- Makes the Buddy URL/View lock an inverse neutral theme panel, not an accent-colored block.
+- Adds the same optimized vehicle placeholder to Posting Buddy.
+- Renames maintained unpacked extension source from extension/latest to extension/source; extension/latest.json remains the live pointer used by LotKeys and the Buddy.
+- Retains V0.9.4.73 behavior and keeps Processor V0.9.4.64 current; no Apps Script reinstall is required.
+- Build: 09474.
+- Service worker cache: lotkeys-app-v09474-leaderboard-placeholder-streamers.
+
 V0.9.4.73 DRIVE-PUBLISHED INFO & UNIFIED AWARD CELEBRATIONS
 - Swaps the Information and LotKeys Info controls on desktop and phone.
 - Replaces the four-step LotKeys Info draft/download/publisher workflow with one Save & Publish button.

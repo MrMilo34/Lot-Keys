@@ -1,3 +1,23 @@
+# LotKeys V0.9.4.74 leaderboard, placeholder, streamers and Buddy timing checklist
+
+- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09474`.
+- Confirm the strip, `version.json`, and service worker report V0.9.4.74 / `09474` / `lotkeys-app-v09474-leaderboard-placeholder-streamers`.
+- Open Top Contributors as a regular user. Confirm every normal score is visible; a short bar’s score sits above the bar in the bar color, and a tall bar’s score remains inside with readable contrast.
+- Open the same current leaderboard as an administrator. Confirm normal scores determine left-to-right order while admin-approved points appear only as a separate gold stack and personal `+… admin` subtotal. Inspect the regular-user rendered chart and confirm it has no admin subtotal element.
+- Replay a disposable month-end reveal and confirm the climbing score clears the Profile photo by about 5px while the existing avatar and bar motion remain unchanged.
+- Check a Vehicle and Listing with no photos in Home, Inventory, Listings, the Listing vehicle selector and the Posting Buddy. Confirm the supplied faint vehicle image appears without stretching. Check a Drive-backed photo that is merely loading and confirm it uses a loading state rather than flashing the missing image.
+- Trigger Vehicle Sold, an Award arrival, and a monthly reveal celebration. Confirm the original party-popper burst still looks the same and smaller bright streamers now leave the same center, fall more slowly, fade over roughly five seconds, and stay in front of the popup.
+- Enable reduced motion and confirm the additional canvas streamer layer is skipped.
+- Install Posting Buddy V0.1.16 from `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`; reload LotKeys and Facebook once.
+- Press **Fill Facebook Listing**. At **All Facebook fields filled**, confirm the frozen auto-fill time and time saved appear beneath Continue.
+- Press **Continue to URL & Views**. Confirm the source sections are greyed/blurred and the lower lock card is neutral inverse-theme—not the user accent—while total posting time continues once per second.
+- Close and reopen the side panel before saving the URL. Confirm the same Listing and elapsed milestones resume without resetting.
+- On the live `/marketplace/item/…` page, press **Save / Use this Website**. Confirm total time freezes, final time saved uses the 12:30 benchmark and never goes negative, and the Listing source unlocks.
+- Confirm `extension/source` contains maintained unpacked source, no `extension/latest` directory is shipped, and `extension/latest.json` still points to the V0.1.16 ZIP.
+- Recheck V0.9.4.73 LotKeys Info publishing/Award popups and V0.9.4.72 Inventory reconciliation. Confirm Processor V0.9.4.64 remains current and is not reinstalled.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.73 Drive Info and Award celebration checklist
 
 - Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09473`.
