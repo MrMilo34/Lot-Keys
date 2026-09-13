@@ -1,15 +1,15 @@
 {
   "name": "LotKeys Facebook Posting Buddy",
   "channel": "beta",
-  "version": "0.1.15",
-  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.15.zip",
+  "version": "0.1.16",
+  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip",
   "releaseNotesUrl": "https://github.com/MrMilo34/Lot-Keys/tree/main/extension",
   "publishedAt": "2026-09-13T00:00:00Z",
   "minimumLotKeysVersion": "0.9.4.69",
   "notes": [
-    "Uses the current LotKeys user accent for the animated working spinner.",
-    "Greys and softly blurs the Listing-selection area during the URL and Views handoff.",
-    "Keeps the Listing selector locked until Back is used or Save / Use this Website succeeds.",
-    "Preserves the proven Facebook fill and later URL/view screens."
+    "Times auto-fill and total posting milestones from Fill through successful live-URL save.",
+    "Shows non-negative time saved against the 12 minute 30 second manual benchmark.",
+    "Uses a neutral inverse-theme timing panel and the optimized missing-vehicle placeholder.",
+    "Retains the accent spinner, grey/blur Listing lock, Back action and proven Facebook fill behavior."
   ]
 }

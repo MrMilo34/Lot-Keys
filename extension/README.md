@@ -1,12 +1,12 @@
 # LotKeys Facebook Posting Buddy
 
-Current beta: **V0.1.15**
+Current beta: **V0.1.16**
 
-V0.1.15 gives the working spinner the active LotKeys accent and places the Listing-selection area into a neutral greyed/blurred lock during the URL and Views handoff. **Back** safely returns to the completion screen, while a successful **Save / Use this Website** unlocks the Listing area. The later screens and proven Facebook fill behavior are unchanged.
+V0.1.16 adds persistent posting milestones and a neutral inverse-theme timing panel. Auto-fill time freezes when all Facebook fields are complete; total time continues until the live Marketplace URL is saved. Both are compared with the 12:30 manual-posting benchmark, with saved time floored at zero. It also uses the shared optimized vehicle placeholder while retaining V0.1.15’s accent spinner and grey/blur source lock.
 
 ## Download
 
-- [Download the newest Posting Buddy — V0.1.15](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.15.zip)
+- [Download the newest Posting Buddy — V0.1.16](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip)
 
 ## Install or update
 
@@ -20,10 +20,11 @@ The Posting Buddy checks `latest.json` and displays a download button when a new
 
 ## Publishing the next beta
 
-1. Increase the version in `latest/manifest.json`, `latest/background.js`, and `latest/facebook.js`.
-2. Put the complete new unpacked source in `latest/`.
-3. Add the versioned ZIP to `releases/`.
-4. Update `latest.json` last so users are never pointed at a partially uploaded release.
+1. Update the maintained development copy outside the public LotKeys website package.
+2. Add only the new versioned ZIP to `releases/` and remove the superseded ZIP from the deployed website snapshot.
+3. Update `latest.json` last so users are never pointed at a partially uploaded release.
+
+The public website package intentionally contains no unpacked `latest/` or `source/` copy. The current versioned ZIP is the downloadable extension package and `latest.json` is its small update pointer.
 
 ## Safety rule
 
