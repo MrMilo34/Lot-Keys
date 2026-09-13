@@ -12,7 +12,7 @@ This browser release gives the developer-facing LotKeys Info editor a single Goo
 - **Five Award Drop categories:** **Special**, **Admin awarded**, **By Level**, **Automatic**, and **Other** are available without weakening Creator-only award rules.
 - **Award arrival popup:** automatic, Admin-approved, direct-grant and developer-grant paths queue one recipient-specific window with the Award artwork, public meaning and grant reason.
 - **Unified celebration:** Vehicle Sold, Monthly Wrap-Up and Award experiences now share the party-popper/confetti effect, rendered in its own browser top layer in front of the popup.
-- **Post Buddy success notice:** downloading the included V0.1.14 ZIP no longer calls an out-of-scope `toast` symbol or displays a browser error after the download succeeds.
+- **Post Buddy success notice:** Garage now serves the included V0.1.15 ZIP, and a successful download no longer calls an out-of-scope `toast` symbol or displays a browser error.
 - **No Processor reinstall needed:** the installed V0.9.4.64 Store Processor remains current.
 - **V0.9.4.72 retained:** cross-device Inventory reconciliation, cache-first navigation, targeted Listing/Profile repair, faster bounded photo uploads, viewed-user public themes and deployment freshness checks remain included.
 

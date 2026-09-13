@@ -11,6 +11,8 @@ V0.9.4.73 DRIVE-PUBLISHED INFO & UNIFIED AWARD CELEBRATIONS
 - Uses the same party-popper/confetti treatment for Vehicle Sold, Monthly Wrap-Up and Award experiences.
 - Renders the unified celebration in a browser top layer in front of its popup.
 - Fixes the successful Post Buddy ZIP download path so it uses a real LotKeys toast helper instead of throwing `toast is not a function`.
+- Refreshes the bundled Posting Buddy to V0.1.15: its working spinner follows the signed-in user's accent, while Continue to URL & Views puts the Listing source into a neutral grey/blur lock.
+- Adds a safe Back action for that handoff; the source stays locked until Back is used or Save / Use this Website succeeds. Later Posting Buddy screens and Facebook-fill behavior remain unchanged.
 - Retains the V0.9.4.72 Inventory reconciliation and photo-speed changes without modifying their logic.
 - Keeps Processor V0.9.4.64 current; no Apps Script reinstall is required.
 - Build: 09473.

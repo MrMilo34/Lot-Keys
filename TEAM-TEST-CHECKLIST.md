@@ -14,7 +14,8 @@
 - Approve an Award nomination and trigger one safe automatic Award on a disposable account. Confirm both paths produce the same recipient experience and do not duplicate an already-granted non-repeatable Award.
 - Confirm the confetti/party-popper effect renders in front of the Award popup, not behind it.
 - Recheck **I Sold This Vehicle** and a Monthly Wrap-Up preview/replay. Confirm they use the same visual celebration treatment and retain their expected audio behavior.
-- In Garage on desktop, download Post Buddy V0.1.14. Confirm the ZIP downloads and LotKeys shows its normal success bubble with no `toast is not a function` browser alert.
+- In Garage on desktop, download Post Buddy V0.1.15. Confirm the ZIP downloads and LotKeys shows its normal success bubble with no `toast is not a function` browser alert.
+- In Posting Buddy V0.1.15, confirm the animated working ring uses the current LotKeys accent. After **Continue to URL & Views**, confirm the upper Listing source is neutral greyed/blurred and cannot be changed until **Back** is used or **Save / Use this Website** succeeds. Confirm the later URL/view screens are otherwise unchanged.
 - Confirm Apps Script still reports Processor V0.9.4.64 and its trigger remains installed. Do not reinstall solely for V0.9.4.73.
 
 ## Previous release checklist
