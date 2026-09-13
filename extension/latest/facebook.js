@@ -304,7 +304,7 @@
   if(extensionContextAlive()){
     try{chrome.runtime.onMessage.addListener((msg,sender,sendResponse)=>{
       if(!isCurrentGeneration())return;
-      if(msg?.type==='LOTKEYS_PING'){sendResponse({ok:true,version:'0.1.14'});return}
+      if(msg?.type==='LOTKEYS_PING'){sendResponse({ok:true,version:'0.1.15'});return}
       if(msg?.type==='LOTKEYS_JUMP_TO_FIELD'){jumpToField(msg.key).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}
       if(msg?.type==='LOTKEYS_RETRY_FIELD'){retryField(msg.key,msg.listing||{}).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}
       if(msg?.type==='LOTKEYS_CHECK_FIELDS'){inspectFields(msg.keys||[]).then(sendResponse).catch(err=>sendResponse({ok:false,error:String(err?.message||err)}));return true;}

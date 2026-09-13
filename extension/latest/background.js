@@ -1,6 +1,6 @@
 const LOTKEYS_RE = /^https:\/\/(?:mrmilo34\.github\.io\/Lot-Keys(?:-TEST)?(?:\/|$)|(?:www\.)?lot-keys\.ca(?:\/|$))/i;
 const FB_RE = /^https:\/\/(?:www\.)?facebook\.com\//i;
-const HELPER_VERSION = '0.1.14';
+const HELPER_VERSION = '0.1.15';
 const RUNTIME_VERSION_KEY = 'lotkeysHelperRuntimeVersion';
 
 function configurePanel(){try{chrome.sidePanel?.setPanelBehavior?.({ openPanelOnActionClick: true }).catch(() => {})}catch{}}

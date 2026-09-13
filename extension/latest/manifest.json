@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "LotKeys Facebook Assistant",
-  "version": "0.1.14",
-  "version_name": "0.1.14 Beta",
+  "version": "0.1.15",
+  "version_name": "0.1.15 Beta",
   "description": "Beta companion for faster, reliable Facebook Marketplace vehicle listing fill from LotKeys.",
   "homepage_url": "https://github.com/MrMilo34/Lot-Keys/tree/main/extension",
   "permissions": [

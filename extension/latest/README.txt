@@ -1,20 +1,20 @@
-LotKeys Facebook Assistant Beta v0.1.14
+LotKeys Facebook Assistant Beta v0.1.15
 
-Current LotKeys appearance and safer Facebook handoff.
+Accent-colored working feedback and a clearer Facebook handoff.
 
 What changed
-- Reads the current LotKeys user accent and light/dark appearance when the Helper opens, when Listings sync, and during the existing background refresh interval.
-- Fills Location last and selects the matching Facebook suggestion when Facebook exposes an exact compatible option.
-- When every field is ready, scrolls to Facebook's final Next/Submit action but never clicks it.
-- Covers URL/view follow-up details in the current accent until Save / Use this Website captures a live Marketplace item page.
-- Keeps the Listing active after the URL is saved so the user can immediately enter current views.
-- Preserves exact selected Listing photo IDs/order, fresh Listing reads, completion sensing, field jump/reinjection and the manual Facebook Next/Publish safety rule.
+- Uses the current LotKeys user accent for the animated working spinner instead of the old red/black ring.
+- After Continue to URL & Views, greys and softly blurs the Listing-selection area instead of leaving it highlighted in blue.
+- Locks that background area against accidental Listing changes during the Facebook publishing handoff.
+- Adds Back to return safely to the completed-transfer screen and remove the lock.
+- A successful Save / Use this Website also removes the lock and enables view tracking.
+- Leaves the later URL/view screens, exact photo order, Location-last behavior, field completion sensing, reinjection and manual Facebook Next/Publish safety rule unchanged.
 
 GitHub release layout
 - extension/latest/ contains the current unpacked extension source.
 - extension/latest.json identifies the newest public version and download.
 - extension/latest.json points LotKeys to the current versioned release.
-- extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.14.zip is the current release.
+- extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.15.zip is the current release.
 
 Install / update
 1. Download and unzip the ZIP supplied by LotKeys.
