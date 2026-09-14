@@ -1,12 +1,12 @@
 /**
- * LotKeys Store Processor V0.9.4.64
+ * LotKeys Store Processor V0.9.4.76
  *
  * This script is installed once by an Admin Level 2 account. It is the trusted
  * writer between each user's private More request queue and the official,
  * Viewer-only Inventory. Never deploy it to execute as the visiting web user.
  */
 
-const LOTKEYS_PROCESSOR_VERSION = '0.9.4.64';
+const LOTKEYS_PROCESSOR_VERSION = '0.9.4.76';
 const LOTKEYS_STORE_FOLDER_ID = '1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g';
 const LK_FOLDER = 'application/vnd.google-apps.folder';
 const LK_SHEET = 'application/vnd.google-apps.spreadsheet';
@@ -307,8 +307,15 @@ function lkProcessOwnerUpdate_(state, actor, request, file, context, loadedVehic
 }
 
 function lkProcessContribution_(state, actor, request, file, context) {
-  const vehicle = lkFindVehicle_(state, String(request.vehicleId || ''));
+  let vehicle = lkFindVehicle_(state, String(request.vehicleId || ''));
   if (!vehicle) return lkRejectRequest_(request, file, context, 'The official Vehicle Profile was not found.');
+  const requestId = String(request.id || file.id || '');
+  const earlierResolution = lkContributionResolution_(vehicle, requestId);
+  if (earlierResolution) {
+    lkTrash_(file.id);
+    return String(earlierResolution.status || 'resolved');
+  }
+  if (!lkTryGet_(file.id)) return 'discarded';
   const media = lkSanitizeRequestMedia_(request.media, context);
   const changes = lkSanitizeChanges_(request.changes, vehicle);
   const trusted = !!(actor.permissions && actor.permissions.trustedUser === true);
@@ -338,6 +345,17 @@ function lkProcessContribution_(state, actor, request, file, context) {
     return lkApproveRequest_(request, file, context, trusted ? 'Trusted information changes applied.' : 'No remaining approval items.');
   }
 
+  // Deny/Approve can happen while a scheduled processor run is holding an older
+  // copy of this request. Re-read both the official sheet and request immediately
+  // before indexing so a terminal decision can never be resurrected.
+  const latestVehicle = lkFindVehicle_(state, String(request.vehicleId || ''));
+  if (!latestVehicle) return lkRejectRequest_(request, file, context, 'The official Vehicle Profile was not found.');
+  const latestResolution = lkContributionResolution_(latestVehicle, requestId);
+  if (latestResolution || !lkTryGet_(file.id)) {
+    lkTrash_(file.id);
+    return latestResolution ? String(latestResolution.status || 'resolved') : 'discarded';
+  }
+  vehicle = latestVehicle;
   vehicle.contributionRequests = Array.isArray(vehicle.contributionRequests) ? vehicle.contributionRequests : [];
   vehicle.contributionRequests = vehicle.contributionRequests.filter(function(row) {
     return String(row.id || '') !== String(request.id || '');
@@ -871,10 +889,17 @@ function lkReadVehicle_(profile, fallback) {
     priceChangeRequests: lkJsonArray_(value('Price Change Requests JSON', 'priceChangeRequests', [])),
     priceChangeAwards: lkJsonArray_(value('Price Change Awards JSON', 'priceChangeAwards', [])),
     contributionRequests: lkJsonArray_(value('Contribution Requests JSON', 'contributionRequests', [])),
+    contributionResolutions: lkContributionResolutions_(value('Contribution Resolutions JSON', 'contributionResolutions', [])),
     websitePriceFinding: lkJsonParse_(value('Website Price Finding JSON', 'websitePriceFinding', null), null),
     updatedAt: Date.parse(value('Updated', 'updatedAt', '')) || Number(value('Updated', 'updatedAt', 0)) || Date.now(),
     drive: {profileFolderId: profile.id, adminSheetId: sheetFile ? sheetFile.id : ''}
   };
+  const resolvedContributionIds = {};
+  vehicle.contributionResolutions.forEach(function(row) { resolvedContributionIds[String(row.id || '')] = true; });
+  vehicle.contributionRequests = vehicle.contributionRequests.filter(function(row) {
+    const id = String(row && row.id || ''), status = String(row && row.status || 'pending').toLowerCase();
+    return id && !resolvedContributionIds[id] && !row.resolvedAt && ['pending', 'open', 'indexed'].indexOf(status) >= 0;
+  });
   vehicle.drive.photosFolderId = lkFolderIdFromUrl_(value('Photos Folder', '', ''));
   vehicle.drive.videosFolderId = lkFolderIdFromUrl_(value('Videos Folder', '', ''));
   vehicle.drive.documentsFolderId = lkFolderIdFromUrl_(value('Documents Folder', '', ''));
@@ -982,6 +1007,7 @@ function lkWriteVehicleSheet_(sheetId, vehicle) {
     ['Pending Deal Updated At', vehicle.pendingDealUpdatedAt || ''], ['Pending Deal Updated By', vehicle.pendingDealUpdatedByUserName || ''],
     ['Deletion Requests JSON', JSON.stringify(vehicle.deletionRequests || [])], ['Price Change Requests JSON', JSON.stringify(vehicle.priceChangeRequests || [])],
     ['Price Change Awards JSON', JSON.stringify(vehicle.priceChangeAwards || [])], ['Contribution Requests JSON', JSON.stringify(vehicle.contributionRequests || [])],
+    ['Contribution Resolutions JSON', JSON.stringify(lkContributionResolutions_(vehicle.contributionResolutions || []))],
     ['Website Price Finding JSON', JSON.stringify(vehicle.websitePriceFinding || null)], ['Cover Photo File ID', lkCoverPhotoId_(vehicle)],
     ['Updated', new Date().toISOString()]
   ];
@@ -1012,6 +1038,7 @@ function lkWriteInventoryEntry_(state, vehicle) {
     priceChangeRequests: vehicle.priceChangeRequests || [],
     priceChangeAwards: vehicle.priceChangeAwards || [],
     contributionRequests: vehicle.contributionRequests || [],
+    contributionResolutions: lkContributionResolutions_(vehicle.contributionResolutions || []),
     websitePriceFinding: vehicle.websitePriceFinding || null,
     recoveryNeeded: false,
     syncError: '',
@@ -1402,6 +1429,23 @@ function lkStock_(value) { return String(value || '').trim().toUpperCase().repla
 function lkBool_(value) { return value === true || String(value || '').trim().toUpperCase() === 'TRUE'; }
 function lkNumberOrBlank_(value) { return value === '' || value === null || value === undefined ? '' : Number(value); }
 function lkJsonArray_(value) { const parsed = Array.isArray(value) ? value : lkJsonParse_(value, []); return Array.isArray(parsed) ? parsed : []; }
+function lkContributionResolutions_(value) {
+  const rows = lkJsonArray_(value).filter(function(row) { return row && row.id; }).sort(function(a, b) {
+    return (Date.parse(b.resolvedAt || 0) || Number(b.resolvedAt) || 0) - (Date.parse(a.resolvedAt || 0) || Number(a.resolvedAt) || 0);
+  });
+  const seen = {}, out = [];
+  rows.forEach(function(row) {
+    const id = String(row.id || '');
+    if (!id || seen[id] || out.length >= 250) return;
+    seen[id] = true;
+    out.push({id: id, status: String(row.status || 'resolved').toLowerCase(), resolvedAt: String(row.resolvedAt || ''), resolvedByUserName: String(row.resolvedByUserName || '')});
+  });
+  return out;
+}
+function lkContributionResolution_(vehicle, requestId) {
+  requestId = String(requestId || '');
+  return lkContributionResolutions_(vehicle && vehicle.contributionResolutions || []).find(function(row) { return String(row.id || '') === requestId; }) || null;
+}
 function lkJsonParse_(value, fallback) { try { return typeof value === 'string' ? JSON.parse(value) : (value === undefined ? fallback : value); } catch (error) { return fallback; } }
 function lkFolderIdFromUrl_(value) { const match = String(value || '').match(/\/folders\/([a-zA-Z0-9_-]+)/); return match ? match[1] : ''; }
 function lkSafeName_(value) { return String(value || 'file').replace(/[\\/:*?"<>|]+/g, '_').slice(0, 180) || 'file'; }
