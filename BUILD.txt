@@ -1,3 +1,19 @@
+V0.9.4.76 LISTING IDENTITY, DURABLE REQUEST DECISIONS & ORPHAN RETENTION
+- Requires an Original Listing page to match the saved stock/VIN and vehicle details before any website price arrow can be shown.
+- Marks a useful dealer page that no longer confirms the saved vehicle identity with ⚠️ instead of borrowing another vehicle's price.
+- Clears stored legacy price arrows once so every active Listing is rescanned under the stricter identity rules.
+- Records approved/denied contribution request IDs as durable terminal resolutions in the Vehicle sheet and Inventory index.
+- Prevents a scheduled Processor pass or stale browser/index data from resurrecting a denied contribution request.
+- Saves the request decision first, runs cleanup/metadata work together, and defers the heavier Vehicle synchronization to the background.
+- Refreshes changed Listing JSON even when an older Listings Index entry exists and preserves a newer local Listing against stale Drive data.
+- Preserves a user's Listing for 15 days when its Vehicle Profile cannot be found or resynchronized.
+- Highlights that Listing in orange, preserves its own Listing photos, uses the lightweight placeholder only when none exist, and disables I Sold This Vehicle.
+- Allows only Delete Listing during the missing-Profile state and automatically removes an unrecovered Listing after its 15-day deadline.
+- Keeps Posting Buddy V0.1.16 unchanged.
+- Updates the required Store Processor to V0.9.4.76; rerun installLotKeysProcessor after replacing Code.gs.
+- Build: 09476.
+- Service worker cache: lotkeys-app-v09476-listing-integrity-request-resolution.
+
 V0.9.4.75 POPUP SHELL, LEADERBOARD CONTRAST & CLEAN EXTENSION PACKAGE
 - Removes a stale public-profile modal class on every close/cancel and whenever ordinary modal content replaces a public Profile.
 - Restores an explicit solid theme surface for Inventory, Listing, wrap-up and other ordinary dialogs.

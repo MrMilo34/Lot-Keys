@@ -17,8 +17,8 @@ LotKeys needs a normal HTTPS origin for Google browser OAuth. Opening `index.htm
    - `lotkeys-store-directory.json`, `lotkeys-creator-access.json`, and `version.json`
    - `PROCESSOR-SETUP.md` and the complete `processor` folder (Admin Level 2 setup source)
    - the complete `assets` folder
-   - the maintained `extension/source` unpacked Post Buddy source
-   - `extension/latest.json` and the complete `extension/releases` folder so the in-app Post Buddy download cannot depend on a remote pointer
+   - `extension/latest.json` and the current V0.1.16 ZIP in `extension/releases`, so the in-app Post Buddy download cannot depend on a remote pointer
+   - no unpacked `extension/latest` or `extension/source` directory and no superseded Buddy ZIPs; maintained source stays outside the public website snapshot
 3. Open the repository's **Settings**.
 4. Open **Pages** under Code and automation.
 5. Under Build and deployment, choose **Deploy from a branch**.

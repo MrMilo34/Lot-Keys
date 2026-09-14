@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.75",
-  "build": "09475",
-  "release": "modal-shell-leaderboard-shadow-clean-extension-package",
+  "version": "0.9.4.76",
+  "build": "09476",
+  "release": "listing-identity-request-resolution-orphan-retention",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09475-modal-leaderboard-cleanup",
-  "publishedAt": "2026-09-13"
+  "serviceWorkerCache": "lotkeys-app-v09476-listing-integrity-request-resolution",
+  "publishedAt": "2026-09-14"
 }

@@ -1,3 +1,20 @@
+# LotKeys V0.9.4.76 listing-integrity, request-resolution and orphan-retention checklist
+
+- Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09476`.
+- Replace Apps Script `Code.gs` with the bundled V0.9.4.76 file and rerun `installLotKeysProcessor` as Admin Level 2. Confirm `getLotKeysProcessorStatus` reports V0.9.4.76 and `triggerInstalled: true`.
+- Open the sold Edmonton Infiniti URL from the affected Listing. Confirm LotKeys displays ⚠️, never a price-up arrow, when the page no longer contains the saved stock, VIN and matching year/make/model identity.
+- Check a live exact-vehicle dealer page containing the saved identity and a changed price. Confirm the correct up/down price arrow still appears.
+- Submit a disposable contribution request, press Deny, and refresh/reopen on two devices after at least one Processor cycle. Confirm the request stays gone.
+- Approve a second disposable request. Confirm the decision returns promptly, the queue updates immediately, and full Vehicle synchronization finishes in the background.
+- Change a Listing price on one device, reopen on another device, and confirm newer Listing JSON wins over a stale Listings Index or older local cache.
+- Delete a disposable Vehicle Profile that has a current Listing. Confirm the Listing remains, carries an orange outer highlight, states that its Vehicle Profile cannot be found, and counts down from 15 days.
+- Confirm that orphan Listing keeps its Listing-uploaded photos. On a photo-free orphan Listing, confirm the 1.6 KB vehicle placeholder is used.
+- Open the orphan Listing actions. Confirm **I Sold This Vehicle** is unavailable and only **Delete Listing** can complete; no Lot-Lvl sale credit can be claimed.
+- Restore/resynchronize the same Vehicle Profile before expiry and confirm the orphan warning/deadline clear. Separately test an expired disposable record and confirm it is automatically removed.
+- Inspect the ZIP: only `extension/latest.json` and Posting Buddy V0.1.16 should be public; no extension source, `latest/` folder, or superseded ZIPs.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.75 popup shell, score contrast and package-cleanup checklist
 
 - Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09475`.

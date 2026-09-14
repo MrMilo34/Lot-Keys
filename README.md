@@ -1,3 +1,26 @@
+# LotKeys V0.9.4.76 — Listing Integrity & Durable Request Decisions
+
+This focused release corrects Original Listing identity validation, makes contribution-request decisions terminal across browser/Processor races, repairs stale Listing prices, and safely retains Listings whose Vehicle Profile disappears. Posting Buddy remains V0.1.16.
+
+## V0.9.4.76 highlights
+
+- **Exact-vehicle price alerts:** LotKeys now requires the saved stock/VIN plus matching vehicle details before showing a website price arrow. A useful page that no longer identifies the saved vehicle receives ⚠️.
+- **Durable Approve/Deny:** terminal contribution-request IDs are written to the Vehicle sheet and Inventory index before cleanup. A stale Processor pass cannot bring a denied request back.
+- **Faster decisions:** request cleanup and lightweight metadata synchronization run together; heavier Vehicle synchronization continues in the background after the decision is visible.
+- **Fresh Listing state:** changed Listing JSON is read even when an older index record exists, while a newer local edit is protected from stale Drive content.
+- **Missing-profile retention:** deleting or losing a Vehicle Profile does not immediately delete the user's Listing. It is outlined orange, explains that the Profile is missing, keeps Listing photos, counts down 15 days, and uses the shared lightweight placeholder only when no Listing photo exists.
+- **Sale protection:** a missing-Profile Listing cannot use **I Sold This Vehicle** and therefore cannot award Lot-Lvl credit. Only **Delete Listing** is available until the Vehicle Profile reconnects.
+- **Processor V0.9.4.76 required:** replace Apps Script `Code.gs` with the bundled file and rerun `installLotKeysProcessor` so scheduled processing honors terminal request resolutions.
+- **Buddy unchanged:** the clean public package still carries only `extension/latest.json` and Posting Buddy V0.1.16.
+
+## Required rollout
+
+Upload every item in the ZIP directly into `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09476`. Replace the complete Apps Script contents with `processor/Code.gs`, save, and run `installLotKeysProcessor` as Admin Level 2. Confirm `getLotKeysProcessorStatus` reports V0.9.4.76 with its trigger installed.
+
+After TEST passes, promote the same V0.9.4.76 files to `MrMilo34/Lot-Keys` while preserving that production repository's `CNAME`.
+
+## Previous release
+
 # LotKeys V0.9.4.75 — Popup Shell & Leaderboard Contrast Repair
 
 This small browser release repairs the shared popup presentation shown in the V0.9.4.74 phone recording, adds contrast to tiny leaderboard scores, and removes duplicate Posting Buddy source/history from the public website package. It retains the V0.9.4.74 feature set and Posting Buddy V0.1.16.

@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09475",
+  "id": "lotkeys-info-v09476",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.75 team-test build repairs shared popup surfaces, clarifies tiny leaderboard scores, and cleans the public extension package.",
-  "updatedAt": "2026-09-13T16:15:00Z",
+  "summary": "The V0.9.4.76 team-test build strengthens Original Listing identity checks, makes request decisions durable, and safely retains Listings whose Vehicle Profile is missing.",
+  "updatedAt": "2026-09-14T18:00:00Z",
   "blocks": [
     {
-      "id": "v09475-heading",
+      "id": "v09476-heading",
       "type": "heading",
-      "text": "V0.9.4.75 test release"
+      "text": "V0.9.4.76 test release"
     },
     {
-      "id": "v09475-text",
+      "id": "v09476-text",
       "type": "text",
-      "text": "Inventory, Listing, wrap-up and other popups now reliably restore their solid rounded theme surface after a viewed public Profile is closed with Android Back or Escape. Tiny colored leaderboard scores gain a compact dark shadow for readability. The public package keeps only the current Posting Buddy V0.1.16 download and its update pointer; duplicate source and older release ZIPs are excluded."
+      "text": "Original Listing checks now require the saved vehicle identity before showing a price arrow, so a removed or replaced dealer page is marked with a warning. Approved and denied contribution requests gain durable resolution records and a faster completion path. A Listing whose Vehicle Profile is missing stays visible with an orange warning for 15 days, preserves its own photos, cannot be marked Sold, and may only be deleted while LotKeys tries to reconnect it. Posting Buddy remains V0.1.16."
     }
   ]
 }
