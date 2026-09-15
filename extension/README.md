@@ -1,12 +1,12 @@
 # LotKeys Facebook Posting Buddy
 
-Current beta: **V0.1.16**
+Current beta: **V0.1.17**
 
-V0.1.16 adds persistent posting milestones and a neutral inverse-theme timing panel. Auto-fill time freezes when all Facebook fields are complete; total time continues until the live Marketplace URL is saved. Both are compared with the 12:30 manual-posting benchmark, with saved time floored at zero. It also uses the shared optimized vehicle placeholder while retaining V0.1.15’s accent spinner and grey/blur source lock.
+V0.1.17 adds an optional walkaround-video step after the normal Facebook fields and photos are complete. It checks the Vehicle Profile only when **Add Video** is pressed, accepts one compatible video no longer than 60 seconds, and preserves the completed photo set if Facebook uses one mixed media control. A missing, unreadable or over-limit video leaves the finished fields/photos untouched. V0.1.16’s posting timers, neutral handoff panel, accent spinner and grey/blur source lock remain unchanged.
 
 ## Download
 
-- [Download the newest Posting Buddy — V0.1.16](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip)
+- [Download the newest Posting Buddy — V0.1.17](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.17.zip)
 
 ## Install or update
 

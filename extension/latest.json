@@ -1,15 +1,15 @@
 {
   "name": "LotKeys Facebook Posting Buddy",
   "channel": "beta",
-  "version": "0.1.16",
-  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip",
+  "version": "0.1.17",
+  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.17.zip",
   "releaseNotesUrl": "https://github.com/MrMilo34/Lot-Keys/tree/main/extension",
-  "publishedAt": "2026-09-13T00:00:00Z",
-  "minimumLotKeysVersion": "0.9.4.69",
+  "publishedAt": "2026-09-15T00:00:00Z",
+  "minimumLotKeysVersion": "0.9.4.77",
   "notes": [
-    "Times auto-fill and total posting milestones from Fill through successful live-URL save.",
-    "Shows non-negative time saved against the 12 minute 30 second manual benchmark.",
-    "Uses a neutral inverse-theme timing panel and the optimized missing-vehicle placeholder.",
-    "Retains the accent spinner, grey/blur Listing lock, Back action and proven Facebook fill behavior."
+    "Adds one optional Vehicle Profile walkaround video under Facebook's 60-second limit.",
+    "Loads and checks the video only after fields and photos are complete and Add Video is pressed.",
+    "Preserves completed photos on mixed media inputs and leaves fields/photos untouched on video failure.",
+    "Retains V0.1.16 posting timers, neutral handoff, accent spinner, grey/blur lock and manual final publish."
   ]
 }
