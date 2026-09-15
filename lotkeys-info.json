@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09476",
+  "id": "lotkeys-info-v09477",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.76 team-test build strengthens Original Listing identity checks, makes request decisions durable, and safely retains Listings whose Vehicle Profile is missing.",
-  "updatedAt": "2026-09-14T18:00:00Z",
+  "summary": "The V0.9.4.77 team-test build quiets Inventory and Listing navigation, makes Pending-only edits faster, and adds optional walkaround video support to Posting Buddy V0.1.17.",
+  "updatedAt": "2026-09-15T00:00:00Z",
   "blocks": [
     {
-      "id": "v09476-heading",
+      "id": "v09477-heading",
       "type": "heading",
-      "text": "V0.9.4.76 test release"
+      "text": "V0.9.4.77 test release"
     },
     {
-      "id": "v09476-text",
+      "id": "v09477-text",
       "type": "text",
-      "text": "Original Listing checks now require the saved vehicle identity before showing a price arrow, so a removed or replaced dealer page is marked with a warning. Approved and denied contribution requests gain durable resolution records and a faster completion path. A Listing whose Vehicle Profile is missing stays visible with an orange warning for 15 days, preserves its own photos, cannot be marked Sold, and may only be deleted while LotKeys tries to reconnect it. Posting Buddy remains V0.1.16."
+      "text": "Moving between Inventory and Listings no longer rewrites untouched Listings. A Pending-only Vehicle edit now updates lightweight state without rechecking Profile media, and the compact Pending control sits directly above the smaller scroll-safe Inventory photo grid. The Posting Assistant opens Facebook Vehicle Selling until a valid live item URL is saved, then opens that exact Vehicle Listing. Celebrations keep the existing party popper with fuller immediately starting streamers. Posting Buddy V0.1.17 adds an optional lazy walkaround-video button for one Vehicle Profile video under 60 seconds after normal fields and photos finish."
     }
   ]
 }

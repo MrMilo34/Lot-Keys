@@ -1,3 +1,22 @@
+# LotKeys V0.9.4.77 quiet-navigation, Pending-state and Buddy-video checklist
+
+- Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09477`.
+- Confirm the header, `version.json`, service worker and loaded scripts report V0.9.4.77 / `09477` / `lotkeys-app-v09477-quiet-navigation-pending-walkaround`.
+- Flip between Inventory and Listings repeatedly without making edits. Confirm no untouched Listing shows a new update/sync state and no Posting Assistant open changes a Listing timestamp.
+- Leave each tab open past the due interval once. Confirm cached cards remain usable while one quiet refresh occurs, without repeatedly auditing every Vehicle Profile folder on each tab press.
+- Edit an existing Vehicle and change only **Mark Vehicle as Pending**. Confirm the compact control is immediately above Photos, the result saves quickly, and photos/documents/videos are not checked or uploaded again.
+- Repeat while a disposable Vehicle already has a full sync finishing. Confirm the requested Pending value remains correct after both operations complete.
+- Expand Inventory Photos on a phone. Confirm the compact three-column tiles allow normal page scrolling; tapping a photo does not select/deselect it, × deletes, and dragging begins only from the centered ☰ handle.
+- Open a Posting Assistant before saving a Facebook item URL. Confirm the button says **Open Facebook Vehicle Selling** and opens the selling page. Save a valid `/marketplace/item/…` URL, reopen, and confirm it says **Open Facebook Vehicle Listing** and opens that exact URL.
+- Trigger Vehicle Sold, an Award and a month-end celebration. Confirm the original popper remains intact and the fuller solid-color streamer pieces begin immediately from the same center, then fall/fade slowly in front of the popup.
+- Install/reload Posting Buddy V0.1.17 and reload both LotKeys and Facebook tabs once. Confirm normal field/photo fill time is unchanged when Add Video is not pressed.
+- With a Profile video under 60 seconds, finish normal fields/photos, press **Add Video**, and confirm one video reaches Facebook without replacing any photos. Continue, publish manually and save the live URL normally.
+- Test a Profile with no video, an unreadable video and a video over 60 seconds. Confirm the Buddy gives a retryable explanation and all completed fields/photos stay intact.
+- Inspect both ZIPs. Confirm the Buddy ZIP has `manifest.json` at its root. Confirm the LotKeys ZIP includes only `extension/latest.json` and the V0.1.17 Buddy release—not `extension/source/`, `extension/latest/` or older Buddy ZIPs.
+- Confirm Garage still reports Store Processor V0.9.4.76 current. Do not reinstall Apps Script solely for V0.9.4.77.
+
+## Previous release checklist
+
 # LotKeys V0.9.4.76 listing-integrity, request-resolution and orphan-retention checklist
 
 - Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09476`.

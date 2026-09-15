@@ -1,3 +1,26 @@
+# LotKeys V0.9.4.77 — Faster Vehicle Edits & Optional Walkaround Video
+
+This focused browser release stops untouched Listings from appearing to update during normal navigation, gives Pending-only Vehicle edits a lightweight path, refines Inventory photo editing and adds an optional lazy walkaround-video step to Posting Buddy V0.1.17.
+
+## V0.9.4.77 highlights
+
+- **Quiet Inventory/Listing navigation:** tab changes use cached data and due refresh guards. Opening a Posting Assistant no longer changes timestamps or starts a Listing synchronization.
+- **Lightweight Pending state:** changing only **Mark Vehicle as Pending** writes Vehicle state and the Inventory index without rescanning or uploading Profile photos, documents or videos. A concurrent full sync is allowed to finish first without losing the Pending choice.
+- **Compact edit control:** Pending now sits directly above Photos with a smaller checkbox row, clear spacing and no extra explanatory copy.
+- **Scroll-safe Inventory photos:** Vehicle Profile photos use the compact three-column Listing-sized grid. Inventory semantics stay separate: every photo remains included, × deletes and only the centered ☰ handle reorders.
+- **Correct Facebook button:** a Listing without a valid saved Marketplace item URL opens **Facebook Vehicle Selling**; after the live URL is saved it becomes **Open Facebook Vehicle Listing** and opens that exact item.
+- **Celebration polish:** the existing party popper is unchanged, while its simple solid-color streamer layer is fuller and begins from the same center at the same time before falling and fading slowly.
+- **Posting Buddy V0.1.17:** once normal fields/photos finish, the user can optionally add one Vehicle Profile walkaround video under 60 seconds. Video data is checked and loaded only on that click; failure cannot disturb the completed fields/photos.
+- **Processor unchanged:** Store Processor V0.9.4.76 remains current. No Apps Script reinstall is needed when it is already installed.
+
+## Required rollout
+
+Upload every item in the ZIP directly into `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09477`. Install/reload Posting Buddy V0.1.17 from its supplied ZIP and reload the existing LotKeys and Facebook tabs once. Keep the small `extension/latest.json` file because both LotKeys and the Buddy use it only as the current-release/update pointer; the redundant unpacked `extension/latest/` folder remains removed.
+
+After TEST passes, promote the same V0.9.4.77 files to `MrMilo34/Lot-Keys` while preserving that production repository's `CNAME`. Do not rerun the Processor installer when Garage already reports V0.9.4.76 current.
+
+## Previous release
+
 # LotKeys V0.9.4.76 — Listing Integrity & Durable Request Decisions
 
 This focused release corrects Original Listing identity validation, makes contribution-request decisions terminal across browser/Processor races, repairs stale Listing prices, and safely retains Listings whose Vehicle Profile disappears. Posting Buddy remains V0.1.16.

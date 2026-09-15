@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.76",
-  "build": "09476",
-  "release": "listing-identity-request-resolution-orphan-retention",
+  "version": "0.9.4.77",
+  "build": "09477",
+  "release": "quiet-navigation-pending-state-walkaround-video",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09476-listing-integrity-request-resolution",
-  "publishedAt": "2026-09-14"
+  "serviceWorkerCache": "lotkeys-app-v09477-quiet-navigation-pending-walkaround",
+  "publishedAt": "2026-09-15"
 }

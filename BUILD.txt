@@ -1,3 +1,19 @@
+V0.9.4.77 QUIET NAVIGATION, LIGHTWEIGHT PENDING & OPTIONAL WALKAROUND VIDEO
+- Stops normal Inventory/Listings tab changes and Posting Assistant opens from rewriting or synchronizing untouched Listings.
+- Uses five-minute due guards for quiet cache-first Inventory and Listing refreshes.
+- Sends Pending-only Vehicle edits through a lightweight Vehicle sheet/Inventory index state update without rescanning Profile media.
+- Preserves the requested Pending state if an older full Vehicle sync is already finishing.
+- Moves the compact Pending checkbox directly above Photos and removes its explanatory description.
+- Matches Inventory's photo tile size/spacing to Listings while retaining delete and drag-handle-only Vehicle Profile behavior.
+- Opens Facebook Vehicle Selling before a valid live Marketplace item URL exists, then opens the exact saved Vehicle Listing afterwards.
+- Starts fuller simple solid-color streamers with the existing party-popper burst and retains their slow fall/fade.
+- Bundles Posting Buddy V0.1.17 with an optional, lazy Vehicle Profile walkaround transfer capped at 60 seconds.
+- Preserves completed Facebook photos when Facebook exposes a mixed media input and leaves all completed work untouched on video failure.
+- Keeps only extension/latest.json and the V0.1.17 release ZIP in the public extension package; maintained source and older ZIPs are excluded.
+- Keeps Store Processor V0.9.4.76 current; no Apps Script reinstall is required for this release.
+- Build: 09477.
+- Service worker cache: lotkeys-app-v09477-quiet-navigation-pending-walkaround.
+
 V0.9.4.76 LISTING IDENTITY, DURABLE REQUEST DECISIONS & ORPHAN RETENTION
 - Requires an Original Listing page to match the saved stock/VIN and vehicle details before any website price arrow can be shown.
 - Marks a useful dealer page that no longer confirms the saved vehicle identity with ⚠️ instead of borrowing another vehicle's price.
