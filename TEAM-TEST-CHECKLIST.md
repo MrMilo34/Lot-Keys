@@ -1,215 +1,53 @@
-# LotKeys V0.9.4.77 quiet-navigation, Pending-state and Buddy-video checklist
+# LotKeys V0.9.4.78 + Posting Buddy V0.1.18 team-test checklist
 
-- Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09477`.
-- Confirm the header, `version.json`, service worker and loaded scripts report V0.9.4.77 / `09477` / `lotkeys-app-v09477-quiet-navigation-pending-walkaround`.
-- Flip between Inventory and Listings repeatedly without making edits. Confirm no untouched Listing shows a new update/sync state and no Posting Assistant open changes a Listing timestamp.
-- Leave each tab open past the due interval once. Confirm cached cards remain usable while one quiet refresh occurs, without repeatedly auditing every Vehicle Profile folder on each tab press.
-- Edit an existing Vehicle and change only **Mark Vehicle as Pending**. Confirm the compact control is immediately above Photos, the result saves quickly, and photos/documents/videos are not checked or uploaded again.
-- Repeat while a disposable Vehicle already has a full sync finishing. Confirm the requested Pending value remains correct after both operations complete.
-- Expand Inventory Photos on a phone. Confirm the compact three-column tiles allow normal page scrolling; tapping a photo does not select/deselect it, × deletes, and dragging begins only from the centered ☰ handle.
-- Open a Posting Assistant before saving a Facebook item URL. Confirm the button says **Open Facebook Vehicle Selling** and opens the selling page. Save a valid `/marketplace/item/…` URL, reopen, and confirm it says **Open Facebook Vehicle Listing** and opens that exact URL.
-- Trigger Vehicle Sold, an Award and a month-end celebration. Confirm the original popper remains intact and the fuller solid-color streamer pieces begin immediately from the same center, then fall/fade slowly in front of the popup.
-- Install/reload Posting Buddy V0.1.17 and reload both LotKeys and Facebook tabs once. Confirm normal field/photo fill time is unchanged when Add Video is not pressed.
-- With a Profile video under 60 seconds, finish normal fields/photos, press **Add Video**, and confirm one video reaches Facebook without replacing any photos. Continue, publish manually and save the live URL normally.
-- Test a Profile with no video, an unreadable video and a video over 60 seconds. Confirm the Buddy gives a retryable explanation and all completed fields/photos stay intact.
-- Inspect both ZIPs. Confirm the Buddy ZIP has `manifest.json` at its root. Confirm the LotKeys ZIP includes only `extension/latest.json` and the V0.1.17 Buddy release—not `extension/source/`, `extension/latest/` or older Buddy ZIPs.
-- Confirm Garage still reports Store Processor V0.9.4.76 current. Do not reinstall Apps Script solely for V0.9.4.77.
+## Deploy / version
+- Upload the complete ZIP to `Lot-Keys-TEST`; keep `CNAME` absent.
+- Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09478`.
+- Confirm header/version metadata report **V0.9.4.78 / 09478** and service worker cache `lotkeys-app-v09478-more-media-selective-posting`.
+- Confirm Garage still reports **Store Processor V0.9.4.76 current**. Do not reinstall Apps Script solely for this release.
+- Install/reload Posting Buddy **V0.1.18** and reload both LotKeys and Facebook tabs once.
 
-## Previous release checklist
+## Preserve V0.9.4.77 behavior
+- Edit a Vehicle Profile and confirm **Mark Vehicle as Pending** remains in the approved location above Photos.
+- Toggle only Pending and confirm the lightweight state update still completes without a full Profile media rescan.
+- Confirm normal Inventory/Listings navigation remains cache-first and does not rewrite untouched Listings.
 
-# LotKeys V0.9.4.76 listing-integrity, request-resolution and orphan-retention checklist
+## Vehicle Profile More Media
+- Open a Vehicle Profile where the signed-in user has never submitted More Media. Confirm **Open Your More Media Folder** is visible, grey and disabled, with no extra surrounding bubble/card.
+- Confirm merely opening the Vehicle Profile does **not** create a new Vehicle More Media folder.
+- Open a Vehicle Profile where the same signed-in user has previously submitted photo/video/document content. Confirm the button becomes blue/enabled after the existing-folder check and opens that user's More Media folder.
+- Confirm the button never exposes another user's More Media folder.
 
-- Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09476`.
-- Replace Apps Script `Code.gs` with the bundled V0.9.4.76 file and rerun `installLotKeysProcessor` as Admin Level 2. Confirm `getLotKeysProcessorStatus` reports V0.9.4.76 and `triggerInstalled: true`.
-- Open the sold Edmonton Infiniti URL from the affected Listing. Confirm LotKeys displays ⚠️, never a price-up arrow, when the page no longer contains the saved stock, VIN and matching year/make/model identity.
-- Check a live exact-vehicle dealer page containing the saved identity and a changed price. Confirm the correct up/down price arrow still appears.
-- Submit a disposable contribution request, press Deny, and refresh/reopen on two devices after at least one Processor cycle. Confirm the request stays gone.
-- Approve a second disposable request. Confirm the decision returns promptly, the queue updates immediately, and full Vehicle synchronization finishes in the background.
-- Change a Listing price on one device, reopen on another device, and confirm newer Listing JSON wins over a stale Listings Index or older local cache.
-- Delete a disposable Vehicle Profile that has a current Listing. Confirm the Listing remains, carries an orange outer highlight, states that its Vehicle Profile cannot be found, and counts down from 15 days.
-- Confirm that orphan Listing keeps its Listing-uploaded photos. On a photo-free orphan Listing, confirm the 1.6 KB vehicle placeholder is used.
-- Open the orphan Listing actions. Confirm **I Sold This Vehicle** is unavailable and only **Delete Listing** can complete; no Lot-Lvl sale credit can be claimed.
-- Restore/resynchronize the same Vehicle Profile before expiry and confirm the orphan warning/deadline clear. Separately test an expired disposable record and confirm it is automatically removed.
-- Inspect the ZIP: only `extension/latest.json` and Posting Buddy V0.1.16 should be public; no extension source, `latest/` folder, or superseded ZIPs.
+## Posting Buddy speed layout
+- Confirm LotKeys/Facebook connection state plus extension version/update controls use the compact top strip.
+- Select a new Listing. Confirm the four controls run horizontally: **Video · Photos · Description · Details**.
+- Confirm new Listing defaults are Video OFF, Photos ON, Description ON, Details ON.
+- Confirm selecting a Listing with a saved Facebook URL changes the mode to **Update** and defaults all four sections OFF.
+- Confirm the action button remains disabled until at least one section is chosen.
 
-## Previous release checklist
+## New Facebook post
+- Post a Listing with Video OFF. Confirm video bytes are not downloaded and normal photo/field transfer speed is not delayed by video.
+- Confirm Posting Buddy still never clicks Facebook's final Next/Publish button.
+- Finish publishing manually, open the live Marketplace item and press **Save / Use this Website**.
+- Confirm the URL writes back to LotKeys.
+- Confirm **Back to Listings** returns directly to the Listings picker and clears the finished timer/session instead of showing the previous green-check completion screen again.
 
-# LotKeys V0.9.4.75 popup shell, score contrast and package-cleanup checklist
+## Video discovery / parallel preparation
+- Use a Vehicle Profile with an approved video at 60 seconds or less. Confirm it appears in the early Video selector with its duration before downloading.
+- Use a Vehicle where the signed-in user has an eligible video only in that user's existing More Media / pending submission. Confirm it also appears and is labelled as the user's pending More Media when applicable.
+- Confirm videos over 60 seconds or without ready Drive duration metadata cannot be selected.
+- Select Video plus normal post fields. Confirm video preparation begins while Facebook fields/photos are being filled and the selected video is added last.
+- Force a video failure and confirm already-filled fields/photos remain in place.
 
-- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09475`.
-- Confirm the strip, `version.json`, and service worker report V0.9.4.75 / `09475` / `lotkeys-app-v09475-modal-leaderboard-cleanup`.
-- Open another user’s public Profile, then close it with Android Back or Escape. Open an Inventory Vehicle, a Listing, Current/Last Month standings, and a month-end replay. Confirm each popup has its normal solid rounded light/dark panel and padding rather than floating directly over the dimmed page.
-- Repeat the public Profile sequence using its visible close button and the Message User path. Confirm the viewed user’s special public-profile theme still works when intended.
-- In Top Contributors, confirm a very short bar’s colored score has a compact dark shadow and stays readable on white. Confirm taller bars and private admin gold stacks remain unchanged.
-- Inspect the release ZIP. Confirm it contains `extension/latest.json` and `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`, but no `extension/latest/`, no `extension/source/`, and no V0.1.13–V0.1.15 ZIPs.
-- Recheck V0.9.4.74 leaderboard/admin separation, missing-vehicle placeholder, month-end spacing, combined celebration and Posting Buddy V0.1.16 timing.
-- Confirm Processor V0.9.4.64 remains current and is not reinstalled.
+## Selective update mode
+- Use a Listing with a valid saved Facebook Marketplace item URL. Select only **Video** and start Update. Confirm Posting Buddy opens the existing Facebook Listing/Edit flow, leaves photos/description/details untouched, and adds only the chosen video.
+- Repeat selecting only **Description** or only **Details** and confirm unchecked sections are not cleared or overwritten.
+- For **Photos** update, confirm Posting Buddy prepares every replacement LotKeys photo before touching existing Facebook photos.
+- If Facebook exposes safe photo-removal controls, confirm the saved LotKeys Listing photo set/order replaces the Facebook photo set rather than appending duplicates.
+- If Facebook does not expose safe replacement controls, confirm Posting Buddy leaves the existing Facebook photos unchanged and asks for manual review.
+- Confirm Posting Buddy never presses Facebook's final Save/Update button; the user finishes the update manually.
 
-## Previous release checklist
-
-# LotKeys V0.9.4.74 leaderboard, placeholder, streamers and Buddy timing checklist
-
-- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09474`.
-- Confirm the strip, `version.json`, and service worker report V0.9.4.74 / `09474` / `lotkeys-app-v09474-leaderboard-placeholder-streamers`.
-- Open Top Contributors as a regular user. Confirm every normal score is visible; a short bar’s score sits above the bar in the bar color, and a tall bar’s score remains inside with readable contrast.
-- Open the same current leaderboard as an administrator. Confirm normal scores determine left-to-right order while admin-approved points appear only as a separate gold stack and personal `+… admin` subtotal. Inspect the regular-user rendered chart and confirm it has no admin subtotal element.
-- Replay a disposable month-end reveal and confirm the climbing score clears the Profile photo by about 5px while the existing avatar and bar motion remain unchanged.
-- Check a Vehicle and Listing with no photos in Home, Inventory, Listings, the Listing vehicle selector and the Posting Buddy. Confirm the supplied faint vehicle image appears without stretching. Check a Drive-backed photo that is merely loading and confirm it uses a loading state rather than flashing the missing image.
-- Trigger Vehicle Sold, an Award arrival, and a monthly reveal celebration. Confirm the original party-popper burst still looks the same and smaller bright streamers now leave the same center, fall more slowly, fade over roughly five seconds, and stay in front of the popup.
-- Enable reduced motion and confirm the additional canvas streamer layer is skipped.
-- Install Posting Buddy V0.1.16 from `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.16.zip`; reload LotKeys and Facebook once.
-- Press **Fill Facebook Listing**. At **All Facebook fields filled**, confirm the frozen auto-fill time and time saved appear beneath Continue.
-- Press **Continue to URL & Views**. Confirm the source sections are greyed/blurred and the lower lock card is neutral inverse-theme—not the user accent—while total posting time continues once per second.
-- Close and reopen the side panel before saving the URL. Confirm the same Listing and elapsed milestones resume without resetting.
-- On the live `/marketplace/item/…` page, press **Save / Use this Website**. Confirm total time freezes, final time saved uses the 12:30 benchmark and never goes negative, and the Listing source unlocks.
-- Confirm `extension/source` contains maintained unpacked source, no `extension/latest` directory is shipped, and `extension/latest.json` still points to the V0.1.16 ZIP.
-- Recheck V0.9.4.73 LotKeys Info publishing/Award popups and V0.9.4.72 Inventory reconciliation. Confirm Processor V0.9.4.64 remains current and is not reinstalled.
-
-## Previous release checklist
-
-# LotKeys V0.9.4.73 Drive Info and Award celebration checklist
-
-- Upload every item inside the release ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09473`.
-- Confirm the strip, `version.json`, and service worker report V0.9.4.73 / `09473` / `lotkeys-app-v09473-drive-info-award-celebrations`.
-- Recheck the Ford Transit and several existing Inventory/Listing records first. They must remain present and open quickly; V0.9.4.73 must not regress the V0.9.4.72 reconciliation fix.
-- On desktop, confirm the Information bubble appears immediately left of **LotKeys Info**, followed by **Lock Screen**. On phone, confirm the Information icon appears left of the LotKeys logo icon, followed by the lock icon.
-- As the registered developer, open **Garage → Dev Tool Kit → LotKeys Info**. Confirm the old Save Draft, Preview, Download and Open Publisher controls are gone and only **Save & Publish** remains.
-- On the first publish, allow creation when prompted. Confirm personal Drive contains exactly one `Lot-Keys Account / Developer Files / LotKeys Info.json` and later publishes replace that file instead of making numbered copies.
-- Confirm the published file is readable and the connected Store Access controls contain its stable Drive file ID, URL and update timestamp.
-- Open LotKeys as a second Store user, refresh Store state or return to the foreground, and confirm the newly published notice appears with one unread dot without uploading another website build.
-- Move the Developer Files folder within personal Drive and publish again; the same Drive folder/file IDs should continue working. For a disposable test only, delete the folder and confirm LotKeys asks before creating a replacement.
-- Open **Special Award Drop** and confirm Award Category offers **Special**, **Admin awarded**, **By Level**, **Automatic**, and **Other**. An empty future category should clearly say it has no awards yet.
-- Grant a non-Creator Award to a second account. Confirm that account receives one popup showing the correct Award art, meaning and grant reason.
-- Approve an Award nomination and trigger one safe automatic Award on a disposable account. Confirm both paths produce the same recipient experience and do not duplicate an already-granted non-repeatable Award.
-- Confirm the confetti/party-popper effect renders in front of the Award popup, not behind it.
-- Recheck **I Sold This Vehicle** and a Monthly Wrap-Up preview/replay. Confirm they use the same visual celebration treatment and retain their expected audio behavior.
-- In Garage on desktop, download Post Buddy V0.1.15. Confirm the ZIP downloads and LotKeys shows its normal success bubble with no `toast is not a function` browser alert.
-- In Posting Buddy V0.1.15, confirm the animated working ring uses the current LotKeys accent. After **Continue to URL & Views**, confirm the upper Listing source is neutral greyed/blurred and cannot be changed until **Back** is used or **Save / Use this Website** succeeds. Confirm the later URL/view screens are otherwise unchanged.
-- Confirm Apps Script still reports Processor V0.9.4.64 and its trigger remains installed. Do not reinstall solely for V0.9.4.73.
-
-## Previous release checklist
-
-# LotKeys V0.9.4.72 platform info and cross-device Inventory checklist
-
-- Upload every item inside the release ZIP directly to `Lot-Keys-TEST`, including both `lotkeys-info` files and the complete `extension/releases` folder. Keep `CNAME` absent.
-- Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09472`; confirm the version strip and `version.json` report V0.9.4.72 / build `09472` / cache `lotkeys-app-v09472-platform-info-inventory-reconcile`.
-- On the phone account, confirm the 2019 Ford Transit Connect is in Inventory and Listings. On the PC account/device, open Listings first and confirm the cached Listing appears immediately even if its cover starts blank.
-- Without performing a full refresh, confirm the PC detects the Listing’s missing linked Vehicle Profile, adds the Transit to Inventory, and fills the Listing cover photo. Navigate to Inventory again and confirm it remains present.
-- Create another Vehicle Profile on one device, wait for Drive processing, then open Inventory on the other device. Confirm the cached page paints first and the new Vehicle appears after the lightweight folder audit.
-- Delete only a disposable test Vehicle through the normal Admin flow and confirm its stale cached card is removed on another device after reopening Inventory.
-- Confirm an unchanged Inventory check remains fast and does not rescan every Vehicle Profile sheet.
-- Create an Admin Vehicle with one document, at least six photos, and one video. Confirm the order remains **information → documents → photos → videos → finalizing**, photo percentages never move backward, and up to three photos transfer concurrently on a normal connection.
-- Repeat a smaller photo upload with Android Data Saver or a simulated slow connection and confirm the safe sequential path completes.
-- Interrupt the photo/video creation once by backgrounding Chrome. Return without pressing Sync and confirm saved resumable sessions continue without duplicate Drive files.
-- From a light-themed account, open Akash’s dark public Profile. Confirm the modal, text, award area, listing area and buttons use Akash’s dark background/accent with readable contrast.
-- Change the viewed user to a light theme with a different accent, reopen their public Profile, and confirm that viewed-user appearance replaces the viewer’s appearance.
-- On a phone, confirm the version strip shows a compact LotKeys-logo button. On desktop, confirm it shows the logo plus **LotKeys Info**.
-- Confirm a new LotKeys Info publication shows one red unread dot, opens one current message, supports heading/text/image/video/link/file blocks, and clears its dot after viewing.
-- As the registered developer, open **Garage → Dev Tool Kit → LotKeys Info**. Add/reorder/delete blocks, preview, save a local draft, and download `lotkeys-info.json`. Confirm a normal Admin/user does not receive this editor.
-- Publish the downloaded JSON only through the protected `MrMilo34/Lot-Keys` repository. Confirm a second Store/device receives the new message on visibility or within two minutes while its cached message opens immediately.
-- Temporarily open an older cached custom-domain tab after the production repository has a newer `version.json`. Confirm it adds a current build cache-buster once and does not enter a reload loop.
-- Remember that `Lot-Keys-TEST` and production `Lot-Keys` are separate deployments: updating TEST alone must not be described as updating `lot-keys.ca`.
-- In Garage on desktop, press **Download Post Buddy ZIP** with a missing/404 local `extension/latest.json`. Confirm the bundled V0.1.14 ZIP still downloads and extracts successfully.
-- Recheck normal Listings, Facebook Listing photo progress, gold Website Price feedback, saved Facebook locations, Chat, contribution cleanup, and first-profile duplicate cleanup from V0.9.4.71.
-- Confirm Apps Script still reports Processor V0.9.4.64 with its existing time trigger. Do not reinstall solely for V0.9.4.72.
-
-## Previous release checklist
-
-# LotKeys V0.9.4.71 Listings rendering repair checklist
-
-- Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09471` and confirm the version bar says V0.9.4.71.
-- Confirm `version.json` reports version `0.9.4.71`, build `09471`, and cache `lotkeys-app-v09471-listings-progress-null-fix`.
-- Confirm ordinary Listings without an active upload show their normal location/status/age and thumbnail—not **Cached Listing details need attention**.
-- Open **Listings** with several cached Listings and confirm the controls/cards appear immediately. Missing cover photos may fill in afterward, but they must not delay navigation.
-- Temporarily test a Listing whose cover cannot be read from Drive and confirm the remaining Listings still open and remain usable.
-- Do not upload `CNAME` to `Lot-Keys-TEST`; preserve the production repository’s existing `CNAME` only when promoting the same build.
-- In Google Cloud → Auth Platform → Audience, add the exact Google email of every tester. Verify a newly added real user can authorize without Error 403 after also being approved in LotKeys.
-- As Admin Level 2, open Garage → Approved Users and confirm **Open Google OAuth Test Users ↗** opens project `lotkeys`’s protected Audience page in a new tab.
-- As a newly approved ordinary user, create the first Vehicle Profile and switch tabs while the Processor finishes. Confirm only one healthy Inventory card remains, its upload marker clears from 95% to normal, and no duplicate **Needs Recovery** card appears.
-- If that account already has a false recovery twin from V0.9.4.68, press **Refresh Inventory** once in V0.9.4.71 and confirm the twin disappears without deleting the official Vehicle Profile.
-- On desktop, press **Download Post Buddy ZIP** in Garage and confirm the ZIP bundled with this LotKeys build downloads without a raw-GitHub error.
-- Create or edit a Facebook Listing with Listing-only photos. Confirm its card shows phase, current filename, item number and percent, while the header shows **Sync 0–100%** beside the stoplight.
-- Interrupt a Listing-only photo transfer once, return online, and confirm the resumable job completes without creating a duplicate Drive file.
-- Press **Use Website Price** and confirm the button flashes gold with **Price Applied ✓** before returning to its normal label.
-- Add, edit and delete a personal posting location. Confirm the heading says **My Saved Facebook Listing Locations**, `Account.json` changes, and a deleted location does not return after refresh or another device loads the account.
-- Install `extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.14.zip`, reload LotKeys and Facebook once, and confirm the Helper version reads V0.1.14.
-- Change the LotKeys user’s accent and light/dark appearance. Open or sync the Helper and confirm its panels, cards and main action colors follow that appearance.
-- Run Fill Facebook Listing and confirm Location is last. If the saved option matches, confirm Facebook selects it and LotKeys scrolls to the final Next/Submit button without clicking it; otherwise confirm Location remains highlighted for the user.
-- Confirm the URL/view area is masked until **Save / Use this Website** succeeds on a live `/marketplace/item/…` page, then unlocks and keeps the same Listing ready for a view count.
-- Recheck Vehicle Profile photo uploads for regression only. V0.9.4.71 intentionally does not contain the next photo-speed optimization.
-- Confirm Apps Script still reports Processor V0.9.4.64 and its existing time trigger. Do not reinstall solely for V0.9.4.71.
-
-## Previous release checklist
-
-# LotKeys V0.9.4.68 automatic fast synchronization and clean-request checklist
-
-- Upload every item inside the release ZIP directly to the `Lot-Keys-TEST` repository root, then open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09468` and confirm the version bar says V0.9.4.68.
-- Confirm the `Lot-Keys-TEST` repository does **not** contain `CNAME`, so `https://mrmilo34.github.io/Lot-Keys-TEST/` remains an independent test address. Preserve the production repository’s existing `CNAME` only when promoting the release to `lot-keys.ca`.
-- Confirm `https://mrmilo34.github.io/Lot-Keys-TEST/version.json` reports version `0.9.4.68`, build `09468`, and cache `lotkeys-app-v09468-automatic-fast-sync-clean-requests`.
-- Open `https://mrmilo34.github.io/Lot-Keys-TEST/install.html` once and confirm it returns to the current LotKeys build.
-- On the affected test account, open Garage, enter the supplied User / Sales Name and Store Code, and press **Save** or **Connect to Store**.
-- Approve Google's updated Drive permission when prompted. Confirm the account reaches **Connected to Store ✓** instead of “Insufficient permissions for the specified parent.”
-- As Admin Level 2, add each exact Google email under **Garage → Approved Users**, press **Repair Store Structure**, and confirm its `Users/<name>` folder contains `Listings`, `Listing Assets`, and `More`.
-- Before updating Apps Script, open Garage as Admin Level 2 and confirm **Store Processor** identifies the old version (or says **Not detected**) and displays the update-required card.
-- This is a browser-only hotfix. If `getLotKeysProcessorStatus` already reports V0.9.4.64 and `triggerInstalled: true`, do **not** reinstall Apps Script.
-- In LotKeys press **Refresh Status** or reopen Garage. Confirm **Store Processor · V0.9.4.64 · current** appears and the update card is gone.
-- In Google Drive, confirm ordinary and Trusted users are Viewer/Reader on Store and Inventory, Writer only on their own user workspace, and not Editor on official Vehicle Profile folders.
-- Connect as an ordinary user and confirm Garage reaches **Connected to Store ✓** without asking management to share official Inventory as Editor.
-- Before contributing media, open a Vehicle Profile and press **Open Your More Media Folder**. Confirm it only shows “You currently don’t have anything uploaded for this vehicle” and does not create a per-vehicle More folder.
-- Submit an information-only correction. Confirm `Requests/Pending` is created for the request but no `Client Media`, `Photos`, `Videos`, or `Documents` folder is created.
-- Submit one photo. Confirm LotKeys creates `Client Media/Photos` and keeps both `Videos` and `Documents` absent.
-- During that photo submission, confirm the top stoplight label advances as **Sync NN%** and the Inventory card shows the current More phase or **More Photos 1 of 1 · filename · NN%** beneath **Syncing…**.
-- Submit one video and then one document. Confirm `Videos` and `Documents` appear only after their respective submissions.
-- Press **Open Your More Media Folder** again and confirm the populated Client Media folder opens. Confirm its cached link opens immediately on the next attempt and Drive verification continues in the background.
-- Submit an ordinary user’s information correction and media. Confirm both appear for Administration review and official Inventory stays unchanged until approval.
-- Approve selected fields/media and leave at least one unchecked. Confirm only checked items apply, points are awarded once, the request disappears without a manual refresh, approved media is copied into official Inventory, and every submitted media file remains in the user’s More folder.
-- While applying that request, confirm the approval button, top stoplight area, and Inventory card visibly advance through request processing, official Vehicle Profile update, contribution points, and cleanup.
-- As an Administrator, add two new photos directly to a Vehicle Profile. Confirm the card identifies each photo and item number while the top label advances from preparation through 100%.
-- Repeat with one very small photo and confirm **100%** remains visible briefly before the header returns to its normal last-sync time.
-- Interrupt an upload once, reopen LotKeys, and confirm the saved operation says **paused** rather than falsely continuing to animate. Resume it and confirm no percentage remains stuck after success or a handled error.
-- Start two approvals close together, close the Vehicle Profile before they finish, and enter Chat. Wait at least one minute. Confirm the Vehicle Profile does not reopen over Chat or jump back to its loading/top position.
-- While leaving the Vehicle Profile open, approve one request. Confirm only that open review refreshes, its Drive-loading splash does not repeat, and the page stays near the same scroll position.
-- Confirm new More request workspaces contain only `Requests/Pending`; completed request JSON is removed instead of moved into Approved or Rejected folders.
-- Submit a Trusted user information/price/Pending Deal correction. Confirm it applies after the processor runs, but Trusted photos/videos/documents still wait for Administration.
-- Create a genuinely new vehicle as a regular user. Confirm it becomes creator-owned after processing; then confirm the creator can update its information/media without receiving Drive Editor access to Inventory.
-- Attempt another profile with the same VIN (or, if no VIN, the same Stock Number). Confirm LotKeys blocks the duplicate claim and directs the user to the existing profile.
-- Confirm only Administrators see direct Delete; other users submit a removal request.
-- Cancel or deny a test connection and confirm Garage remains **Not connected** rather than retaining the attempted Store folder.
-- Sign in as an ordinary new user and confirm **New Store Setup** is not shown.
-- View a vehicle marked Pending Deal and confirm its Inventory ribbon reads **Deal / Pending**, stays inside the card, and retains the user's Accent Color.
-- Create a complete Vehicle Profile containing at least one document, two photos and one larger video. Confirm progress runs in the order **Vehicle information → Documents → Photos → Videos → Finalizing**.
-- After Documents and Photos finish and while the Video percentage is moving, switch from Chrome to a text-message app for at least ten seconds. Confirm LotKeys records the upload as paused without turning every Vehicle Profile unusable.
-- Return to Chrome. Do not open the Vehicle Profile or press Sync. Confirm the same video resumes automatically from its acknowledged checkpoint, completed Documents/Photos are not uploaded again, and the Vehicle finishes at 100%.
-- Open the interrupted Jeep and at least three unrelated Vehicle Profiles. Confirm all open immediately from the local cache, even while the Jeep is paused or retrying.
-- Confirm an older V0.9.4.64 card with a network/media **Sync needs attention** state retries automatically after V0.9.4.68 starts. Permission or authorization errors must remain stopped for user action.
-- Repeat the background test with a regular user submitting media through More. Confirm the partial request keeps the same request identity and produces no duplicate files after resuming.
-- Open V0.9.4.68 once as each test user and confirm neither user says Setup pending. Keep both browsers open, send both directions, and confirm the sender paints immediately and the recipient receives the Chat message plus popup bubble within roughly 2–6 seconds without leaving the conversation.
-- After the first message, confirm each sender has only one recipient-specific **LotKeys Live Messages** folder in their own Messaging Outbox. The recipient must have Reader access only to that encrypted lane; no Inventory permission changes are allowed.
-- Run `processLotKeysRequests` twice. Confirm the second run does not deliver duplicate copies and does not log “insufficient permissions” while trying to trash another user’s Outbox message.
-- On both accounts, open the exact Vehicle Profile that previously showed a card spinner and then stopped. Confirm its modal appears immediately. Repeat with several Inventory vehicles; photos/details may reconcile quietly afterward, but the card must not fail silently or leave “Opening vehicle profile…” indefinitely.
-- Temporarily force a profile display exception in a development copy and confirm LotKeys displays **Could not open this profile** with **Try Again**, rather than returning silently to Inventory.
-- Confirm both user profile photos and the previous monthly placement/crown appear in Chat and Store user views. This must also recover a user who already had `Profile Thumbnail.jpg` from an earlier build.
-- Refresh unchanged Inventory twice and confirm the second check completes quickly from the local cache while Drive remains the source of truth.
-- Run Repair Store Structure and confirm the stage label and percentage visibly advance to 100%.
-- Reload once and confirm Awards, Chat, and staged synchronization progress still load from the V0.9.4.68 service-worker cache.
-- If a dealership PC shows `ERR_CONNECTION_RESET` before any LotKeys page appears, retry that same URL on the PC through a phone hotspot. A hotspot success isolates the remaining issue to the dealership network, proxy, DNS filter, or security software rather than LotKeys browser code.
-
-## Previous V0.9.4.56 checks
-
-# LotKeys V0.9.4.56 stable filename checklist
-
-- Upload the complete release and confirm the root contains `lotkeys-awards.js`, `lotkeys-messaging.js`, `CHECKSUMS.txt` and this permanent `TEAM-TEST-CHECKLIST.md` filename.
-- Remove earlier root-level `lotkeys-awards-v*.js`, `lotkeys-messaging-v*.js`, `CHECKSUMS-V*.txt`, `TEAM-TEST-CHECKLIST-V*.md` and any stray `LotKeys-*-CNAME` file. Keep `CNAME`.
-- Open `https://lot-keys.ca/?build=09456` and confirm the version bar says V0.9.4.56.
-- Reload once and confirm Awards and Chat still load, proving the new service worker cached the permanent module names.
-- Confirm `extension/latest.json` still downloads the versioned Post Buddy ZIP it names.
-- Recheck the V0.9.4.55 Pending ribbon and the V0.9.4.54 Dev Tool Kit and phone/PC Post Buddy behavior.
-
-## Previous V0.9.4.55 checks
-
-- Open `https://lot-keys.ca/?build=09455` and confirm the version bar says V0.9.4.55.
-- View a Pending Deal vehicle on a phone and confirm the Accent Color slash sits 4 px farther right.
-- Confirm the slash joins the Pending box without the white triangular notch shown in V0.9.4.54.
-- Confirm the Pending label remains inside the Inventory card and uses the current user Accent Color.
-- Confirm non-pending vehicles do not show the ribbon or reserve extra space.
-- Recheck the V0.9.4.54 Dev Tool Kit recipient, preview and Post Buddy phone/PC behavior.
+## Package integrity
+- Confirm the Buddy ZIP has `manifest.json` at its root and reports V0.1.18.
+- Confirm the LotKeys ZIP contains only `extension/latest.json`, `extension/README.md`, and the current V0.1.18 release ZIP under `extension/` (no old Buddy ZIPs or unpacked source).
+- Verify `CHECKSUMS.txt` after the final ZIP is produced.

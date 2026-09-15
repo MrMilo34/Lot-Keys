@@ -1,3 +1,21 @@
+V0.9.4.78 MORE MEDIA AVAILABILITY + SPEED-FIRST SELECTIVE POSTING BUDDY
+- Builds directly on the approved V0.9.4.77 browser source; the relocated Mark Vehicle as Pending control and lightweight Pending-state path remain unchanged.
+- Removes the extra Vehicle Profile bubble around Open Your More Media Folder.
+- Keeps the More Media action visible but grey/disabled until the signed-in user has existing More Media content for that Vehicle Profile.
+- Verifies existing More Media in the background without creating an empty Vehicle More Media folder.
+- Adds read-only Drive video metadata helpers for Posting Buddy so duration can be checked without downloading the video first.
+- Bundles Posting Buddy V0.1.18 with one horizontal Video / Photos / Description / Details speed row.
+- New Facebook posts default to Photos + Description + Details while Video remains optional.
+- A Listing with a saved Facebook Marketplace URL becomes a selective Update job; unchecked sections are left untouched.
+- Video discovery includes approved Vehicle Profile videos and the signed-in user's own existing More Media/pending-submission videos, never another user's More Media.
+- Only Drive videos with ready duration metadata at 60 seconds or less can be selected.
+- A selected video begins preparing while Facebook fields/photos are being filled, then is added last. Video failure cannot roll back completed work.
+- Existing-Listing photo updates prepare the full replacement set before removing Facebook photos; if safe removal controls are unavailable, Facebook photos are left unchanged for manual review.
+- After Save / Use this Website succeeds for a new post, Back returns directly to Listings and clears the completed timer/session.
+- Keeps Store Processor V0.9.4.76 current; no Apps Script reinstall is required for this release.
+- Build: 09478.
+- Service worker cache: lotkeys-app-v09478-more-media-selective-posting.
+
 V0.9.4.77 QUIET NAVIGATION, LIGHTWEIGHT PENDING & OPTIONAL WALKAROUND VIDEO
 - Stops normal Inventory/Listings tab changes and Posting Assistant opens from rewriting or synchronizing untouched Listings.
 - Uses five-minute due guards for quiet cache-first Inventory and Listing refreshes.

@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09477",
+  "id": "lotkeys-info-v09478",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "The V0.9.4.77 team-test build quiets Inventory and Listing navigation, makes Pending-only edits faster, and adds optional walkaround video support to Posting Buddy V0.1.17.",
+  "summary": "V0.9.4.78 keeps the approved V0.9.4.77 Vehicle Profile workflow, simplifies More Media availability, and bundles Posting Buddy V0.1.18 selective Facebook updates with faster optional video handling.",
   "updatedAt": "2026-09-15T00:00:00Z",
   "blocks": [
     {
-      "id": "v09477-heading",
+      "id": "v09478-heading",
       "type": "heading",
-      "text": "V0.9.4.77 test release"
+      "text": "V0.9.4.78 test release"
     },
     {
-      "id": "v09477-text",
+      "id": "v09478-text",
       "type": "text",
-      "text": "Moving between Inventory and Listings no longer rewrites untouched Listings. A Pending-only Vehicle edit now updates lightweight state without rechecking Profile media, and the compact Pending control sits directly above the smaller scroll-safe Inventory photo grid. The Posting Assistant opens Facebook Vehicle Selling until a valid live item URL is saved, then opens that exact Vehicle Listing. Celebrations keep the existing party popper with fuller immediately starting streamers. Posting Buddy V0.1.17 adds an optional lazy walkaround-video button for one Vehicle Profile video under 60 seconds after normal fields and photos finish."
+      "text": "Vehicle Profiles keep the approved V0.9.4.77 Pending layout. Open Your More Media Folder now sits directly in the action area with no extra bubble and stays grey until the signed-in user actually has More Media content for that vehicle. Posting Buddy V0.1.18 moves Video, Photos, Description and Details into one horizontal speed row, turns posted Listings into selective Update jobs, discovers official and signed-in-user More Media video candidates from Drive duration metadata, prepares a chosen video while other Facebook content is filling, and returns directly to Listings after the live Facebook URL is saved. Store Processor V0.9.4.76 remains current."
     }
   ]
 }

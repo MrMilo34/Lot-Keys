@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.77",
-  "build": "09477",
-  "release": "quiet-navigation-pending-state-walkaround-video",
+  "version": "0.9.4.78",
+  "build": "09478",
+  "release": "more-media-selective-posting-buddy",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09477-quiet-navigation-pending-walkaround",
+  "serviceWorkerCache": "lotkeys-app-v09478-more-media-selective-posting",
   "publishedAt": "2026-09-15"
 }

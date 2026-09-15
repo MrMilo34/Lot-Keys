@@ -1,3 +1,26 @@
+# LotKeys V0.9.4.78 — Faster Posting Buddy Updates & Cleaner More Media
+
+V0.9.4.78 is a focused update built directly on the approved V0.9.4.77 source. It keeps the relocated **Mark Vehicle as Pending** workflow, simplifies the Vehicle Profile More Media action, and bundles Posting Buddy V0.1.18 as a speed-first Post / Update assistant.
+
+## V0.9.4.78 highlights
+
+- **Cleaner More Media action:** the extra bubble/card around **Open Your More Media Folder** is removed. The action remains visible but is grey/disabled until the signed-in user actually has More Media content for that Vehicle Profile. A background lookup can enable it when an existing folder is discovered; the lookup does not create a Vehicle More Media folder.
+- **Lightweight video metadata bridge:** LotKeys exposes read-only Drive helpers used by Posting Buddy to list video metadata and read duration without first downloading the video.
+- **Posting Buddy V0.1.18 speed row:** **Video · Photos · Description · Details** are arranged horizontally. New posts default to Photos + Description + Details, with Video optional.
+- **Selective Facebook updates:** once a Listing has a saved Facebook Marketplace URL, Posting Buddy opens the existing Listing and changes only the sections the user selects. Unchecked sections are left alone.
+- **Faster optional video:** the Buddy discovers eligible official Vehicle Profile videos plus the signed-in user's existing More Media videos, including the user's pending submissions. Only ready videos at 60 seconds or less are selectable. If selected, video preparation starts in parallel while Facebook fields/photos are filled and the video is added last.
+- **Safer photo updates:** all replacement LotKeys photos are prepared before existing Facebook photos are touched. If Facebook does not expose safe photo-removal controls, the existing photos are preserved for manual review rather than blindly appending duplicates.
+- **Cleaner finish:** after a new post's live Marketplace URL is saved, **Back to Listings** clears the completed posting session/timer instead of reopening the previous green-check state.
+- **Processor unchanged:** Store Processor V0.9.4.76 remains current. No Apps Script reinstall is required when Garage already reports V0.9.4.76.
+
+## Required rollout
+
+Upload every item in the ZIP directly into `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09478`. Install/reload Posting Buddy V0.1.18 from the supplied ZIP, then reload the existing LotKeys and Facebook tabs once. Test one brand-new post and one saved-URL update before promotion.
+
+After TEST passes, promote the same V0.9.4.78 files to `MrMilo34/Lot-Keys` while preserving the production repository's `CNAME`. Do not rerun the Processor installer when Garage already reports V0.9.4.76 current.
+
+## Previous release
+
 # LotKeys V0.9.4.77 — Faster Vehicle Edits & Optional Walkaround Video
 
 This focused browser release stops untouched Listings from appearing to update during normal navigation, gives Pending-only Vehicle edits a lightweight path, refines Inventory photo editing and adds an optional lazy walkaround-video step to Posting Buddy V0.1.17.

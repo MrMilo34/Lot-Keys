@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-const VERSION='0.9.4.77';
+const VERSION='0.9.4.78';
 const LOCAL_SOURCE=new URL('./lotkeys-info.json',location.href).href;
 const CANONICAL_SOURCE='https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/lotkeys-info.json';
 const CACHE_KEY='lotkeys-platform-info-cache-v1';

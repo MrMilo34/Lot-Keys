@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-const VERSION='0.9.4.77';
+const VERSION='0.9.4.78';
 const DEFINITIONS_KEY='lotkeysAwardDefinitionsV1';
 const NOMINATIONS_KEY='lotkeysAwardNominationsV1';
 const PROFILE_KEY='lotkeysAwardProfileV1';
