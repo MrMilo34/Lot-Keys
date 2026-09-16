@@ -1,3 +1,17 @@
+V0.9.4.79 SAFE EDITOR SESSIONS + UNFINISHED FORM RECOVERY
+- Builds directly on the approved V0.9.4.78 browser source.
+- Removes automatic location.replace version-forwarding while LotKeys is open; newer builds are staged instead of forcing the user back to Home.
+- Removes Service Worker controllerchange location.reload behavior; activated workers take effect on the next natural refresh/reopen.
+- Adds local draft protection for Vehicle Profile and Marketplace Listing editors, including text/select/checkbox values and key photo-selection/order state.
+- If the browser genuinely reloads while an editor is active, LotKeys reopens that editor and restores the unfinished draft automatically.
+- Deliberately closed unfinished editors keep a local draft for up to 7 days and offer Resume / Discard when the same Create/Edit flow is opened again.
+- Successfully saved Vehicle Profiles, contributions and Listings clear their local drafts.
+- Unsaved browser file-picker selections may need to be reselected after a full reload; LotKeys explicitly reminds the user after recovery.
+- Bundles current Posting Buddy V0.1.20 so the LotKeys download does not regress the extension package.
+- Keeps Store Processor V0.9.4.76 current; no Apps Script reinstall is required for this release.
+- Build: 09479.
+- Service worker cache: lotkeys-app-v09479-safe-editor-drafts.
+
 V0.9.4.78 MORE MEDIA AVAILABILITY + SPEED-FIRST SELECTIVE POSTING BUDDY
 - Builds directly on the approved V0.9.4.77 browser source; the relocated Mark Vehicle as Pending control and lightweight Pending-state path remain unchanged.
 - Removes the extra Vehicle Profile bubble around Open Your More Media Folder.

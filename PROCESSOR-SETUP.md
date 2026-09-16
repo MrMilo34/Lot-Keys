@@ -1,10 +1,10 @@
 # LotKeys Store Processor setup
 
-The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.4.78 continues to use Processor V0.9.4.76; if Garage already reports that version as current, this browser release does not require replacing `Code.gs` or rerunning the installer.
+The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.4.79 continues to use Processor V0.9.4.76; if Garage already reports that version as current, this browser release does not require replacing `Code.gs` or rerunning the installer.
 
 ## Before installing
 
-1. Upload the complete V0.9.4.78 website package to GitHub Pages.
+1. Upload the complete V0.9.4.79 website package to GitHub Pages.
 2. Sign in to LotKeys as Admin Level 2.
 3. While Google Auth Platform is in Testing, add every tester’s exact Google email under **Audience → Test users**. Admin Level 2 can use the shortcut in Garage → Approved Users.
 4. In **Garage → Approved Users**, add every tester using that same exact Google account email.
@@ -42,7 +42,7 @@ Repeat with a Trusted user. Vehicle information, price, and Pending Deal changes
 
 Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.76 · current**. If it reports an earlier version or no trigger, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
 
-For profile-photo and Chat testing, open website V0.9.4.78 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the V0.9.4.76 processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
+For profile-photo and Chat testing, open website V0.9.4.79 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the V0.9.4.76 processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
 
 ## Important boundaries
 

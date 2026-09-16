@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09478",
+  "id": "lotkeys-info-v09479",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "V0.9.4.78 keeps the approved V0.9.4.77 Vehicle Profile workflow, simplifies More Media availability, and bundles Posting Buddy V0.1.18 selective Facebook updates with faster optional video handling.",
-  "updatedAt": "2026-09-15T00:00:00Z",
+  "summary": "V0.9.4.79 protects active Vehicle Profile and Marketplace Listing editors from surprise app-update reloads and adds local unfinished-form recovery. Posting Buddy V0.1.20 remains current.",
+  "updatedAt": "2026-09-16T00:00:00Z",
   "blocks": [
     {
-      "id": "v09478-heading",
+      "id": "v09479-heading",
       "type": "heading",
-      "text": "V0.9.4.78 test release"
+      "text": "V0.9.4.79 test release"
     },
     {
-      "id": "v09478-text",
+      "id": "v09479-text",
       "type": "text",
-      "text": "Vehicle Profiles keep the approved V0.9.4.77 Pending layout. Open Your More Media Folder now sits directly in the action area with no extra bubble and stays grey until the signed-in user actually has More Media content for that vehicle. Posting Buddy V0.1.18 moves Video, Photos, Description and Details into one horizontal speed row, turns posted Listings into selective Update jobs, discovers official and signed-in-user More Media video candidates from Drive duration metadata, prepares a chosen video while other Facebook content is filling, and returns directly to Listings after the live Facebook URL is saved. Store Processor V0.9.4.76 remains current."
+      "text": "LotKeys no longer reloads or version-forwards an active page when a new Service Worker/build appears. Vehicle Profile and Marketplace Listing editors now save local drafts while you work; an editor that was active during a real reload is reopened and restored on the next boot, while deliberately closed drafts can be resumed for up to 7 days. Browser-selected files that were never saved may still need to be reselected after a full reload. Posting Buddy V0.1.20 is bundled as the current extension. Store Processor V0.9.4.76 remains current."
     }
   ]
 }

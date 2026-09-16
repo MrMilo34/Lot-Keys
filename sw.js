@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09478-more-media-selective-posting';
+const CACHE='lotkeys-app-v09479-safe-editor-drafts';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

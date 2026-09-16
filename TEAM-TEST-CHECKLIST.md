@@ -1,53 +1,43 @@
-# LotKeys V0.9.4.78 + Posting Buddy V0.1.18 team-test checklist
+# LotKeys V0.9.4.79 + Posting Buddy V0.1.20 team-test checklist
 
-## Deploy / version
-- Upload the complete ZIP to `Lot-Keys-TEST`; keep `CNAME` absent.
-- Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09478`.
-- Confirm header/version metadata report **V0.9.4.78 / 09478** and service worker cache `lotkeys-app-v09478-more-media-selective-posting`.
-- Confirm Garage still reports **Store Processor V0.9.4.76 current**. Do not reinstall Apps Script solely for this release.
-- Install/reload Posting Buddy **V0.1.18** and reload both LotKeys and Facebook tabs once.
+## Release identity
+- Open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09479`.
+- Confirm version metadata reports **V0.9.4.79 / 09479**.
+- Confirm service worker cache is `lotkeys-app-v09479-safe-editor-drafts`.
+- Confirm Store Processor remains **V0.9.4.76** and does not need reinstalling.
 
-## Preserve V0.9.4.77 behavior
-- Edit a Vehicle Profile and confirm **Mark Vehicle as Pending** remains in the approved location above Photos.
-- Toggle only Pending and confirm the lightweight state update still completes without a full Profile media rescan.
-- Confirm normal Inventory/Listings navigation remains cache-first and does not rewrite untouched Listings.
+## Vehicle Profile draft protection
+- Start **Add Vehicle** and manually enter Year / Make / Model / price / odometer / VIN / stock / description and CARFAX selections.
+- Wait about one second, then refresh the browser while the Vehicle editor is still open.
+- Confirm LotKeys boots and automatically reopens the unfinished Vehicle editor.
+- Confirm the entered fields are restored.
+- Confirm a recovery toast reminds the tester to reselect any unsaved files if needed.
+- Close an unfinished Vehicle editor using X, then open Add Vehicle again. Confirm LotKeys offers **Resume** or **Discard**.
+- Save the Vehicle successfully, reopen Add Vehicle, and confirm the saved draft no longer appears.
+- Repeat with an existing Vehicle edit and verify the saved Inventory record is not changed until Save Vehicle is pressed.
 
-## Vehicle Profile More Media
-- Open a Vehicle Profile where the signed-in user has never submitted More Media. Confirm **Open Your More Media Folder** is visible, grey and disabled, with no extra surrounding bubble/card.
-- Confirm merely opening the Vehicle Profile does **not** create a new Vehicle More Media folder.
-- Open a Vehicle Profile where the same signed-in user has previously submitted photo/video/document content. Confirm the button becomes blue/enabled after the existing-folder check and opens that user's More Media folder.
-- Confirm the button never exposes another user's More Media folder.
+## Marketplace Listing draft protection
+- Start a new Listing manually and enter title, price, odometer, Facebook details, location, description, status and URL.
+- Select/reorder Vehicle Profile photos.
+- Refresh while the Listing editor is still open.
+- Confirm the editor automatically reopens and restores the manual fields plus the saved Listing photo selection/order state.
+- Close an unfinished Listing with X, then reopen the same Create/Edit flow and confirm Resume / Discard is offered.
+- Save the Listing and confirm the temporary local draft is removed.
 
-## Posting Buddy speed layout
-- Confirm LotKeys/Facebook connection state plus extension version/update controls use the compact top strip.
-- Select a new Listing. Confirm the four controls run horizontally: **Video · Photos · Description · Details**.
-- Confirm new Listing defaults are Video OFF, Photos ON, Description ON, Details ON.
-- Confirm selecting a Listing with a saved Facebook URL changes the mode to **Update** and defaults all four sections OFF.
-- Confirm the action button remains disabled until at least one section is chosen.
+## Update/reload regression
+- While a Vehicle or Listing editor is open, deploy a newer Service Worker/build to the TEST branch or force `registration.update()` from DevTools.
+- Confirm LotKeys **does not reload or jump to Home** when `controllerchange` fires.
+- Confirm the current form remains editable.
+- Confirm the newer build takes effect after the tester manually refreshes/reopens LotKeys.
 
-## New Facebook post
-- Post a Listing with Video OFF. Confirm video bytes are not downloaded and normal photo/field transfer speed is not delayed by video.
-- Confirm Posting Buddy still never clicks Facebook's final Next/Publish button.
-- Finish publishing manually, open the live Marketplace item and press **Save / Use this Website**.
-- Confirm the URL writes back to LotKeys.
-- Confirm **Back to Listings** returns directly to the Listings picker and clears the finished timer/session instead of showing the previous green-check completion screen again.
+## Existing behavior regression
+- Confirm the relocated **Mark Vehicle as Pending** control still saves correctly.
+- Confirm More Media still stays grey until the signed-in user has an existing More Media folder/content for the Vehicle.
+- Confirm Inventory and Listings still refresh quietly on their due interval and do not interrupt an open modal.
+- Confirm normal Vehicle/Profile media uploads and background sync still work after Save.
 
-## Video discovery / parallel preparation
-- Use a Vehicle Profile with an approved video at 60 seconds or less. Confirm it appears in the early Video selector with its duration before downloading.
-- Use a Vehicle where the signed-in user has an eligible video only in that user's existing More Media / pending submission. Confirm it also appears and is labelled as the user's pending More Media when applicable.
-- Confirm videos over 60 seconds or without ready Drive duration metadata cannot be selected.
-- Select Video plus normal post fields. Confirm video preparation begins while Facebook fields/photos are being filled and the selected video is added last.
-- Force a video failure and confirm already-filled fields/photos remain in place.
-
-## Selective update mode
-- Use a Listing with a valid saved Facebook Marketplace item URL. Select only **Video** and start Update. Confirm Posting Buddy opens the existing Facebook Listing/Edit flow, leaves photos/description/details untouched, and adds only the chosen video.
-- Repeat selecting only **Description** or only **Details** and confirm unchecked sections are not cleared or overwritten.
-- For **Photos** update, confirm Posting Buddy prepares every replacement LotKeys photo before touching existing Facebook photos.
-- If Facebook exposes safe photo-removal controls, confirm the saved LotKeys Listing photo set/order replaces the Facebook photo set rather than appending duplicates.
-- If Facebook does not expose safe replacement controls, confirm Posting Buddy leaves the existing Facebook photos unchanged and asks for manual review.
-- Confirm Posting Buddy never presses Facebook's final Save/Update button; the user finishes the update manually.
-
-## Package integrity
-- Confirm the Buddy ZIP has `manifest.json` at its root and reports V0.1.18.
-- Confirm the LotKeys ZIP contains only `extension/latest.json`, `extension/README.md`, and the current V0.1.18 release ZIP under `extension/` (no old Buddy ZIPs or unpacked source).
-- Verify `CHECKSUMS.txt` after the final ZIP is produced.
+## Posting Buddy package
+- Confirm `extension/latest.json` reports **V0.1.20**.
+- Confirm the bundled ZIP has `manifest.json` at its root and reports V0.1.20.
+- Confirm **Open Listing** only opens the saved Facebook URL and does not automatically enter Edit mode.
+- Confirm the user can navigate to another Facebook Marketplace listing, open Facebook's Edit Listing screen, and then use **Update Selected Items**.
