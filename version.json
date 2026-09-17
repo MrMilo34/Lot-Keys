@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.79",
-  "build": "09479",
-  "release": "safe-editor-drafts",
+  "version": "0.9.4.80",
+  "build": "09480",
+  "release": "parallel-media-replacement-posting",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09479-safe-editor-drafts",
-  "publishedAt": "2026-09-16"
+  "serviceWorkerCache": "lotkeys-app-v09480-parallel-media-replacement-posting",
+  "publishedAt": "2026-09-17"
 }

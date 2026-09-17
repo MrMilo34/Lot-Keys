@@ -1,10 +1,10 @@
 # LotKeys architecture v0.2
 
-## V0.9.4.79 least-privilege Store model
+## V0.9.4.80 least-privilege Store model
 
 The official Inventory remains on the Store side. Ordinary and Trusted users receive Viewer access to it; each user receives Writer access only to their own limited-access workspace. The Admin Level 2 Store Processor validates the workspace that contains a request instead of trusting identity fields supplied by the browser.
 
-## V0.9.4.79 LotKeys Info source
+## V0.9.4.80 LotKeys Info source
 
 - The registered developer publishes one `Lot-Keys Account / Developer Files / LotKeys Info.json` file in personal Google Drive.
 - The file ID stays stable while Save & Publish replaces its JSON content; moving the folder does not invalidate the Drive ID.

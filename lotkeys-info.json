@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09479",
+  "id": "lotkeys-info-v09480",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "V0.9.4.79 protects active Vehicle Profile and Marketplace Listing editors from surprise app-update reloads and adds local unfinished-form recovery. Posting Buddy V0.1.20 remains current.",
-  "updatedAt": "2026-09-16T00:00:00Z",
+  "summary": "V0.9.4.80 starts Vehicle Profile photos and video together after Documents are safe, adds video byte progress, and bundles Posting Buddy V0.1.22 with replacement-style Facebook photo/text updates.",
+  "updatedAt": "2026-09-17T20:00:00Z",
   "blocks": [
     {
-      "id": "v09479-heading",
+      "id": "v09480-heading",
       "type": "heading",
-      "text": "V0.9.4.79 test release"
+      "text": "V0.9.4.80 test release"
     },
     {
-      "id": "v09479-text",
+      "id": "v09480-text",
       "type": "text",
-      "text": "LotKeys no longer reloads or version-forwards an active page when a new Service Worker/build appears. Vehicle Profile and Marketplace Listing editors now save local drafts while you work; an editor that was active during a real reload is reopened and restored on the next boot, while deliberately closed drafts can be resumed for up to 7 days. Browser-selected files that were never saved may still need to be reselected after a full reload. Posting Buddy V0.1.20 is bundled as the current extension. Store Processor V0.9.4.76 remains current."
+      "text": "Vehicle Profile uploads keep resumable Drive safety and the three-worker photo path, but Photos and the single video lane now start together after Documents instead of forcing a large video to wait behind every photo. Video progress includes transferred MB / total MB. Posting Buddy V0.1.22 replaces the selected Facebook photo set in LotKeys order on updates rather than appending duplicates, and clears selected text details before replacement. V0.9.4.79 editor draft recovery remains intact. Store Processor V0.9.4.76 remains current."
     }
   ]
 }

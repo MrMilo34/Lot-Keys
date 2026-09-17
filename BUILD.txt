@@ -1,3 +1,18 @@
+V0.9.4.80 PARALLEL MEDIA UPLOADS + SAFE FACEBOOK REPLACEMENT UPDATES
+- Builds directly on the approved V0.9.4.79 browser source; safe editor drafts, staged app updates and unfinished-form recovery remain intact.
+- Keeps Documents first, then starts Vehicle Profile Photos and the single large-video lane together instead of making video wait for the full photo queue.
+- Retains the existing bounded three-worker photo uploader, resumable Drive sessions, stable media IDs, checkpoints, background interruption recovery and one video lane.
+- Applies the same Photos + Video parallel phase to owner Vehicle submissions and More contribution requests after their Document stage, with media folders prepared before the parallel lanes begin.
+- Shows transferred MB / total MB during active video progress so network transfer speed is visible.
+- Bundles Posting Buddy V0.1.22 with V0.1.21 chunked video transfer retained.
+- Existing Facebook Listing photo updates now prepare the full LotKeys set, remove the old Facebook photos one live tile at a time, then upload the current LotKeys selection in saved order; it never intentionally appends duplicates.
+- Existing Listing Model, Mileage, Price and Description are cleared before replacement when those update sections are selected; dropdown details are replaced by selecting the new value.
+- If Facebook does not expose safe photo removal controls, the photo step leaves the live photos unchanged for manual review.
+- Updates extension/latest.json to V0.1.22 and bundles the matching release ZIP.
+- Keeps Store Processor V0.9.4.76 current; no Apps Script reinstall is required.
+- Build: 09480.
+- Service worker cache: lotkeys-app-v09480-parallel-media-replacement-posting.
+
 V0.9.4.79 SAFE EDITOR SESSIONS + UNFINISHED FORM RECOVERY
 - Builds directly on the approved V0.9.4.78 browser source.
 - Removes automatic location.replace version-forwarding while LotKeys is open; newer builds are staged instead of forcing the user back to Home.
