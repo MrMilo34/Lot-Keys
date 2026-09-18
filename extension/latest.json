@@ -1,15 +1,15 @@
 {
   "name": "LotKeys Facebook Posting Buddy",
   "channel": "beta",
-  "version": "0.1.22",
-  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.22.zip",
+  "version": "0.1.23",
+  "downloadUrl": "https://raw.githubusercontent.com/MrMilo34/Lot-Keys/main/extension/releases/LotKeys-Facebook-Assistant-Beta-v0.1.23.zip",
   "releaseNotesUrl": "https://github.com/MrMilo34/Lot-Keys/tree/main/extension",
   "publishedAt": "2026-09-17T00:00:00Z",
-  "minimumLotKeysVersion": "0.9.4.78",
+  "minimumLotKeysVersion": "0.9.4.81",
   "notes": [
-    "Existing Facebook Listing photo updates replace the complete photo set in the saved LotKeys order instead of appending duplicates.",
-    "Posting Buddy loads all replacement photos before removing the live Facebook set; unsafe removal leaves the existing photos unchanged for manual review.",
-    "Selected Model, Mileage, Price and Description values are cleared before replacement on updates.",
-    "Retains V0.1.21 chunked large-video transfer and speed-first new-post/update option defaults."
+    "Fresh video discovery checks the live Vehicle Profile Videos folder and the signed-in user's existing More Media Videos without requiring the LotKeys Listing to be edited again.",
+    "When Video is selected, Posting Buddy prepares it early and hands it to Facebook first, then fills the remaining selected sections while Facebook handles the video.",
+    "The fields timer finishes when Facebook has accepted the video and exposes the next Save / Update / Next step; fixed video handoff delays are removed.",
+    "Existing Listing photo replacement still rebuilds the Facebook photo set in LotKeys order without appending duplicates."
   ]
 }
