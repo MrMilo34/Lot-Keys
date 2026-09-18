@@ -1,4 +1,4 @@
-const CACHE='lotkeys-app-v09480-parallel-media-replacement-posting';
+const CACHE='lotkeys-app-v09481-fresh-video-management-updates';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',

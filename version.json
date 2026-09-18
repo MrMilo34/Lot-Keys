@@ -1,9 +1,9 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.80",
-  "build": "09480",
-  "release": "parallel-media-replacement-posting",
+  "version": "0.9.4.81",
+  "build": "09481",
+  "release": "fresh-video-management-updates",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09480-parallel-media-replacement-posting",
+  "serviceWorkerCache": "lotkeys-app-v09481-fresh-video-management-updates",
   "publishedAt": "2026-09-17"
 }

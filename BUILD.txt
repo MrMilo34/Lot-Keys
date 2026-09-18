@@ -1,3 +1,17 @@
+V0.9.4.81 FRESH VIDEO DISCOVERY + MANAGEMENT UPDATE POLISH
+- Builds directly on V0.9.4.80; parallel Vehicle Profile Photos + Video uploads, three-worker photos, resumable Drive sessions, MB diagnostics, V0.9.4.79 editor recovery, and all prior Store/Processor behavior remain intact.
+- Adds a targeted Vehicle Profile video-metadata refresh so Posting Buddy can see a video added after the LotKeys Listing was created without forcing the Listing to be edited/saved again.
+- Keeps the signed-in user's existing More Media video discovery separate and current; no empty More Media folders are created just for Posting Buddy.
+- Moves admin-only Management Updates controls above the top post so administrators can create/manage updates without scrolling.
+- Removes published image/video filename and MIME/size captions; downloadable files/documents retain their filename and open/download row.
+- Bundles Posting Buddy V0.1.23 with video-first handoff: selected video is prepared early and handed to Facebook first, then selected Photos / Description / Details are filled while Facebook handles the video.
+- Removes the old fixed video handoff delay. The fields timer completes from live Facebook editor readiness when the video is attached and Facebook exposes the next Save / Update / Next action.
+- Existing Facebook Listing photo updates still prepare the full LotKeys set, clear the old Facebook photos, and rebuild the current saved order without intentionally appending duplicates.
+- Updates extension/latest.json to V0.1.23 and bundles the matching release ZIP.
+- Keeps Store Processor V0.9.4.76 current; no Apps Script reinstall is required.
+- Build: 09481.
+- Service worker cache: lotkeys-app-v09481-fresh-video-management-updates.
+
 V0.9.4.80 PARALLEL MEDIA UPLOADS + SAFE FACEBOOK REPLACEMENT UPDATES
 - Builds directly on the approved V0.9.4.79 browser source; safe editor drafts, staged app updates and unfinished-form recovery remain intact.
 - Keeps Documents first, then starts Vehicle Profile Photos and the single large-video lane together instead of making video wait for the full photo queue.

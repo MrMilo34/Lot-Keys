@@ -1,19 +1,18 @@
-# LotKeys V0.9.4.80
+# LotKeys V0.9.4.81
 
-V0.9.4.80 is a focused reliability update built directly on V0.9.4.78. Its job is to protect a salesperson who is halfway through manually creating or editing a Vehicle Profile or Marketplace Listing.
+V0.9.4.81 is a focused workflow update built directly on V0.9.4.80. It keeps the V0.9.4.80 parallel Vehicle Profile media uploader and V0.9.4.79 safe editor recovery unchanged while tightening Posting Buddy video discovery and Management Updates.
 
-## What changed
+## Included
+- **Fresh Vehicle video discovery:** Posting Buddy can ask the open LotKeys tab to refresh the official Vehicle Profile Videos folder directly from Drive. A video added after a Marketplace Listing was created no longer requires re-saving the LotKeys Listing before the Buddy can discover it.
+- **Per-user More Media retained:** the signed-in user's own existing More Media Videos are checked separately; another user's More Media is never exposed and empty More folders are not created just for discovery.
+- **Management Updates cleanup:** admin controls are above the top post for administrators. Published images and videos no longer show device filenames, MIME types, or file sizes. Real downloadable documents/files keep their filename and open/download row.
+- **Posting Buddy V0.1.23 bundled:** video is prepared early and handed to Facebook first; selected Photos, Description and Details continue while Facebook handles the video. The fields timer finishes from live Facebook editor readiness rather than a fixed video delay.
+- **Existing update safety preserved:** selected photo updates still rebuild the Facebook photo set in the saved LotKeys order rather than appending duplicates; selected text fields remain replacement updates.
+- **Processor unchanged:** Store Processor V0.9.4.76 remains current.
 
-- **No surprise update reloads:** a newer LotKeys build or Service Worker is staged without replacing/reloading the active page. The current session stays intact until the user naturally refreshes or reopens LotKeys.
-- **Vehicle Profile drafts:** manual fields, switches and key photo-order state are saved locally while the form is being edited.
-- **Marketplace Listing drafts:** Listing fields plus Listing photo selection/order are saved locally while the form is being edited.
-- **Automatic recovery after a real reload:** if a Vehicle/Listing editor was active when the page was unloaded, LotKeys reopens that editor and restores its draft on the next boot.
-- **Resume later:** closing an unfinished editor keeps the draft for up to 7 days. Opening that same Create/Edit flow offers Resume or Discard.
-- **Successful saves clean up:** saved Vehicle Profiles, contribution requests and Listings delete the temporary local draft.
-- **File-picker limitation:** browser-selected files that were never saved may need to be selected again after a full reload; the recovered form warns the user.
-- **Posting Buddy V0.1.22 bundled:** the current speed-first selective Posting Buddy is included so this LotKeys release does not point users back to an older extension.
-- **Store Processor unchanged:** V0.9.4.76 remains current.
+## Test deployment
+Upload the complete ZIP to `Lot-Keys-TEST`, keep `CNAME` absent, and open:
 
-## Team test
+`https://mrmilo34.github.io/Lot-Keys-TEST/?build=09481`
 
-Upload the ZIP into `Lot-Keys-TEST`, keep `CNAME` absent, and open `https://mrmilo34.github.io/Lot-Keys-TEST/?build=09480`. Test a partially completed Vehicle Profile and a partially completed Marketplace Listing, then trigger a browser refresh/reload and confirm the active editor returns with its manually entered values. Also leave each form using the X button and confirm reopening offers Resume / Discard.
+For the extension, install V0.1.23 unpacked, reload the LotKeys and Facebook tabs once, and test both a newly added official Vehicle Profile video and a video in the signed-in user's More Media.

@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09480",
+  "id": "lotkeys-info-v09481",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "V0.9.4.80 starts Vehicle Profile photos and video together after Documents are safe, adds video byte progress, and bundles Posting Buddy V0.1.22 with replacement-style Facebook photo/text updates.",
-  "updatedAt": "2026-09-17T20:00:00Z",
+  "summary": "V0.9.4.81 refreshes Posting Buddy video discovery directly from Drive, cleans up Management Updates media cards, and bundles Posting Buddy V0.1.23 with video-first handoff and live Facebook readiness timing.",
+  "updatedAt": "2026-09-17T20:30:00Z",
   "blocks": [
     {
-      "id": "v09480-heading",
+      "id": "v09481-heading",
       "type": "heading",
-      "text": "V0.9.4.80 test release"
+      "text": "V0.9.4.81 test release"
     },
     {
-      "id": "v09480-text",
+      "id": "v09481-text",
       "type": "text",
-      "text": "Vehicle Profile uploads keep resumable Drive safety and the three-worker photo path, but Photos and the single video lane now start together after Documents instead of forcing a large video to wait behind every photo. Video progress includes transferred MB / total MB. Posting Buddy V0.1.22 replaces the selected Facebook photo set in LotKeys order on updates rather than appending duplicates, and clears selected text details before replacement. V0.9.4.79 editor draft recovery remains intact. Store Processor V0.9.4.76 remains current."
+      "text": "Posting Buddy video discovery now refreshes the official Vehicle Profile Videos folder directly from Drive and rechecks the signed-in user's existing More Media Videos, so a newly added walkaround no longer depends on re-saving the LotKeys Listing. Management Updates hide image/video filenames and place Administration controls above the top post for admins. Posting Buddy V0.1.23 prepares video early, sends it to Facebook first, then fills the remaining selected sections while Facebook handles the video; the fields timer finishes when Facebook enables the next step. V0.9.4.80 parallel Vehicle Profile media uploads remain intact. Store Processor V0.9.4.76 remains current."
     }
   ]
 }
