@@ -1,0 +1,90 @@
+name: Build LotKeys Android Layer
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/build-lotkeys-android.yml'
+      - 'android/**'
+  push:
+    paths:
+      - '.github/workflows/build-lotkeys-android.yml'
+      - 'android/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Prepare stable TEST signing identity
+        env:
+          LOTKEYS_TEST_KEYSTORE_B64: ${{ secrets.LOTKEYS_TEST_KEYSTORE_B64 }}
+          LOTKEYS_TEST_KEYSTORE_PASSWORD: ${{ secrets.LOTKEYS_TEST_KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$LOTKEYS_TEST_KEYSTORE_B64" ] && [ -n "$LOTKEYS_TEST_KEYSTORE_PASSWORD" ]; then
+            printf '%s' "$LOTKEYS_TEST_KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/lotkeys-test.keystore"
+            echo "LOTKEYS_TEST_KEYSTORE_PATH=$RUNNER_TEMP/lotkeys-test.keystore" >> "$GITHUB_ENV"
+            echo "LOTKEYS_TEST_KEYSTORE_PASSWORD=$LOTKEYS_TEST_KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "LOTKEYS_TEST_KEY_ALIAS=lotkeys-test" >> "$GITHUB_ENV"
+            echo "LOTKEYS_TEST_SIGNED=true" >> "$GITHUB_ENV"
+          else
+            echo "::warning::Stable TEST signing secrets are not configured; CI will validate code but will not publish an APK."
+            echo "LOTKEYS_TEST_SIGNED=false" >> "$GITHUB_ENV"
+          fi
+      - name: Build and lint Android test layer
+        working-directory: android
+        run: gradle --no-daemon --continue :app:assembleDebug :app:testDebugUnitTest :app:lintDebug :app:assembleRelease :app:bundleRelease :app:lintRelease
+      - name: Preserve local signing verifier
+        run: |
+          tool_jar=$(find "$ANDROID_HOME/build-tools" -path '*/lib/apksigner.jar' | sort -V | tail -n 1)
+          cp "$tool_jar" android/app/build/outputs/apk/debug/apksigner.jar
+      - name: Verify registered TEST certificate
+        if: success() && env.LOTKEYS_TEST_SIGNED == 'true'
+        run: |
+          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)
+          "$APKSIGNER" verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk | tee "$RUNNER_TEMP/apk-signing.txt"
+          grep -Fqi '6cae202927d7884907c25147fe7fa0e11d87b741' "$RUNNER_TEMP/apk-signing.txt"
+      - uses: actions/upload-artifact@v4
+        if: success() && env.LOTKEYS_TEST_SIGNED == 'true'
+        with:
+          name: LotKeys-Android-V0.9.5.46
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            android/app/build/outputs/apk/debug/apksigner.jar
+          retention-days: 14
+      - name: Preserve APK for private local signing when CI secrets are unavailable
+        uses: actions/upload-artifact@v4
+        if: success() && env.LOTKEYS_TEST_SIGNED != 'true'
+        with:
+          name: LotKeys-Android-UNSIGNED-DO-NOT-INSTALL-V0.9.5.46
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            android/app/build/outputs/apk/debug/apksigner.jar
+          retention-days: 1
+      - name: Preserve non-debuggable release candidate
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: LotKeys-Android-RELEASE-CANDIDATE-V0.9.5.46
+          path: |
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/bundle/release/*.aab
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: LotKeys-Android-Build-Reports
+          path: android/app/build/reports/
+          if-no-files-found: ignore
+          retention-days: 14

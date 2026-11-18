@@ -1,0 +1,16 @@
+LotKeys TEST .48 Inventory recovery checkpoint
+Base: 025ecc2f7ef0860b7d0a0bcc5cd9a289c0cb7b80 (.47).
+Local branch/worktree: lotkeys-inventory-recovery; preserve other recovery copies.
+Web .48 and distributed processor .78; Android stays original-key .46.
+Implemented gallery callbacks/Retry/concurrency and Listing selection preservation;
+owner per-file checkpoints, reserved final request IDs, context/new-edit protection;
+pending Inventory receipt adoption; terminal processor receipt/order/limit fix.
+Live LW-034 existing script patched narrowly from .76 to .78 and source read back.
+Both older stuck requests now approved. Existing newer More photos are NOT proven
+published; original device must resume to submit its actual chosen media manifest.
+461 Node tests and 31 JavaScript syntax checks pass; diff check passes.
+Initial PR #20 and Pages 42906375749 succeeded; six live files matched.
+Independent slow-original workers and cache-write handling are covered by the
+follow-up checks; verify final Pages bytes after that promotion.
+No production change, data clearing, new credentials or permission changes.
+Phone/PC ordinary-user gallery, upload retry and cross-user publication remain needed.

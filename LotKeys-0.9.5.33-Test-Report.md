@@ -1,0 +1,11 @@
+# LotKeys V0.9.5.33 — verification
+
+**191 Node tests pass**, including 14 new workspace-recovery checks. JavaScript syntax checks cover the web scripts and nonempty executable inline scripts in index.html.
+
+The actual Store setup and vehicle-sync functions were exercised with Drive/IndexedDB contract fixtures. The reported failure was reproduced with a pre-update structure cache and missing user/listing folders. The vehicle-sync fixture then completed through 100% with 11 photo items and one video item without invoking personal listing migration. These are simulated uploads, not carrier, OAuth or physical-device tests.
+
+Recovery checks cover replacement-folder reuse, refreshed registry IDs, preservation of local listing data and Blob objects, another user's records, deletion tombstones, a failed personal migration, existing completed personal storage, concurrent setup, Store transitions, stale second-device caches, ordinary users, unapproved users, disabled users, permission failures, wrong-parent folders and folders in Trash. Actual listing serialization recreates missing JSON on 404 while preserving 403 errors. Missing original listing photos are reported rather than silently counted as restored.
+
+Read-only inspection of the affected Drive confirmed that the failing reference was the old Listing Assets folder and that its user workspace, Listings and More references also returned not-found responses. Inventory, Administration and personal Account Storage remained accessible. The Store configuration recorded Processor V0.9.4.76 as installed; its trigger was not independently executed by this diagnostic. Replacement workspace folders were created under the existing Store Users folder and their placement was verified by listing the parent and children. Their contents and registry reconciliation are completed by the normal app setup; unavailable original files were not claimed as recovered.
+
+No messaging, import, Android or processor source was changed. Prior Go Auto/Legacy importer, personal listing-storage and chat receipt tests remain in the passing suite. The complete source package retains the previous release's assets and native/processor sources. Publishing is confined to Lot-Keys-TEST.

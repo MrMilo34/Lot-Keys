@@ -1,0 +1,39 @@
+{
+  "testSource": "39e89f0306e9fd10da4f06771dc62ac78566af85",
+  "regularBase": "82543c12cee842c869bced97b92c29e61b2d36a1",
+  "cssSha256": "038d2843071d2787d0b37900d5d404880fac83af78fcbe46401a109d86af3c50",
+  "inlineJsSourceUnmodifiedExceptReleaseBranding": false,
+  "protected": {
+    "ARCHITECTURE-v0.2.md": "eb6563213107fd8c026abf85f3d71d016110cf46b8a055323842e1783f53ae26",
+    "CNAME": "8ef259ac7a28a7d47746df9200249e1be61a16db7fd60cc40d7323b092f9e437",
+    "DEPLOY-GITHUB-PAGES.md": "3b838b38c7af7dac1c475b7426eb0fc5d1c1e23c660ed2cd36454353eec046bf",
+    "DNS-SETUP-LOT-KEYS-CA.md": "e408afed0749f4e9baed10e6d860e841d5093134bf87d085da0dfb3630e9e5b7",
+    "GOOGLE-CLOUD-SETUP.md": "397fc0a28c28fc22682f2e09c128377c9669fb8d5b9f4cb83eb3cfc26415dba1",
+    "SECURITY-RELEASE-GATE.md": "4505dfeca6b35a6b448115eddec330e61b200926e0f109890efa485304b902a2",
+    "TEAM-TEST-CHECKLIST.md": "028f1ef24c49fd2ba60e5f79fe90f046ecea2b7fcd6d1e86e3a515b9c2c437f0",
+    "install.html": "8996f4a6c95cd1a5888d77080205654812384b95153c039a4b11a6d1f65ba607",
+    "lotkeys-creator-access.json": "d335d1559b83d61afce2a78cf90e27ea078f7df30435189a6ff0823a9515815d",
+    "lotkeys-store-directory.json": "2bddd4ab1dcb2dde87b653367c0e8276f76f51d9ebd99797c4a48d40526c858c"
+  },
+  "indexBytes": 978608,
+  "jsonEncodedIndexBytes": 993060,
+  "inlineScriptSha256": [
+    "20f978a6622c5d3a968d064fce1ee461bdd70679baf85856216d92c0cd2a99d3",
+    "6715efd9bb49f04f3fdade65b709ccec8af04509f5ef67dd2100f7efc42acb57",
+    "f052fc1df8820340294362b1ebb202134b33be18ff3f5607db5ca71771a6fd95",
+    "efd778bd3b2f6dc83a162b603d81599daaeeaccf96acf582f9fd1e71d6e5b19b",
+    "606bce9fe21d633377eb4a5be9f8315ee22016bab2fdccdce13d6e9d2ddd6a90",
+    "fe8223cebc9b5510974f4b3d85cc60d2875a1d631675869547c36f470dd5927e",
+    "abbf94cd6b518808e97393e5e993acad01a4d3c50d34eb3bd0558fc00da78702",
+    "5f28e895f2ccec2ca7391f1a529d1335e7b68daa1840a181572096fd5fad67b6"
+  ],
+  "productionGoogleDefaultSha256": {
+    "googleClientId": "e80e3e2c20833cf3541afbf1479527e0c8bd8428bf6ab0de654727d2b3bff241",
+    "googleApiKey": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "googleProjectNumber": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "runtimeJsChanges": [
+    "regular release labels",
+    "preserve regular Google client fallback and blank API-key/project defaults"
+  ]
+}

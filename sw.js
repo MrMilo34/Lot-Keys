@@ -1,8 +1,13 @@
-const CACHE='lotkeys-app-v09481-fresh-video-management-updates';
+const CACHE='lotkeys-app-v095050-reliability-preview';
 const LOTKEYS_CACHE_PREFIXES=['lotkeys-drive-test-','lotkeys-app-'];
 const CORE=[
   './',
   './index.html',
+  './lotkeys-app.css',
+  './lotkeys-compare.js',
+  './lotkeys-reliability.js',
+  './lotkeys-compare-ui.js',
+  './lotkeys-compare.css',
   './install.html',
   './privacy.html',
   './terms.html',
@@ -12,6 +17,20 @@ const CORE=[
   './lotkeys-creator-access.json',
   './lotkeys-store-directory.json',
   './lotkeys-messaging.js',
+  './lotkeys-hub-core.js',
+  './lotkeys-hub-store.js',
+  './lotkeys-listing-storage.js',
+  './lotkeys-personal-preferences.js',
+  './lotkeys-store-requests.js',
+  './lotkeys-website-identity.js',
+  './lotkeys-doorbell-core.js',
+  './lotkeys-transfer-core.js',
+  './lotkeys-native-transfers.js',
+  './lotkeys-deferred-save.js',
+  './lotkeys-phone-core.js',
+  './lotkeys-phone.js',
+  './lotkeys-hub.js',
+  './lotkeys-hub.css',
   './lotkeys-awards.js',
   './lotkeys-info.js',
   './lotkeys-info.json',
@@ -92,6 +111,8 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   const url=new URL(event.request.url);
   if(url.origin!==location.origin)return;
+  // Installers/checksums must not enter the app cache or replace its navigation fallback.
+  if(/\.(?:apk|sha256)$/i.test(url.pathname))return;
   const navigation=event.request.mode==='navigate';
   const cacheKey=scopedCacheKey(url,{navigation});
   if(navigation){

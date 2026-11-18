@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ca.lotkeys.connector.test",
+      "sha256_cert_fingerprints": [
+        "77:BB:FA:FC:A8:61:EF:06:38:CE:DB:BE:AE:08:47:D9:9D:4C:34:16:F6:B5:0A:88:8B:01:CA:B0:7B:1F:26:35"
+      ]
+    }
+  }
+]

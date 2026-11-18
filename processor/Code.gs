@@ -1,13 +1,15 @@
 /**
- * LotKeys Store Processor V0.9.4.76
+ * LotKeys Store Processor V0.9.4.78
  *
  * This script is installed once by an Admin Level 2 account. It is the trusted
  * writer between each user's private More request queue and the official,
  * Viewer-only Inventory. Never deploy it to execute as the visiting web user.
  */
 
-const LOTKEYS_PROCESSOR_VERSION = '0.9.4.76';
-const LOTKEYS_STORE_FOLDER_ID = '1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g';
+const LOTKEYS_PROCESSOR_VERSION = '0.9.4.78';
+// First installation only: configure this or the lotkeysStoreFolderId Script
+// property. Generic updates never select a dealership or replace that binding.
+const LOTKEYS_STORE_FOLDER_ID = '';
 const LK_FOLDER = 'application/vnd.google-apps.folder';
 const LK_SHEET = 'application/vnd.google-apps.spreadsheet';
 const LK_REQUEST_LIMIT = 100;
@@ -40,14 +42,14 @@ function installLotKeysProcessor() {
   ScriptApp.newTrigger('processLotKeysRequests').timeBased().everyMinutes(1).create();
   const result = processLotKeysRequests();
   PropertiesService.getScriptProperties().setProperties({
-    lotkeysStoreFolderId: LOTKEYS_STORE_FOLDER_ID,
+    lotkeysStoreFolderId: state.root.id,
     lotkeysProcessorVersion: LOTKEYS_PROCESSOR_VERSION,
     lotkeysInstalledAt: new Date().toISOString()
   });
   return {
     installed: true,
     version: LOTKEYS_PROCESSOR_VERSION,
-    storeFolderId: LOTKEYS_STORE_FOLDER_ID,
+    storeFolderId: state.root.id,
     firstRun: result
   };
 }
@@ -186,14 +188,15 @@ function processLotKeysRequests() {
         const context = lkMoreContext_(moreVehicle);
         if (!context.pendingFolder) return;
         const files = lkListChildren_(context.pendingFolder.id, "mimeType != '" + LK_FOLDER + "'")
-          .filter(function(file) { return /\.json$/i.test(file.name || ''); });
+          .filter(function(file) { return /\.json$/i.test(file.name || ''); })
+          .sort(function(a, b) { return (Date.parse(a.createdTime || '') || 0) - (Date.parse(b.createdTime || '') || 0); });
         files.forEach(function(file) {
           if (remaining <= 0) return;
-          remaining -= 1;
-          result.processed += 1;
           try {
             const request = lkReadJsonFile_(file.id);
             if (!request || String(request.status || 'pending') !== 'pending') return;
+            remaining -= 1;
+            result.processed += 1;
             request.driveRequestFileId = file.id;
             request.userName = lkUserName_(actor);
             request.userEmail = lkEmail_(actor);
@@ -432,11 +435,21 @@ function lkProcessVehicleState_(state, actor, request, file, context) {
   return 'indexed';
 }
 
-function lkLoadState_() {
-  if (!LOTKEYS_STORE_FOLDER_ID || LOTKEYS_STORE_FOLDER_ID.indexOf('PASTE_') === 0) {
-    throw new Error('Set LOTKEYS_STORE_FOLDER_ID at the top of Code.gs first.');
+function lkConfiguredStoreFolderId_() {
+  const saved = String(PropertiesService.getScriptProperties().getProperty('lotkeysStoreFolderId') || '').trim();
+  const configured = String(LOTKEYS_STORE_FOLDER_ID || '').trim();
+  if (saved && configured && saved !== configured) {
+    throw new Error('The configured Store differs from this processor’s saved Store. Check the lotkeysStoreFolderId Script property before changing Stores.');
   }
-  const root = lkGet_(LOTKEYS_STORE_FOLDER_ID);
+  const id = saved || configured;
+  if (!id || id.indexOf('PASTE_') === 0 || !/^[A-Za-z0-9_-]+$/.test(id)) {
+    throw new Error('Set the lotkeysStoreFolderId Script property to your Store folder ID before installing. No Store was selected.');
+  }
+  return id;
+}
+
+function lkLoadState_() {
+  const root = lkGet_(lkConfiguredStoreFolderId_());
   if (root.mimeType !== LK_FOLDER) throw new Error('LOTKEYS_STORE_FOLDER_ID is not a Google Drive folder.');
   const usersFolder = lkEnsureFolder_(root.id, 'Users', {lotkeysRole: 'users'});
   const adminFolder = lkEnsureFolder_(root.id, 'Administration', {lotkeysRole: 'administration'});
@@ -1302,12 +1315,16 @@ function lkCleanupLegacyRequestArchives_(moreFolder) {
 
 function lkApproveRequest_(request, file, context, note) {
   request.status = 'approved'; request.resolvedAt = new Date().toISOString(); request.processorNote = note || '';
+  // Shared-folder writers may edit a user-owned request but cannot trash it.
+  // Persist the terminal receipt first so cleanup failure cannot replay a save.
+  lkWriteJsonFile_(file.id, request, file.name);
   lkTrash_(file.id);
   return 'approved';
 }
 
 function lkRejectRequest_(request, file, context, reason) {
   request.status = 'rejected'; request.resolvedAt = new Date().toISOString(); request.processorError = String(reason || 'Request rejected.');
+  lkWriteJsonFile_(file.id, request, file.name);
   lkTrash_(file.id);
   return 'rejected';
 }
@@ -1466,7 +1483,7 @@ function lkListChildren_(parentId, extraQuery) {
     const response = Drive.Files.list({
       q: query, pageSize: 1000, pageToken: pageToken,
       supportsAllDrives: true, includeItemsFromAllDrives: true,
-      fields: 'nextPageToken,files(id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed,modifiedTime)'
+      fields: 'nextPageToken,files(id,name,mimeType,driveId,parents,appProperties,properties,webViewLink,trashed,createdTime,modifiedTime)'
     });
     Array.prototype.push.apply(out, response.files || []);
     pageToken = response.nextPageToken;

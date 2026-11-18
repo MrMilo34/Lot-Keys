@@ -1,3 +1,343 @@
+V0.9.5.47 STORE ACCESS REQUESTS
+- Private invitations open Google's authenticated Request access flow for new users.
+- Admin Reports / Requests lists, approves/provisions or denies pending requests.
+- Reader Store access; existing own-workspace permissions; identity/Store guards.
+- Retained receipts recover uncertain approval and partial setup without blind grants.
+- 433 web tests, 30 syntax checks and diff check pass; two-account Google test pending.
+- Web build 095047; cache lotkeys-app-v095047-store-access-requests; signed Android .46 retained.
+- No extra scopes, credentials, public folders or production changes. OAuth test gate separate.
+
+V0.9.5.46 TRUSTED LAUNCH AND BACKGROUND UPLOAD CONTROLS
+- Actual Trusted Web Activity requests preserve the existing browser/profile and origin.
+- Origin-root public certificate verification is live; Google linked=true. Phone visual check pending.
+- Native visible Continue uploads action requests user-initiated scheduling for committed queue.
+- Preparation needs LotKeys open; Android can defer/stop work. Existing retries/data remain.
+- 406 web / 58 native tests, 24 JS syntax checks, assembly/bundle/lint/signature checks pass.
+- Signed .46 same-key update in downloads; install over current TEST, no uninstall/data clearing.
+- Build 095046; cache lotkeys-app-v095046-trusted-launch-background-controls; Posting Buddy .25.
+
+V0.9.5.44 EARLIER ANDROID HANDOFF
+- Establish folders/core data first; hand every original and PDF finishing plan to Android.
+- Ready to switch apps only after durable commit; native PDF/sharing/Inventory finish afterwards.
+- Parallel folders, bounded 1 MiB staging, stable IDs, revision/ETag/retry safeguards.
+- Old connector and conservative media-edit fallback retained; no native media deletions.
+- Signed Android .44 required for early handoff. Install over current TEST app; preserve data/trust.
+- 393 Node / 27 native tests, assembly/lint/syntax/signature checks pass. Device timing pending.
+- Build 095044; cache lotkeys-app-v095044-early-background-handoff. Posting Buddy remains .25.
+
+V0.9.5.43 RETAINED ANDROID SAVE STATUS
+- Reject incomplete JSON/status replies as recoverable observation failures, not false context mismatches.
+- Retain the current native receipt and recheck after reconnect/visibility; real guards remain strict.
+- Separate queued/upload/error guidance; actual errors replace stale switch-app advice.
+- 369 Node tests; 16 standalone/eight inline/three packaged JS syntax checks pass.
+- Web-only: Android .40, Posting Buddy .25 and .41 Drive recovery retained. Physical-phone check pending.
+- Native scheduler UIDT upgrade is a separate pending follow-up; no native scheduling change here.
+- Build: 095043. Cache: lotkeys-app-v095043-native-save-status.
+
+V0.9.5.42 POSTING BUDDY V0.1.25 MEDIA UPDATES
+- Empty Facebook uploaders no longer require removal controls for an Update Photos transfer.
+- Prepare every image first, scope and verify removals, reacquire the current picker after grid rebuilds.
+- Preserve the mixed-picker video; actual photo counts survive input resets and exclude video-only files.
+- Saved Listing titles, unchecked fields, permissions and user Save/Update/Publish control retained.
+- Replace files in the same unpacked extension folder; Reload extension + Facebook; Sync.
+- 355 Node tests; 16 web/eight inline/three packaged script syntax checks pass. Live Facebook check pending.
+- Android .40, .41 native Drive recovery, Hub and recent-conversation cache unchanged.
+- Build: 095042. Cache: lotkeys-app-v095042-posting-buddy-media.
+
+V0.9.5.41 BACKGROUND-SAVE RECOVERY
+- Pending Profiles and Inventory refreshes preserve native upload receipts and local media.
+- Conditional database writes protect newer edits; delayed thumbnails merge image bytes only.
+- Explicit retry can recover the evidenced .40 sheet overwrite with retained Android originals.
+- Errors/native saves override stale Synced flags; completed saves restore their cover thumbnail.
+- Web-only: original Android .40, pairing, active/hourly Hub and conversation cache retained.
+- 340 Node tests, 16 JavaScript/eight inline syntax checks and diff checks pass.
+- Physical-phone confirmation outstanding; no connector reinstall or data clearing.
+- Build: 095041. Cache: lotkeys-app-v095041-background-save-recovery-guard.
+
+V0.9.5.40 PHONE PAIRING AND LIVE CONNECTION STATUS
+- Add a PC / Check for code on the phone; trusted reconnections remain automatic.
+- Blue phone/PC live connection status; open status dialogs and native UI refresh.
+- Store warnings remain separate; no additional idle network polling.
+- Background ready appears after durable original-file handoff; early switching may pause staging.
+- Build: 095040. Cache: lotkeys-app-v095040-phone-pairing-status.
+
+V0.9.5.39 BACKGROUND VEHICLE UPLOADS AND ACTIVE/IDLE HUB
+- Optional native original-file queue for administrator Vehicle Profile photos, videos and documents; separate Drive approval.
+- Keep LotKeys open through Preparing originals; Android has the originals confirms durable handoff, not upload completion.
+- Uploads have their own queue and do not wait for hourly Hub checks.
+- PC owns automatic phone connection retries; green means registered, blue requires a fresh acknowledgement.
+- Matching Android .39: two-second checks during visible phone use or live PC activity; hourly idle recovery with trusted PCs; no idle checks without one.
+- A newly opened PC alone may wait for the idle phone check. No Firebase setup is required.
+- Existing .12 remains website-compatible; .39 native features require the same-key APK update over the installed connector.
+- 317 web tests, 16 Android tests, assembly and lint pass. Real-device verification remains outstanding.
+- Posting Buddy V0.1.24 and Processor binding unchanged.
+- Build: 095039.
+- Service worker cache: lotkeys-app-v095039-background-transfers-doorbell.
+
+V0.9.5.38 RECENT DEVICE CONVERSATION CACHE
+- Latest six phone messages retained for ten most recent conversations.
+- Background warming operates outside Hub home, yields between reads and retries failed threads independently.
+- Older-message cursors, active history, drafts, unread handling and privacy clearing retained.
+- Android V0.9.5.12, Posting Buddy V0.1.24 and Processor binding unchanged.
+- Phone wake remains pending LotKeys-specific Firebase registration and secure sender setup.
+- Build: 095038.
+- Service worker cache: lotkeys-app-v095038-recent-device-cache.
+
+V0.9.5.37 STORE BRANDING ISOLATION
+- Logos are cached for the active Store and Google account, with the source file and version retained together.
+- Foreign Administration logos and late Store/account responses are rejected.
+- Explici…3622 tokens truncated…2, version code 95012 (unchanged).
+- Service worker cache: lotkeys-app-v095015-device-mms-preview-media-sections.
+
+V0.9.5.14 DEVICE CHAT PROGRESSIVE HISTORY
+- Opens Device chats with the newest six messages and reveals older history in 20-message chunks.
+- Warms the newest conversation from the Hub list and reuses up to eight recent first pages in volatile memory for five minutes.
+- Shows the existing thread preview immediately while a cold paired-PC request crosses the encrypted Drive relay.
+- Clears the warm cache on expiry, disconnect, or tab close and never writes cached message bodies to browser storage.
+- Retains V0.9.5.13 live conversation refresh and the compatible V0.9.5.12 Android connector.
+- Build: 095014.
+- Android connector: V0.9.5.12, version code 95012 (unchanged).
+- Service worker cache: lotkeys-app-v095014-device-chat-progressive-history.
+
+V0.9.5.13 OPEN DEVICE CHAT LIVE REFRESH
+- Refreshes the visible Device SMS/MMS history when Android or the paired-PC relay reports changed phone data.
+- Shows incoming replies without backing out of and reopening the conversation on either phone or PC.
+- Preserves unsent composer content, queued attachments, reading position, and previously loaded older history during live updates.
+- Reconciles a locally rendered outgoing SMS with its phone-confirmed copy to avoid a duplicate bubble.
+- Web-only update; keep the compatible V0.9.5.12 Android connector installed. No APK reinstall or account re-selection is required.
+- Build: 095013.
+- Android connector: V0.9.5.12, version code 95012 (unchanged).
+- Service worker cache: lotkeys-app-v095013-device-chat-live-refresh.
+
+V0.9.5.12 ANDROID ACCOUNT RELAY RECOVERY
+- Preserves the exact Android Google account name and account type instead of rebuilding a normalized identity that can fail with AccountNotPresent.
+- Hands the freshly authorized Google token directly to the already-running foreground relay so the setup screen and live relay cannot disagree.
+- Requires one account re-selection when upgrading from the incomplete V0.9.5.11 stored identity, then keeps that exact identity for later background refreshes.
+- Shows the foreground relay's real error in the connector and retains V0.9.5.11 trusted-PC automatic reconnect once pairing succeeds.
+- Guides sideloaded-app restricted-settings recovery and opens Android's direct battery-exemption confirmation.
+- Build: 095012.
+- Android version code: 95012.
+- Service worker cache: lotkeys-app-v095012-android-relay-account-recovery.
+
+V0.9.5.10 ANDROID RELAY REQUIRED + VISIBLE MATCHING CODE
+- The phone refuses browser-only PC pairing when the Android background relay is unauthorized or reports an error.
+- Android relay errors survive local message refresh and appear in Phone connection; legacy browser-owned phone sessions are retired.
+- Automatically shows a pending PC matching code in Hub without a second Pairing tap.
+- Web-only update; the Android connector remains at V0.9.5.09 source metadata and needs no new signed APK for these checks.
+- Build: 095010.
+- Service worker cache: lotkeys-app-v095010-android-relay-required-pairing-code.
+
+V0.9.5.09 PHONE RECONNECT + CONNECTION DIALOG
+- Probes a saved PC-to-phone session before creating a new pairing offer; guards a late heartbeat from changing a replacement session.
+- Keeps the phone's three connection actions in one row and separates phone relay errors from Hub record-sync errors.
+- The installed V0.9.5.08 Android connector remains compatible with this web update.
+- Build: 095009.
+- Service worker cache: lotkeys-app-v095009-phone-reconnect-dialog-recovery.
+
+V0.9.5.08 PAIRED PC STATUS + BACKGROUND RECOVERY
+- Shows paired PC state in Hub and the healthy header, with a Connected/Forget list on the phone.
+- Retries trusted PC pairing after an expired offer or stale session, prioritizes active Android message frames, and links to Android battery settings.
+- Build: 095008.
+- Service worker cache: lotkeys-app-v095008-phone-pairing-background-recovery.
+- Real locked-phone latency remains subject to Android Doze network windows; verify on a physical device.
+
+V0.9.5.07 PC PAIRING MULTIPART UPLOAD CORRECTION
+- Sends the exact mixed-case boundary in the multipart header and body for private pairing probes and offers.
+- Fixes Google's “Invalid multipart request with 0 mime parts” response observed on the PC in V0.9.5.06.
+- Retains the account chooser, route fallbacks, Store connection, LotKeys data, and compatible phone connector.
+- Build: 095007.
+- Service worker cache: lotkeys-app-v095007-pairing-multipart-boundary-fix.
+
+V0.9.5.06 PC BROWSER-ROUTE PAIRING RECOVERY
+- Adds a fresh Google account chooser that does not reuse the account hint which produced Google's error page.
+- Verifies both the selected identity and private Drive app-data access before retrying pairing.
+- Tries primary and alternate Google API endpoints with Fetch/XMLHttpRequest, then the official Google API JavaScript client.
+- Reports route-specific Google or browser-network failures when no transport can create the pairing offer.
+- Keeps Store connection, LotKeys data and Android relay trust unchanged during repair.
+- Build: 095006.
+- Service worker cache: lotkeys-app-v095006-pairing-browser-route-recovery.
+
+V0.9.5.04 INLINE BLOCKING + SMS SHORT CODES
+- Keeps 📵 Block Number / Unblock Number beside the primary number in saved Contact details.
+- Accepts numeric SMS short codes such as 66000 for LotKeys blocking and Device organization without treating them as callable phone numbers.
+- Keeps normal Contact validation and Call actions limited to full valid phone numbers.
+- Retains all V0.9.5.03 Blocked, Unsorted, Interested Vehicle, and unread-alert behavior.
+- Build: 095004.
+- Service worker cache: lotkeys-app-v095004-inline-block-short-codes.
+
+V0.9.5.03 HUB BLOCKING + INTERESTED VEHICLE SHORTCUTS
+- Moves Unsorted beside All Device as the first organization choice and replaces Saved contacts with 📵 Blocked.
+- Blocks or unblocks saved Contacts and unsaved phone numbers while preserving each number's categories and phone history.
+- Keeps blocked numbers out of normal Hub views, unread totals, numbered category badges and Important-category alert dots.
+- Keeps Interested Vehicle, Media and Chat on one Contact shortcut row.
+- Adds a + Interested Vehicle card to empty Device-chat headers with Vehicle Profile search and custom typed entries.
+- Retains the V0.9.5.02 unread acknowledgement behavior.
+- Build: 095003.
+- Service worker cache: lotkeys-app-v095003-hub-blocking-vehicle-shortcuts.
+
+V0.9.5.02 UNREAD ALERT READ RECEIPTS
+- Clears a Device conversation's LotKeys unread row, numbered category badge, total Hub badge, and Important-category dot after its history opens successfully.
+- Restores those alerts only for a newer incoming message; outgoing replies and harmless Android thread refreshes stay acknowledged.
+- Keeps the Android SMS/MMS provider read-only by storing a bounded, device-scoped LotKeys receipt containing only thread/message markers.
+- Remains protocol-compatible with the V0.9.5.01 Android connector; this web alert fix does not require an APK reinstall.
+- Retains every V0.9.5.01 numbered-category and Important Hub alert rule.
+- Build: 095002.
+- Service worker cache: lotkeys-app-v095002-unread-alert-read-receipts.
+
+V0.9.5.01 NUMBERED CATEGORY UNREAD BADGES
+- Shows a high-contrast numbered unread badge on every Device category chip with live unread messages, whether or not it is starred Important.
+- Caps the visible chip count at 99+ and keeps the exact unread total in the chip's accessible label and tooltip.
+- Keeps the Hub tab's category-coloured dots limited to the up-to-three starred Important categories.
+- Retains parent/subcategory closure, multi-category counting, and zero unread contribution from saved contacts without a live thread.
+- Retains every V0.9.4.100 pairing-scope, Organize contrast, reminder, message, Store and Android relay behavior.
+- Build: 095001.
+- Service worker cache: lotkeys-app-v095001-category-unread-count-badges.
+
+V0.9.4.100 IMPORTANT HUB ALERTS + PAIRING SCOPE REPAIR
+- Adds a ⭐ Important selector to every Device category/subcategory and preserves the first three selections in saved category order.
+- Keeps the existing all-unread Hub badge and adds up to three vertically stacked category-coloured unread dots for live Device messages.
+- Shows black/white high-contrast unread dots on Important category chips while retaining parent/subcategory closure.
+- Renames the filter action to 🗂️ Organize with opposite black/white contrast across light and dark themes.
+- Requests and validates both Store Drive and private drive.appdata permissions required by phone-to-PC pairing.
+- Replaces raw requested-space, insufficient-scope and relay network failures with useful recovery instructions.
+- Retains every V0.9.4.99 category-ordering, Listing photo-movement, reminder, message, Store and Android relay behavior.
+- Build: 094100.
+- Service worker cache: lotkeys-app-v094100-important-alerts-pairing-scope.
+
+V0.9.4.99 CATEGORY + LISTING REORDER HOTFIX
+- Gives every Hub category row a bottom-left physical drag grip with pointer-driven mouse/touch movement and clear drop cues.
+- Persists category order numbers after drag or arrow movement instead of normalizing rows back to their previous positions.
+- Reuses Inventory's immediate tile/handle layout in Listings and avoids the extra scroll-restoration frame after photo drag.
+- Retains Listing tap-to-toggle without tile movement, grey unselected photos, selected-only Cover/sequential numbering and the 20-photo cap.
+- Retains every V0.9.4.98 change-aware Hub refresh and stable Vehicle Profile thumbnail behavior.
+- Build: 09499.
+- Service worker cache: lotkeys-app-v09499-category-listing-reorder-hotfix.
+
+V0.9.4.98 HUB REFRESH CHANGE-DETECTION HOTFIX
+- Keeps the three-second phone connection check but suppresses unchanged status events before they reach the UI.
+- Updates only the connection indicator for status changes instead of rebuilding every Device conversation card.
+- Compares thread snapshots before notifying Hub and refreshes real phone changes without first clearing the visible list.
+- Retains every V0.9.4.97 linked Vehicle Profile thumbnail and manual-vehicle fallback fix.
+- Build: 09498.
+- Service worker cache: lotkeys-app-v09498-hub-refresh-change-detection-hotfix.
+
+V0.9.4.97 HUB VEHICLE-THUMBNAIL HOTFIX
+- Restores cached Vehicle Profile cover photos on linked Interested Vehicle cards in the Hub Device conversation list.
+- Reuses the working chat-header thumbnail painter after every Hub list repaint and cleans up replaced object URLs.
+- Keeps the standard missing-vehicle image for manually entered vehicles that are not linked to Inventory.
+- Retains every V0.9.4.96 reminder-form, reminder-bell, sync-label and navigation fix.
+- Build: 09497.
+- Service worker cache: lotkeys-app-v09497-hub-vehicle-thumbnail-hotfix.
+
+V0.9.4.96 REMINDER ADDITIONAL-FIELDS HOTFIX
+- Keeps Customer / Contact, Phone number, and Interested Vehicle / Vehicle Profile collapsed inside Additional fields until opened.
+- Automatically opens Additional fields when editing a reminder that already contains one of those values.
+- Retains every V0.9.4.95 reminder-bell, sync-label, navigation and deletion-repaint fix.
+- Build: 09496.
+- Service worker cache: lotkeys-app-v09496-reminder-additional-fields-hotfix.
+
+V0.9.4.95 REMINDER BELL STATE HOTFIX
+- Restores the main-header bell's hidden state after the final active reminder is completed.
+- Keeps the Android-safe separate bell and urgency-mark layout while explicitly overriding its grid display when hidden.
+- Shows "Synced [time]" in the phone header instead of an unexplained time by itself.
+- Retains every V0.9.4.94 reminder, navigation, sync-time and deletion repaint fix.
+- Build: 09495.
+- Service worker cache: lotkeys-app-v09495-reminder-bell-state-hotfix.
+
+V0.9.4.94 REMINDERS + NAVIGATION HOTFIX
+- Keeps the active Home, Inventory, Listings, Account, or Garage page when Chrome restores LotKeys after Google approval work.
+- Shows the newest successful Inventory or Listings refresh time in full in the main header, including on phones.
+- Separates the main-header reminder bell and urgency mark so Android renders one-mark and two-mark states consistently.
+- Deletes reminders locally first, returns to the prior list or Calendar immediately, refreshes its count, and queues Drive cleanup.
+- Changes Calendar's + Reminder shortcut to open All reminders; the plus inside that view still creates a new reminder.
+- Retains every V0.9.4.93 standalone reminder, migration, Calendar, appointment-identity and Android relay behavior.
+- Build: 09494.
+- Service worker cache: lotkeys-app-v09494-reminders-navigation-hotfix.
+
+V0.9.4.93 STANDALONE REMINDERS
+- Replaces appointment-shaped reminders with private, local-first reminder records in a dedicated Hub/Reminders Drive folder.
+- Adds the shared main-header and Hub bells with inclusive 7-day/3-day America/Edmonton urgency rules.
+- Adds compact All/Open/Completed/Daily task views, optional Contact/raw-phone/Vehicle links, and daily completion reset.
+- Shows dated one-time reminders as lightweight Calendar rows without appointment collision, status, duration, or type behavior.
+- Migrates legacy kind: Reminder appointments safely and idempotently by stable ID before tombstoning the old record.
+- Preserves linked notes and standalone tasks across reminder or Contact deletion.
+- Fixes phone-only appointment identities so the number is displayed exactly once.
+- Retains the V0.9.4.92 Android PC relay, trust, refresh recovery and device controls.
+- Build: 09493.
+- Service worker cache: lotkeys-app-v09493-standalone-reminders.
+
+V0.9.4.92 RELIABLE PC PAIRING
+- Moves the encrypted PC relay into the Android foreground service so Device Messages can continue after the phone browser closes.
+- Requires matching four-digit phone approval for every new computer and supports Ask, 36-hour, 7-day and Until Disconnect trust.
+- Restores encrypted browser sessions across refresh and creates fresh ECDH/AES-GCM sessions for trusted reconnection.
+- Enforces one active PC, securely transfers the session, and exposes disconnect, individual forget and revoke-all controls.
+- Adds a stable TEST-only Android signing identity and same-project Android OAuth setup for private Drive app-data access.
+- Retains the complete V0.9.4.91 contact-card, appointment, notes, composer, media and Calendar workflow.
+- Build: 09492.
+- Service worker cache: lotkeys-app-v09492-pc-pairing-relay.
+
+V0.9.4.91 COMPACT CONTACT ROWS
+- Places a saved name and phone number together on the first line without repeating phone-only identities.
+- Places the customer category beside the appointment date, AM/PM start–end range and status on the second line.
+- Makes the complete Device conversation card open its chat while the appointment chip still opens Calendar.
+- Restores native calendar and clock pickers when establishing a new appointment; editing keeps compact manual/menu controls.
+- Replaces Appointment Duration with optional End Time while preserving calculated ranges for older saved appointments.
+- Moves the Calendar day-view time range above each appointment so the full-width customer card is shorter.
+- Retains the compact Interested Vehicle/buying card inside the upper-right Device-chat header.
+- Makes Cash / Financing a clean two-choice Note field without the text box or keyboard.
+- Repairs 0.5-second hold-and-drag composer shortcuts and auto-closes tap menus after five seconds.
+- Removes the Device composer explanation and simplifies Lock Screen wording to Password.
+- Retains the V0.9.4.88 cards, appointment workflow, smart notes, media composers and Android handoff.
+- Build: 09491.
+- Service worker cache: lotkeys-app-v09491-compact-contact-rows.
+
+V0.9.4.86 HUB CUSTOMER WORKFLOW
+- Keeps the V0.9.4.84 Android phone-source and adaptive-monitoring behavior, plus the screen-recording-enabled V0.9.4.85 TEST APK.
+- Groups All conversations with LotKeys Chats first and Device Messages second; each section has a persistent expand/collapse control and unread counts.
+- Removes the duplicate contact avatar from Device conversation headers and places Contact, Call, Appointment, Add Note, Questions and document actions together.
+- Links private contacts to one or more current Vehicle Profiles and shows a compact primary vehicle card with year/make/model, stock, odometer and price.
+- Adds searchable note topics, optional date-only/timed Calendar reminders during note save, direct Calendar reminder creation and date-only `.ics` export.
+- Ranks missing Questions from visible conversation context and saved notes; a chosen Device question is inserted into the draft and never auto-sent.
+- Adds PC-only LotKeys Chat notification sounds with built-in tones, Silent and a short local custom clip; Android automatic LotKeys Chat sounds remain suppressed and Device SMS/MMS stays native.
+- Clips the dark corner matte from the Hub logo and restores mobile/desktop floating action placement.
+- Build: 09486.
+- Service worker cache: lotkeys-app-v09486-hub-workflow.
+
+V0.9.4.84 ANDROID PHONE-SOURCE CHECKPOINT
+- Adaptive-monitor hotfix 4 gives Inventory/Listings refreshes and Vehicle Profile/Listing uploads temporary network priority: Phone checks move from 3 seconds to 30 seconds and internal Chat from 1.5 seconds to 10 seconds, followed by an immediate catch-up when heavy work ends. Active calls and requested phone operations keep a faster safety path.
+- Local-first hotfix 3 renders cached LotKeys before remote Account/Store/Chat/Phone startup, then starts the connection layers in the background. Hub phone coverage is now a compact upper-right signal control whose popup retains status, pairing and Hub sync actions.
+- Device chat hotfix 2 prevents LotKeys Chat background refresh from replacing an open phone conversation and keeps unsent per-conversation drafts locally for up to 30 days.
+- Connection hotfix 1 requests browser loopback access from the Reconnect phone tap, improves blocked-connector guidance, and uses a small clickable signal indicator instead of the oversized status dot.
+- Builds directly on the clean V0.9.4.83 Hub foundation; Inventory, Listings, Account recovery, internal LotKeys Chat and private Hub records retain their existing boundaries.
+- Adds a small Android permission/capability layer while keeping the LotKeys website/PWA as the phone and computer interface and leaving the user's chosen messaging app as default.
+- Reads the current Android SMS/MMS conversation index and paged history, with optional existing Android Contact names and no message-database write/delete permission.
+- Pairs one active computer with four matching digits and phone approval; no Bluetooth, screen casting, manual JSON, Python relay or HTTPS tunnel is used.
+- Uses ephemeral ECDH P-256 / AES-GCM session keys and short-lived encrypted Google Drive app-data frames; normal phone history is not retained as a customer Drive record or independent PC archive.
+- Sends explicit plain-text SMS instructions through the phone and renders Sending, Sent and Failed without automatic retry.
+- Adds honest green/amber/red coverage state; this checkpoint is amber because SMS/MMS is live while RCS safety coverage is deferred.
+- Adds phone-number sorting records so unknown numbers can use multiple categories without forcing a full LotKeys customer folder.
+- Includes Ask Every Time, 36 Hours, 7 Days and Until I Disconnect trust choices with one active PC plus phone.
+- Adds Android Gradle source and a GitHub Actions APK/lint workflow for the private TEST artifact.
+- Keeps production lot-keys.ca untouched.
+- Build: 09484.
+- Service worker cache: lotkeys-app-v09484-adaptive-monitor-hotfix4.
+
+V0.9.4.83 CLEAN HUB FOUNDATION REBUILD
+- Rebuilds directly on the supplied V0.9.4.81 gold-standard LotKeys application.
+- Retains the V0.9.4.82 Hub integration boundary for the existing internal LotKeys Chat.
+- Adds a functional Device organization layer for saved CRM contacts: user-created categories, one nested subcategory level, multi-category assignment/filtering, reorder controls and visible colors.
+- Keeps customer names, numbers, notes, documents, appointments and vehicle links in private Hub records independent from phone contacts.
+- Intentionally excludes live phone pairing, message history, notification capture and PC-to-phone transport. Device chat is visibly marked as the next build instead of pretending to connect.
+- Removes the abandoned Android notification-bridge, phone-client and phone-pairing runtime from the TEST release tree.
+- Restores the complete approved Google TEST browser configuration as safe fallbacks while preserving saved Admin overrides.
+- Repairs personal Account restore so a phone cannot save blank defaults over `Account.json`; cross-device conflicts stop safely and Account Photo deletion now requires an explicit removal request.
+- Adds Restore from Drive for reloading recovered photo, sound links, appearance and custom Description Builder templates.
+- Scans Account Photo and Celebration Sounds directly from the selected Account folder so missing `Account.json` references can be rebuilt without re-uploading the surviving files.
+- Mirrors custom Description Builder templates as individual recovery JSON files and never removes discovered assets unless the user explicitly requests deletion.
+- Leaves production lot-keys.ca untouched.
+- Build: 09483.
+- Service worker cache: lotkeys-app-v09483-account-folder-recovery.
+
 V0.9.4.81 FRESH VIDEO DISCOVERY + MANAGEMENT UPDATE POLISH
 - Builds directly on V0.9.4.80; parallel Vehicle Profile Photos + Video uploads, three-worker photos, resumable Drive sessions, MB diagnostics, V0.9.4.79 editor recovery, and all prior Store/Processor behavior remain intact.
 - Adds a targeted Vehicle Profile video-metadata refresh so Posting Buddy can see a video added after the LotKeys Listing was created without forcing the Listing to be edited/saved again.
@@ -682,3 +1022,11 @@ Preserved from v0.9.4.15:
 Release layout:
 - Standard LotKeys root layout: 11 files + assets folder.
 - v0.9.4.16 runtime helper lives inside assets/lotkeys-v09416.js rather than cluttering the repository root.
+V0.9.5.19 UNIFIED BUBBLE CHAT + HUB CONTROLS
+- Bubble Chat follows the last conversation replied to across LotKeys and connected Device SMS.
+- Device replies and incoming messages appear in Bubble Chat through the phone connection.
+- Incoming previews show the contact name, text and Device organization color; tap to reply.
+- Centers the header bell, enlarges the Hub bell, and moves the existing action stack near the lower-right corner without stretching its spacing.
+- Web-only update; V0.9.5.12 Android connector remains installed.
+- Build: 095019.
+- Service worker cache: lotkeys-app-v095019-unified-bubble-chat-hub-controls.

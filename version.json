@@ -1,9 +1,27 @@
 {
   "app": "LotKeys",
-  "version": "0.9.4.81",
-  "build": "09481",
-  "release": "fresh-video-management-updates",
+  "version": "0.9.5.50",
+  "build": "095050",
+  "release": "reliability-preview",
+  "channel": "regular",
   "canonicalUrl": "https://lot-keys.ca/",
-  "serviceWorkerCache": "lotkeys-app-v09481-fresh-video-management-updates",
-  "publishedAt": "2026-09-17"
+  "serviceWorkerCache": "lotkeys-app-v095050-reliability-preview",
+  "basedOn": "Verified TEST .50 39e89f0; regular .81 rollback 82543c1",
+  "androidConnectorVersion": "0.9.5.46",
+  "preparedAt": "2026-11-18",
+  "releaseScope": "partial-reliability-regular-preview",
+  "automaticWebsiteSearch": false,
+  "lotkeysDriveAuthorizationVerified": false,
+  "lotkeysDriveRenewalVerified": false,
+  "physicalPhoneVerified": false,
+  "deploymentStatus": "regular-preview",
+  "regularUserNativeHandoff": false,
+  "knownLimitations": [
+    "Regular-user submissions remain browser-dependent; preparation screen wake is best effort.",
+    "Paired-PC higher-authority report needs its exact error for diagnosis; only definite relay 401 renewal is addressed.",
+    "Automatic Compare remains blocked by approved source access, report rights and private backend."
+  ],
+  "approvedAdditionalScope": "https://www.googleapis.com/auth/drive.appdata",
+  "sourceTestCommit": "39e89f0306e9fd10da4f06771dc62ac78566af85",
+  "regularRollback": "82543c12cee842c869bced97b92c29e61b2d36a1"
 }
