@@ -1,0 +1,68 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'ca.lotkeys.connector'
+    compileSdk 36
+
+    // A controlled TEST release uses one stable, non-production certificate so
+    // its Android OAuth client can be registered once. The private key is
+    // supplied only by GitHub Actions secrets and is never stored in this repo.
+    def testStorePath = System.getenv('LOTKEYS_TEST_KEYSTORE_PATH') ?: ''
+    def testStorePassword = System.getenv('LOTKEYS_TEST_KEYSTORE_PASSWORD') ?: ''
+    def testStoreAlias = System.getenv('LOTKEYS_TEST_KEY_ALIAS') ?: 'lotkeys-test'
+    def testStore = testStorePath ? file(testStorePath) : null
+    def hasTestSigning = testStore != null && testStore.exists() && !testStorePassword.isEmpty()
+
+    signingConfigs {
+        if (hasTestSigning) {
+            lotkeysTest {
+                storeFile testStore
+                storePassword testStorePassword
+                keyAlias testStoreAlias
+                keyPassword testStorePassword
+            }
+        }
+    }
+
+    defaultConfig {
+        applicationId 'ca.lotkeys.connector.test'
+        minSdk 30
+        targetSdk 36
+        versionCode 95046
+        versionName '0.9.5.46-test'
+    }
+
+    buildTypes {
+        debug {
+            if (hasTestSigning) signingConfig signingConfigs.lotkeysTest
+        }
+        release {
+            if (hasTestSigning) signingConfig signingConfigs.lotkeysTest
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    testOptions { unitTests.includeAndroidResources = true }
+
+    lint {
+        warningsAsErrors false
+        disable 'BatteryLife'
+    }
+}
+
+dependencies {
+    // Keep Google's sign-in transitive Kotlin modules on one version. Older
+    // AndroidX constraints otherwise mix kotlin-stdlib 1.8 with the retired
+    // jdk7/jdk8 1.6 split artifacts and fail duplicate-class validation.
+    implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.22')
+    implementation 'androidx.core:core:1.15.0'
+    implementation 'androidx.browser:browser:1.8.0'
+    implementation 'com.google.android.gms:play-services-auth:21.3.0'
+    implementation platform('com.google.firebase:firebase-bom:34.5.0')
+    implementation 'com.google.firebase:firebase-messaging'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.16.1'
+}

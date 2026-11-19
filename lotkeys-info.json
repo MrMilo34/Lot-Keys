@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "lotkeys-info-v09481",
+  "id": "lotkeys-info-v095050-regular",
   "active": true,
   "title": "LotKeys Info",
-  "summary": "V0.9.4.81 refreshes Posting Buddy video discovery directly from Drive, cleans up Management Updates media cards, and bundles Posting Buddy V0.1.23 with video-first handoff and live Facebook readiness timing.",
-  "updatedAt": "2026-09-17T20:30:00Z",
+  "summary": "V0.9.5.50 brings the reviewed web reliability and Inventory media updates to the regular site.",
+  "updatedAt": "2026-11-18",
   "blocks": [
     {
-      "id": "v09481-heading",
+      "id": "v095050-heading",
       "type": "heading",
-      "text": "V0.9.4.81 test release"
+      "text": "V0.9.5.50 regular reliability preview"
     },
     {
-      "id": "v09481-text",
+      "id": "v095050-text",
       "type": "text",
-      "text": "Posting Buddy video discovery now refreshes the official Vehicle Profile Videos folder directly from Drive and rechecks the signed-in user's existing More Media Videos, so a newly added walkaround no longer depends on re-saving the LotKeys Listing. Management Updates hide image/video filenames and place Administration controls above the top post for admins. Posting Buddy V0.1.23 prepares video early, sends it to Facebook first, then fills the remaining selected sections while Facebook handles the video; the fields timer finishes when Facebook enables the next step. V0.9.4.80 parallel Vehicle Profile media uploads remain intact. Store Processor V0.9.4.76 remains current."
+      "text": "Includes cached sign-in recovery, Inventory photo refresh/retry, retained upload checkpoints, preparation screen wake and compact Account controls. Google may request the approved app-specific pairing-data permission. Regular-user locked-screen/background request finalization and the reported paired-PC send issue remain unverified; the original Android connector and live Store processors are unchanged. Compare remains manual/import only, with no connected automatic listing search."
     }
   ]
 }

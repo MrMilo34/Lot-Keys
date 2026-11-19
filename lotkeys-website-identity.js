@@ -1,0 +1,32 @@
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.LotKeysWebsiteIdentity=api})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  'use strict';
+  const norm=x=>String(x||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  const escape=x=>String(x).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  function containsIdentifier(text,id){const token=norm(id);if(!token)return false;const pattern=[...token].map(escape).join('[\\s*`_\\-]*');return new RegExp('(?:^|[^A-Z0-9])'+pattern+'(?![A-Z0-9])','i').test(String(text||''))}
+  function identifiers(text){const raw=String(text||'').replace(/[*`_]/g,''),stock=raw.match(/\b(?:stock(?:\s+(?:number|no\.?))?|STK)\s*[#:]*\s*([A-Z0-9][A-Z0-9-]{2,24})\b/i),vin=raw.match(/\bVIN(?:\s+(?:number|no\.?))?\s*[#:]*\s*([A-HJ-NPR-Z0-9]{17})\b/i);return {stock:stock?.[1]||'',vin:vin?.[1]||''}}
+  function primaryText(text){const lines=String(text||'').split('\n');let seen=false,out=[];for(const line of lines){const heading=line.trim().replace(/^#{1,6}\s*/,'').replace(/:$/,'');if(/\b(?:19|20)\d{2}\s+[A-Za-z]/.test(heading)&&!/^Title:/i.test(heading))seen=true;if(seen&&/^(?:explore more vehicles|similar vehicles|recently viewed|you may also like|recommended vehicles|more vehicles|other vehicles|vehicles you may like)$/i.test(heading))break;out.push(line)}return out.join('\n')}
+  const makes=['Alfa Romeo','Land Rover','Mercedes-Benz','Acura','Audi','BMW','Buick','Cadillac','Chevrolet','Chrysler','Dodge','Fiat','Ford','Genesis','GMC','Honda','Hyundai','Infiniti','Jaguar','Jeep','Kia','Lexus','Lincoln','Mazda','MINI','Mitsubishi','Nissan','Porsche','Ram','Subaru','Tesla','Toyota','Volkswagen','Volvo'];
+  function vehicleHeading(text){const rx=new RegExp('(?:^|\\n)\\s*(?:#{1,6}\\s*)?(?:Title:\\s*)?((?:19|20)\\d{2})\\s+('+makes.map(escape).join('|')+')\\s+([^\\n]{1,120})','i'),m=String(text||'').match(rx);return m?{year:m[1],make:m[2],model:m[3]}:{}}
+  function match(vehicle={},result={}){
+    const raw=primaryText(result.identityText??result.rawText??''),upper=raw.toUpperCase(),found={...vehicleHeading(raw),...identifiers(raw)},fields=result.fields||{},field=k=>String(fields[k]?.value||found[k]||'').trim(),stock=norm(vehicle.stock),vin=norm(vehicle.vin),year=norm(vehicle.year),make=norm(vehicle.make),model=norm(vehicle.model),parsedStock=norm(field('stock')),parsedVin=norm(field('vin')),parsedYear=norm(field('year')),parsedMake=norm(field('make')),parsedModel=norm(field('model'));
+    const hits=[],misses=[],conflicts=[],check=(label,expected,parsed,ok)=>{if(!expected)return false;if(parsed&&parsed!==expected)conflicts.push(label);(ok?hits:misses).push(label);return ok};
+    const stockOk=check('stock',stock,parsedStock,!!stock&&(parsedStock===stock||!parsedStock&&containsIdentifier(raw,stock))),vinOk=check('VIN',vin,parsedVin,!!vin&&(parsedVin===vin||!parsedVin&&containsIdentifier(raw,vin))),yearOk=check('year',year,parsedYear,!!year&&(parsedYear===year||!parsedYear&&containsIdentifier(raw,year))),makeOk=check('make',make,parsedMake,!!make&&(parsedMake===make||!parsedMake&&norm(raw).includes(make)));
+    const modelOk=!!model&&(parsedModel?parsedModel.includes(model)||model.includes(parsedModel):norm(raw).includes(model));if(model)(modelOk?hits:misses).push('model');if(model&&parsedModel&&!modelOk)conflicts.push('model');
+    const unavailable=/(?:page|vehicle|listing)\s+(?:is\s+)?(?:not found|no longer available)|(?:this\s+)?vehicle\s+has\s+been\s+sold|404\s+(?:not found|error)|listing\s+(?:has\s+been\s+)?removed/i.test(raw);
+    const strongConflicts=conflicts.filter(x=>x==='stock'||x==='VIN'),detailHits=Number(yearOk)+Number(makeOk)+Number(modelOk),strongIdentifier=stockOk||vinOk,priceEligible=!conflicts.length&&(stock||vin?strongIdentifier&&detailHits>=2:detailHits===3);
+    const base={identityHits:hits,identityMisses:misses,identityConflicts:conflicts,identityScore:Number(stockOk)*5+Number(vinOk)*6+detailHits,missingRatio:misses.length/Math.max(1,hits.length+misses.length),feedbackWeight:Number(vehicle._websiteVerificationFeedbackWeight)||0,strongIdentifier,priceEligible};
+    if(unavailable)return {...base,ok:false,alertWorthy:true,priceEligible:false,confidence:'high',reasonCode:'explicit-unavailable',reason:'The Original Listing Website explicitly indicates this listing is no longer available.'};
+    if(strongConflicts.length&&!strongIdentifier&&(strongConflicts.includes('VIN')||conflicts.some(x=>['year','make','model'].includes(x))))return {...base,ok:false,alertWorthy:true,priceEligible:false,confidence:'high',reasonCode:'identity-changed',reason:'The primary vehicle on the Original Listing Website has conflicting identifying details ('+conflicts.join(', ')+').'};
+    // An absent field is unknown. It is not evidence that the page was removed.
+    return {...base,ok:true,alertWorthy:false,confidence:priceEligible?(strongIdentifier?'high':'medium'):'low',matchedBy:hits.join('+')||'inconclusive-page-read',inconclusive:!priceEligible,reasonCode:priceEligible?'matched':'identity-inconclusive'};
+  }
+  function priceContextMatches(text,vehicle){return match(vehicle,{rawText:text}).priceEligible}
+  function priceBackcheck(result,expectedPrice,vehicle={}){
+    const price=Number(String(expectedPrice??'').replace(/[^0-9.]/g,''));if(!(price>=1000&&price<=500000)||result?.fields?.price?.ambiguous||!match(vehicle,result).priceEligible)return null;
+    let legacy=false;try{legacy=/^(?:www\.)?legacydodgewetaskiwin\.(?:com|ca)$/.test(new URL(vehicle.originalListingUrl||result.url||'').hostname)}catch{}
+    const text=primaryText(result.identityText??result.rawText??''),rx=legacy?/\blegacy\s+price[^0-9$]{0,45}\$?\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,7})/ig:/\b(?:your|sale|selling|dealer|internet|online|special|our|cash|current)\s+price[^0-9$]{0,45}\$?\s*([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,7})/ig;
+    const rows=[...text.matchAll(rx)],values=new Set(rows.map(row=>Number(row[1].replace(/,/g,''))));if(values.size!==1||!values.has(price))return null;const row=rows[0],around=text.slice(Math.max(0,row.index-45),row.index+row[0].length+60).replace(/\s+/g,' ').trim();
+    return {price,source:'backcheck',label:legacy?'legacy price':'current price',reason:'Known price confirmed against an explicit current sale-price label on the matched primary vehicle',context:around};
+  }
+  return {containsIdentifier,identifiers,primaryText,match,priceContextMatches,priceBackcheck};
+});

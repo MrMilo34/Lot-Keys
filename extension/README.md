@@ -1,9 +1,11 @@
 # LotKeys Facebook Posting Buddy
 
-Current beta: **V0.1.23**
+Current beta: **V0.1.25**
 
-V0.1.23 keeps the speed-first horizontal **Video · Photos · Description · Details** workflow and all V0.1.22 replacement-style update behavior. Video discovery now refreshes the Vehicle Profile Videos folder directly from Drive plus the signed-in user's own existing More Media Videos, so adding a walkaround later does not require re-saving the LotKeys Listing. When Video is selected it is prepared early and handed to Facebook first; the remaining selected sections continue while Facebook handles the video. The fields timer completes when Facebook exposes the next Save / Update / Next step.
+Update Photos now accepts Facebook's explicitly empty photo uploader, without requiring old-photo removal buttons. Existing-photo replacement prepares and decodes every new image before removing anything, checks removal controls within the upload section, and reacquires the live picker after Facebook rebuilds its grid. A selected video in a mixed picker is retained. Progress uses the actual photo count after Facebook clears FileList; a video alone cannot count as Photos filled.
 
-[Download the newest Posting Buddy — V0.1.23](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.23.zip)
+[Download Posting Buddy V0.1.25](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.25.zip). Extract it, replace the files in the **same unpacked extension folder**, press **Reload** for Posting Buddy at `chrome://extensions`, reload Facebook, then press Sync in Posting Buddy. Installing the website update alone does not replace Chrome's loaded extension files.
 
-`latest.json` is the live version pointer used by the extension's **Check for update** button.
+Saved Listing names, unchecked Details/Description, permissions and the review-before-save workflow remain. Posting Buddy never clicks Facebook's final Save/Update/Publish action. Live Facebook confirmation is still needed after installing this release.
+
+[Previous .24 release](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.24.zip) · [Older .23 release](./releases/LotKeys-Facebook-Assistant-Beta-v0.1.23.zip).

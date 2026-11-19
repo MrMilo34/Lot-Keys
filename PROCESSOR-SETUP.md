@@ -1,20 +1,20 @@
 # LotKeys Store Processor setup
 
-The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.4.81 continues to use Processor V0.9.4.76; if Garage already reports that version as current, this browser release does not require replacing `Code.gs` or rerunning the installer.
+The Store Processor is the trusted management writer between each user’s `More` request queue and the official Inventory. It also publishes Store-visible profile photos, Chat identities and monthly crowns, and provides durable fallback delivery for encrypted Chat. Live Chat normally uses recipient-only read lanes and does not wait for the one-minute trigger. The processor allows ordinary and Trusted users to remain **Viewer** on Inventory. Install it from the Google account registered in LotKeys as **Admin Level 2**, and rerun the installer whenever the bundled processor version changes. Website V0.9.5.37 bundles Processor V0.9.4.77. An already working V0.9.4.76 processor remains compatible; no reinstall is required solely for the browser branding fix. V0.9.4.77 removes the old dealership default and preserves the installed Store binding through future code replacements.
 
 ## Before installing
 
-1. Upload the complete V0.9.4.81 website package to GitHub Pages.
+1. Upload the complete current website package to GitHub Pages.
 2. Sign in to LotKeys as Admin Level 2.
 3. While Google Auth Platform is in Testing, add every tester’s exact Google email under **Audience → Test users**. Admin Level 2 can use the shortcut in Garage → Approved Users.
 4. In **Garage → Approved Users**, add every tester using that same exact Google account email.
 5. Press **Repair Store Structure** once. This creates each user’s writable `Listings` and `More` workspace and applies the Viewer/Administrator Drive roles.
-6. Confirm the Store folder ID at the top of `processor/Code.gs` is the correct Store. This release is preconfigured for `1vJRzFWTVtg9o1fRw5dUNsY2JNlIhOf-g`.
+6. In the Apps Script project’s **Project Settings → Script properties**, set `lotkeysStoreFolderId` to the folder ID of the Store you intend to manage. Existing installations retain this property when Code.gs is replaced. The distributed template does not select a Store. Check `getLotKeysProcessorStatus` against Garage before installing or repairing access. To intentionally move a processor, stop its trigger and update this property first; do not reuse one project across Stores.
 
 ## Create the Apps Script project
 
 1. Open [Google Apps Script](https://script.google.com/) while signed in as the Admin Level 2 Google account and create a **New project** named `LotKeys Store Processor`.
-2. If Garage or `getLotKeysProcessorStatus` reports a version older than V0.9.4.76, replace the complete `Code.gs` contents with `processor/Code.gs` from this release. Skip this replacement when V0.9.4.76 is already current.
+2. For a new installation or an intentional processor upgrade, replace the complete `Code.gs` contents with `processor/Code.gs` from this release. Keep the existing Apps Script project and its saved `lotkeysStoreFolderId` property. A correct working V0.9.4.76 installation can stay in place.
 3. Open **Project Settings**, enable **Show “appsscript.json” manifest file in editor**, then replace the complete manifest with `processor/appsscript.json` from this release.
 4. Save the project. The manifest enables the Advanced Drive service (`Drive API v3`). If the editor still shows Drive as unavailable, open **Services → +**, choose **Drive API**, select **v3**, and add it.
 5. From the function menu select `installLotKeysProcessor`, press **Run**, review the requested Google permissions, and approve them. Run this installer again when upgrading an existing processor; it safely replaces the old minute trigger.
@@ -25,7 +25,7 @@ The install function verifies the executing Google email against the LotKeys Adm
 
 Run `getLotKeysProcessorStatus` from Apps Script. Its execution result should report:
 
-- `version: 0.9.4.76`
+- `version: 0.9.4.77`
 - `triggerInstalled: true`
 - the expected Store folder ID
 - the number of Approved Users
@@ -40,7 +40,7 @@ Then test with an ordinary user:
 
 Repeat with a Trusted user. Vehicle information, price, and Pending Deal changes should apply after the processor runs; photos, videos, and documents must still remain pending for Administration.
 
-Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.76 · current**. If it reports an earlier version or no trigger, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
+Back in LotKeys, press **Garage → Refresh Status** or reopen Garage. The connection card should say **Store Processor · V0.9.4.77 · current**. If it reports an earlier version or no trigger, rerun `installLotKeysProcessor` and wait for the Apps Script execution to complete.
 
 For profile-photo and Chat testing, open website V0.9.4.81 once as every test user. Their user-owned Public Profile publishes the photo reference and encrypted Messaging identity; the V0.9.4.76 processor refreshes Store Access, grants active Store users Viewer access to profile thumbnails, and creates private `Messaging/Inbox` and `Messaging/Outbox` folders. Allow up to one minute for first-time directory reconciliation. Then keep both accounts open and send messages both directions: live messages and popup alerts should normally arrive within a few seconds, while the processor retains one deduplicated Inbox copy as recovery.
 

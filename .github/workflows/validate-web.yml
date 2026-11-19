@@ -1,0 +1,94 @@
+name: Validate LotKeys web build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: JavaScript syntax
+        run: |
+          node --check lotkeys-compare.js
+          node --check lotkeys-compare-ui.js
+          node --check lotkeys-info.js
+          node --check lotkeys-messaging.js
+          node --check lotkeys-awards.js
+          node --check lotkeys-hub-core.js
+          node --check lotkeys-hub-store.js
+          node --check lotkeys-listing-storage.js
+          node --check lotkeys-store-requests.js
+          node --check lotkeys-personal-preferences.js
+          node --check lotkeys-website-identity.js
+          node --check lotkeys-transfer-core.js
+          node --check lotkeys-native-transfers.js
+          node --check lotkeys-deferred-save.js
+          node --check lotkeys-doorbell-core.js
+          node --check wake-sender/Code.js
+          node --check lotkeys-phone-core.js
+          node --check lotkeys-reliability.js
+          node --check lotkeys-phone.js
+          node --check lotkeys-hub.js
+          node --check sw.js
+      - name: Hub and release contract tests
+        run: node --test tests/*.test.js
+      - name: Posting Buddy packaged JavaScript
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, subprocess, tempfile, zipfile
+          version = json.loads(pathlib.Path('extension/latest.json').read_text())['version']
+          with zipfile.ZipFile(f'extension/releases/LotKeys-Facebook-Assistant-Beta-v{version}.zip') as bundle:
+              for name in ['background.js', 'facebook.js', 'sidepanel.js']:
+                  with tempfile.NamedTemporaryFile(suffix='.js') as script:
+                      script.write(bundle.read(name))
+                      script.flush()
+                      subprocess.run(['node', '--check', script.name], check=True)
+          PY
+
+      - name: Package regular web source
+        run: python3 tools/package-review.py "$RUNNER_TEMP/LotKeys-0.9.5.50-REGULAR-WEB-source.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LotKeys-0.9.5.50-REGULAR-WEB-source
+          path: ${{ runner.temp }}/LotKeys-0.9.5.50-REGULAR-WEB-source.zip
+          if-no-files-found: error
+
+  compare-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Comparison DOM behavior
+        run: |
+          npm install --prefix "$RUNNER_TEMP/compare-dom" --ignore-scripts --no-audit --no-fund happy-dom@21.0.4
+          LOTKEYS_COMPARE_DOM="$RUNNER_TEMP/compare-dom/node_modules/happy-dom/lib/index.js" node --test tests/compare-ui-dom.mjs tests/account-controls-dom.mjs
+      - name: Install isolated browser test tools
+        run: |
+          python -m pip install playwright==1.62.0
+          python -m playwright install --with-deps chromium
+      - name: Compare desktop and mobile browser checks
+        env:
+          COMPARE_EVIDENCE_DIRECTORY: ${{ runner.temp }}/lotkeys-compare-evidence
+        run: python tests/compare-browser.py
+      - name: Upload synthetic browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: LotKeys-Compare-browser-evidence
+          path: ${{ runner.temp }}/lotkeys-compare-evidence
+          if-no-files-found: ignore

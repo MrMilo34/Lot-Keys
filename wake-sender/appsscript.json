@@ -1,0 +1,9 @@
+{
+  "timeZone": "America/Regina",
+  "runtimeVersion": "V8",
+  "exceptionLogging": "NONE",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/firebase.messaging"
+  ]
+}

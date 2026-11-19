@@ -1,0 +1,33 @@
+LotKeys .46 TEST release continuation — 2026-11-10
+
+Completed: PR #17 merged at 7e8544bdd0024fc964b18ace7c6037719bcced5e;
+Pages 42871744941 succeeded. TEST .46 web/runtime and signed APK/checksum matched
+committed bytes. The final copy-only follow-up corrects old install-page toolbar
+instructions. No Android source/binary change. Production remains 0.9.4.81.
+Release-head web check 42871334586 and Android check 42871334239 succeeded.
+406 web tests / 58 native tests / 24 JS syntax checks; lint 0 errors/33 warnings.
+Original Android source 3c6089d8ad4d3d7c3eef9926c96b6a7f378681c9, CI 42855311393.
+Signed .46 APK ca.lotkeys.connector.test / 95046, SHA-256
+5050259a4ebc48314ba5c1ebbddc895f73e271dc2ccdbc3b76e0f3c9973a0093.
+Library APK file_000000005f4081fdb2863b82d42d24ba is the same verified binary.
+
+Root assetlinks.json is HTTP 200 JSON without redirect. Google Digital Asset Links
+returned linked=true for exact origin/package/original certificate. Helper repo
+MrMilo34/mrmilo34.github.io commit 1432430a221d9e0353839e71e45a19b72b994950.
+No CNAME, new credentials, permission grants or production changes.
+Recovery .45 branch recovery/test-v095045-before-v095046 retains
+0b5310597e907544065b15658106e75b21ea18a0; .44/.43 fallbacks remain.
+
+Next: verify final copy-only Pages deployment, then phone tests. Update over the
+installed TEST app; normal close/reopen, same browser/profile/account/Store.
+Do not uninstall or clear app/browser data. Confirm native .46, absent URL bar,
+retained originals before switching apps, native Continue uploads in background,
+then app-switch/lock/network-retry and final PDF/Inventory without missing or
+duplicated media. Android may defer/stop jobs; preparation needs LotKeys open.
+Server verification and automated tests do not establish actual phone behavior.
+
+Blair explicitly approved necessary related steps for this correction and future
+tasks, without repeated permission questions. Ask when an approach materially
+changes or direct input is required; higher-level action safeguards still apply.
+Historical automatic-review denials were resolved by later relevant approval.
+See LotKeys-0.9.5.46-Test-Report.md for exact evidence and rollback instructions.

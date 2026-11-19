@@ -1,0 +1,575 @@
+LOTKEYS PHONE MESSAGING AND PC CONNECTIVITY SPECIFICATION
+Baseline: LotKeys V0.9.4.83
+Planning date: September 23, 2026
+Status: Locked reference before implementation
+
+PURPOSE
+-------
+
+This document preserves the agreed behaviour for connecting an Android phone to
+LotKeys and viewing or sending the phone's messages from LotKeys on the phone or
+on one paired PC. It is the reference point if an implementation attempt moves
+away from the intended design.
+
+
+1. CORE PRODUCT RULES
+---------------------
+
+1.1 The phone is the source of truth for ordinary message conversations.
+
+1.2 LotKeys does not cast, record, mirror, scrape, or interpret the phone screen.
+It exchanges structured message data through an installed Android component.
+
+1.3 Android is the first supported phone platform. iPhone support is a later
+project because comparable carrier-message access is currently restricted by
+Apple and is not generally available to Canadian users.
+
+1.4 LotKeys will not ask to become the default messaging application during this
+phase. The user's existing messaging application, such as Google Messages,
+remains the default.
+
+1.5 On the phone, the installed LotKeys Android app should look and behave like
+the existing LotKeys website. A native Android layer underneath the same
+interface supplies the protected message, contact, background-service, and
+pairing capabilities that a normal website/PWA cannot provide.
+
+1.6 On a computer, LotKeys remains the website. The computer can view and send
+messages only while the phone is connected and available.
+
+
+2. MESSAGE COVERAGE
+-------------------
+
+2.1 "Full Coverage - SMS/MMS" is enabled by default.
+
+2.2 LotKeys cannot silently disable Google Messages RCS. Setup must explain this
+and guide the user to the phone's RCS settings when full SMS/MMS coverage is
+desired.
+
+2.3 A later RCS Safety Watcher will use Android Notification Access as a
+best-effort fallback. It cannot guarantee old RCS history, outgoing RCS sent in
+Google Messages, full attachments, or gap-free coverage.
+
+2.4 Coverage indicator:
+
+  GREEN  - Phone online, required SMS/MMS permissions working, and the user has
+           confirmed the full SMS/MMS configuration.
+
+  AMBER  - RCS may be active or only the best-effort RCS watcher can see a
+           portion of the conversation.
+
+  RED    - Phone disconnected or required access is missing.
+
+2.5 LotKeys must never label watcher-only RCS access as complete coverage.
+
+
+3. THREE SEPARATE DATA LAYERS
+-----------------------------
+
+LotKeys must keep the following concepts separate:
+
+3.1 Phone Conversation
+
+The actual SMS/MMS messages and ordinary attachments stored on the phone.
+Deleting this conversation removes its message history but does not delete the
+LotKeys sorting information or optional LotKeys contact folder.
+
+3.2 LotKeys Sorting Entry
+
+A lightweight record that connects a normalized phone number to one or more
+category paths. Sorting a number must not automatically create a full LotKeys
+contact folder.
+
+3.3 LotKeys Contact Folder
+
+An optional, persistent Google Drive folder for the person or phone number. It
+can contain a LotKeys name, details, notes, approved images, approved videos,
+approved documents, shopping requirements, and other deliberately saved data.
+
+The user can delete individual pieces of this information or delete the entire
+LotKeys contact. Fully deleting/removing the contact from LotKeys also removes
+its sorting entry. If a phone conversation still exists, it returns to
+Unsorted. This action does not delete the phone's message conversation.
+
+
+4. PHONE NUMBER AND NAME IDENTITY
+---------------------------------
+
+4.1 The normalized phone number is the stable identity used by LotKeys.
+
+4.2 Display-name priority is:
+
+  1. LotKeys custom name
+  2. Name from Android Contacts
+  3. Formatted phone number
+
+4.3 An Android contact-name change updates the displayed fallback name but does
+not alter LotKeys category assignments.
+
+4.4 Deleting an Android contact removes that phone-provided name only. The
+number's LotKeys sorting remains until the user explicitly removes it from
+LotKeys.
+
+4.5 A different phone number is treated as a different identity. LotKeys must
+not guess or automatically merge two numbers.
+
+
+5. CATEGORY AND SUBCATEGORY TREE
+--------------------------------
+
+5.1 Categories behave like folders on a computer. The root shows broad results.
+Each deeper folder produces more specific results.
+
+Example:
+
+  All Conversations
+    Clients
+      Currently Working
+        Super Hot
+
+5.2 Parent categories include the conversations assigned directly to the parent
+and those contained in descendant subcategories.
+
+5.3 A phone number can belong to multiple category paths at the same time. For
+example, one customer can appear under Clients, Currently Working, and Super
+Hot. A family member can appear in Family without having a full LotKeys contact
+folder.
+
+5.4 Multiple category references never duplicate the underlying contact or
+conversation data. Combined views must de-duplicate results.
+
+5.5 A Primary Category controls the conversation's notification and Bubble Chat
+accent colour only. It does not remove any other category memberships.
+
+5.6 Numbers without a category appear in:
+
+  All Conversations > Unsorted
+
+5.7 Assigning a random number to a category is allowed without creating a
+LotKeys contact folder. Once sorted, it remains in All Conversations but leaves
+Unsorted.
+
+5.8 Category assignments survive deletion of the phone conversation. If the
+same number messages again later, it returns to its saved category paths.
+
+5.9 Fully removing the contact/tracked number from LotKeys clears its category
+assignments. Any current or future conversation then appears in Unsorted.
+
+
+6. CONVERSATION LIST AND HISTORY BEHAVIOUR
+------------------------------------------
+
+6.1 Conversation lists are ordered by most recent activity:
+
+  Newest conversation at the top
+  Oldest conversation at the bottom
+
+6.2 Inside a conversation, messages use the normal phone layout:
+
+  Oldest message at the top
+  Newest message at the bottom
+
+6.3 Opening a normal conversation moves to the newest message. Opening a
+conversation with unread messages begins at the first unread message and shows
+a New Messages divider.
+
+6.4 Scrolling upward loads older messages.
+
+6.5 Thousands of conversations must remain available and searchable without
+rendering every full history at once. LotKeys first loads a lightweight index
+containing conversation summaries. Recent conversations render first, older
+conversations load during scrolling or search, and a full history loads only
+when opened.
+
+6.6 Returning to an already opened conversation preserves its position during
+the active session.
+
+6.7 Every category and subcategory uses the same newest-first conversation
+ordering.
+
+
+7. HIDE FROM LOTKEYS
+--------------------
+
+7.1 Hide is not Delete and is not the same as Archive.
+
+7.2 Hide applies to the specific current source conversation, not permanently to
+the phone number or contact.
+
+7.3 New messages arriving inside that same phone conversation remain hidden.
+The user deliberately hid that conversation.
+
+7.4 LotKeys keeps a simple source-conversation record/fingerprint. During normal
+SMS/MMS synchronization, if the original phone conversation no longer exists,
+LotKeys removes the hidden state.
+
+7.5 If the same number creates a new conversation after the old phone
+conversation was deleted, the new conversation appears normally and uses all
+saved category assignments and contact information.
+
+7.6 A Hidden Conversations area allows manual restoration.
+
+7.7 Hide confirmation text:
+
+  "New messages in this conversation will remain hidden. It will return when
+   you unhide it or delete the conversation from your phone."
+
+7.8 The RCS watcher cannot reliably distinguish a deleted Google Messages RCS
+conversation from a dismissed notification. Hidden watcher-only RCS
+conversations therefore require manual unhide until a future LotKeys Messenger
+controls the source.
+
+
+8. SAVING MESSAGE ATTACHMENTS TO A CONTACT
+------------------------------------------
+
+8.1 Ordinary message attachments remain part of the phone conversation unless
+the user deliberately saves them.
+
+8.2 From either LotKeys on the phone or the active PC, the user can select:
+
+  Save to Contact Folder
+
+8.3 This copies the item into the contact's Google Drive folder. It does not
+remove the original attachment from the phone conversation.
+
+8.4 The approved Drive-backed copy is available from LotKeys on both the phone
+and PC. It remains available after the phone conversation is deleted.
+
+8.5 If a LotKeys contact folder already exists, the item can save immediately.
+
+8.6 If no LotKeys contact folder exists, saving becomes an intentional contact
+creation flow:
+
+  1. Show Create Contact & Save.
+  2. Prefill the Android contact name when available.
+  3. Otherwise require the user to enter a name.
+  4. Cancel creates nothing and uploads nothing.
+  5. Create & Save creates the folder, keeps existing category assignments,
+     and uploads the approved item.
+
+8.7 The user may later delete individual saved items or the entire contact
+folder at their own discretion.
+
+8.8 A watcher-only RCS notification may not contain the original attachment.
+Until the future LotKeys Messenger exists, the fallback is to use Android's
+Share to LotKeys action from the default messaging application.
+
+
+9. PHONE AND PC PAIRING
+-----------------------
+
+9.1 Pairing is not Bluetooth. It is an authenticated, device-bound LotKeys
+connection over the internet.
+
+9.2 When the same LotKeys account is signed in on both devices, the PC
+automatically discovers the phone.
+
+9.3 A brand-new PC/browser is never trusted merely because the account is signed
+in. First access to private message history and phone sending requires approval
+from the phone.
+
+9.4 Pairing flow:
+
+  1. PC selects Connect Phone.
+  2. PC and phone display the same four-digit, short-lived confirmation code.
+  3. The phone shows the requesting PC/browser details.
+  4. User taps Approve & Connect on the phone.
+  5. No code typing is required.
+
+9.5 Trust slider positions:
+
+  1. Ask Every Time
+  2. 36 Hours - Default
+  3. 7 Days
+  4. Until I Disconnect - Personal Computer
+
+9.6 The explanation beneath the slider changes with the selected position.
+
+9.7 The 36-hour and 7-day periods renew from active foreground use of LotKeys on
+that PC, not from silent background heartbeats. A forgotten browser must not
+remain trusted forever merely because it reconnects in the background.
+
+9.8 Trust belongs to the LotKeys account plus that browser/device profile, not
+to every person using the physical computer.
+
+9.9 Signing out immediately ends access. Reconnection still requires the same
+account and a valid trust record.
+
+9.10 Connected Devices shows device name, last activity, trust mode, expiry,
+connection state, Disconnect, Forget Device, and Disconnect All Devices.
+
+
+10. MULTIPLE COMPUTERS AND PHONES
+---------------------------------
+
+10.1 Multiple PCs may remain paired and trusted.
+
+10.2 Phase 1 permits only one active PC messaging session at a time. The phone
+and that active PC remain fully usable at the same time.
+
+10.3 Selecting Connect Here from another still-trusted PC transfers the active
+PC session. The old PC displays "Messaging moved to [PC name]."
+
+10.4 No new phone approval is needed when the new PC still has valid trust. An
+expired trust record requires the four-digit approval again.
+
+10.5 Drafts on the previous PC stay as drafts and are never sent automatically.
+
+10.6 The design must not prevent multi-PC simultaneous use later. Starting with
+one active PC is a safety and reliability restriction for the first build.
+
+10.7 Multiple phones can be paired later. Category colour remains the main chat
+accent. Each phone receives a smaller coloured device badge and can be filtered
+individually or through All Devices.
+
+10.8 Conversations belonging to different phones stay separate, even when the
+same customer number appears on both. Replies always route through the phone
+that owns that conversation. The LotKeys contact folder and category assignments
+can still be shared by normalized phone number.
+
+
+11. MESSAGE STORAGE AND OFFLINE BEHAVIOUR
+-----------------------------------------
+
+11.1 Normal message history is not permanently copied into Google Drive.
+
+11.2 The phone supplies the message index and histories during the live,
+encrypted connection. The PC may use a temporary session cache for performance
+but must not create a permanent independent message archive.
+
+11.3 When the phone disconnects or powers off, the PC Device Messages area locks
+and the coverage indicator becomes red. The PC does not pretend its temporary
+copy is the source of truth.
+
+11.4 LotKeys contact folders, category assignments, notes, and deliberately
+saved Drive files remain available independently because they are LotKeys data,
+not the phone's message database.
+
+
+12. SENDING FROM LOTKEYS
+------------------------
+
+12.1 A PC does not send a carrier message directly. It sends a secure instruction
+to the phone, and the phone sends the SMS/MMS through its cellular service.
+
+12.2 A file selected on the PC transfers temporarily and securely to the phone,
+which performs the actual send. Temporary transfer data is removed after
+completion or failure.
+
+12.3 Visual states:
+
+  Sending - Slightly faded message bubble with a loading wheel.
+  Sent    - Normal full-colour message bubble.
+  Failed  - Greyed message bubble with an exclamation mark, like a phone.
+
+12.4 Tapping a failed message offers Retry or Delete.
+
+12.5 LotKeys never automatically retries a failed message. This avoids delayed,
+stale, or duplicate messages reaching a customer.
+
+12.6 When the phone is disconnected, Send is unavailable and the text remains a
+local draft. Nothing sends later without a fresh user action.
+
+12.7 Phone and active PC may view and reply in the same conversation
+simultaneously. Updates from either side appear live on the other.
+
+
+13. READ AND UNREAD STATE
+-------------------------
+
+13.1 Opening or replying to a conversation in LotKeys clears the unread state
+across LotKeys phone and PC.
+
+13.2 When the default phone messaging app reports a conversation as read,
+LotKeys clears its unread state when that status is available.
+
+13.3 Because LotKeys is not the default SMS app, the Google Messages unread
+badge may remain after a conversation is read through LotKeys during the first
+phase.
+
+13.4 The message bridge must keep a future capability point for applying the
+source application's read state later, without requiring a chat-interface
+rewrite.
+
+
+14. NOTIFICATIONS AND BUBBLE CHAT
+---------------------------------
+
+14.1 The LotKeys phone app does not create a second message alert, sound, or
+vibration. The user's selected default messaging application owns the phone's
+normal message notification.
+
+14.2 While an active PC connection is running, Android may display one silent
+ongoing status notification such as "LotKeys connected to Office PC." This is a
+connection/status notification, not a duplicate message alert.
+
+14.3 The active PC receives LotKeys message notifications with sender and
+message preview enabled by default.
+
+14.4 Each PC can independently disable message previews, sound, or all LotKeys
+notifications.
+
+14.5 Clicking a PC notification opens the correct conversation.
+
+14.6 Hidden conversations do not create a LotKeys PC notification. The phone's
+default messaging application may still notify normally.
+
+14.7 Device conversations reuse the existing LotKeys internal-chat Bubble Chat
+experience instead of introducing a second chat design.
+
+14.8 The conversation's Primary Category colour supplies the Bubble Chat and
+notification accent. Unsorted uses the standard LotKeys accent. A smaller
+device-colour badge identifies the source phone without overriding the category
+colour.
+
+
+15. ANDROID SETUP AND PERMISSIONS
+---------------------------------
+
+Setup must use short, one-purpose screens and request permissions in context.
+It must not dump every Android permission prompt at once.
+
+15.1 Screen 1 - Connect Phone Messaging
+
+  Explain that LotKeys mirrors SMS/MMS and sends replies through this phone.
+  Confirm that the current messaging application remains the default.
+
+15.2 Screen 2 - Messages (Required)
+
+  Request only the access needed to read existing SMS/MMS, receive live
+  SMS/MMS events, and send user-approved replies. Do not request write/delete
+  access during this phase.
+
+15.3 Screen 3 - Contact Names (Optional)
+
+  Request Android Contacts access so existing phone-contact names can display.
+  If declined, LotKeys continues using phone numbers.
+
+15.4 Screen 4 - Stay Connected (Required for PC background use)
+
+  Explain pairing requests and the silent Android remote-messaging connection
+  used while a trusted PC is active. Request notification permission so pairing
+  requests and the silent connection-status notification can appear.
+
+15.5 After the permissions are complete, go directly to Pair a Computer.
+
+15.6 Android permissions are checked from their actual system state. Once a
+user grants them, LotKeys does not repeatedly show setup. Setup/repair appears
+again only when access is missing, revoked, reset, or removed during reinstall.
+
+15.7 New PCs do not repeat Android permission setup. They only follow the
+pairing and trust rules.
+
+15.8 Do not request during the first checkpoint:
+
+  - Default SMS application status
+  - Bluetooth
+  - Screen capture or casting
+  - Accessibility access
+  - Broad/all-files access
+  - SMS database write/delete access
+  - RCS Notification Access
+
+15.9 RCS Notification Access and its explanatory screen are added only when the
+later RCS Safety Watcher is implemented.
+
+15.10 Public Google Play distribution requires a sensitive-permissions
+declaration and review for the connected-device/cross-device SMS use case. The
+first implementation can be built and tested privately before that submission.
+
+
+16. FIRST CONNECTIVITY CHECKPOINT
+---------------------------------
+
+The first proof must remain deliberately small. Its success criteria are:
+
+  1. One Android phone and one active PC.
+  2. The installed LotKeys Android layer obtains the agreed required access.
+  3. The phone reads the current SMS/MMS conversation index and histories.
+  4. The phone-side LotKeys interface can display those conversations.
+  5. The same LotKeys account discovers the phone from the PC.
+  6. Four-digit matching-code approval pairs the PC.
+  7. The PC displays the phone's conversation list and opens message history.
+  8. New SMS/MMS activity appears live.
+  9. A plain-text PC reply travels through the phone.
+ 10. Sending, Sent, and Failed visual states work.
+ 11. Disconnecting the phone locks the PC Device Messages area and produces a
+     red coverage state.
+
+Do not make the following items dependencies of the first proof:
+
+  - RCS Safety Watcher
+  - RCS history reconstruction
+  - Saving message attachments into Drive
+  - Multi-phone operation
+  - Simultaneous multi-PC operation
+  - Group-message completion
+  - Dual-SIM selection
+  - Recommended Outreach
+  - Calendar or conversation-coaching features
+
+The implementation should still use clear capability boundaries so these
+features can be added without replacing the working connection.
+
+
+17. FUTURE LOTKEYS MESSENGER
+----------------------------
+
+17.1 A future optional LotKeys Messenger may become the default phone messaging
+application. This is a separate product phase and is not required now.
+
+17.2 As the default messenger, it can eventually own actual SMS/MMS deletion,
+unified phone read state, deeper organization, calendars, reminders, and
+conversation coaching.
+
+17.3 Becoming the default SMS app does not automatically unlock the existing
+Google Messages RCS database or history. A real RCS transport/provider
+integration is a separate technical and distribution project.
+
+17.4 The future messenger should help the user think productively and guide
+customer conversations, but recommendations remain user-controlled.
+
+
+18. FUTURE RECOMMENDED OUTREACH
+-------------------------------
+
+18.1 A contact folder may later contain shopping requirements such as:
+
+  - Maximum price
+  - Maximum kilometres
+  - Vehicle type/body style
+  - Luxury requirement
+  - Preferred makes/models
+  - Other specific needs
+
+18.2 When a Vehicle Profile is created or updated, LotKeys compares it with
+active customer requirements.
+
+18.3 Matches appear in a Recommended Outreach area and may also appear as advice
+inside the customer's conversation.
+
+18.4 Every recommendation explains why the vehicle matches.
+
+18.5 LotKeys never automatically sends the outreach. The user reviews, edits,
+and deliberately sends it.
+
+
+19. IMPLEMENTATION DISCIPLINE
+-----------------------------
+
+19.1 Do not attempt screen casting, screen scraping, notification-only message
+mirroring, or any architecture that contradicts the phone-as-source rule.
+
+19.2 Build the connection in checkpoints and verify each checkpoint before
+adding the next layer.
+
+19.3 When an external service, repository action, build, or test becomes stuck,
+stop promptly and ask Blair for help instead of spending hours repeating a
+blocked action.
+
+19.4 Preserve V0.9.4.83 as the clean baseline. Do not allow experimental phone
+connectivity work to damage the existing LotKeys application, internal chat,
+sorting tree, Drive recovery, or account behaviour.
+
+END OF LOCKED SPECIFICATION

@@ -1,0 +1,25 @@
+LotKeys TEST .47 Store join requests — 2026-11-10
+
+Baseline main 6f5d24622789d466237483f0a4bcf55f0eac7bdc (.46). Source in isolated
+lotkeys-store-requests checkout. Native/installed signed .46 stays unchanged.
+433 Node tests (27 new) and 30 JS syntax/diff checks pass. Current task: finish PR,
+verify CI, promote TEST only and verify Pages/source/APK preservation. Record actual
+PR/merge/deployment evidence before calling it live. No production change.
+
+Implemented: copied private Store invitation, Google-authenticated Request access
+handoff on connection, Check approval, Admin Reports / Requests proposal listing,
+Approve (Reader + ordinary Store workspace), Deny, exact-recipient checks and safe
+interrupted/uncertain setup recovery. Google Drive sharing authority is enforced.
+Disabled/delegated/view-only requests require manual review. No public folder,
+new server/credentials/scopes or automatic Google request fabrication.
+
+Google Drive cannot create access proposals via API. User must send in Google's
+Request access screen. Existing Store Codes work when already accessible or listed;
+unlisted private Stores need the invitation. Google OAuth Testing allowlist remains
+separate from Store membership. A real two-account Google/phone check is pending;
+see test report. No Store access was granted by development tooling.
+
+Preserve .44 upload retries/.43 fallback/user data/same key, root verification and
+production .81. Blair confirmed .46 toolbar fix, not actual background uploads.
+Future Account-below-Lock-Screen background/connector controls remain on planning
+branch codex/account-background-release-readiness. This release does not move them.
